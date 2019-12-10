@@ -65,14 +65,15 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
+	<!--<build>
+	Other modules can't see it as a dependency when this present, needs some solution
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-	</build>
+	</build>-->
 
 	<repositories>
 		<repository>

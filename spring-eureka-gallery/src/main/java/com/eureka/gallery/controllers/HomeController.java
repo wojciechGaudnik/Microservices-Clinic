@@ -15,7 +15,7 @@ import com.eureka.gallery.entities.Gallery;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@RequestMapping("/gallery")
+@RequestMapping("/")
 public class HomeController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
