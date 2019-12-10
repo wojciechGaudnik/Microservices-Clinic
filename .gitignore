@@ -1,0 +1,24 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+#.idea
+#*.iws
+#*.iml
+#*.ipr
+
+
+!/spring-boot-log*.log
+spring-boot-log*.log
+*.tmp
+
+
+#test
+
+#1spring-boot-log.log
+#src/main/java/com/kamprzewoj/queststore/view/
+#src/main/resources/static/
+#src/main/resources/templates/
