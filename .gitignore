@@ -14,11 +14,3 @@ target/
 !/spring-boot-log*.log
 spring-boot-log*.log
 *.tmp
-
-
-#test
-
-#1spring-boot-log.log
-#src/main/java/com/kamprzewoj/queststore/view/
-#src/main/resources/static/
-#src/main/resources/templates/
