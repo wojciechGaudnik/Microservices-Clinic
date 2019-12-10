@@ -32,6 +32,11 @@ public class HomeController {
 		// We load balance among them, and display which instance received the request.
 		return "Hello from Gallery Service running at port: " + env.getProperty("local.server.port");
 	}
+
+	@RequestMapping("/gallery-public")
+	public String securedMethod() {
+		return "### NOT SECURED #### Hello from Gallery Secured Service running at port: " + env.getProperty("local.server.port");
+	}
   
 	@HystrixCommand(fallbackMethod = "fallback")
 	@RequestMapping("/{id}")

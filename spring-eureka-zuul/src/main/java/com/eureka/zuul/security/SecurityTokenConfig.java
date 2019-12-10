@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.eureka.common.security.JwtConfig;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @EnableWebSecurity 	// Enable security config. This annotation denotes config for spring security.
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
@@ -20,24 +20,28 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
  
 	@Override
   	protected void configure(HttpSecurity http) throws Exception {
-    	   http
-		.csrf().disable()
-		    // make sure we use stateless session; session won't be used to store user's state.
-	 	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 	
-		.and()
-		    // handle an authorized attempts 
-		    .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED)) 	
-		.and()
-		   // Add a filter to validate the tokens with every request
-		 //  .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
-		// authorization requests config
-		.authorizeRequests()
-		   // allow all who are accessing "auth" service
-		   //.antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-		   // must be an admin if trying to access admin area (authentication is also required here)
-	   .antMatchers("/**").permitAll()/*.hasRole("ADMIN")*/
-	   // Any other request must be authenticated
-	   .anyRequest().authenticated();
+		http
+				.csrf().disable()
+				// make sure we use stateless session; session won't be used to store user's state.
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				// handle an authorized attempts
+				.exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+				.and()
+				// Add a filter to validate user credentials and add token in the response header
+
+				// What's the authenticationManager()?
+				// An object provided by WebSecurityConfigurerAdapter, used to authenticate the user passing user's credentials
+				// The filter needs this auth manager to authenticate the user.
+				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), BasicAuthenticationFilter.class)
+				.authorizeRequests()
+				// allow all POST requests
+				.antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
+				//Example of something unprotected
+				.antMatchers(HttpMethod.GET, "/gallery/gallery-public").permitAll()
+				// any other requests must be authenticated
+				.anyRequest().authenticated();
+
 	}
 	
 	@Bean
