@@ -23,7 +23,7 @@ public class BootStrapData implements CommandLineRunner {
 		Patient patientFirst = Patient
 				.builder()
 				.uuid(UUID.randomUUID())
-				.firstName("First Name Alloha World")
+				.firstName("First Name Alloha Patients World")
 				.build();
 		patientRepository.save(patientFirst);
 		System.out.println(patientRepository.count());
