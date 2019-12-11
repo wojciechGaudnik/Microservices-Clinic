@@ -1,17 +1,20 @@
 package com.clinicsmicroservices.doctor.controllers;
 
+import com.clinicsmicroservices.doctor.exceptions.UserNotFoundException;
+import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
 import com.clinicsmicroservices.doctor.shared.Patient;
 import com.clinicsmicroservices.doctor.tools.ConsoleColors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -28,6 +31,15 @@ public class DoctorController {
 	@GetMapping("/test")
 	@ResponseBody
 	public List<Object> getFirstUser(){
+		Doctor doctor = null;
+//		Optional<Doctor> optionalDoctor = Optional.of(doctor);
+		log.error("test");
+		int id = 666;
+		if (doctor == null) {
+			throw new UserNotFoundException("id-" + id);
+		}
+
+
 		RestTemplate restTemplate = new RestTemplate();
 
 		final String uri = "http://localhost:8081/patient/test/";
@@ -37,5 +49,16 @@ public class DoctorController {
 		objectList.add(doctorService.getDoctorByID(1L).get());
 		objectList.add(restTemplate.getForObject(uri, Patient.class));
 		return objectList;
+	}
+
+	@PostMapping("/doctor")
+	public ResponseEntity<Object> addDoctor(@RequestBody Doctor doctor) {
+		Doctor savedDoctor = doctor;
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(savedDoctor.getId())
+				.toUri();
+		return ResponseEntity.created(location).build();
 	}
 }
