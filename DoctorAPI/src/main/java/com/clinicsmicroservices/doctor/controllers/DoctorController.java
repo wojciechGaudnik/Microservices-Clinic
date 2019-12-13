@@ -4,11 +4,14 @@ import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
 import com.clinicsmicroservices.doctor.shared.Patient;
 import com.clinicsmicroservices.doctor.tools.ConsoleColors;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,7 +35,7 @@ public class DoctorController {
 
 	@GetMapping("/test")
 	@ResponseBody
-	public List<Object> getFirstUser(){
+	public List<Object> getFirstUser() {
 
 		//todo exception handling pattern
 //		Doctor doctor = null;
@@ -54,7 +57,7 @@ public class DoctorController {
 	}
 
 	@GetMapping("/hateoas")
-	public EntityModel<Doctor> getHateoasFormatTest(){
+	public EntityModel<Doctor> getHateoasFormatTest() {
 		//todo HATEOAS pattern
 		Doctor doctorHATEOAS = Doctor.builder().firstName("Hateoas doctor").build();
 		EntityModel<Doctor> resource = new EntityModel<>(doctorHATEOAS);
@@ -75,5 +78,16 @@ public class DoctorController {
 				.buildAndExpand(savedDoctor.getId())
 				.toUri();
 		return ResponseEntity.created(location).build();
+	}
+
+	@GetMapping("/filtering")
+	public MappingJacksonValue retrieveSomeDoctor(){
+		Doctor doctor = doctorService.getDoctorByID(1L).get();
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("Id", "uuid");
+		FilterProvider filterProvider = new SimpleFilterProvider().addFilter("DoctorFilter", filter);
+		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(doctor);
+		mappingJacksonValue.setFilters(filterProvider);
+		return mappingJacksonValue;
+
 	}
 }

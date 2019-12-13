@@ -25,7 +25,19 @@ public class BootStrapData implements CommandLineRunner {
 				.uuid(UUID.randomUUID())
 				.firstName("First Name Alloha Doctor's World")
 				.build();
+		Doctor patientSecond = Doctor
+				.builder()
+				.uuid(UUID.randomUUID())
+				.firstName("Second Name Alloha Doctor's World")
+				.build();
+		Doctor patientThird = Doctor
+				.builder()
+				.uuid(UUID.randomUUID())
+				.firstName("Third Name Alloha Doctor's World")
+				.build();
 		doctorRepository.save(patientFirst);
+		doctorRepository.save(patientSecond);
+		doctorRepository.save(patientThird);
 		System.out.println(doctorRepository.count());
 		System.out.println(doctorRepository.findById(1L).get().getFirstName());;
 		System.out.println("Bootstrap END -----------------------------------------------------------------------------------------------" + ConsoleColors.RESET);
