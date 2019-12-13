@@ -5,10 +5,10 @@ target/
 !**/src/test/**
 
 ### IntelliJ IDEA ###
-#.idea
-#*.iws
-#*.iml
-#*.ipr
+.idea
+*.iws
+*.iml
+*.ipr
 
 
 !/spring-boot-log*.log
