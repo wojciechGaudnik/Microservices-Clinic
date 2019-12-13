@@ -2,10 +2,12 @@ package com.clinicsmicroservices.doctor.model;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 @Getter
@@ -28,4 +30,13 @@ public class Doctor {
 	@NotBlank(message = "firstName is mandatory")
 	@Size(min = 3, max = 100, message = "length out of range ")
 	private String firstName;
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", Doctor.class.getSimpleName() + "[", "]")
+				.add("Id=" + Id)
+				.add("uuid=" + uuid)
+				.add("firstName='" + firstName + "'")
+				.toString();
+	}
 }

@@ -1,6 +1,5 @@
 package com.clinicsmicroservices.doctor.controllers;
 
-import com.clinicsmicroservices.doctor.exceptions.UserNotFoundException;
 import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
 import com.clinicsmicroservices.doctor.shared.Patient;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Slf4j
@@ -33,11 +32,11 @@ public class DoctorController {
 	public List<Object> getFirstUser(){
 		Doctor doctor = null;
 //		Optional<Doctor> optionalDoctor = Optional.of(doctor);
-		log.error("test");
-		int id = 666;
-		if (doctor == null) {
-			throw new UserNotFoundException("id-" + id);
-		}
+//		log.error("test");
+//		int id = 666;
+//		if (doctor == null) {
+//			throw new UserNotFoundException("id-" + id);
+//		}
 
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -51,9 +50,11 @@ public class DoctorController {
 		return objectList;
 	}
 
-	@PostMapping("/doctor")
-	public ResponseEntity<Object> addDoctor(@RequestBody Doctor doctor) {
+	@PostMapping("/add")
+	public ResponseEntity<Object> addDoctor(@Valid @RequestBody Doctor doctor) {
+		log.debug(doctor.toString());
 		Doctor savedDoctor = doctor;
+		doctorService.add(doctor);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")

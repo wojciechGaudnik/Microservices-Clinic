@@ -22,4 +22,8 @@ public class DoctorService {
 		log.debug(ConsoleColors.YELLOW + "Message from Service" + ConsoleColors.RESET);
 		return doctorRepository.findById(1L);
 	}
+
+	public void add(Doctor doctor) {
+		doctorRepository.save(doctor);
+	}
 }
