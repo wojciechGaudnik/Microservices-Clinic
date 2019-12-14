@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 //@JsonIgnoreProperties(value = {"uuid", "Id"})
-@JsonFilter(value = "DoctorFilter") //todo <--- connect with controller /filltering
+//@JsonFilter(value = "DoctorFilter") //todo <--- connect with controller /filltering
 @Entity(name = "doctor")
 public class Doctor {
 

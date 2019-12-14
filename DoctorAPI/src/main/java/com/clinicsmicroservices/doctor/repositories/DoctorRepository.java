@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface DoctorRepository extends CrudRepository<Doctor, Long> {
 	@Override
 	Optional<Doctor> findById(Long id);
+	Doctor findFirstByFirstName(String name);
 }
