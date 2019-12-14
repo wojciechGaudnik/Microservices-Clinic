@@ -1,5 +1,7 @@
 package com.clinicsmicroservices.doctor.controllers;
 
+import com.clinicsmicroservices.doctor.configuration.Configuration;
+import com.clinicsmicroservices.doctor.configuration.DoctorConfiguration;
 import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
 import com.clinicsmicroservices.doctor.shared.Patient;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +27,13 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/doctors")
 public class DoctorController {
 
 	private final DoctorService doctorService;
+
+	@Autowired
+	private Configuration configuration;
 
 	public DoctorController(DoctorService doctorService) {
 		this.doctorService = doctorService;
@@ -49,7 +55,7 @@ public class DoctorController {
 		RestTemplate restTemplate = new RestTemplate();
 		final String uri = "http://localhost:8081/patient/test/";
 		log.debug(ConsoleColors.YELLOW + restTemplate.getForObject(uri, String.class));
-		log.debug(ConsoleColors.YELLOW + "Message from Controller" + ConsoleColors.RESET);
+		log.debug(ConsoleColors.YELLOW + "Message from Controller New test" + ConsoleColors.RESET);
 		List<Object> objectList = new ArrayList<>();
 		objectList.add(doctorService.getDoctorByID(1L).get());
 		objectList.add(restTemplate.getForObject(uri, Patient.class));
@@ -64,6 +70,21 @@ public class DoctorController {
 		WebMvcLinkBuilder linkToDoctor = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getFirstUser());
 		resource.add(linkToDoctor.withRel("First user named by Me"));
 		return resource;
+	}
+
+//	@GetMapping("/{id}")
+//	public Doctor getOverride() {
+//		//todo override data-rest
+//		Doctor doctorHATEOAS = Doctor.builder().firstName("Hateoas doctor").build();
+//		EntityModel<Doctor> resource = new EntityModel<>(doctorHATEOAS);
+//		WebMvcLinkBuilder linkToDoctor = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getFirstUser());
+//		resource.add(linkToDoctor.withRel("First user named by Me"));
+//		return new Doctor().toBuilder().firstName("test from override").build();
+//	}
+
+	@GetMapping("/configuration")
+	public DoctorConfiguration getDoctorConf(){
+		return new DoctorConfiguration(configuration.getBq666());
 	}
 
 
