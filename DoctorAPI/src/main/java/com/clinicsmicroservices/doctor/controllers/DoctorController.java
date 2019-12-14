@@ -1,6 +1,5 @@
 package com.clinicsmicroservices.doctor.controllers;
 
-import com.clinicsmicroservices.doctor.configuration.Configuration;
 import com.clinicsmicroservices.doctor.configuration.DoctorConfiguration;
 import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +29,11 @@ import java.util.List;
 public class DoctorController {
 
 	private final DoctorService doctorService;
+	private final DoctorConfiguration configuration;
 
-	@Autowired
-	private Configuration configuration;
-
-	public DoctorController(DoctorService doctorService) {
+	public DoctorController(DoctorService doctorService, DoctorConfiguration configuration) {
 		this.doctorService = doctorService;
+		this.configuration = configuration;
 	}
 
 	@GetMapping("/test")
