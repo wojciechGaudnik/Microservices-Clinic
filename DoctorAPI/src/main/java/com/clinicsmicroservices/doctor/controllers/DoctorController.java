@@ -1,5 +1,6 @@
 package com.clinicsmicroservices.doctor.controllers;
 
+import com.clinicsmicroservices.doctor.configuration.Configuration;
 import com.clinicsmicroservices.doctor.configuration.DoctorConfiguration;
 import com.clinicsmicroservices.doctor.model.Doctor;
 import com.clinicsmicroservices.doctor.services.DoctorService;
@@ -29,9 +30,9 @@ import java.util.List;
 public class DoctorController {
 
 	private final DoctorService doctorService;
-	private final DoctorConfiguration configuration;
+	private final Configuration configuration;
 
-	public DoctorController(DoctorService doctorService, DoctorConfiguration configuration) {
+	public DoctorController(DoctorService doctorService, Configuration configuration) {
 		this.doctorService = doctorService;
 		this.configuration = configuration;
 	}
@@ -79,11 +80,6 @@ public class DoctorController {
 //		return new Doctor().toBuilder().firstName("test from override").build();
 //	}
 
-	@GetMapping("/configuration")
-	public DoctorConfiguration getDoctorConf(){
-		return new DoctorConfiguration(configuration.getBq666());
-	}
-
 
 	@PostMapping("/add")
 	public ResponseEntity<Object> addDoctor(@Valid @RequestBody Doctor doctor) {
@@ -107,5 +103,13 @@ public class DoctorController {
 		mappingJacksonValue.setFilters(filterProvider);
 		return mappingJacksonValue;
 
+	}
+
+	@GetMapping("/configuration")
+	public DoctorConfiguration getDoctorConf(){
+
+		log.error("test");
+		log.error(String.valueOf(configuration.getBq666()));
+		return new DoctorConfiguration(configuration.getBq666());
 	}
 }

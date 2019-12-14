@@ -1,7 +1,9 @@
 package com.clinicsmicroservices.doctor;
 
+import com.clinicsmicroservices.doctor.configuration.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 //todo check if override data-rest end point working <--- probably Yes but we need more tests
@@ -9,7 +11,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 //todo set the same pass and user for postgres and user tests
 
 @SpringBootApplication
-@EnableConfigurationProperties
+//@EnableConfigurationProperties(Configuration.class)
+@ConfigurationPropertiesScan
 public class DoctorApplication {
 
 	public static void main(String[] args) {
