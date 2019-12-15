@@ -51,7 +51,7 @@ public class DoctorController {
 //		}
 
 		RestTemplate restTemplate = new RestTemplate();
-		final String uri = "http://localhost:8081/patient/test/";
+		final String uri = "http://localhost:8081/patients/1";
 		log.debug(ConsoleColors.YELLOW + restTemplate.getForObject(uri, String.class));
 		log.debug(ConsoleColors.YELLOW + "Message from Controller New test" + ConsoleColors.RESET);
 		List<Object> objectList = new ArrayList<>();
