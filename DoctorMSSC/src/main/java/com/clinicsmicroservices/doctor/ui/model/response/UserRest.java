@@ -10,6 +10,6 @@ public class UserRest {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Integer userId;
+	private String userId;
 
 }
