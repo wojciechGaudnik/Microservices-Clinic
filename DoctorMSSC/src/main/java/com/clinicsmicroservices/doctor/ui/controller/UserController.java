@@ -23,6 +23,9 @@ public class UserController {
 	public String getUserWithParam(@RequestParam(value = "page", defaultValue = "1") int page,
 	                               @RequestParam(value = "limit", defaultValue = "1") int limit,
 	                               @RequestParam(value = "sort", defaultValue = "desc", required = false) String sort) {
+		String test = null;
+		test.length();
+
 		return "page = " + page + " limit = " + limit + " sort = " + sort;
 	}
 
