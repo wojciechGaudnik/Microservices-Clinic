@@ -4,6 +4,12 @@ import com.clinicsmicroservices.doctor.exceptions.UserServiceException;
 import com.clinicsmicroservices.doctor.ui.model.request.UpdateUserDetailsRequestModel;
 import com.clinicsmicroservices.doctor.ui.model.request.UserDetailsRequestModel;
 import com.clinicsmicroservices.doctor.ui.model.response.UserRest;
+import com.clinicsmicroservices.doctor.ui.service.UserService;
+import lombok.CustomLog;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -16,11 +22,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+//@CustomLog
+//@Slf4j(topic="UserController")
+@Log
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/doctors")
 public class UserController {
 
 	Map<String, UserRest> users;
+
+	@Autowired
+	UserService userRest;
 
 	@GetMapping()
 	public String getUserWithParam(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -36,6 +48,8 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE
 	})
 	public ResponseEntity<UserRest> getUserById(@PathVariable String userId) {
+		log.info(userId + " my error");
+
 		if (users.containsKey(userId)) {
 			return new ResponseEntity<>(users.get(userId), HttpStatus.OK);
 		}
@@ -48,16 +62,18 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE},
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetailsRequestModel) {
-		UserRest userRest = UserRest.builder()
-				.firstName(userDetailsRequestModel.getFirstName())
-				.lastName(userDetailsRequestModel.getLastName())
-				.email(userDetailsRequestModel.getEmail())
-				.build();
-		String userId = UUID.randomUUID().toString();
-		userRest.setUserId(userId);
-		if(users == null) users = new HashMap<>();
-		users.put(userId, userRest);
-		return new ResponseEntity<>(userRest, HttpStatus.OK);
+//		UserRest userRest = UserRest.builder()
+//				.firstName(userDetailsRequestModel.getFirstName())
+//				.lastName(userDetailsRequestModel.getLastName())
+//				.email(userDetailsRequestModel.getEmail())
+//				.build();
+//		String userId = UUID.randomUUID().toString();
+//		userRest.setUserId(userId);
+//		if(users == null) users = new HashMap<>();
+//		users.put(userId, userRest);
+
+
+		return new ResponseEntity<>(userRest.createUser(userDetailsRequestModel), HttpStatus.OK);
 	}
 
 	@PutMapping(path="/{userId}", consumes = {
