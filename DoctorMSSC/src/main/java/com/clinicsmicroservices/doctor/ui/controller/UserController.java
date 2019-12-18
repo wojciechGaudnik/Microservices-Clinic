@@ -38,7 +38,7 @@ public class UserController {
 	public String getUserWithParam(@RequestParam(value = "page", defaultValue = "1") int page,
 	                               @RequestParam(value = "limit", defaultValue = "1") int limit,
 	                               @RequestParam(value = "sort", defaultValue = "desc", required = false) String sort) {
-		if(true) throw  new UserServiceException("test ");
+		if (true) throw new UserServiceException("test ");
 
 		return "page = " + page + " limit = " + limit + " sort = " + sort;
 	}
@@ -76,7 +76,7 @@ public class UserController {
 		return new ResponseEntity<>(userRest.createUser(userDetailsRequestModel), HttpStatus.OK);
 	}
 
-	@PutMapping(path="/{userId}", consumes = {
+	@PutMapping(path = "/{userId}", consumes = {
 			MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE},
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,7 +88,7 @@ public class UserController {
 		return storedUserDetail;
 	}
 
-	@DeleteMapping(path="/{userId}")
+	@DeleteMapping(path = "/{userId}")
 	public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
 		users.remove(userId);
 		return ResponseEntity.noContent().build();

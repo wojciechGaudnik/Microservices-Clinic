@@ -21,13 +21,13 @@ public class AppExceptionsHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = {Exception.class})
 	public ResponseEntity<Object> handlerAnyException(Exception ex, WebRequest request) {
-		ErrorMessage errorMessage = new ErrorMessage(new Date(), (ex.getLocalizedMessage() == null)? ex.toString(): ex.getLocalizedMessage());
+		ErrorMessage errorMessage = new ErrorMessage(new Date(), (ex.getLocalizedMessage() == null) ? ex.toString() : ex.getLocalizedMessage());
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(value = {NullPointerException.class, UserServiceException.class})
 	public ResponseEntity<Object> handlerNullPointerException(Exception ex, WebRequest request) {  //todo <--- Exception because two Exception pass into this method
-		ErrorMessage errorMessage = new ErrorMessage(new Date(), (ex.getLocalizedMessage() == null)? ex.toString(): ex.getLocalizedMessage());
+		ErrorMessage errorMessage = new ErrorMessage(new Date(), (ex.getLocalizedMessage() == null) ? ex.toString() : ex.getLocalizedMessage());
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 

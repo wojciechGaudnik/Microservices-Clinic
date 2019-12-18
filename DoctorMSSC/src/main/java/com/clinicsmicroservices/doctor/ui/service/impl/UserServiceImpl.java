@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 				.build();
 		String userId = UUID.randomUUID().toString();
 		userRest.setUserId(userId);
-		if(users == null) users = new HashMap<>();
+		if (users == null) users = new HashMap<>();
 		users.put(userId, userRest);
 		return userRest;
 	}
