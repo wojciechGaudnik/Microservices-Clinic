@@ -1,8 +1,11 @@
 package com.clinicsmicroservices.doctor.ui.controller;
 
+import com.clinicsmicroservices.doctor.exceptions.UserServiceException;
 import com.clinicsmicroservices.doctor.ui.model.request.UpdateUserDetailsRequestModel;
 import com.clinicsmicroservices.doctor.ui.model.request.UserDetailsRequestModel;
 import com.clinicsmicroservices.doctor.ui.model.response.UserRest;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +22,11 @@ public class UserController {
 
 	Map<String, UserRest> users;
 
-	@GetMapping
+	@GetMapping()
 	public String getUserWithParam(@RequestParam(value = "page", defaultValue = "1") int page,
 	                               @RequestParam(value = "limit", defaultValue = "1") int limit,
 	                               @RequestParam(value = "sort", defaultValue = "desc", required = false) String sort) {
-		String test = null;
-		test.length();
+		if(true) throw  new UserServiceException("test ");
 
 		return "page = " + page + " limit = " + limit + " sort = " + sort;
 	}
@@ -74,5 +76,15 @@ public class UserController {
 	public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
 		users.remove(userId);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/hateoas")
+	public EntityModel<UserRest> getHateoasFormatTest() {
+		//todo HATEOAS pattern
+		UserRest doctorHATEOAS = UserRest.builder().firstName("Hateoas doctor").build();
+		EntityModel<UserRest> resource = new EntityModel<>(doctorHATEOAS);
+		WebMvcLinkBuilder linkToDoctor = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getUserById("adf"));
+		resource.add(linkToDoctor.withRel("First user named by Me"));
+		return resource;
 	}
 }
