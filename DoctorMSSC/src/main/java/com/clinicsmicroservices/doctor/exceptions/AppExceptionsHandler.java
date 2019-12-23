@@ -14,6 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+//todo @Enumerated(EnumType.STRING)
+//todo private AuthorityType name;
+
 //todo https://projectlombok.org/features/log
 @CommonsLog
 @ControllerAdvice

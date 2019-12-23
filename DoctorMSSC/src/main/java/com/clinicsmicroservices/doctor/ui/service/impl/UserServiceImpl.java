@@ -3,13 +3,14 @@ package com.clinicsmicroservices.doctor.ui.service.impl;
 import com.clinicsmicroservices.doctor.ui.model.request.UserDetailsRequestModel;
 import com.clinicsmicroservices.doctor.ui.model.response.UserRest;
 import com.clinicsmicroservices.doctor.ui.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
+@Slf4j(topic="UserServiceImpl")
 public class UserServiceImpl implements UserService {
 
 	Map<String, UserRest> users;
@@ -28,5 +29,18 @@ public class UserServiceImpl implements UserService {
 		return userRest;
 	}
 
+	@Override
+	public List<UserRest> getAll() {
+		log.error("From userSerimp ,---------");
+		for (UserRest user: users.values()) {
+			log.error(user.toString());
+		}
+		return new LinkedList<>(users.values());
+	}
+
+	@Override
+	public UserRest getById(String id) {
+		return users.values().stream().filter(u -> u.getUserId().equals(id)).findFirst().get();
+	}
 
 }
