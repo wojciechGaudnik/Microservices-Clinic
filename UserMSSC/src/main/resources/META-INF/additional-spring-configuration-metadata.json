@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "gateway.ip",
+      "type": "java.lang.String",
+      "description": "Description for gateway.ip."
+  }
+] }
