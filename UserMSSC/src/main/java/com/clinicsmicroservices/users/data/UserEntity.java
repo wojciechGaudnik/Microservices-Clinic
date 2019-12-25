@@ -5,10 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Entity(name = "users")
 public class UserEntity implements Serializable {
@@ -27,6 +28,7 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String lastName;
 
+	@Email
 	@Column(nullable = false, length = 120, unique = true)
 	private String email;
 
@@ -35,4 +37,12 @@ public class UserEntity implements Serializable {
 
 	@Column(nullable = false, unique = true)
 	private String encryptedPassword;
+
+	@Column(nullable = false)
+	private Date createAt;
+
+	@PrePersist
+	void createAt() {
+		this.createAt = new Date();
+	}
 }
