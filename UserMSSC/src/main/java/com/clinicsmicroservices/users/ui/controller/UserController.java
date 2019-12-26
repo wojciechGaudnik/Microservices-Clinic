@@ -42,4 +42,9 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
 	}
 
+	@GetMapping("/status/check/JWT")
+	public String statusJWT() {
+		return "Proper JWT on port " + environment.getProperty("local.server.port");
+	}
+
 }
