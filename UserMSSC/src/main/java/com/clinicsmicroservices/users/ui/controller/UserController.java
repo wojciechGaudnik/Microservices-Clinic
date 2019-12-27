@@ -4,16 +4,22 @@ import com.clinicsmicroservices.users.shared.UserDTO;
 import com.clinicsmicroservices.users.ui.model.CreateUserRequestModel;
 import com.clinicsmicroservices.users.ui.model.CreateUserResponseModel;
 import com.clinicsmicroservices.users.ui.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+//@Profile("dev")
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -46,5 +52,14 @@ public class UserController {
 	public String statusJWT() {
 		return "Proper JWT on port " + environment.getProperty("local.server.port");
 	}
+
+//	@GetMapping("/status/check/JWT")
+//	public String statusJWT(@AuthenticationPrincipal User user) {
+//		if (user == null) {
+//			log.error("user == null < --------------------------------");
+//		}
+//		log.error(user.toString());
+//		return "Proper JWT on port " + environment.getProperty("local.server.port") + "\nUser: ";
+//	}
 
 }
