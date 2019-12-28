@@ -32,7 +32,12 @@ public class UserController {
 
 	@GetMapping("/status/check")
 	public String status() {
-		return "Working from User on port " + environment.getProperty("local.server.port");
+		return "Working from User on port " + environment.getProperty("local.server.port") + environment.getProperty("token.secret");
+	}
+
+	@GetMapping("/status/check/JWT")
+	public String statusJWT() {
+		return "Proper JWT on port " + environment.getProperty("local.server.port") + ", with token = " + environment.getProperty("token.secret");
 	}
 
 	@PostMapping()
@@ -48,10 +53,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
 	}
 
-	@GetMapping("/status/check/JWT")
-	public String statusJWT() {
-		return "Proper JWT on port " + environment.getProperty("local.server.port");
-	}
+
 
 //	@GetMapping("/status/check/JWT")
 //	public String statusJWT(@AuthenticationPrincipal User user) {
