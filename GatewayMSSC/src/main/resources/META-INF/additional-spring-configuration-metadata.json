@@ -29,6 +29,16 @@
       "name": "token.secret",
       "type": "java.lang.String",
       "description": "Description for token.secret."
+    },
+    {
+      "name": "api.zuul.actuator.url.path",
+      "type": "java.lang.String",
+      "description": "Description for api.zuul.actuator.url.path."
+    },
+    {
+      "name": "api.users.actuator.url.path",
+      "type": "java.lang.String",
+      "description": "Description for api.users.actuator.url.path."
     }
   ]
 }
