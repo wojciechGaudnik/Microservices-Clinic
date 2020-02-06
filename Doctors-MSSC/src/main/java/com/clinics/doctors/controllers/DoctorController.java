@@ -1,5 +1,7 @@
 package com.clinics.doctors.controllers;
 
+import com.clinics.doctors.services.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/doctors")
 public class DoctorController {
 
-	@GetMapping(path = "{doctorId}")
-	public ResponseEntity<String> getDoctor(@PathVariable String doctorId){
-		return ResponseEntity.ok().body("Hello from Doctor + doctorId" + doctorId);
+	@Autowired
+	DoctorService doctorService;
+
+	@GetMapping(path = "{UUID}")
+	public ResponseEntity<String> getDoctorByUUID(@PathVariable String UUID){
+		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
 	}
 }
