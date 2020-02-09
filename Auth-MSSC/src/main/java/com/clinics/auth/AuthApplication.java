@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
+@EnableEurekaClient
 @SpringBootApplication
 public class AuthApplication {
 

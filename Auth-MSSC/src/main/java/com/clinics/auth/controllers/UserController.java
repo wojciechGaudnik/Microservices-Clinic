@@ -15,8 +15,15 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(path = "/{UUID}")
-	public ResponseEntity<String> getUserByUUID(@PathVariable String UUID){
-		return ResponseEntity.ok().body(userService.getUserByUUID(UUID));
+//	@GetMapping(path = "/{UUID}")
+//	public ResponseEntity<String> getUserByUUID(@PathVariable String UUID){
+//		return ResponseEntity.ok().body(userService.getUserByUUID(UUID));
+//	}
+
+	@GetMapping(path = "/{test}")
+	public ResponseEntity<String> getTest(@PathVariable String test){
+		return ResponseEntity.ok().body("Response from auth plus " + test);
 	}
+
+
 }
