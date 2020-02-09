@@ -30,7 +30,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter implements
 				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-				.antMatchers("/doctor").hasAnyRole(ROLE.DOCTOR)
+				.antMatchers("/doctor/**").hasRole(ROLE.DOCTOR)
 				.anyRequest().authenticated();
 	}
 
