@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
@@ -16,7 +18,12 @@ public class DoctorController {
 	DoctorService doctorService;
 
 	@GetMapping(path = "{UUID}")
-	public ResponseEntity<String> getDoctorByUUID(@PathVariable String UUID){
+	public ResponseEntity<String> getDoctorByUUID(@PathVariable UUID UUID){
 		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
+	}
+
+	@GetMapping(path = "/id/{ID}")
+	public ResponseEntity<String> getDoctorByID(@PathVariable Long ID){
+		return ResponseEntity.ok().body(doctorService.getDoctorByID(ID));
 	}
 }
