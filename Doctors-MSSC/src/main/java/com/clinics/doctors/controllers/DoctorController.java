@@ -22,6 +22,11 @@ public class DoctorController {
 	@Autowired
 	RestTemplate restTemplate;
 
+	@GetMapping
+	public ResponseEntity<String> getDefault(){
+		return ResponseEntity.ok().body("Hello world from doctor");
+	}
+
 	@GetMapping(path = "{UUID}")
 	public ResponseEntity<String> getDoctorByUUID(@PathVariable UUID UUID){
 		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
