@@ -14,13 +14,9 @@ import java.util.UUID;
 @Entity
 public class Doctor {
 
-//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String name;
 
 	@Column(
 			updatable = false,
@@ -44,4 +40,15 @@ public class Doctor {
 			joinColumns = {@JoinColumn(name = "doctor_uuid")},
 			inverseJoinColumns = {@JoinColumn(name = "specialization_id")})
 	private Collection<Specialization> specializations;
+
+//	todo private Collection<Patients> patients;
+
+	//	@Id
+//	@GeneratedValue(generator = "UUID")
+//	@GenericGenerator(
+//			name = "UUID",
+//			strategy = "org.hibernate.id.UUIDGenerator"
+//	)
+//	@Column(updatable = false, nullable = false)
+//	private UUID uuid;
 }

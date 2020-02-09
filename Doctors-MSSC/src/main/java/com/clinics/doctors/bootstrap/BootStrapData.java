@@ -70,27 +70,25 @@ public class BootStrapData implements CommandLineRunner {
 
 		Doctor doctor1 = Doctor
 				.builder()
-				.name("doctor1")
 				.uuid(UUID.randomUUID())
-				.licence("Licence example")
+				.licence("Licence example doctor 1")
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.name("doctor2")
 				.uuid(UUID.randomUUID())
-				.licence("Licence example")
+				.licence("Licence example doctor 2")
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
-				.name("doctor3")
 				.uuid(UUID.randomUUID())
-				.licence("Licence example")
+				.licence("Licence example doctor 3")
 				.build();
 
 		calendarGP.setDoctor(doctor1);
 		calendarNeurologist.setDoctor(doctor1);
 		calendarPediatric.setDoctor(doctor1);
 
+		//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
 		specializationGP.setDoctors(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
 
 		calendarRepository.saveAll(Arrays.asList(
@@ -111,7 +109,7 @@ public class BootStrapData implements CommandLineRunner {
 
 		var calendarGPAfter = calendarRepository.findById(1L).get();
 		System.out.println("---> " + calendarGPAfter.getName() + " <---");
-		System.out.println("---> " + calendarGPAfter.getDoctor().getName() + " <---");
+		System.out.println("---> " + calendarGPAfter.getDoctor().getLicence() + " <---");
 
 		List<Calendar> calendars = Arrays.asList(calendarCardiologist, calendarGynecologist, calendarUrologist);
 		Doctor doctorToChange = doctorRepository.findById(2L).get();
