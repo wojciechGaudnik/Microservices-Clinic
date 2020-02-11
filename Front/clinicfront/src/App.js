@@ -8,48 +8,48 @@ function App() {
 
     return(
         <div>
-            <p>{message}</p>
-            <button onClick={() => connectWithDoctors()}>
-                Connect to get message
-            </button>
+            <button></button>
+            <button></button>
+            <button></button>
         </div>
     );
 
-    function connectWithDoctors() {
-        try {
-            getTokenByGivenLoginDetails();
-            // let givenMessage = getInfoByGivenToken();
-            // setMessage(tokenForLogin);
-        }catch (e) {
-            console.log(e);
-            setMessage("Nothing");
-        }
-    }
-
-    function getTokenByGivenLoginDetails(
-        user = 'jan',
-        pass = '12345'
-    ){
-        const URL = 'http://localhost:8762/auth';
-        const response = axios({
-            method: 'POST',
-            url: URL,
-            async: true,
-            crossDomain: true,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-            body: {
-                username: user,
-                password: pass
-            }
-        }).then(respone => {console.log(respone.status)});
-    }
-
-    function getInfoByGivenToken(){
-
-    }
+    // function connectWithDoctors() {
+    //     try {
+    //         getTokenByGivenLoginDetails();
+    //         // let givenMessage = getInfoByGivenToken();
+    //         // setMessage(tokenForLogin);
+    //     }catch (e) {
+    //         console.log(e);
+    //         setMessage("Nothing");
+    //     }
+    // }
+    //
+    // async function getTokenByGivenLoginDetails(
+    //     user = 'jan',
+    //     pass = '12345'
+    // ){
+    //     const URL = 'http://localhost:8762/auth';
+    //     const response = await axios({
+    //         method: 'POST',
+    //         url: URL,
+    //         async: true,
+    //         crossDomain: true,
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json;charset=UTF-8',
+    //             'Access-Control-Allow-Origin': '*'
+    //         },
+    //         body: {
+    //             username: user,
+    //             password: pass
+    //         }
+    //     }).then(respone => {console.log(respone.status)});
+    // }
+    //
+    // function getInfoByGivenToken(){
+    //
+    // }
 }
 
 export default App;
