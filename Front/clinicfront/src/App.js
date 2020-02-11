@@ -35,6 +35,7 @@ function App() {
             method: 'POST',
             url: URL,
             async: true,
+            crossDomain: true,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8'
