@@ -11,6 +11,9 @@ function App() {
             <p>{message}</p>
             <button onClick={() => connectWithDoctors()}>
                 Connect to get message
+            </button><br/><br/><br/>
+            <button onClick={() => getTokenByGivenLoginDetailsFetch()}>
+                Connect to get message
             </button>
         </div>
     );
@@ -26,25 +29,40 @@ function App() {
         }
     }
 
-    function getTokenByGivenLoginDetails(
-        user = 'jan',
-        pass = '12345'
-    ){
-        const URL = 'http://localhost:8762/auth';
-        const response = axios({
-            method: 'POST',
-            url: URL,
-            async: true,
+    function getTokenByGivenLoginDetails(username = "jan", password = "12345"){
+        const URL = 'http://localhost:8762/auth/auth';        
+
+        axios({
+            url: 'http://localhost:8762/auth/auth',
+            method: 'POST',            
+            async: false,
             crossDomain: true,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {
-                username: user,
-                password: pass
-            }
+            username: 'jan',
+            password: '12345'
         }).then(respone => {console.log(respone.status)});
+    }
+    
+    
+    
+    function getTokenByGivenLoginDetailsFetch(username = "jan", password = "12345"){
+        const URL = 'http://localhost:8762/auth/auth';
+        const user = {
+            "username": "jan",
+            "password": "12345"
+        };
+       
+        fetch(URL, {
+            method: 'POST',
+            body: JSON.stringify(user)
+        })
+            .then(results => results.json())
+            .then(results => {
+                console.log("---> " + results.Authorization);
+            });
     }
 
     function getInfoByGivenToken(){
