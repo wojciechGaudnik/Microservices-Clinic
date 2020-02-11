@@ -54,9 +54,11 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter implements
 				"Access-Control-Allow-Origin",
 				"Access-Control-Request-Method",
 				"Access-Control-Request-Headers",
-				"Origin","Cache-Control",
+				"Origin", "Cache-Control",
 				"Content-Type",
-				"Authorization"));
+				"Authorization",
+				"Pragma"
+		));
 		configuration.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PUT", "OPTIONS", "PATCH"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

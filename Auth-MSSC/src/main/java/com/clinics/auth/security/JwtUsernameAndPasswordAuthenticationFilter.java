@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+
+@Slf4j
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager authManager;
 	private final JwtConfig jwtConfig;
@@ -67,7 +70,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 				.signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
 				.compact();
 		response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
-
+		response.getWriter().write("{\"" + jwtConfig.getHeader() + "\":\"" + jwtConfig.getPrefix() + token + "\"}");
 	}
 
 

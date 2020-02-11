@@ -34,8 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
+				.cors().and()
 				.csrf().disable()
-				.cors().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.exceptionHandling().authenticationEntryPoint((request, response, e) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
@@ -80,7 +80,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				"Access-Control-Request-Headers",
 				"Origin","Cache-Control",
 				"Content-Type",
-				"Authorization"));
+				"Authorization",
+				"Pragma"
+		));
 		configuration.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PUT", "OPTIONS", "PATCH"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
