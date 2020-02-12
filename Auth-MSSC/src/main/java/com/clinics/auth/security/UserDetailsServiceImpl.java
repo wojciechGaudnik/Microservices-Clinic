@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.common.ROLE;
+import com.clinics.common.security.Role;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +24,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		final List<AppUser> users = Arrays.asList(
-				new AppUser(1, "jan", encoder.encode("12345"), ROLE.DOCTOR),
-				new AppUser(2, "creepy", encoder.encode("12345"), ROLE.SYSTEM_ADMIN)
+				new AppUser(1, "jan", encoder.encode("12345"), Role.DOCTOR),
+				new AppUser(2, "creepy", encoder.encode("12345"), Role.SYSTEM_ADMIN)
 		);
 		for (AppUser appUser : users) {
 			if (appUser.getUsername().equals(userName)) {

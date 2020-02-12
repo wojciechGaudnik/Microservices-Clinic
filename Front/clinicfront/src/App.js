@@ -30,10 +30,10 @@ function App() {
     }
 
     function getTokenByGivenLoginDetails(username = "jan", password = "12345"){
-        const URL = 'http://localhost:8762/auth/auth';        
+        const URL = 'http://localhost:8762/auth/login';        
 
         axios({
-            url: 'http://localhost:8762/auth/auth',
+            url: 'http://localhost:8762/auth/login',
             method: 'POST',            
             async: false,
             crossDomain: true,
@@ -49,21 +49,45 @@ function App() {
     
     
     function getTokenByGivenLoginDetailsFetch(username = "jan", password = "12345"){
-        const URL = 'http://localhost:8762/auth/auth';
+        const URL = 'http://localhost:8762/auth/login';
         const user = {
             "username": "jan",
             "password": "12345"
         };
-       
         fetch(URL, {
             method: 'POST',
+            async: false,
             body: JSON.stringify(user)
         })
             .then(results => results.json())
             .then(results => {
                 console.log("---> " + results.Authorization);
+                const fetchData = fetch('http://localhost:8762/doctor/doctors', {
+                    method: 'GET',
+                    async: false,
+                    headers: {
+                    'Authorization': results.Authorization
+                    }
+                });
+                fetchData.then(resoults => {
+                    return resoults.json();
+                })
+                    .then(resoult => {
+                        console.log(resoult.message);
+                    })
+                // .then(resoults => JSON.parse(results))
+                // .then(results => {
+                //     console.log("---> " + results);
+                // });
+                // fetchData.then(resoults => {console.log(resoults)})
+                    // .then(resoults => JSON.parse(results))
+                    // .then(results => {
+                    //     console.log("---> " + results);
+                    // });
+
             });
     }
+    
 
     function getInfoByGivenToken(){
 

@@ -1,9 +1,9 @@
-package com.clinics.common;
+package com.clinics.common.security;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ROLE {
+public interface Role {
 	String SYSTEM_ADMIN = "system_admin";
 	String DOCTOR = "doctor";
 	String PATIENT = "patient";

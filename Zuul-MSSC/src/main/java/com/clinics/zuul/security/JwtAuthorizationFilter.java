@@ -1,6 +1,6 @@
 package com.clinics.zuul.security;
 
-import com.clinics.common.security.JwtConfig;
+import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,34 +16,27 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
-
-	private final JwtConfig jwtConfig;
-
-	public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
-		this.jwtConfig = jwtConfig;
-	}
+public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtProperties {
 
 	@Override
 	protected void doFilterInternal(
 			HttpServletRequest request,
-			HttpServletResponse respone,
+			HttpServletResponse response,
 			FilterChain filterChain)
 			throws ServletException, IOException {
-		String header = request.getHeader(jwtConfig.getHeader());
-		if (header == null || !header.startsWith(jwtConfig.getPrefix())) {
-			filterChain.doFilter(request, respone);
+		String header = request.getHeader(TOKEN_REQUEST_HEADER);
+		if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+			filterChain.doFilter(request, response);
 			return;
 		}
-		String token = header.replace(jwtConfig.getPrefix(), "");
+		String token = header.replace(TOKEN_PREFIX, "");
 		try {
 			Claims claims = Jwts.parser()
-					.setSigningKey(jwtConfig.getSecret().getBytes())
+					.setSigningKey(TOKEN_SECRET)
 					.parseClaimsJws(token)
 					.getBody();
 			String userName = claims.getSubject();
 			if (userName != null) {
-				@SuppressWarnings("unchecked <--- my")
 				List<String> authorities = (List<String>) claims.get("authorities");
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
@@ -57,6 +50,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 		} catch (Exception e){
 			SecurityContextHolder.clearContext();
 		}
-		filterChain.doFilter(request, respone);
+		filterChain.doFilter(request, response);
 	}
 }

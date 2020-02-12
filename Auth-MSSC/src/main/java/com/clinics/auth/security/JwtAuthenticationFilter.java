@@ -1,10 +1,10 @@
 package com.clinics.auth.security;
 
-import com.clinics.common.security.JwtConfig;
+import com.clinics.common.DTO.request.LoginUserDTO;
+import com.clinics.common.security.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,14 +24,12 @@ import java.util.stream.Collectors;
 
 
 @Slf4j
-public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	private AuthenticationManager authManager;
-	private final JwtConfig jwtConfig;
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties {
+	private AuthenticationManager authenticationManager;
 
-	public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
-		this.authManager = authManager;
-		this.jwtConfig = jwtConfig;
-		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(TOKEN_LOGIN_URI, "POST"));
 	}
 
 	@Override
@@ -40,13 +37,13 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 			HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
 		try {
-			UserCredentials credentials = new ObjectMapper().readValue(request.getInputStream(), UserCredentials.class);
+			LoginUserDTO loginUserDTO = new ObjectMapper().readValue(request.getInputStream(), LoginUserDTO.class);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					credentials.getUsername(),
-					credentials.getPassword(),
+					loginUserDTO.getUsername(),
+					loginUserDTO.getPassword(),
 					Collections.emptyList()
 			);
-			return authManager.authenticate(authenticationToken);
+			return authenticationManager.authenticate(authenticationToken);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -57,27 +54,18 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 			HttpServletRequest request,
 			HttpServletResponse response,
 			FilterChain filterChain,
-			Authentication auth) throws IOException, ServletException {
-		Long now = System.currentTimeMillis();
+			Authentication authResult) throws IOException {
 		String token = Jwts.builder()
-				.setSubject(auth.getName())
-				.claim("authorities", auth.getAuthorities()
+				.setSubject(authResult.getName())
+				.claim("authorities", authResult.getAuthorities()
 						.stream()
 						.map(GrantedAuthority::getAuthority)
 						.collect(Collectors.toList()))
-				.setIssuedAt(new Date(now))
-				.setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))
-				.signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
+				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
 				.compact();
-		response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
-		response.getWriter().write("{\"" + jwtConfig.getHeader() + "\":\"" + jwtConfig.getPrefix() + token + "\"}");
-	}
-
-
-	// A (temporary) class just to represent the user credentials
-	@Data
-	private static class UserCredentials {
-		private String username, password;
-		// getters and setters ...
+		response.addHeader(TOKEN_REQUEST_HEADER, TOKEN_PREFIX + token);
+		response.getWriter().write("{\"" + TOKEN_REQUEST_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
 	}
 }

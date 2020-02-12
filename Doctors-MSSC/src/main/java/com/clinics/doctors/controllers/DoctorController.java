@@ -24,7 +24,7 @@ public class DoctorController {
 
 	@GetMapping
 	public ResponseEntity<String> getDefault(){
-		return ResponseEntity.ok().body("Hello world from doctor");
+		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
 	}
 
 	@GetMapping(path = "{UUID}")
