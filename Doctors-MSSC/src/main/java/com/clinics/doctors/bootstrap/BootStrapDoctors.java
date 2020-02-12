@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class BootStrapData implements CommandLineRunner {
+public class BootStrapDoctors implements CommandLineRunner {
 
 	@Autowired
 	private DoctorRepository doctorRepository;

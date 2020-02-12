@@ -1,4 +1,4 @@
-package com.clinics.doctors.exceptions;
+package com.clinics.common.exceptions;
 
 import com.clinics.common.ConsoleColors;
 import lombok.extern.slf4j.Slf4j;

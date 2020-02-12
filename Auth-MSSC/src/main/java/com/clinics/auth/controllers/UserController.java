@@ -9,21 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/auth")
 public class UserController {
 
 	@Autowired
 	UserService userService;
 
-//	@GetMapping(path = "/{UUID}")
-//	public ResponseEntity<String> getUserByUUID(@PathVariable String UUID){
-//		return ResponseEntity.ok().body(userService.getUserByUUID(UUID));
-//	}
-
-	@GetMapping(path = "/{test}")
-	public ResponseEntity<String> getTest(@PathVariable String test){
-		return ResponseEntity.ok().body("Response from auth plus " + test);
+	@GetMapping(value = "/test")
+	public ResponseEntity<String> getTest(){
+		return ResponseEntity.ok().body("Hello world from AUTH");
 	}
-
-
 }

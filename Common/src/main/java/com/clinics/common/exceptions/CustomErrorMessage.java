@@ -1,4 +1,4 @@
-package com.clinics.doctors.exceptions;
+package com.clinics.common.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

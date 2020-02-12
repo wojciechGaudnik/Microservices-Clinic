@@ -42,6 +42,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
+				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.anyRequest().authenticated();
 	}
 

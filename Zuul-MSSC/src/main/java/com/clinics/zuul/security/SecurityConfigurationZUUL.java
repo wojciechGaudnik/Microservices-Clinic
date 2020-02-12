@@ -32,6 +32,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers("/doctor/**").hasRole(Role.DOCTOR)
+				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.anyRequest().authenticated();
 	}
 
