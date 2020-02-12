@@ -51,7 +51,7 @@ function App() {
     function getTokenByGivenLoginDetailsFetch(username = "jan", password = "12345"){
         const URL = 'http://localhost:8762/auth/login';
         const user = {
-            "username": "jan@jan.pl",
+            "username": "ola@ola.pl",
             "password": "12345"
         };
         fetch(URL, {

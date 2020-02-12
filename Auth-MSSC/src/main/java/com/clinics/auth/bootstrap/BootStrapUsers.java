@@ -29,7 +29,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.builder()
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
-				.role(Role.DOCTOR)
+				.role(Role.PATIENT)
 				.firstName("Jan")
 				.lastName("Janjanowski")
 				.photoUrl("http://jan.pl")

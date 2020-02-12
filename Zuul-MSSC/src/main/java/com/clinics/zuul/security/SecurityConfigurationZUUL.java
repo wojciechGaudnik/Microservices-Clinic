@@ -31,6 +31,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
+				.antMatchers(HttpMethod.GET, "/doctor/doctors/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers("/doctor/**").hasRole(Role.DOCTOR)
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.anyRequest().authenticated();

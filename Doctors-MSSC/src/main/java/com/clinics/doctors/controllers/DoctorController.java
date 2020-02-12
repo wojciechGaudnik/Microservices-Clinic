@@ -27,9 +27,9 @@ public class DoctorController {
 		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
 	}
 
-	@GetMapping(path = "{UUID}")
+	@GetMapping(path = "/{UUID}")
 	public ResponseEntity<String> getDoctorByUUID(@PathVariable UUID UUID){
-		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
+		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID) + " <--- my note 12.2 21.16");
 	}
 
 	@GetMapping(path = "/id/{ID}")
