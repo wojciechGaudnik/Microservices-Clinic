@@ -1,7 +1,10 @@
 package com.clinics.auth.repositories;
 
-import com.clinics.auth.models.User;
+import com.clinics.auth.models.ClinicUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<ClinicUser, Long> {
+	ClinicUser findByEmail(String s);
 }

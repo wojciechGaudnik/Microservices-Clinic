@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
-public class User implements Role, Serializable {
+public class ClinicUser implements Role, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -55,12 +55,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			HttpServletResponse response,
 			FilterChain filterChain,
 			Authentication authResult) throws IOException {
+		UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 		String token = Jwts.builder()
 				.setSubject(authResult.getName())
 				.claim("authorities", authResult.getAuthorities()
 						.stream()
 						.map(GrantedAuthority::getAuthority)
 						.collect(Collectors.toList()))
+				.claim("UUID", principal.getClinicUser().getUuid())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
 				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)

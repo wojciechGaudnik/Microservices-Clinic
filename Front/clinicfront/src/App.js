@@ -41,7 +41,7 @@ function App() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8'
             },
-            username: 'jan',
+            username: 'jan@jan.pl',
             password: '12345'
         }).then(respone => {console.log(respone.status)});
     }
@@ -51,7 +51,7 @@ function App() {
     function getTokenByGivenLoginDetailsFetch(username = "jan", password = "12345"){
         const URL = 'http://localhost:8762/auth/login';
         const user = {
-            "username": "jan",
+            "username": "jan@jan.pl",
             "password": "12345"
         };
         fetch(URL, {

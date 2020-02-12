@@ -3,6 +3,7 @@ package com.clinics.zuul.security;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtProperties {
 
 	@Override
@@ -37,7 +39,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtP
 					.getBody();
 			String userName = claims.getSubject();
 			if (userName != null) {
+				String msgFromAuth = (String) claims.get("UUID");
+				log.warn(msgFromAuth);
 				List<String> authorities = (List<String>) claims.get("authorities");
+				log.warn(authorities.get(0));
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
 						null,
