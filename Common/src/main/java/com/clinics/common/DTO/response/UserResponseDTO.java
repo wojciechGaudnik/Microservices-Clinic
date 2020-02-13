@@ -1,6 +1,5 @@
 package com.clinics.common.DTO.response;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.util.UUID;

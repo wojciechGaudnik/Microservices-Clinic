@@ -39,10 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtP
 					.getBody();
 			String userName = claims.getSubject();
 			if (userName != null) {
-				String msgFromAuth = (String) claims.get("UUID");
-				log.warn(msgFromAuth);
 				List<String> authorities = (List<String>) claims.get("authorities");
-				log.warn(authorities.get(0));
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
 						claims.get("UUID"),
