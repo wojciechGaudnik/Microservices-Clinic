@@ -1,11 +1,16 @@
 package com.clinics.auth.security;
 
 import com.clinics.common.DTO.request.LoginUserDTO;
+import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.jackson.JsonNodeValueReader;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -66,6 +71,25 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
 				.compact();
 		response.addHeader(TOKEN_REQUEST_HEADER, TOKEN_PREFIX + token);
-		response.getWriter().write("{\"" + TOKEN_REQUEST_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
+
+
+//		response.getWriter().write("{\"" + TOKEN_REQUEST_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
+
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		UserResponseDTO userResponseDTO = modelMapper.map(principal.getClinicUser(), UserResponseDTO.class);
+		userResponseDTO.setToken(TOKEN_PREFIX + token);
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValueAsString(userResponseDTO);
+
+
+
+//		userResponseDTO.setToken("{\"" + TOKEN_REQUEST_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
+//		JsonGenerator jsonGenerator = modelMapper.
+
+
+		response.getWriter().write(mapper.writeValueAsString(userResponseDTO));
+
 	}
 }

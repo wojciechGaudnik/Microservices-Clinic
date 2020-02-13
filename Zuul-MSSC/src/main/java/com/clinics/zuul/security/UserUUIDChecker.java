@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserUUIDChecker {
 	public boolean checkUserUUID(Authentication authentication, String uuid) {
-		log.warn(authentication.getCredentials().toString() + " <--- from userUUIDChecker");
-		log.warn(uuid + " <--- from userUUIDChecker");
-		if (uuid.equals(authentication.getCredentials().toString())) {
-			log.warn("The same <--- my");
-		} else
-			log.warn("Not the  same <--- my");
+//		log.warn(authentication.getCredentials().toString() + " <--- from userUUIDChecker");
+//		log.warn(uuid + " <--- from userUUIDChecker");
+//		if (uuid.equals(authentication.getCredentials().toString())) {
+//			log.warn("The same <--- my");
+//		} else
+//			log.warn("Not the  same <--- my");
 		return uuid.equals(authentication.getCredentials().toString());
 	}
 }
