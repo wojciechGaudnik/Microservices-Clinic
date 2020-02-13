@@ -2,10 +2,7 @@ package com.clinics.patient.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +15,9 @@ public class Visit {
 
     private Date date;
     private UUID doctorUUID;
-    private UUID patientUUID;
+
+    @ManyToOne
+    private Patient patient;
+
     private String description;
 }
