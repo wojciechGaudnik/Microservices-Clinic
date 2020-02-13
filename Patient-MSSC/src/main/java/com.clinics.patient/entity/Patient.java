@@ -3,6 +3,8 @@ package com.clinics.patient.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -13,4 +15,7 @@ public class Patient {
     private Long id;
 
     private UUID uuid;
+
+    @OneToMany
+    private List<Visit> visits = new ArrayList<>();
 }
