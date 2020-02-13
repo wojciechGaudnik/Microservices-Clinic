@@ -1,4 +1,4 @@
-package com.clinics.patient;
+package com.clinics.patient.entity;
 
 import lombok.Data;
 
