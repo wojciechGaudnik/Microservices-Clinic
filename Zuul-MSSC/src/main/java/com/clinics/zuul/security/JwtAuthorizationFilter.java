@@ -45,7 +45,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtP
 				log.warn(authorities.get(0));
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
-						null,
+						claims.get("UUID"),
 						authorities
 								.stream()
 								.map(SimpleGrantedAuthority::new)

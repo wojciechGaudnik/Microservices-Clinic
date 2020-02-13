@@ -18,6 +18,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -58,10 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 		String token = Jwts.builder()
 				.setSubject(authResult.getName())
-				.claim("authorities", authResult.getAuthorities()
-						.stream()
-						.map(GrantedAuthority::getAuthority)
-						.collect(Collectors.toList()))
+				.claim("authorities", Collections.singletonList("ROLE_" + principal.getClinicUser().getRole()))
 				.claim("UUID", principal.getClinicUser().getUuid())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
