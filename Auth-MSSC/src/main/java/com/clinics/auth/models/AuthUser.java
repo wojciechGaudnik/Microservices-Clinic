@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
-public class ClinicUser implements Role, Serializable {
+public class AuthUser implements Role, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,7 @@ public class ClinicUser implements Role, Serializable {
 
 	@NotBlank(message = "password is mandatory")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Size(min = 8, max = 100, message = "password length out of range")
 	private String password;
 
 	@Column(nullable = false)

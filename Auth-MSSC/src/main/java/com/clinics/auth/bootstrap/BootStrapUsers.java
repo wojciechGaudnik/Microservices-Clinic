@@ -1,6 +1,6 @@
 package com.clinics.auth.bootstrap;
 
-import com.clinics.auth.models.ClinicUser;
+import com.clinics.auth.models.AuthUser;
 import com.clinics.auth.repositories.UserRepository;
 import com.clinics.common.ConsoleColors;
 import com.clinics.common.security.Role;
@@ -25,7 +25,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ClinicUser clinicUserPatient1 = ClinicUser
+		AuthUser authUserPatient1 = AuthUser
 				.builder()
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -34,7 +34,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Janjanowski")
 				.photoUrl("http://jan.pl")
 				.build();
-		ClinicUser clinicUserPatient2 = ClinicUser
+		AuthUser authUserPatient2 = AuthUser
 				.builder()
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -43,7 +43,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Adamowski")
 				.photoUrl("http://adam.pl")
 				.build();
-		ClinicUser clinicUserDoctor1 = ClinicUser
+		AuthUser authUserDoctor1 = AuthUser
 				.builder()
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -52,7 +52,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Olkowska")
 				.photoUrl("http://ola.pl")
 				.build();
-		ClinicUser clinicUserDoctor2 = ClinicUser
+		AuthUser authUserDoctor2 = AuthUser
 				.builder()
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -61,7 +61,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Alowska")
 				.photoUrl("http://ala.pl")
 				.build();
-		ClinicUser clinicUserAssistant1 = ClinicUser
+		AuthUser authUserAssistant1 = AuthUser
 				.builder()
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -70,7 +70,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Zetowska")
 				.photoUrl("http://zeta.pl")
 				.build();
-		ClinicUser clinicUserAssistant2 = ClinicUser
+		AuthUser authUserAssistant2 = AuthUser
 				.builder()
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
@@ -79,7 +79,7 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.lastName("Annowska")
 				.photoUrl("http://anna.pl")
 				.build();
-		ClinicUser creepy = ClinicUser
+		AuthUser creepy = AuthUser
 				.builder()
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
@@ -89,16 +89,16 @@ public class BootStrapUsers implements CommandLineRunner, Role {
 				.photoUrl("http://creepy.pl")
 				.build();
 
-		List<ClinicUser> clinicUserList = Arrays.asList(
-				clinicUserPatient1,
-				clinicUserPatient2,
-				clinicUserDoctor1,
-				clinicUserDoctor2,
-				clinicUserAssistant1,
-				clinicUserAssistant2,
+		List<AuthUser> authUserList = Arrays.asList(
+				authUserPatient1,
+				authUserPatient2,
+				authUserDoctor1,
+				authUserDoctor2,
+				authUserAssistant1,
+				authUserAssistant2,
 				creepy);
 
-		userRepository.saveAll(clinicUserList);
+		userRepository.saveAll(authUserList);
 
 		var user = userRepository.findById(1L).get();
 		System.out.println(ConsoleColors.GREEN_BOLD);

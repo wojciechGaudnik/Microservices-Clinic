@@ -1,6 +1,5 @@
 package com.clinics.common.DTO.response;
 
-
 import lombok.*;
 
 import java.util.UUID;
@@ -9,13 +8,12 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-public class DoctorResponseDTO {
+public class UserResponseDTO {
+	private String token;
 	private UUID uuid;
+	private String email;
+	private String role;
 	private String firstName;
 	private String lastName;
-	private String email;
-	private String licence;
-	private String specialization;
-	private String calendarsUUIDs;
-	private String patientsUUIDs;
+	private String photoUrl;
 }
