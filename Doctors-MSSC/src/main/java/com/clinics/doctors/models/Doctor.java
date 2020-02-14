@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -20,10 +23,25 @@ public class Doctor {
 	@JsonIgnore
 	private Long id;
 
-	@Column(
-			updatable = false,
-			nullable = false)
+//	@Column(
+//			updatable = false,
+//			nullable = false)
 	private UUID uuid;
+
+	@NotBlank(message = "fistName is mandatory")
+	@Size(min = 2, max = 100, message = "firstName length out of range")
+	private String firstName;
+
+	@NotBlank(message = "lastName is mandatory")
+	@Size(min = 3, max = 100, message = "lastName length out of range")
+	private String lastName;
+
+	@Column(unique = true)
+	@Size(min = 3, max = 100, message = "length out of range ")
+	private String photoUrl;
+
+	@ElementCollection
+	private List<UUID> medicalUnits = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String licence;
@@ -43,14 +61,6 @@ public class Doctor {
 			inverseJoinColumns = {@JoinColumn(name = "specialization_id")})
 	private Collection<Specialization> specializations;
 
-//	todo private Collection<Patients> patients;
 
-	//	@Id
-//	@GeneratedValue(generator = "UUID")
-//	@GenericGenerator(
-//			name = "UUID",
-//			strategy = "org.hibernate.id.UUIDGenerator"
-//	)
-//	@Column(updatable = false, nullable = false)
-//	private UUID uuid;
+//	todo private Collection<Patients> patients;
 }

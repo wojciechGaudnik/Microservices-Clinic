@@ -10,8 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -43,19 +41,4 @@ public class AuthUser implements Role, Serializable {
 
 	@Column(nullable = false)
 	private String role = Role.PATIENT;
-
-	@NotBlank(message = "fistName is mandatory")
-	@Size(min = 2, max = 100, message = "firstName length out of range")
-	private String firstName;
-
-	@NotBlank(message = "lastName is mandatory")
-	@Size(min = 3, max = 100, message = "lastName length out of range")
-	private String lastName;
-
-	@Column(unique = true)
-	@Size(min = 3, max = 100, message = "length out of range ")
-	private String photoUrl;
-
-	@ElementCollection
-	private List<UUID> medicalUnits = new ArrayList<>();
 }
