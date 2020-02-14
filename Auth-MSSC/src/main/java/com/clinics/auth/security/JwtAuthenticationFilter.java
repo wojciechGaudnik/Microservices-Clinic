@@ -78,8 +78,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	}
 
 	private void addUserDataIntoBody(HttpServletResponse response, UserAuth userAuth, String token) throws IOException {
-//		ModelMapper modelMapper = new ModelMapper();
-//		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserResponseDTO userResponseDTO = modelMapper.map(userAuth, UserResponseDTO.class);
 		userResponseDTO.setToken(TOKEN_PREFIX + token);
 		objectMapper.writeValueAsString(userResponseDTO);

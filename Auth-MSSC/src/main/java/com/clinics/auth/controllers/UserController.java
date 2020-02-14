@@ -2,6 +2,7 @@ package com.clinics.auth.controllers;
 
 import com.clinics.auth.services.UserService;
 import com.clinics.common.DTO.request.RegisterUserDTO;
+import com.clinics.common.DTO.response.UserResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/users")
-	public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO){
-		userService.saveUser(registerUserDTO);
-		return ResponseEntity.ok().body("Hello world from AUTH");
+	public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO){
+		return ResponseEntity.status(201).body(userService.saveUser(registerUserDTO));
 	}
 }
