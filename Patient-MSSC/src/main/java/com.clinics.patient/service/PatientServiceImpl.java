@@ -42,9 +42,23 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient editPatient(Patient patientToChange, Patient patient) {
-        //TODO
-        savePatient(patientToChange);
-        return patientToChange;
+    public Patient editPatient(Patient patient) {
+
+        patientValid(patient);
+        Optional<Patient> existingPatient = patientRepository.findById(patient.getId());
+
+        if(existingPatient.isPresent())
+        {
+            //TODO change patient data
+            existingPatient.get().setPesel(patient.getPesel());
+            return patientRepository.save(existingPatient.get());
+        }else{
+            return null;
+        }
+    }
+
+    private void patientValid(Patient patient){
+        // TODO patient data validation
+        // Throw exception if f.ex pesel is wrong
     }
 }

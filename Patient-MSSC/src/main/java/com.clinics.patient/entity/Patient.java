@@ -15,6 +15,7 @@ public class Patient {
     private Long id;
 
     private UUID uuid;
+    private String pesel;
 
     @OneToMany
     private List<Visit> visits = new ArrayList<>();
