@@ -1,5 +1,6 @@
 package com.clinics.auth.security;
 
+import com.clinics.auth.services.UserService;
 import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ import java.util.Arrays;
 public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter implements JwtProperties {
 
 	@Autowired
-	private UserPrincipalDetailsService userPrincipalDetailsService;
+	private UserService userService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
@@ -58,7 +59,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 	DaoAuthenticationProvider authenticationProvider(){
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-		daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+		daoAuthenticationProvider.setUserDetailsService(this.userService);
 		return daoAuthenticationProvider;
 	}
 
