@@ -9,6 +9,10 @@ public class PatientController {
 
     //zapis wizyty
     //do doktora najpierw i jak zwroci 200 to dodaj wizyte
+    public void registerVisit(){
+
+    }
+
 
     //otworz swoja historie wizyt
     //getVisitsByPatientById()
