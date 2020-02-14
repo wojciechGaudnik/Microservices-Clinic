@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class UserUUIDChecker {
+public class UserUuidChecker {
 	public boolean checkUserUUID(Authentication authentication, String uuid) {
 		return uuid.equals(authentication.getCredentials().toString());
 	}

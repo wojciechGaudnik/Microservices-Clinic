@@ -1,5 +1,6 @@
 package com.clinics.auth.security;
 
+import com.clinics.auth.models.AuthUser;
 import com.clinics.common.DTO.request.LoginUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
@@ -61,11 +62,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			HttpServletResponse response,
 			FilterChain filterChain,
 			Authentication authResult) throws IOException {
-		AuthUserDetails authUserDetails = (AuthUserDetails) authResult.getPrincipal();
+		AuthUser authUserDetails = (AuthUser) authResult.getPrincipal();
 		String token = Jwts.builder()
 				.setSubject(authResult.getName())
-				.claim("authorities", Collections.singletonList("ROLE_" + authUserDetails.getAuthUser().getRole()))
-				.claim("UUID", authUserDetails.getAuthUser().getUuid())
+				.claim("authorities", Collections.singletonList("ROLE_" + authUserDetails.getRole()))
+				.claim("UUID", authUserDetails.getUuid())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
 				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
@@ -74,10 +75,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		addUserDataIntoBody(response, authUserDetails, token);
 	}
 
-	private void addUserDataIntoBody(HttpServletResponse response, AuthUserDetails authUserDetails, String token) throws IOException {
+	private void addUserDataIntoBody(HttpServletResponse response, AuthUser authUser, String token) throws IOException {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		UserResponseDTO userResponseDTO = modelMapper.map(authUserDetails.getAuthUser(), UserResponseDTO.class);
+		UserResponseDTO userResponseDTO = modelMapper.map(authUser, UserResponseDTO.class);
 		userResponseDTO.setToken(TOKEN_PREFIX + token);
 		objectMapper.writeValueAsString(userResponseDTO);
 		response.getWriter().write(objectMapper.writeValueAsString(userResponseDTO));
