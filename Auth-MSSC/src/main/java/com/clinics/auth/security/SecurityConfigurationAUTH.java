@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -27,6 +28,9 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
@@ -59,15 +63,15 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 	@Bean
 	DaoAuthenticationProvider authenticationProvider(){
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		daoAuthenticationProvider.setUserDetailsService(this.userService);
 		return daoAuthenticationProvider;
 	}
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public BCryptPasswordEncoder passwordEncoder(){
+//		return new BCryptPasswordEncoder();
+//	}
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {

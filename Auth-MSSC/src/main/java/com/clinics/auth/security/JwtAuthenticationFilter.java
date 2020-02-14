@@ -41,8 +41,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}
 
-
-
 	@Override
 	public Authentication attemptAuthentication(
 			HttpServletRequest request,

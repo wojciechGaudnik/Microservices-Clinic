@@ -28,9 +28,7 @@ public class UserController {
 
 	@PostMapping(value = "/users")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO){
-		log.warn(registerUserDTO.getEmail());
-		log.warn(registerUserDTO.getPassword());
-		log.warn(registerUserDTO.getRole());
+		userService.saveUser(registerUserDTO);
 		return ResponseEntity.ok().body("Hello world from AUTH");
 	}
 }
