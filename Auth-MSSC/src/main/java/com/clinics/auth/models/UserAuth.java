@@ -23,7 +23,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
-public class AuthUser implements Role, Serializable, UserDetails {
+public class UserAuth implements Role, Serializable, UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

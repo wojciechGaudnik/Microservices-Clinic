@@ -43,6 +43,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.anyRequest().denyAll();
 
 		http
