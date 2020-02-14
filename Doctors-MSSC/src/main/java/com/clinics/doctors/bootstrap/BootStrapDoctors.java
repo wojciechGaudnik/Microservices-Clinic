@@ -70,17 +70,26 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Doctor doctor1 = Doctor
 				.builder()
-				.uuid(UUID.randomUUID())
+//				.uuid(UUID.randomUUID())  //todo <--- get from auth
+				.firstName("Jan")
+				.lastName("Janjanowski")
+				.photoUrl("http://jan.pl")
 				.licence("Licence example doctor 1")
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.uuid(UUID.randomUUID())
+//				.uuid(UUID.randomUUID())
+				.firstName("Adam")
+				.lastName("Adamowski")
+				.photoUrl("http://adam.pl")
 				.licence("Licence example doctor 2")
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
-				.uuid(UUID.randomUUID())
+//				.uuid(UUID.randomUUID())
+				.firstName("Ola")
+				.lastName("Olkowska")
+				.photoUrl("http://ola.pl")
 				.licence("Licence example doctor 3")
 				.build();
 

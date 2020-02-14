@@ -13,7 +13,6 @@ public class DoctorResponseDTO {
 	private UUID uuid;
 	private String firstName;
 	private String lastName;
-	private String email;
 	private String licence;
 	private String specialization;
 	private String calendarsUUIDs;
