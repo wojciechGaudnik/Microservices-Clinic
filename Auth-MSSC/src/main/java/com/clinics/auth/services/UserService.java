@@ -2,11 +2,9 @@ package com.clinics.auth.services;
 
 import com.clinics.auth.models.UserAuth;
 import com.clinics.auth.repositories.UserRepository;
+import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
-import com.clinics.common.security.JwtProperties;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
 
 @Slf4j(topic = "---> UserService <---")
 @Service
-public class UserService implements UserDetailsService, JwtProperties {
+public class UserService implements UserDetailsService, JwtMaker {
 
 	private UserAuth userAuth;
 
@@ -49,17 +45,6 @@ public class UserService implements UserDetailsService, JwtProperties {
 		userResponse.setToken(TOKEN_PREFIX + token);
 		return userResponse;
 
-	}
-
-	private String makeJwtToken(UserAuth userAuth) {
-		return Jwts.builder()
-					.setSubject("Temporary")
-					.claim("authorities", Collections.singletonList("ROLE_" + userAuth.getRole()))
-					.claim("UUID", userAuth.getUuid())
-					.setIssuedAt(new Date(System.currentTimeMillis()))
-					.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
-					.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
-					.compact();
 	}
 
 	public String getUserByUUID(String UUID){

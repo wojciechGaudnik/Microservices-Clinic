@@ -10,6 +10,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.MDC;
+import org.slf4j.MarkerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,11 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 
 
 @Slf4j
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties, JwtMaker {
 
 	private AuthenticationManager authenticationManager;
 	private ObjectMapper objectMapper;
@@ -64,17 +65,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			HttpServletResponse response,
 			FilterChain filterChain,
 			Authentication authResult) throws IOException {
-		UserAuth userAuthDetails = (UserAuth) authResult.getPrincipal();
-		String token = Jwts.builder()
-				.setSubject(authResult.getName())
-				.claim("authorities", Collections.singletonList("ROLE_" + userAuthDetails.getRole()))
-				.claim("UUID", userAuthDetails.getUuid())
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
-				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
-				.compact();
+		UserAuth userAuth = (UserAuth) authResult.getPrincipal();
+		String token = makeJwtToken(userAuth);
 		response.addHeader(TOKEN_REQUEST_HEADER, TOKEN_PREFIX + token);
-		addUserDataIntoBody(response, userAuthDetails, token);
+		addUserDataIntoBody(response, userAuth, token);
 	}
 
 	private void addUserDataIntoBody(HttpServletResponse response, UserAuth userAuth, String token) throws IOException {
