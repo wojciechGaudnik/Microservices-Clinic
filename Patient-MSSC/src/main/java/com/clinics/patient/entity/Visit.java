@@ -16,8 +16,13 @@ public class Visit {
     private Date date;
     private UUID doctorUUID;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     private String description;
+
+    //depending on implementation of calendar/terms in doctor service
+    //maybe not needed if we stick to dateTime
+    //private Long termId;
 }

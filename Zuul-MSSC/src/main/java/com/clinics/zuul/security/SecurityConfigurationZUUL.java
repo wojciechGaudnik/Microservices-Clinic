@@ -34,11 +34,16 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.DELETE, "/doctor-mssc/doctors/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/**").hasAnyRole(Role.DOCTOR, Role.ASSISTANT, Role.SYSTEM_ADMIN)
 
+				//teoretycznie nie musimy przekazywac UUID w sciezce bo patientUUID idzie w body obiektu wizyty,
+				//czy jestesmy tu w stanie wyciagnac UUID z body requesta i porownac z tokenowym,
+				//jeżeli tak to czy ZUUL musi rozumiec obiekt Visit, ktory idzie w body.
+				//jeżeli tak to będziemy potrzebowali VisitDTO
+				.antMatchers(HttpMethod.POST, "/patient-mssc/visit/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
+
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.anyRequest().denyAll();
-//				.anyRequest().permitAll();
 	}
 
 	@Bean
@@ -61,5 +66,4 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
 }
