@@ -1,6 +1,6 @@
 package com.clinics.auth.bootstrap;
 
-import com.clinics.auth.models.AuthUser;
+import com.clinics.auth.models.UserAuth;
 import com.clinics.auth.repositories.UserRepository;
 import com.clinics.common.ConsoleColors;
 import com.clinics.common.security.Role;
@@ -25,59 +25,59 @@ public class BootStrapUser implements CommandLineRunner, Role {
 
 	@Override
 	public void run(String... args) throws Exception {
-		AuthUser authUserPatient1 = AuthUser
+		UserAuth userAuthPatient1 = UserAuth
 				.builder()
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		AuthUser authUserPatient2 = AuthUser
+		UserAuth userAuthPatient2 = UserAuth
 				.builder()
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		AuthUser authUserDoctor1 = AuthUser
+		UserAuth userAuthDoctor1 = UserAuth
 				.builder()
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		AuthUser authUserDoctor2 = AuthUser
+		UserAuth userAuthDoctor2 = UserAuth
 				.builder()
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		AuthUser authUserAssistant1 = AuthUser
+		UserAuth userAuthAssistant1 = UserAuth
 				.builder()
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		AuthUser authUserAssistant2 = AuthUser
+		UserAuth userAuthAssistant2 = UserAuth
 				.builder()
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		AuthUser creepy = AuthUser
+		UserAuth creepy = UserAuth
 				.builder()
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
 				.role(Role.SYSTEM_ADMIN)
 				.build();
 
-		List<AuthUser> authUserList = Arrays.asList(
-				authUserPatient1,
-				authUserPatient2,
-				authUserDoctor1,
-				authUserDoctor2,
-				authUserAssistant1,
-				authUserAssistant2,
+		List<UserAuth> userAuthList = Arrays.asList(
+				userAuthPatient1,
+				userAuthPatient2,
+				userAuthDoctor1,
+				userAuthDoctor2,
+				userAuthAssistant1,
+				userAuthAssistant2,
 				creepy);
 
-		userRepository.saveAll(authUserList);
+		userRepository.saveAll(userAuthList);
 
 		var user = userRepository.findById(1L).get();
 		System.out.println(ConsoleColors.GREEN_BOLD);
