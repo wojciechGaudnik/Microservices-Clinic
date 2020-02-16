@@ -1,25 +1,23 @@
 package com.clinics.patient.controller;
 
-import com.clinics.common.DTO.request.RegisterVisitDTO;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/patient/{uuid}/visit")
 public class VisitController {
 
     @Autowired
     VisitService visitService;
 
-    @PostMapping("/visit/{uuid}")
-    public Visit registerVisit(@RequestBody Visit visit, @RequestParam UUID uuid){
-        return visitService.registerVisit(visit, uuid);
+    @PostMapping
+    public Visit registerVisit(@RequestBody Visit visit, @PathVariable(name = "uuid") UUID patientUUID){
+        return visitService.registerVisit(visit, patientUUID);
     }
 
     //otworz swoja historie wizyt

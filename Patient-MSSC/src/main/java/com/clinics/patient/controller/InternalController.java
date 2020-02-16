@@ -10,12 +10,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/patient")
 public class InternalController {
 
     @Autowired
     PatientService patientService;
 
-    @GetMapping(path = "/patients")
+    @GetMapping(path = "")
     public List<Patient> list() {
         return patientService.findAll();
     }

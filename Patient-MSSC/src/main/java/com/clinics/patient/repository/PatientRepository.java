@@ -10,7 +10,7 @@ import java.util.UUID;
 
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, Long> {
+public interface PatientRepository extends  JpaRepository<Patient, Long> {
 	Patient findByUuid(UUID uuid);
 	Optional<Patient> findById(Long id);
 	void deleteById(Long id);

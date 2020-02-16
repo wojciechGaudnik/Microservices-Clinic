@@ -18,7 +18,7 @@ public class PatientClient {
         RegisterVisitDTO registerVisitDTO = new RegisterVisitDTO();
         //fill the data
 
-        //poprawic sciezke
-        return restTemplate.postForObject("http://doctor/registerVisit/", registerVisitDTO, VisitRegisterResponseDTO.class);
+        //return restTemplate.postForObject("http://doctor/registerVisit/", registerVisitDTO, VisitRegisterResponseDTO.class);
+        return new VisitRegisterResponseDTO();
     }
 }

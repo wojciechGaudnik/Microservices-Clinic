@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "patient")
 public class Patient {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
@@ -31,6 +32,6 @@ public class Patient {
     @Size(min = 3, max = 100, message = "length out of range ")
     private String photoUrl;
 
-    @OneToMany
-    private List<Visit> visits = new ArrayList<>();
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Visit> visits;
 }
