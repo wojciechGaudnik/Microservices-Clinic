@@ -1,15 +1,18 @@
-package com.clinics.zuul.security;
+package com.clinics.auth.security;
 
-import com.clinics.common.ROLE;
-import com.clinics.common.security.JwtConfig;
+import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -17,31 +20,39 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
+@Configuration
 @EnableWebSecurity
-public class SecurityTokenConfig extends WebSecurityConfigurerAdapter implements ROLE {
+public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter implements JwtProperties {
 
+	@Qualifier("userDetailsServiceImpl")
 	@Autowired
-	private JwtConfig jwtConfig;
+	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
-				.csrf().disable()
 				.cors().disable()
+				.csrf().disable()
+				.formLogin().loginProcessingUrl("/auth/login")
+				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.exceptionHandling().authenticationEntryPoint((request, response, e) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
 				.and()
-				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-				.antMatchers("/doctor/**").hasRole(ROLE.DOCTOR)
+				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.anyRequest().authenticated();
 	}
 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
 	@Bean
-	public JwtConfig jwtConfig(){
-		return new JwtConfig();
+	public BCryptPasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
@@ -56,11 +67,12 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter implements
 				"Access-Control-Request-Headers",
 				"Origin","Cache-Control",
 				"Content-Type",
-				"Authorization"));
+				"Authorization",
+				"Pragma"
+		));
 		configuration.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PUT", "OPTIONS", "PATCH"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
 }
