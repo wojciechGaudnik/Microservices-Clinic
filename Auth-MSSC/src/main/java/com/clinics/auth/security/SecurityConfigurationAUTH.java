@@ -1,18 +1,19 @@
 package com.clinics.auth.security;
 
+import com.clinics.auth.services.UserService;
 import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,9 +25,8 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter implements JwtProperties {
 
-	@Qualifier("userDetailsServiceImpl")
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserService userService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
@@ -42,12 +42,25 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
-				.anyRequest().authenticated();
+				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
+				.anyRequest().denyAll();
+
+		http
+				.headers()
+				.addHeaderWriter(new StaticHeadersWriter("Content-Type", "application/json"));
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		auth.authenticationProvider(authenticationProvider());
+	}
+
+	@Bean
+	DaoAuthenticationProvider authenticationProvider(){
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		daoAuthenticationProvider.setUserDetailsService(this.userService);
+		return daoAuthenticationProvider;
 	}
 
 	@Bean

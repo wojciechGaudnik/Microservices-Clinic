@@ -1,6 +1,6 @@
 package com.clinics.doctors.services;
 
-import com.clinics.doctors.exceptions.DoctorServiceException;
+import com.clinics.common.exceptions.DoctorServiceException;
 import com.clinics.doctors.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,8 @@ public class DoctorService {
 	DoctorRepository doctorRepository;
 
 	public String getDoctorByUUID(UUID UUID) {
-		return doctorRepository.findByUuid(UUID).getLicence();
+		return "There is no such doctor";
+//		return (doctorRepository.findByUuid(UUID).getLicence() == null)? "There is no such doctor" : doctorRepository.findByUuid(UUID).getLicence();
 	}
 
 	public String getDoctorByID(Long id) {
