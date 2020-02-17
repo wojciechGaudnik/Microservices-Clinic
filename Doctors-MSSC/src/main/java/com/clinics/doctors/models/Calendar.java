@@ -18,6 +18,8 @@ public class Calendar {
 
 	private String name;
 
+//	https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+//	@ManyToOne(fetch = FetchType.LAZY)
 	@ManyToOne(
 			cascade = CascadeType.ALL
 			)

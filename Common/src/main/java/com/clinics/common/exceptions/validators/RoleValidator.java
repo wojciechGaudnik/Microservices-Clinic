@@ -1,4 +1,4 @@
-package com.clinics.common.DTO.validators;
+package com.clinics.common.exceptions.validators;
 
 import com.clinics.common.security.Role;
 

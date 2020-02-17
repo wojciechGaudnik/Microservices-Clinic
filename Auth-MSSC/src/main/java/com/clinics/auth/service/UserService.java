@@ -1,13 +1,11 @@
-package com.clinics.auth.services;
+package com.clinics.auth.service;
 
-import com.clinics.auth.models.UserAuth;
-import com.clinics.auth.repositories.UserRepository;
+import com.clinics.auth.model.UserDAO;
+import com.clinics.auth.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,29 +13,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-@Slf4j(topic = "---> UserService <---")
 @Service
 public class UserService implements UserDetailsService, JwtMaker {
 
-	private UserAuth userAuth;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
+	private UserDAO userDAO;
 	private ModelMapper modelMapper;
-
-	@Autowired
+	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
+
+	public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.modelMapper = modelMapper;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		this.userAuth = this.userRepository.findByEmail(email);
-		return this.userAuth;
+		this.userDAO = this.userRepository.findByEmail(email).orElseThrow();
+		return this.userDAO;
 	}
 
 	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
-		var userAuth = modelMapper.map(registerUserDTO, UserAuth.class);
+		var userAuth = modelMapper.map(registerUserDTO, UserDAO.class);
 		userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
 		userRepository.save(userAuth);
 		var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
@@ -47,7 +44,7 @@ public class UserService implements UserDetailsService, JwtMaker {
 
 	}
 
-	public String getUserByUUID(String UUID){
-		return "User service test" + UUID;
+	public boolean existsUserDAOByEmail(String email) {
+		return userRepository.existsUserDAOByEmail(email);
 	}
 }
