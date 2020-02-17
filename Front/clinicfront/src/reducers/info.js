@@ -1,4 +1,4 @@
-const info = (state = "Nothing", action) => {
+const info = (state = "Nothing" , action) => {
     if (action.type === 'SET_MESSAGE') {
         return action.message;
     } else {
