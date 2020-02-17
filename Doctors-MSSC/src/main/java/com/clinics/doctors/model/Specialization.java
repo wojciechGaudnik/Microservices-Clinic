@@ -1,8 +1,9 @@
-package com.clinics.doctors.models;
+package com.clinics.doctors.model;
 
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -19,6 +20,7 @@ public class Specialization {
 	@Column(nullable = false)
 	private String name;
 
+	@Builder.Default
 	@ManyToMany(mappedBy = "specializations")
-	private Collection<Doctor> doctors;
+	final private Collection<Doctor> doctors = new ArrayList<>();
 }

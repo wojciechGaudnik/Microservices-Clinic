@@ -1,6 +1,6 @@
-package com.clinics.doctors.controllers;
+package com.clinics.doctors.controller;
 
-import com.clinics.doctors.services.DoctorService;
+import com.clinics.doctors.service.DoctorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
 
@@ -22,10 +21,8 @@ public class DoctorController {
 	RestTemplate restTemplate;
 
 	@GetMapping
-//			(produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getDefault(){
-		return "{\"message\":\"Hello world from doctor\"}";
-//		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
+	public ResponseEntity<String> getDefault(){
+		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
 	}
 
 	@GetMapping(path = "/{UUID}")
@@ -45,11 +42,4 @@ public class DoctorController {
 
 		return ResponseEntity.ok().body(restTemplate.getForObject("http://auth/users/" + text, String.class));
 	}
-
-	@ModelAttribute
-	public void setVaryResponseHeader(HttpServletResponse response) {
-		response.setHeader("Content-Type", "application/json");
-		response.setHeader("6666", "666666");
-	}
-
 }

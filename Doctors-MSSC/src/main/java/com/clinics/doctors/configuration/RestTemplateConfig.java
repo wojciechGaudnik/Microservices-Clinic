@@ -10,11 +10,7 @@ public class RestTemplateConfig {
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate(){
-//		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
-//
-//
-//		var restTemplate = new RestTemplateConfig();
-//		restTemplate.
+		//todo time out
 		return new RestTemplate();
 	}
 }

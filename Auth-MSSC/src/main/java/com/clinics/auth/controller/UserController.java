@@ -17,8 +17,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "/auth")
 public class UserController {
 
+	private UserService userService;
+
 	@Autowired
-	UserService userService;
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping(value = "/test")
 	public ResponseEntity<String> getTest(){

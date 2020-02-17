@@ -1,6 +1,6 @@
-package com.clinics.doctors.repositories;
+package com.clinics.doctors.repositorie;
 
-import com.clinics.doctors.models.Calendar;
+import com.clinics.doctors.model.Calendar;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

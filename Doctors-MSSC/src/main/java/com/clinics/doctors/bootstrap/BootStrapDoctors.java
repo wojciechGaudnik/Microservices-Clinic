@@ -2,12 +2,12 @@ package com.clinics.doctors.bootstrap;
 
 
 import com.clinics.common.ConsoleColors;
-import com.clinics.doctors.models.Doctor;
-import com.clinics.doctors.models.Calendar;
-import com.clinics.doctors.models.Specialization;
-import com.clinics.doctors.repositories.CalendarRepository;
-import com.clinics.doctors.repositories.DoctorRepository;
-import com.clinics.doctors.repositories.SpecializationRepository;
+import com.clinics.doctors.model.Doctor;
+import com.clinics.doctors.model.Calendar;
+import com.clinics.doctors.model.Specialization;
+import com.clinics.doctors.repositorie.CalendarRepository;
+import com.clinics.doctors.repositorie.DoctorRepository;
+import com.clinics.doctors.repositorie.SpecializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -98,7 +98,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 		calendarPediatric.setDoctor(doctor1);
 
 		//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
-		specializationGP.setDoctors(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
+		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
 
 		calendarRepository.saveAll(Arrays.asList(
 				calendarPediatric,
@@ -122,10 +122,8 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		List<Calendar> calendars = Arrays.asList(calendarCardiologist, calendarGynecologist, calendarUrologist);
 		Doctor doctorToChange = doctorRepository.findById(2L).get();
-		doctorToChange.setCalendars(calendars);  //todo BUG doesn't work
+		doctorToChange.getCalendars().addAll(calendars);  //todo BUG doesn't work
 		doctorRepository.save(doctorToChange);
-
-
 
 		System.out.println(ConsoleColors.RESET);
 	}
