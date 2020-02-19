@@ -1,15 +1,15 @@
 package com.clinics.auth.repositorie;
 
-import com.clinics.auth.model.UserDAO;
+import com.clinics.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserDAO, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<UserDAO> findByEmail(String email);
+	Optional<User> findByEmail(String email);
 	Boolean existsUserDAOByEmail(String email);
 
 }

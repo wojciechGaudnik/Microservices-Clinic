@@ -1,4 +1,4 @@
-package com.clinics.common.exceptions;
+package com.clinics.common.exception;
 
 
 public class DoctorServiceException extends RuntimeException{

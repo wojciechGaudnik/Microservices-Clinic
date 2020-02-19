@@ -1,6 +1,6 @@
-package com.clinics.auth.exception.validators;
+package com.clinics.auth.exception.validator;
 
-import com.clinics.auth.beans.BeansFactory;
+import com.clinics.auth.beans.BeansFactoryAuth;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
@@ -14,7 +14,7 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailCons
 
 	@Override
 	public void initialize(UniqueEmailConstraint constraintAnnotation) {
-		entityManager = BeansFactory.getBean(EntityManager.class);
+		entityManager = BeansFactoryAuth.getBean(EntityManager.class);
 	}
 
 	@Override

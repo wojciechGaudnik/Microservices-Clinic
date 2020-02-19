@@ -8,8 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -17,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
+//@Component
 @EnableWebSecurity
 public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter implements Role, JwtProperties {
 
@@ -29,11 +33,15 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.and()
 				.exceptionHandling().authenticationEntryPoint((request, response, e) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
 				.and()
+//				.addFilterAfter(new JwtAuthorizationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 				.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.DELETE, "/doctor-mssc/doctors/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/**").hasAnyRole(Role.DOCTOR, Role.ASSISTANT, Role.SYSTEM_ADMIN)
+//				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").access("@doctorUUIDChecker.checkDoctorUUID(authentication, request)")
+//				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").access("@doctorUUIDCheckerOld.checkDoctorUUID(authentication, request)")
+				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
@@ -65,5 +73,10 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+
+//	@Bean
+//	public Authentication getAuthentication(){
+//		return SecurityContextHolder.getContext().getAuthentication();
+//	}
 
 }

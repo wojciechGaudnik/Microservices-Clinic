@@ -1,8 +1,6 @@
-package com.clinics.auth.exception;
+package com.clinics.doctors.exception;
 
 import com.clinics.common.exception.CustomErrorMessage;
-import javax.validation.ValidationException;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +8,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.ValidationException;
 import java.util.HashMap;
 
 @ControllerAdvice
-public class ExceptionHandlerAuth {
+public class ExceptionHandlerDoctor {
 	@ExceptionHandler({ValidationException.class})
 	public ResponseEntity<Object> handlerConstraintViolationException(Exception exception, WebRequest request) {
 		CustomErrorMessage customErrorMessage = CustomErrorMessage

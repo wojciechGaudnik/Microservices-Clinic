@@ -1,5 +1,7 @@
 package com.clinics.doctors.controller;
 
+import com.clinics.common.DTO.request.RegisterDoctorDTO;
+import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.doctors.service.DoctorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Slf4j
@@ -15,14 +18,23 @@ import java.util.UUID;
 @RequestMapping(value = "/doctors")
 public class DoctorController {
 
-	@Autowired
-	DoctorService doctorService;
-	@Autowired
-	RestTemplate restTemplate;
+	final DoctorService doctorService;
+	final RestTemplate restTemplate;
+
+	public DoctorController(DoctorService doctorService, RestTemplate restTemplate) {
+		this.doctorService = doctorService;
+		this.restTemplate = restTemplate;
+	}
 
 	@GetMapping
 	public ResponseEntity<String> getDefault(){
 		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
+	}
+
+	@PostMapping
+	public ResponseEntity<DoctorResponseDTO> registerDoctor(@Valid @RequestBody RegisterDoctorDTO registerDoctorDTO) {
+		log.warn("registerDoctor <-------------------------");
+		return ResponseEntity.status(201).body(doctorService.saveDoctor(registerDoctorDTO));
 	}
 
 	@GetMapping(path = "/{UUID}")

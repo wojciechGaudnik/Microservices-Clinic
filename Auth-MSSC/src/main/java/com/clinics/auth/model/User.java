@@ -1,6 +1,6 @@
 package com.clinics.auth.model;
 
-import com.clinics.auth.exception.validators.UniqueEmailConstraint;
+import com.clinics.auth.exception.validator.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
-public class UserDAO implements Role, Serializable, UserDetails{
+public class User implements Role, Serializable, UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

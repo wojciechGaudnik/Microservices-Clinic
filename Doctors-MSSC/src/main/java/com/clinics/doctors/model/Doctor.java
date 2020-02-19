@@ -2,14 +2,12 @@ package com.clinics.doctors.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -41,16 +39,16 @@ public class Doctor {
 	@Size(min = 3, max = 100, message = "lastName length out of range")
 	private String lastName;
 
+	@URL
 	@Column(unique = true)
-	@Size(min = 3, max = 100, message = "length out of range ")
+	@Size(min = 3, max = 500, message = "photoUrl length out of range ")
 	private String photoUrl;
-
-	@ElementCollection
-	final private List<UUID> medicalUnits = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String licence;
 
+
+// https://springframework.guru/hibernate-show-sql/
 //	https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
 //	@OneToMany(
 //			mappedBy = "post",
@@ -65,7 +63,7 @@ public class Doctor {
 	)
 	final private Collection<Calendar> calendars = new ArrayList<>();
 
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	@ManyToMany(
 			targetEntity = Specialization.class)
 	@JoinTable(
@@ -74,6 +72,9 @@ public class Doctor {
 			inverseJoinColumns = {@JoinColumn(name = "specialization_id")})
 	private Collection<Specialization> specializations;
 
+	@ElementCollection
+	final private Collection<UUID> patients = new HashSet<>();
 
-//	todo private Collection<Patients> patients;
+	@ElementCollection
+	final private Collection<UUID> medicalUnits = new HashSet<>();
 }
