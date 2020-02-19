@@ -109,19 +109,22 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 
 	public Object run() {
 		log.warn("DoctorUUIDChecker ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		log.warn(String.valueOf(authentication.getCredentials()));
 
 		try {
 			RequestContext context = getCurrentContext();
-			InputStream in = (InputStream) context.get("requestEntity");
-			if (in == null) {
-				in = context.getRequest().getInputStream();
-			}
+//			InputStream in = (InputStream) context.get("requestEntity");
+//			if (in == null) {
+//				in = context.getRequest().getInputStream();
+//			}
+			InputStream in = context.getRequest().getInputStream();
 			String body = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
 			log.warn(body);
 			String header = context.getRequest().getHeader(TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
 			System.out.println(header + " <------------------header");
 //			log.warn(authentication.getName());
-			// body = "request body modified via set('requestEntity'): "+ body;
+			 body = "request body modified via set('requestEntity'): "+ body;
 			body = body.toUpperCase();
 //			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
 		}
