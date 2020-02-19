@@ -112,6 +112,7 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 		log.warn("DoctorUUIDChecker ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		log.warn(String.valueOf(authentication.getCredentials()));
+//		int uuid = authentication.getCredentials();
 
 		try {
 			RequestContext context = getCurrentContext();
@@ -134,6 +135,9 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 					"\t\"licence\": \"asdf23 rrasfd\",\n" +
 					"\t\"uuid\":\"505604a5-d8af-41d1-a6b7-0f796c4d7777\"" +
 					"}";
+			//todo throw excepiton if "uuid" not exist
+//			body.replaceAll("(\"uuid\"(\\s*):(\\s*)\")(.)*\"", "\"uuid: \"" + ");
+//			context.set(String.valueOf(new ByteArrayInputStream(body.getBytes(StandardCharsets.UTF_8))));
 			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
 		}
 		catch (IOException e) {

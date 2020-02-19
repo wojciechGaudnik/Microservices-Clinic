@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtP
 				List<String> authorities = (List<String>) claims.get("authorities");
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
-						claims.get("UUID"),
+						new HashMap<String, Object>(){{
+							put("UUID", claims.get("UUID"));
+							put("isEnable", claims.get("isEnable"));
+						}},
 						authorities
 								.stream()
 								.map(SimpleGrantedAuthority::new)
