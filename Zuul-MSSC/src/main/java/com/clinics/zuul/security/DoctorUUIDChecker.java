@@ -14,6 +14,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -118,15 +119,22 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 //			if (in == null) {
 //				in = context.getRequest().getInputStream();
 //			}
-			InputStream in = context.getRequest().getInputStream();
+//			InputStream in = context.getRequest().getInputStream();
+			InputStream in = (InputStream) context.get("requestEntity");
 			String body = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
 			log.warn(body);
-			String header = context.getRequest().getHeader(TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
-			System.out.println(header + " <------------------header");
+//			String header = context.getRequest().getHeader(TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
+//			System.out.println(header + " <------------------header");
 //			log.warn(authentication.getName());
 			 body = "request body modified via set('requestEntity'): "+ body;
-			body = body.toUpperCase();
-//			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
+			body = "{\n" +
+					"\t\"firstName\": \"123\",\n" +
+					"\t\"lastName\": \"abc\",\n" +
+					"\t\"photoUrl\": \"asdfasdfasdfasdfasdfasdfasdfasdfasdf\",\n" +
+					"\t\"licence\": \"asdf23 rrasfd\",\n" +
+					"\t\"uuid\":\"505604a5-d8af-41d1-a6b7-0f796c4d7777\"" +
+					"}";
+			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
 		}
 		catch (IOException e) {
 			rethrowRuntimeException(e);
