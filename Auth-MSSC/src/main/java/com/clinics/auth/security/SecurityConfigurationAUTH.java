@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.services.UserService;
+import com.clinics.auth.service.UserService;
 import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

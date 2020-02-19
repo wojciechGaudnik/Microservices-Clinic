@@ -1,7 +1,7 @@
 package com.clinics.auth.bootstrap;
 
-import com.clinics.auth.models.UserAuth;
-import com.clinics.auth.repositories.UserRepository;
+import com.clinics.auth.model.UserDAO;
+import com.clinics.auth.repositorie.UserRepository;
 import com.clinics.common.ConsoleColors;
 import com.clinics.common.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,75 +16,81 @@ import java.util.List;
 @Component
 public class BootStrapUser implements CommandLineRunner, Role {
 
+	@Lazy
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Lazy
 	@Autowired
-	public PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
+
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserAuth userAuthPatient1 = UserAuth
+		init();
+	}
+
+	public void init(){
+		UserDAO userDAOPatient1 = UserDAO
 				.builder()
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		UserAuth userAuthPatient2 = UserAuth
+		UserDAO userDAOPatient2 = UserDAO
 				.builder()
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		UserAuth userAuthDoctor1 = UserAuth
+		UserDAO userDAODoctor1 = UserDAO
 				.builder()
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		UserAuth userAuthDoctor2 = UserAuth
+		UserDAO userDAODoctor2 = UserDAO
 				.builder()
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		UserAuth userAuthAssistant1 = UserAuth
+		UserDAO userDAOAssistant1 = UserDAO
 				.builder()
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		UserAuth userAuthAssistant2 = UserAuth
+		UserDAO userDAOAssistant2 = UserDAO
 				.builder()
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		UserAuth creepy = UserAuth
+		UserDAO creepy = UserDAO
 				.builder()
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
 				.role(Role.SYSTEM_ADMIN)
 				.build();
 
-		List<UserAuth> userAuthList = Arrays.asList(
-				userAuthPatient1,
-				userAuthPatient2,
-				userAuthDoctor1,
-				userAuthDoctor2,
-				userAuthAssistant1,
-				userAuthAssistant2,
+		List<UserDAO> userDAOList = Arrays.asList(
+				userDAOPatient1,
+				userDAOPatient2,
+				userDAODoctor1,
+				userDAODoctor2,
+				userDAOAssistant1,
+				userDAOAssistant2,
 				creepy);
 
-		userRepository.saveAll(userAuthList);
+		userRepository.saveAll(userDAOList);
+		System.out.println(userRepository);
 
 		var user = userRepository.findById(1L).get();
 		System.out.println(ConsoleColors.GREEN_BOLD);
 		System.out.println(user.getEmail());
 		System.out.println(user.getPassword());
 		System.out.println(ConsoleColors.RESET);
-
 	}
 }
 

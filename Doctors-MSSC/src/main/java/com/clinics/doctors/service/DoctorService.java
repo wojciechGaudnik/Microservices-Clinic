@@ -1,7 +1,7 @@
-package com.clinics.doctors.services;
+package com.clinics.doctors.service;
 
 import com.clinics.common.exceptions.DoctorServiceException;
-import com.clinics.doctors.repositories.DoctorRepository;
+import com.clinics.doctors.repositorie.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
