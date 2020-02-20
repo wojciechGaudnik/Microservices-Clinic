@@ -36,5 +36,5 @@ public class Patient {
     private String photoUrl;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<Visit> visits;
+    private List<Visit> visits = new ArrayList<>();
 }

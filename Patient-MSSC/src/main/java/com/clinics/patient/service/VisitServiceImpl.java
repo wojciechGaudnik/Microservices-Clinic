@@ -36,6 +36,9 @@ public class VisitServiceImpl implements VisitService {
 
         //Hibernate bidirectional relation
         visit.setPatient(patient);
+        visit.setUuid(UUID.randomUUID());
+        visitDTO.setUuid(visit.getUuid());
+        visitDTO.setPatientUUID(patientUUID);
         patient.getVisits().add(visit);
 
         patientRepository.save(patient);

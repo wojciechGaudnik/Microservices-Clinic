@@ -25,7 +25,6 @@ public class Visit {
     @Column(updatable = false, nullable = false)
     private UUID uuid = UUID.randomUUID();
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date;
     private UUID doctorUUID;
 
@@ -35,8 +34,6 @@ public class Visit {
     private Patient patient;
 
     private String description;
-
-    public Visit() {}
 
     //depending on implementation of calendar/terms in doctor service
     //maybe not needed if we stick to dateTime
