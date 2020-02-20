@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-@Slf4j
 @Service
 public class DoctorService {
 
@@ -28,15 +27,10 @@ public class DoctorService {
 
 	//todo Optional !!! if not throw Exception and send response message from Advisor !!!  //		doctor.ifPresentOrElse
 	public DoctorResponseDTO getDoctorByUUID(UUID UUID) {
-		log.warn(String.valueOf(UUID));
 		Optional<Doctor> doctor = doctorRepository.findByDoctoruuid(UUID);
 		if (doctor.isPresent()) {
-			log.warn("Is present <--------------");
-			log.warn(modelMapper.map(doctor.get(), DoctorResponseDTO.class).getFirstName());
-			log.warn(String.valueOf(modelMapper.map(doctor, DoctorResponseDTO.class).getDoctoruuid()));
 			return modelMapper.map(doctor.get(), DoctorResponseDTO.class);
 		}
-		log.warn("Is NOT !!! present <--------------");
 		return new DoctorResponseDTO();
 	}
 
