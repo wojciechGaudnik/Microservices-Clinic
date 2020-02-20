@@ -1,6 +1,5 @@
 package com.clinics.common.DTO.response;
 
-
 import lombok.*;
 
 import java.util.Collection;
@@ -21,7 +20,7 @@ public class DoctorResponseDTO {
 	private Collection<Object> calendars;
 	private Collection<Object> specializations;
 
-//	private Collection<UUID> patientsUUIDs;
+//	private Collection<UUID> patientsUUIDs; todo get ALL cannot show patients ? however there will be only uuid so ... ?
 	private Collection<UUID> medicalUnits;
 
 }

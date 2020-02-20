@@ -1,13 +1,9 @@
 package com.clinics.zuul.security;
 
-import com.clinics.common.exception.ZuulCustomException;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 

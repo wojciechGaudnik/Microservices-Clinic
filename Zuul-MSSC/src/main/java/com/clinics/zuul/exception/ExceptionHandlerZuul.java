@@ -1,7 +1,7 @@
 package com.clinics.zuul.exception;
 
 import com.clinics.common.exception.ErrorMessageCustom;
-import com.clinics.common.exception.ZuulCustomException;
+//import com.clinics.common.exception.ZuulCustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,18 +31,18 @@ public class ExceptionHandlerZuul {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ExceptionHandler({ZuulCustomException.class})
-	public ResponseEntity<Object> handleZuulCustomException(Exception exception, WebRequest request) {
-		log.error("@ExceptionHandler({ZuulCustomException.class})");
-		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
-				.builder()
-				.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.error("RuntimeException")
-				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
-				.webRequest(request)
-				.build();
-		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-	}
+//	@ExceptionHandler({ZuulCustomException.class})
+//	public ResponseEntity<Object> handleZuulCustomException(Exception exception, WebRequest request) {
+//		log.error("@ExceptionHandler({ZuulCustomException.class})");
+//		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+//				.builder()
+//				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//				.error("RuntimeException")
+//				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+//				.webRequest(request)
+//				.build();
+//		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+//	}
 
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<Object> handleRuntimeException() {
