@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService, JwtMaker {
 
-	private User user;
 	final private UserRepository userRepository;
 	final private ModelMapper modelMapper;
 	final private PasswordEncoder passwordEncoder;
@@ -31,8 +30,7 @@ public class UserService implements UserDetailsService, JwtMaker {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		this.user = this.userRepository.findByEmail(email).orElseThrow();
-		return this.user;
+		return this.userRepository.findByEmail(email).orElseThrow();
 	}
 
 	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {

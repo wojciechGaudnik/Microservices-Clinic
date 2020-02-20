@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 public class DoctorResponseDTO {
-	private UUID doctor_uuid;
+	private UUID doctoruuid;
 	private String firstName;
 	private String lastName;
 	private String photoUrl;

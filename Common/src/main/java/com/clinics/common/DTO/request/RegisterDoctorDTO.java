@@ -11,7 +11,7 @@ import java.util.UUID;
 public class RegisterDoctorDTO {
 
 	@NotNull(message = "uuid cannot be null")
-	private UUID doctor_uuid;
+	private UUID doctoruuid;
 
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")

@@ -1,6 +1,6 @@
 package com.clinics.doctors.model;
 
-import com.clinics.doctors.exception.validator.UniqueUUID;
+import com.clinics.doctors.exception.validator.UniqueUUIDConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -31,7 +31,7 @@ public class Doctor {
 			updatable = false,
 			nullable = false)
 	@UniqueUUIDConstraint
-	private UUID doctor_uuid;
+	private UUID doctoruuid; //todo bad name because JPA <---> sqlQuery
 
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")

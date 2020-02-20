@@ -1,4 +1,4 @@
-package com.clinics.doctors.model;
+package com.clinics.doctors.exception.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

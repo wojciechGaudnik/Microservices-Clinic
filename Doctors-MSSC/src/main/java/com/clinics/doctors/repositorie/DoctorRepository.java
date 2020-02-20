@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-//	Optional<Doctor> findBy(UUID doctor_uuid);
+	Optional<Doctor> findByDoctoruuid(UUID uuid);
 }
