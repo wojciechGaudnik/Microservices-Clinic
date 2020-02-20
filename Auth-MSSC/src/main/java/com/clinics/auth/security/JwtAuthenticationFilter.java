@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 
-@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties, JwtMaker {
 
 	private AuthenticationManager authenticationManager;

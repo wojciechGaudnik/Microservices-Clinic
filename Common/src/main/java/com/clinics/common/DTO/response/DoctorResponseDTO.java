@@ -21,7 +21,7 @@ public class DoctorResponseDTO {
 	private Collection<Object> calendars;
 	private Collection<Object> specializations;
 
-	private Collection<UUID> patientsUUIDs;
+//	private Collection<UUID> patientsUUIDs;
 	private Collection<UUID> medicalUnits;
 
 }

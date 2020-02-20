@@ -104,16 +104,18 @@ public class BootStrapDoctors implements CommandLineRunner {
 		//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
 		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
 
-//		calendarRepository.saveAll(Arrays.asList(
-//				calendarPediatric,
-//				calendarGP,
-//				calendarNeurologist,
-//				calendarCardiologist,
-//				calendarGynecologist,
-//				calendarUrologist));
+		calendarRepository.saveAll(Arrays.asList(
+				calendarPediatric,
+				calendarGP,
+				calendarNeurologist,
+				calendarCardiologist,
+				calendarGynecologist,
+				calendarUrologist));
+		doctorRepository.save(doctor2);
+		doctorRepository.save(doctor3);
 //		doctorRepository.saveAll(Arrays.asList(doctor1, doctor2, doctor3));
 //		specializationRepository.saveAll(Arrays.asList(specializationGP, specializationPediatric));
-
+//
 //		System.out.println(ConsoleColors.GREEN_BOLD);
 //		var doctor1After = doctorRepository.findById(1L).get();
 //		for (Calendar one : doctor1After.getCalendars()) {

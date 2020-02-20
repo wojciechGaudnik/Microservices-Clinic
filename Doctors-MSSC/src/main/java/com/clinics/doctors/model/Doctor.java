@@ -74,6 +74,7 @@ public class Doctor {
 			inverseJoinColumns = {@JoinColumn(name = "specialization_id")})
 	private Collection<Specialization> specializations;
 
+	@JsonIgnore
 	@ElementCollection
 	final private Collection<UUID> patients = new HashSet<>();
 

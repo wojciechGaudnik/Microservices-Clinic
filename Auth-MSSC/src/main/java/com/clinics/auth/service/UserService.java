@@ -43,10 +43,5 @@ public class UserService implements UserDetailsService, JwtMaker {
 		String token = makeJwtToken(userAuth);
 		userResponse.setToken(TOKEN_PREFIX + token);
 		return userResponse;
-
-	}
-
-	public boolean existsUserDAOByEmail(String email) {
-		return userRepository.existsUserDAOByEmail(email);
 	}
 }
