@@ -3,9 +3,12 @@ package com.clinics.patient.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,8 +22,11 @@ public class Visit {
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(updatable = false, nullable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
+    private LocalDateTime date;
     private UUID doctorUUID;
 
     @ManyToOne()

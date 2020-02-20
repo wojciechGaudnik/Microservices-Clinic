@@ -1,5 +1,6 @@
 package com.clinics.patient.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +18,9 @@ public class Patient {
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Long id;
 
-    private UUID uuid;
+    @Column(updatable = false, nullable = false)
+    private UUID uuid = UUID.randomUUID();
+
     private String pesel;
 
     @NotBlank(message = "fistName is mandatory")

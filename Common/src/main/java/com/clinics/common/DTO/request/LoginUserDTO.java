@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class LoginUserDTO {
+
 	@Email
 	@NotNull(message = "email cannot be null")
 	private String email;
