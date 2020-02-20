@@ -1,12 +1,10 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.models.AuthUser;
+import com.clinics.auth.model.UserDAO;
 import com.clinics.common.DTO.request.LoginUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -22,22 +20,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 
 
 @Slf4j
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties, JwtMaker {
 
 	private AuthenticationManager authenticationManager;
 	private ObjectMapper objectMapper;
+	private ModelMapper modelMapper;
+
 
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(TOKEN_LOGIN_URI, "POST"));
 		this.objectMapper = new ObjectMapper();
+		this.modelMapper = new ModelMapper();
+		this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}
-
-
 
 	@Override
 	public Authentication attemptAuthentication(
@@ -62,23 +61,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			HttpServletResponse response,
 			FilterChain filterChain,
 			Authentication authResult) throws IOException {
-		AuthUser authUserDetails = (AuthUser) authResult.getPrincipal();
-		String token = Jwts.builder()
-				.setSubject(authResult.getName())
-				.claim("authorities", Collections.singletonList("ROLE_" + authUserDetails.getRole()))
-				.claim("UUID", authUserDetails.getUuid())
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
-				.signWith(SignatureAlgorithm.HS512, TOKEN_SECRET)
-				.compact();
+		UserDAO userDAO = (UserDAO) authResult.getPrincipal();
+		String token = makeJwtToken(userDAO);
 		response.addHeader(TOKEN_REQUEST_HEADER, TOKEN_PREFIX + token);
-		addUserDataIntoBody(response, authUserDetails, token);
+		addUserDataIntoBody(response, userDAO, token);
 	}
 
-	private void addUserDataIntoBody(HttpServletResponse response, AuthUser authUser, String token) throws IOException {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		UserResponseDTO userResponseDTO = modelMapper.map(authUser, UserResponseDTO.class);
+	private void addUserDataIntoBody(HttpServletResponse response, UserDAO userDAO, String token) throws IOException {
+		UserResponseDTO userResponseDTO = modelMapper.map(userDAO, UserResponseDTO.class);
 		userResponseDTO.setToken(TOKEN_PREFIX + token);
 		objectMapper.writeValueAsString(userResponseDTO);
 		response.getWriter().write(objectMapper.writeValueAsString(userResponseDTO));

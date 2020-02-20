@@ -1,5 +1,6 @@
-package com.clinics.auth.models;
+package com.clinics.auth.model;
 
+import com.clinics.auth.exception.validators.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
-public class AuthUser implements Role, Serializable, UserDetails {
+public class UserDAO implements Role, Serializable, UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +36,12 @@ public class AuthUser implements Role, Serializable, UserDetails {
 	private UUID uuid = UUID.randomUUID();
 
 	@Column(unique = true)
+	@UniqueEmailConstraint
 	@NotBlank(message = "email is mandatory")
 	@Size(min = 3, max = 200, message = "email length out of range")
 	@Email(message = "email invalid")
 	private String email;
+
 
 	@NotBlank(message = "password is mandatory")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -1,4 +1,4 @@
-package com.clinics.doctors.models;
+package com.clinics.doctors.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -15,8 +15,13 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
+//@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
 @Entity
 public class Doctor {
+
+//	public static DoctorBuilder builder(UUID uuid) {
+//		return hiddenBuilder().uuid(uuid);
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +46,24 @@ public class Doctor {
 	private String photoUrl;
 
 	@ElementCollection
-	private List<UUID> medicalUnits = new ArrayList<>();
+	final private List<UUID> medicalUnits = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String licence;
 
+//	https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+//	@OneToMany(
+//			mappedBy = "post",
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true
+//	)
 	@OneToMany(
 			mappedBy = "doctor",
-			fetch = FetchType.EAGER
+			fetch = FetchType.EAGER  //todo <--- to s.... epsułem ?! Powinno być na odwrut ?
+//			todo tutaj cascade all bo po drugiej stronie jest encja a nie lista więc powinien tam zapisać ?!
+//			todo tam po stronie Calendars fetch eager bo wyciągnie i tak tylko 1 ID 1 doktora ?!
 	)
-	private Collection<Calendar> calendars = new ArrayList<>();
+	final private Collection<Calendar> calendars = new ArrayList<>();
 
 	@Column(nullable = false)
 	@ManyToMany(

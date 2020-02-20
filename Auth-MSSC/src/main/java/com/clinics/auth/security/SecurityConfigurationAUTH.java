@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.services.UserService;
+import com.clinics.auth.service.UserService;
 import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -27,6 +27,9 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
@@ -43,6 +46,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.anyRequest().denyAll();
 
 		http
@@ -58,14 +62,9 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 	@Bean
 	DaoAuthenticationProvider authenticationProvider(){
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		daoAuthenticationProvider.setUserDetailsService(this.userService);
 		return daoAuthenticationProvider;
-	}
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
 	}
 
 	@Bean

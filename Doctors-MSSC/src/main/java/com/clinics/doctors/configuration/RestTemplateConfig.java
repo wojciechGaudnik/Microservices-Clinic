@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfig {
 	@Bean
 	@LoadBalanced
-	public RestTemplate restTemplate(){
+	public RestTemplate getRestTemplate(){
+		//todo time out
 		return new RestTemplate();
 	}
 }
