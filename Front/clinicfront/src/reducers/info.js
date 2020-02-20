@@ -1,8 +1,9 @@
-const info = (state = "Nothing" , action) => {
-    if (action.type === 'SET_MESSAGE') {
-        return action.message;
-    } else {
-        return state;
+const info = (state = {message: "Nothing"} , action) => {
+    switch (action.type) {
+        case 'SET_MESSAGE':
+            return {message: action.message};
+        default:
+            return state;
     }
 };
 
