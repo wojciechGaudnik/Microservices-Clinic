@@ -1,4 +1,4 @@
-package com.clinics.auth.beans;
+package com.clinics.common.bean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
@@ -8,9 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class BeansFactory implements ApplicationContextAware {
 
 	private static ApplicationContext context;

@@ -1,6 +1,6 @@
 package com.clinics.auth.bootstrap;
 
-import com.clinics.auth.model.UserDAO;
+import com.clinics.auth.model.User;
 import com.clinics.auth.repositorie.UserRepository;
 import com.clinics.common.ConsoleColors;
 import com.clinics.common.security.Role;
@@ -31,59 +31,59 @@ public class BootStrapUser implements CommandLineRunner, Role {
 	}
 
 	public void init(){
-		UserDAO userDAOPatient1 = UserDAO
+		User userPatient1 = User
 				.builder()
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		UserDAO userDAOPatient2 = UserDAO
+		User userPatient2 = User
 				.builder()
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
-		UserDAO userDAODoctor1 = UserDAO
+		User userDoctor1 = User
 				.builder()
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		UserDAO userDAODoctor2 = UserDAO
+		User userDoctor2 = User
 				.builder()
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
 				.build();
-		UserDAO userDAOAssistant1 = UserDAO
+		User userAssistant1 = User
 				.builder()
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		UserDAO userDAOAssistant2 = UserDAO
+		User userAssistant2 = User
 				.builder()
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
-		UserDAO creepy = UserDAO
+		User creepy = User
 				.builder()
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
 				.role(Role.SYSTEM_ADMIN)
 				.build();
 
-		List<UserDAO> userDAOList = Arrays.asList(
-				userDAOPatient1,
-				userDAOPatient2,
-				userDAODoctor1,
-				userDAODoctor2,
-				userDAOAssistant1,
-				userDAOAssistant2,
+		List<User> userList = Arrays.asList(
+				userPatient1,
+				userPatient2,
+				userDoctor1,
+				userDoctor2,
+				userAssistant1,
+				userAssistant2,
 				creepy);
 
-		userRepository.saveAll(userDAOList);
+		userRepository.saveAll(userList);
 		System.out.println(userRepository);
 
 		var user = userRepository.findById(1L).get();

@@ -1,4 +1,4 @@
-package com.clinics.common.exceptions;
+package com.clinics.common.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,14 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 
 @Slf4j
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomErrorMessage {
+public class ErrorMessageCustom {
 
 	@Builder.Default
 	private Date timeStamp = new Date();

@@ -1,4 +1,4 @@
-package com.clinics.common.exceptions.validators;
+package com.clinics.common.exception.validators;
 
 import com.clinics.common.security.Role;
 
