@@ -1,20 +1,36 @@
 package com.clinics.zuul.security;
 
+import com.clinics.common.exception.ZuulCustomException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 
 @Slf4j
 @Component
 public class UserUuidChecker {
+//	@SneakyThrows
 	public boolean checkUserUUID(Authentication authentication, String uuid) {
-		HashMap<String, Object> test = (HashMap<String, Object>)authentication.getCredentials();
-		log.warn(String.valueOf(test.getClass() + " <------------------"));
-		log.warn(String.valueOf(( test.get("UUID")) + " <------------------"));
-		log.warn(String.valueOf(( test.get("isEnable")) + " <------------------"));
-		return uuid.equals(((HashMap<String, Object>) authentication.getCredentials()).get("UUID"));
+		if(
+				authentication == null ||
+				authentication.getCredentials() == null ||
+				authentication.getCredentials().toString().length() == 0)
+			return false;
+
+		log.warn(String.valueOf(authentication.getCredentials().getClass()));
+
+			HashMap<String, Object> credentials;
+			credentials = (HashMap<String, Object>)authentication.getCredentials();
+			log.warn(String.valueOf(credentials.getClass() + " <------------------"));
+			log.warn(String.valueOf(( credentials.get("UUID")) + " <------------------"));
+			log.warn(String.valueOf(( credentials.get("isEnable")) + " <------------------"));
+			return uuid.equals(credentials.get("UUID"));
+
 	}
+
 }

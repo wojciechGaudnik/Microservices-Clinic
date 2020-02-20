@@ -38,14 +38,20 @@ public class DoctorController {
 	}
 
 	@GetMapping(path = "/{UUID}")
-	public ResponseEntity<String> getDoctorByUUID(@PathVariable UUID UUID){
-		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID) + " <--- my note 12.2 21.16");
+	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID UUID){
+		log.warn("getDoctorByUUID <-------------------------");
+		log.warn(String.valueOf(UUID.getClass()));
+		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
 	}
 
-	@GetMapping(path = "/id/{ID}")
-	public ResponseEntity<String> getDoctorByID(@PathVariable Long ID){
-		return ResponseEntity.ok().body(doctorService.getDoctorByID(ID));
-	}
+
+
+//	@GetMapping(path = "/id/{ID}")
+//	public ResponseEntity<String> getDoctorByID(@PathVariable Long ID){
+//		return ResponseEntity.ok().body(doctorService.getDoctorByID(ID));
+//	}
+
+
 
 	@GetMapping(path = "/test/{text}")
 	public ResponseEntity<String> getTestFromAuth(@PathVariable String text){

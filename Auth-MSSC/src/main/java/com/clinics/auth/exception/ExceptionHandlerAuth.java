@@ -1,6 +1,6 @@
 package com.clinics.auth.exception;
 
-import com.clinics.common.exception.CustomErrorMessage;
+import com.clinics.common.exception.ErrorMessageCustom;
 import javax.validation.ValidationException;
 
 import org.springframework.http.HttpHeaders;
@@ -15,26 +15,26 @@ import java.util.HashMap;
 @ControllerAdvice
 public class ExceptionHandlerAuth {
 	@ExceptionHandler({ValidationException.class})
-	public ResponseEntity<Object> handlerConstraintViolationException(Exception exception, WebRequest request) {
-		CustomErrorMessage customErrorMessage = CustomErrorMessage
+	public ResponseEntity<Object> handleConstraintViolationException(Exception exception, WebRequest request) {
+		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()
 				.status(HttpStatus.UNPROCESSABLE_ENTITY)
 				.error("Validation Exception")
 				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
 				.webRequest(request)
 				.build();
-		return new ResponseEntity<>(customErrorMessage, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<Object> handlerRuntimeExceptionException(Exception exception, WebRequest request) {
-		CustomErrorMessage customErrorMessage = CustomErrorMessage
+	public ResponseEntity<Object> handleRuntimeException(Exception exception, WebRequest request) {
+		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.error("RuntimeException")
 				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
 				.webRequest(request)
 				.build();
-		return new ResponseEntity<>(customErrorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 }

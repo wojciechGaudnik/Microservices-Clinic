@@ -20,7 +20,7 @@ import java.util.HashMap;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomErrorMessage {
+public class ErrorMessageCustom {
 
 	@Builder.Default
 	private Date timeStamp = new Date();

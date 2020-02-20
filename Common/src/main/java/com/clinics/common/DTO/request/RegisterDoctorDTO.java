@@ -3,11 +3,15 @@ package com.clinics.common.DTO.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
 public class RegisterDoctorDTO {
+
+	@NotNull(message = "uuid cannot be null")
+	private UUID doctor_uuid;
 
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
@@ -23,6 +27,4 @@ public class RegisterDoctorDTO {
 
 	@NotBlank(message = "licence is mandatory")
 	private String licence;
-
-	private UUID uuid;
 }

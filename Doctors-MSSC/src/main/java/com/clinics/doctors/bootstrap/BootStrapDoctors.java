@@ -10,6 +10,7 @@ import com.clinics.doctors.repositorie.DoctorRepository;
 import com.clinics.doctors.repositorie.SpecializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -17,10 +18,13 @@ import java.util.*;
 @Component
 public class BootStrapDoctors implements CommandLineRunner {
 
+	@Lazy
 	@Autowired
 	private DoctorRepository doctorRepository;
+	@Lazy
 	@Autowired
 	private CalendarRepository calendarRepository;
+	@Lazy
 	@Autowired
 	private SpecializationRepository specializationRepository;
 
@@ -70,7 +74,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Doctor doctor1 = Doctor
 				.builder()
-//				.uuid(UUID.randomUUID())  //todo <--- get from auth
+				.doctor_uuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
 				.firstName("Jan")
 				.lastName("Janjanowski")
 				.photoUrl("http://jan.pl")
@@ -78,7 +82,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-//				.uuid(UUID.randomUUID())
+				.doctor_uuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
 				.firstName("Adam")
 				.lastName("Adamowski")
 				.photoUrl("http://adam.pl")
@@ -86,7 +90,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
-//				.uuid(UUID.randomUUID())
+				.doctor_uuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
 				.firstName("Ola")
 				.lastName("Olkowska")
 				.photoUrl("http://ola.pl")
@@ -100,31 +104,31 @@ public class BootStrapDoctors implements CommandLineRunner {
 		//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
 		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
 
-		calendarRepository.saveAll(Arrays.asList(
-				calendarPediatric,
-				calendarGP,
-				calendarNeurologist,
-				calendarCardiologist,
-				calendarGynecologist,
-				calendarUrologist));
-		doctorRepository.saveAll(Arrays.asList(doctor1, doctor2, doctor3));
-		specializationRepository.saveAll(Arrays.asList(specializationGP, specializationPediatric));
+//		calendarRepository.saveAll(Arrays.asList(
+//				calendarPediatric,
+//				calendarGP,
+//				calendarNeurologist,
+//				calendarCardiologist,
+//				calendarGynecologist,
+//				calendarUrologist));
+//		doctorRepository.saveAll(Arrays.asList(doctor1, doctor2, doctor3));
+//		specializationRepository.saveAll(Arrays.asList(specializationGP, specializationPediatric));
 
-		System.out.println(ConsoleColors.GREEN_BOLD);
-		var doctor1After = doctorRepository.findById(1L).get();
-		for (Calendar one : doctor1After.getCalendars()) {
-			System.out.println("---> " + one.getName() + " <---");
-		}
-
-		var calendarGPAfter = calendarRepository.findById(1L).get();
-		System.out.println("---> " + calendarGPAfter.getName() + " <---");
-		System.out.println("---> " + calendarGPAfter.getDoctor().getLicence() + " <---");
-
-		List<Calendar> calendars = Arrays.asList(calendarCardiologist, calendarGynecologist, calendarUrologist);
-		Doctor doctorToChange = doctorRepository.findById(2L).get();
-		doctorToChange.getCalendars().addAll(calendars);  //todo BUG doesn't work
-		doctorRepository.save(doctorToChange);
-
-		System.out.println(ConsoleColors.RESET);
+//		System.out.println(ConsoleColors.GREEN_BOLD);
+//		var doctor1After = doctorRepository.findById(1L).get();
+//		for (Calendar one : doctor1After.getCalendars()) {
+//			System.out.println("---> " + one.getName() + " <---");
+//		}
+//
+//		var calendarGPAfter = calendarRepository.findById(1L).get();
+//		System.out.println("---> " + calendarGPAfter.getName() + " <---");
+//		System.out.println("---> " + calendarGPAfter.getDoctor().getLicence() + " <---");
+//
+//		List<Calendar> calendars = Arrays.asList(calendarCardiologist, calendarGynecologist, calendarUrologist);
+//		Doctor doctorToChange = doctorRepository.findById(2L).get();
+//		doctorToChange.getCalendars().addAll(calendars);  //todo BUG doesn't work
+//		doctorRepository.save(doctorToChange);
+//
+//		System.out.println(ConsoleColors.RESET);
 	}
 }

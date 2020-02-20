@@ -1,5 +1,6 @@
 package com.clinics.doctors.model;
 
+import com.clinics.doctors.exception.validator.UniqueUUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -14,7 +15,7 @@ import java.util.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 //@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
-@Entity
+@Entity(name = "doctor")
 public class Doctor {
 
 //	public static DoctorBuilder builder(UUID uuid) {
@@ -26,10 +27,11 @@ public class Doctor {
 	@JsonIgnore
 	private Long id;
 
-//	@Column(
-//			updatable = false,
-//			nullable = false)
-	private UUID uuid;
+	@Column(
+			updatable = false,
+			nullable = false)
+	@UniqueUUIDConstraint
+	private UUID doctor_uuid;
 
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
