@@ -31,7 +31,10 @@ public class BeansFactory implements ApplicationContextAware {
 	@Bean
 	public ModelMapper getModelMapper(){
 		var modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		modelMapper
+				.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setSkipNullEnabled(true);
 		return modelMapper;
 	}
 
