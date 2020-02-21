@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {redirectByRole} from "../actions";
+import {getTokenByGivenLoginDetails, redirectByRole} from "../actions";
 
 export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({
@@ -7,19 +7,19 @@ export const LoginPage = (props) => {
         role: null
     });
 
-    useEffect(() => {
-        props.setStoreUserDetails(userDetails);
-        redirectByRole(userDetails.role, props)
-    },[userDetails.role]);
-
     let email;
     let password;
 
-    return  (
+    useEffect(() => {
+        props.setStoreUserDetails(userDetails);
+        redirectByRole(userDetails.role, props)
+    }, [userDetails.role]);
+
+    return (
         <div>
-            <form onSubmit= {e => {
+            <form onSubmit={e => {
                 e.preventDefault();
-                getTokenByGivenLoginDetails(email.value, password.value)
+                getTokenByGivenLoginDetails(email.value, password.value, {setUserDetails})
             }}>
                 <label>Email: </label><input type="text" name="email" ref={input => email = input}/>
                 <br/>
@@ -27,30 +27,8 @@ export const LoginPage = (props) => {
                 <br/>
                 <input type="submit"/>
             </form>
-            {/*<button onClick={() => getInfo({setUserDetails}, userDetails.uuid)}>CLICK</button>*/}
         </div>
     );
-
-    function getTokenByGivenLoginDetails(email, password) {
-        const URL = 'http://localhost:8762/auth/login';
-        const user = {
-            "email": email,
-            "password": password
-        };
-        fetch(URL, {
-            method: 'POST',
-            async: false,
-            body: JSON.stringify(user)
-        })
-            .then((response) => response.json())
-            .then((responseData) => {
-                setUserDetails({
-                    uuid: responseData.uuid,
-                    role: responseData.role
-                });
-                localStorage.setItem("token", responseData.token);
-            });
-    }
 };
 
 export default LoginPage

@@ -19,7 +19,27 @@ export const redirectByRole = (role, props) => {
         default:
             return;
     }
+};
 
+export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) => {
+    const URL = 'http://localhost:8762/auth/login';
+    const user = {
+        "email": email,
+        "password": password
+    };
+    fetch(URL, {
+        method: 'POST',
+        async: false,
+        body: JSON.stringify(user)
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+            setUserDetails({
+                uuid: responseData.uuid,
+                role: responseData.role
+            });
+            localStorage.setItem("token", responseData.token);
+        });
 };
 
 // export const checkUserByLocalToken = ({setUserDetails}) => {
