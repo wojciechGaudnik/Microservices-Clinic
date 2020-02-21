@@ -36,8 +36,9 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 		http
 				.cors().disable()
 				.csrf().disable()
-				.formLogin().loginProcessingUrl("/auth/login")
-				.and()
+//				.formLogin().loginProcessingUrl(TOKEN_LOGIN_URI)  // todo <--- check if ok
+//				.formLogin().loginProcessingUrl("/auth/login")
+//				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.exceptionHandling().authenticationEntryPoint((request, response, e) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))

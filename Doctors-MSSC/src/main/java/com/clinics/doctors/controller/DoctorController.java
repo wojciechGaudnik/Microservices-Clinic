@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
@@ -39,7 +38,6 @@ public class DoctorController {
 
 	@GetMapping(path = "/{UUID}")
 	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID UUID){
-		log.warn(String.valueOf(UUID));
 		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
 	}
 

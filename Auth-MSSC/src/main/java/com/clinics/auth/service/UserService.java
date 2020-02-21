@@ -36,6 +36,7 @@ public class UserService implements UserDetailsService, JwtMaker {
 	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
 		userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
+//		userAuth.setEnable(false);
 		userRepository.save(userAuth);
 		var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
 		String token = makeJwtToken(userAuth);

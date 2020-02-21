@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-@Slf4j
 @Data
 @Builder
 @AllArgsConstructor
@@ -50,7 +49,6 @@ public class ErrorMessageCustom {
 	}
 
 	public String getError() {
-		log.warn(error + " <-----");
 		return WordUtils.capitalizeFully(error.replace("_", " ").replaceAll("(\\d)+\\s", ""));
 	}
 }

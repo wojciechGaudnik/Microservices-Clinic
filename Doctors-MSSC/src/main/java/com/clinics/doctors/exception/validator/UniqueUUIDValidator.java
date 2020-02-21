@@ -1,6 +1,6 @@
 package com.clinics.doctors.exception.validator;
 
-import com.clinics.doctors.beans.BeansFactoryDoctor;
+import com.clinics.doctors.bean.BeanFactoryDoctor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
@@ -15,7 +15,7 @@ public class UniqueUUIDValidator implements ConstraintValidator<UniqueUUIDConstr
 
    @Override
    public void initialize(UniqueUUIDConstraint constraintAnnotation) {
-      entityManager = BeansFactoryDoctor.getBean(EntityManager.class);
+      entityManager = BeanFactoryDoctor.getBean(EntityManager.class);
    }
 
    @Override
