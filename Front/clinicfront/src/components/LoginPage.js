@@ -1,11 +1,15 @@
-import React, {useState} from "react";
-import { checkUserByLocalToken, getInfo } from "../actions";
+import React, {useEffect, useState} from "react";
+import {redirectByRole} from "../actions";
 
-export const LoginPage = () => {
+export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
     });
+
+    useEffect(() => {
+        redirectByRole(userDetails.role, props)
+    },[userDetails.role]);
 
     let email;
     let password;
@@ -22,9 +26,7 @@ export const LoginPage = () => {
                 <br/>
                 <input type="submit"/>
             </form>
-            <p>{userDetails.uuid}</p>
-            <p>{userDetails.role}</p>
-            <button onClick={() => getInfo({setUserDetails}, userDetails.uuid)}>CLICK</button>
+            {/*<button onClick={() => getInfo({setUserDetails}, userDetails.uuid)}>CLICK</button>*/}
         </div>
     );
 
