@@ -1,6 +1,6 @@
-export const setMessage = message => ({
-   type: 'SET_MESSAGE',
-   message
+export const setStoreUserDetails = userDetails => ({
+   type: 'SET_USER_DETAILS',
+   userDetails
 });
 
 //USEFUL FUNCTIONS
@@ -8,37 +8,37 @@ export const setMessage = message => ({
 export const redirectByRole = (role, props) => {
     switch (role) {
         case "doctor":
-            props.history.push("/doctor", props);
+            props.history.push("/doctor");
             return;
         case "assistant":
-            props.history.push("/assistant", props);
+            props.history.push("/assistant");
             return;
         case "patient":
-            props.history.push("/patient", props);
+            props.history.push("/patient");
+            return;
+        default:
             return;
     }
 
 };
 
-//TODO: Create function to get Data by fetch(URL) two below functions to one
-
-export const checkUserByLocalToken = ({setUserDetails}) => {
-   const fetchData = fetch('http://localhost:8762/auth/login', {
-      method: 'GET',
-      async: false,
-      headers: {
-         'Authorization': localStorage.token,
-      }
-   });
-
-   fetchData
-       .then(response => {
-          return response.json();
-       })
-       .then(results => {
-           setUserDetails(results.uuid)
-       });
-};
+// export const checkUserByLocalToken = ({setUserDetails}) => {
+//    const fetchData = fetch('http://localhost:8762/auth/login', {
+//       method: 'GET',
+//       async: false,
+//       headers: {
+//          'Authorization': localStorage.token,
+//       }
+//    });
+//
+//    fetchData
+//        .then(response => {
+//           return response.json();
+//        })
+//        .then(results => {
+//            setUserDetails(results.uuid)
+//        });
+// };
 
 // export const getInfo = ({setUserDetails}, userUUID) => {
 //     let URL = 'http://localhost:8762/doctor-mssc/doctors/' + userUUID;

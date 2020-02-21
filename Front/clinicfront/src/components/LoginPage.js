@@ -8,6 +8,7 @@ export const LoginPage = (props) => {
     });
 
     useEffect(() => {
+        props.setStoreUserDetails(userDetails);
         redirectByRole(userDetails.role, props)
     },[userDetails.role]);
 
@@ -43,13 +44,11 @@ export const LoginPage = (props) => {
         })
             .then((response) => response.json())
             .then((responseData) => {
-                console.log("Before : " + localStorage.token);
                 setUserDetails({
                     uuid: responseData.uuid,
                     role: responseData.role
                 });
                 localStorage.setItem("token", responseData.token);
-                console.log("After : " + localStorage.token);
             });
     }
 };
