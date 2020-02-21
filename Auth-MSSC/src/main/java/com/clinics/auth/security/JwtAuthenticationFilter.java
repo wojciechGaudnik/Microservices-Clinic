@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.model.UserDAO;
+import com.clinics.auth.model.User;
 import com.clinics.common.DTO.request.LoginUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 
-@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements JwtProperties, JwtMaker {
 
 	private AuthenticationManager authenticationManager;
@@ -61,14 +60,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			HttpServletResponse response,
 			FilterChain filterChain,
 			Authentication authResult) throws IOException {
-		UserDAO userDAO = (UserDAO) authResult.getPrincipal();
-		String token = makeJwtToken(userDAO);
+		User user = (User) authResult.getPrincipal();
+		String token = makeJwtToken(user);
 		response.addHeader(TOKEN_REQUEST_HEADER, TOKEN_PREFIX + token);
-		addUserDataIntoBody(response, userDAO, token);
+		addUserDataIntoBody(response, user, token);
 	}
 
-	private void addUserDataIntoBody(HttpServletResponse response, UserDAO userDAO, String token) throws IOException {
-		UserResponseDTO userResponseDTO = modelMapper.map(userDAO, UserResponseDTO.class);
+	private void addUserDataIntoBody(HttpServletResponse response, User user, String token) throws IOException {
+		UserResponseDTO userResponseDTO = modelMapper.map(user, UserResponseDTO.class);
 		userResponseDTO.setToken(TOKEN_PREFIX + token);
 		objectMapper.writeValueAsString(userResponseDTO);
 		response.getWriter().write(objectMapper.writeValueAsString(userResponseDTO));

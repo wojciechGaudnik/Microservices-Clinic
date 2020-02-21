@@ -3,7 +3,6 @@ package com.clinics.zuul.security;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,10 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtProperties {
 
 	@Override
@@ -39,10 +38,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter implements JwtP
 					.getBody();
 			String userName = claims.getSubject();
 			if (userName != null) {
-				List<String> authorities = (List<String>) claims.get("authorities");
+				List<String> authorities = (List<String>) claims.get(TOKEN_CLAIM_AUTHORITIES);
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 						userName,
-						claims.get("UUID"),
+						new HashMap<String, Object>(){{
+							put(TOKEN_CLAIM_UUID, claims.get(TOKEN_CLAIM_UUID));
+							put(TOKEN_CLAIM_ISENABLE, claims.get(TOKEN_CLAIM_ISENABLE));
+						}},
 						authorities
 								.stream()
 								.map(SimpleGrantedAuthority::new)

@@ -1,6 +1,6 @@
 package com.clinics.common.DTO.request;
 
-import com.clinics.common.exceptions.validators.RoleConstraint;
+import com.clinics.common.exception.validators.RoleConstraint;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

@@ -31,15 +31,16 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.and()
 				.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
+
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.DELETE, "/doctor-mssc/doctors/{uuid}/**").access("@userUuidChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/**").hasAnyRole(Role.DOCTOR, Role.ASSISTANT, Role.SYSTEM_ADMIN)
+				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.anyRequest().denyAll();
-//				.anyRequest().permitAll();
 		http
 				.headers()
 				.addHeaderWriter(new StaticHeadersWriter("Content-Type", "application/json"));
@@ -65,5 +66,4 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
 }
