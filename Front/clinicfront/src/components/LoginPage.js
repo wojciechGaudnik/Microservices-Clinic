@@ -21,24 +21,31 @@ export const LoginPage = (props) => {
 
     return (
         <div style={{
-            padding: '40px',
+            margin: '50px auto auto 50px',
             width: '30%',
         }}>
-            <Form onSubmit={e => {
-                e.preventDefault();
-                getTokenByGivenLoginDetails(email.value, password.value, {setUserDetails})
-            }}>
+            <Form
+                onSubmit={e => {
+                    e.preventDefault();
+                    getTokenByGivenLoginDetails(email.value, password.value, {setUserDetails})
+                }}
+                style={{
+                    border: '2px solid white',
+                    borderRadius: '5px',
+                    padding: '8px'
+                }}
+            >
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label style={{color:'white'}}>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name="email" ref={input => email = input}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label style={{color:'white'}}>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" name="password" ref={input => password = input}/>
                 </Form.Group>
 
-                <Button variant="outline-primary" type="submit">
+                <Button variant="light" type="submit">
                     Log In
                 </Button>
             </Form>
