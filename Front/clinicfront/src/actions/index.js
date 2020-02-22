@@ -47,24 +47,6 @@ export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) 
         });
 };
 
-// export const checkUserByLocalToken = ({setUserDetails}) => {
-//    const fetchData = fetch('http://localhost:8762/auth/login', {
-//       method: 'GET',
-//       async: false,
-//       headers: {
-//          'Authorization': localStorage.token,
-//       }
-//    });
-//
-//    fetchData
-//        .then(response => {
-//           return response.json();
-//        })
-//        .then(results => {
-//            setUserDetails(results.uuid)
-//        });
-// };
-
 export const getInfo = (userUUID, {setUserInformation}) => {
     let URL = 'http://localhost:8762/doctor-mssc/doctors/' + userUUID;
     const fetchData = fetch(URL, {

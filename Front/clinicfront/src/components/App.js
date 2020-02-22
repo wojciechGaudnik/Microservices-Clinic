@@ -7,8 +7,7 @@ import {AssistantPage} from "../containers/EmployeePage/AssistantPage";
 import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
-//TODO:Stworzneie połączenia umozliwiającego pobranie danych o użytkownaiku
-//TODO:Wyświetlenie danych o użytkowaniu na stronie zaleznej od roli
+
 //TODO:Wygląd stron pracowników
 
 const App = () => (
