@@ -3,7 +3,6 @@ import {getInfo} from "../../actions";
 import Container from 'react-bootstrap/Container'
 import {Badge, Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import {render} from "react-dom";
 
 export const DoctorPage = (props) => {
     const [userInformation, setUserInformation] = useState({
