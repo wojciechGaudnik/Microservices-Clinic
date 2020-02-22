@@ -9,8 +9,6 @@ import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
 
-//TODO:Wygląd stron pracowników
-
 const App = () => (
     <BrowserRouter>
         <div className="App">

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getInfo} from "../../actions";
-import Container from 'react-bootstrap/Container'
-import {Badge, Row} from "react-bootstrap";
-import Col from "react-bootstrap/Col";
+import {Badge, Row, Container, Col} from "react-bootstrap";
 
 export const DoctorPage = (props) => {
     const [userInformation, setUserInformation] = useState({
@@ -16,11 +14,13 @@ export const DoctorPage = (props) => {
         medicalUnits: "empty"
     });
 
+    //Effects after each render
     useEffect(() => {
         getInfo(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
     }, [userInformation.doctorUUID]);
 
+    //CSS stylesheet
     const styleForKeyCol = {
         textAlign: 'right',
         border: '2px solid grey',
@@ -39,18 +39,23 @@ export const DoctorPage = (props) => {
         marginBottom: '5px'
     };
 
-    return(
-        <div style={{
-            margin: '30px'
-        }}>
-            <Container style={{
-                color: 'black',
-                padding: '10px 30px 10px 30px',
-                width: '50%',
-                border: '2px solid white',
-                borderRadius: '7px',
+    const styleForContainer = {
+        color: 'black',
+        padding: '10px 30px 10px 30px',
+        width: '50%',
+        border: '2px solid white',
+        borderRadius: '7px',
 
-            }}>
+    };
+
+    const styleForMainDiv = {
+        margin: '30px'
+    };
+
+    //Main HTML return
+    return(
+        <div style={styleForMainDiv}>
+            <Container style={styleForContainer}>
                 <Row><h5><Badge variant="primary">DOCTOR</Badge></h5></Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>UUID:</Col>           <Col style={styleForValueCol}>{props.userDetails.uuid}</Col>         </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Role:</Col>           <Col style={styleForValueCol}>{props.userDetails.role}</Col>         </Row>
