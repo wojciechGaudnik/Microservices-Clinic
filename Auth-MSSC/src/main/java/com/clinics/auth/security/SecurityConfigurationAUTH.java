@@ -48,6 +48,8 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
+				.antMatchers(HttpMethod.PATCH, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
+
 				.anyRequest().denyAll();
 
 		http

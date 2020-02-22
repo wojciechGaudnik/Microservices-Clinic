@@ -22,6 +22,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@ToString
 @Builder(toBuilder = true)
 @Entity(name = "auth_user")
 public class User implements Role, Serializable, UserDetails{

@@ -36,6 +36,10 @@ public class DoctorController {
 		return ResponseEntity.status(201).body(doctorService.saveDoctor(registerDoctorDTO));
 	}
 
+//	@PatchMapping(path = "/{userUUID}")
+//	public ResponseEntity<DoctorResponseDTO>
+
+
 	@GetMapping(path = "/{UUID}")
 	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID UUID){
 		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
