@@ -4,7 +4,7 @@ import {Route, Switch} from "react-router";
 import DoctorPage from "../containers/EmployeePage/EmployeeContainers/SetDoctorPage";
 import {PatientPage} from "../containers/EmployeePage/PatientPage";
 import {AssistantPage} from "../containers/EmployeePage/AssistantPage";
-import LoginPage from "../containers/SetFirstLoginPage";
+import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
 //TODO:Stworzneie połączenia umozliwiającego pobranie danych o użytkownaiku

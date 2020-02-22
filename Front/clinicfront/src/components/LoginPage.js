@@ -13,7 +13,7 @@ export const LoginPage = (props) => {
     useEffect(() => {
         props.setStoreUserDetails(userDetails);
         redirectByRole(userDetails.role, props)
-    }, [userDetails.role]);
+    }, [userDetails]);
 
     return (
         <div>
