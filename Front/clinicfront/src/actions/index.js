@@ -3,6 +3,11 @@ export const setStoreUserDetails = userDetails => ({
    userDetails
 });
 
+export const setStoreUserInformation = userInformation => ({
+    type: 'SET_USER_INFORMATION',
+    userInformation
+});
+
 //USEFUL FUNCTIONS
 
 export const redirectByRole = (role, props) => {
@@ -60,26 +65,20 @@ export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) 
 //        });
 // };
 
-// export const getInfo = ({setUserDetails}, userUUID) => {
-//     let URL = 'http://localhost:8762/doctor-mssc/doctors/' + userUUID;
-//     const fetchData = fetch(URL, {
-//         method: 'GET',
-//         async: false,
-//         headers: {
-//             'Authorization': localStorage.token,
-//         }
-//     });
-//     console.log(URL);
-//
-//     fetchData
-//         .then(response => {
-//             console.log(response);
-//             return response.json();
-//         })
-//         .then(results => {
-//             console.log(results)
-//             // setUserDetails({
-//             //
-//             // })
-//         });
-// };
+export const getInfo = (userUUID, {setUserInformation}) => {
+    let URL = 'http://localhost:8762/doctor-mssc/doctors/' + userUUID;
+    const fetchData = fetch(URL, {
+        method: 'GET',
+        async: false,
+        headers: {
+            'Authorization': localStorage.token,
+        }
+    });
+    fetchData
+        .then(response => {
+            return response.json();
+        })
+        .then(results => {
+            setUserInformation(results);
+        });
+};
