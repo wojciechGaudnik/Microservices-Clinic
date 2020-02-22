@@ -60,9 +60,11 @@ public class UserService implements UserDetailsService, JwtMaker {
 		}
 		log.warn((user.get().getUuid() + " <--- user uuid from repository "));
 		var updatedUser = user.get();
+		updatedUser.setEnable(true);
 		log.warn(ConsoleColors.RED_BRIGHT + (updatedUser) + ConsoleColors.RESET);
         userRepository.save(updatedUser);
         return modelMapper.map(updatedUser, UserResponseDTO.class);
+
 	}
 
 }
