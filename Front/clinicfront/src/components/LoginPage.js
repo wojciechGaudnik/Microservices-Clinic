@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {getTokenByGivenLoginDetails, redirectByRole} from "../actions";
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, OverlayTrigger, Popover, PopoverContent} from "react-bootstrap";
 
 export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
     });
-
-    let email;
-    let password;
 
     //Effects after each render
     useEffect(() => {
@@ -19,6 +16,41 @@ export const LoginPage = (props) => {
         }
     }, [userDetails]);
 
+    //PopOver
+    const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const handleChange = (event) => {
+        const { name, value} = event.target;
+        switch (name) {
+            case 'password':
+                setPassword(value);
+                return;
+            case 'email':
+                setEmail(value);
+                return;
+        }
+    };
+
+    const popover = (input) => {
+        if (input === null){
+            return (
+                <Popover id="popover-basic">
+                    <PopoverContent>
+                        Fill it!
+                    </PopoverContent>
+                </Popover>)
+        } else {
+            return (
+                <Popover id="popover-basic">
+                    <PopoverContent>
+                        {input}
+                    </PopoverContent>
+                </Popover>)
+        }
+    };
 
     //CSS stylesheet
     const styleForFormLabel = {color:'white'};
@@ -40,18 +72,39 @@ export const LoginPage = (props) => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    getTokenByGivenLoginDetails(email.value, password.value, {setUserDetails})
+                    getTokenByGivenLoginDetails(email, password, {setUserDetails})
                 }}
                 style={styleForForm}
             >
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label style={styleForFormLabel}>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" name="email" ref={input => email = input}/>
+                    <OverlayTrigger
+                        overlay={popover(email)}
+                        trigger="focus"
+                        placement="right"
+                    >
+                        <Form.Control
+                            type="email"
+                            onChange={(e) => handleChange(e)}
+                            placeholder="Enter email"
+                            name="email"
+                        />
+                    </OverlayTrigger>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label style={styleForFormLabel}>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" name="password" ref={input => password = input}/>
+                    <OverlayTrigger
+                        overlay={popover(password)}
+                        trigger="focus"
+                        placement="right"
+                    >
+                        <Form.Control
+                            type="password"
+                            onChange={(e) => handleChange(e)}
+                            placeholder="Password"
+                            name="password"/>
+                    </OverlayTrigger>
                 </Form.Group>
 
                 <Button variant="light" type="submit">
