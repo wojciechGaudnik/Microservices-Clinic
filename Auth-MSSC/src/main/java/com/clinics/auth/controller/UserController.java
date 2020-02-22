@@ -37,7 +37,7 @@ public class UserController {
 
 	@PatchMapping(path = "/users/{userUUID}")
 	public ResponseEntity<UserResponseDTO> setUserEnable(@PathVariable UUID userUUID) {
-		log.warn((userUUID) + " <--- uuid from controler");
+//		log.warn(userUUID + " <----------- from controler");
 		return ResponseEntity.status(201).body(userService.setUserEnable(userUUID));
 	}
 }

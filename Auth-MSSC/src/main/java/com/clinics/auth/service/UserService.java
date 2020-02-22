@@ -51,17 +51,17 @@ public class UserService implements UserDetailsService, JwtMaker {
 	}
 
 	public UserResponseDTO setUserEnable(UUID userUUID) {
-		log.warn(userUUID + "<--- uid from service ");
-		log.warn((userUUID.getClass()) + " <--- uid from service class");
+//		log.warn(userUUID + "<--- uid from service ");
+//		log.warn((userUUID.getClass()) + " <--- uid from service class");
 		Optional<User> user = userRepository.findByUuid(userUUID);
-		if (user.isEmpty()) {
-			log.warn("Uesr is empty <---------------");
+		if (user.isEmpty() || user.get().isEnable()) {
+//			log.warn("Uesr is empty <---------------");
 			throw new NoSuchElementException("User not found");
 		}
-		log.warn((user.get().getUuid() + " <--- user uuid from repository "));
+//		log.warn((user.get().getUuid() + " <--- user uuid from repository "));
 		var updatedUser = user.get();
 		updatedUser.setEnable(true);
-		log.warn(ConsoleColors.RED_BRIGHT + (updatedUser) + ConsoleColors.RESET);
+//		log.warn(ConsoleColors.RED_BRIGHT + (updatedUser) + ConsoleColors.RESET);
         userRepository.save(updatedUser);
         return modelMapper.map(updatedUser, UserResponseDTO.class);
 

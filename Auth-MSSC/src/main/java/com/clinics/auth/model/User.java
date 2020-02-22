@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@UniqueEmailConstraint
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -37,7 +38,7 @@ public class User implements Role, Serializable, UserDetails{
 	private UUID uuid = UUID.randomUUID();
 
 	@Column(unique = true)
-	@UniqueEmailConstraint
+//	@UniqueEmailConstraint
 	@NotBlank(message = "email is mandatory")
 	@Size(min = 3, max = 200, message = "email length out of range")
 	@Email(message = "email invalid")
