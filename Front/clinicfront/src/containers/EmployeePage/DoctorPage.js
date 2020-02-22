@@ -23,12 +23,12 @@ export const DoctorPage = (props) => {
             <p>Doctor</p>
             <p>UUID: {props.userDetails.uuid}</p>
             <p>Role: {props.userDetails.role}</p>
-            <p>FirstName: ".{userInformation.firstName}."</p>
-            <p>LastName: ".{userInformation.firstName}."</p>
-            <p>Licence: ".{userInformation.firstName}."</p>
-            <p>Calendars: ".{userInformation.firstName}."</p>
-            <p>Specialization: ".{userInformation.firstName}."</p>
-            <p>Medical Units: ".{userInformation.firstName}."</p>
+            <p>FirstName: {userInformation.firstName}</p>
+            <p>LastName: {userInformation.lastName}</p>
+            <p>Licence: {userInformation.licence}</p>
+            <p>Calendars: {userInformation.calendars}</p>
+            <p>Specialization: {userInformation.specializations}</p>
+            <p>Medical Units: {userInformation.medicalUnits}</p>
         </div>
     )
 };
