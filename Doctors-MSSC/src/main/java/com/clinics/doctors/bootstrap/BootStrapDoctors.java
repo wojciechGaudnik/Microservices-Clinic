@@ -73,26 +73,26 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Doctor doctor1 = Doctor
 				.builder()
-				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Jan")
-				.lastName("Janjanowski")
-				.photoUrl("http://jan.pl")
+				.doctoruuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
+				.firstName("Ola")
+				.lastName("Olkowska")
+				.photoUrl("http://ola.pl")
 				.licence("Licence example doctor 1")
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Adam")
-				.lastName("Adamowski")
-				.photoUrl("http://adam.pl")
+				.doctoruuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
+				.firstName("Ala")
+				.lastName("Alowsla")
+				.photoUrl("http://ala.pl")
 				.licence("Licence example doctor 2")
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
 				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Ola")
-				.lastName("Olkowska")
-				.photoUrl("http://ola.pl")
+				.firstName("Ela")
+				.lastName("Elkowska")
+				.photoUrl("http://ela.pl")
 				.licence("Licence example doctor 3")
 				.build();
 

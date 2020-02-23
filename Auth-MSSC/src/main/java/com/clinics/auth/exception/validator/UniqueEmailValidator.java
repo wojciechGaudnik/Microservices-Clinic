@@ -28,7 +28,8 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailCons
 			entityManager.setFlushMode(FlushModeType.COMMIT);
 			Query query = entityManager.createQuery("SELECT e FROM auth_user e WHERE e.email LIKE :email");
 			query.setParameter("email", email);
-			if(!userToValid.isEnabled() && query.getResultList().isEmpty()) return true;
+//			if(!userToValid.isEnabled() && query.getResultList().isEmpty()) return true;
+			if(query.getResultList().isEmpty()) return true;
 			User userFromDB = (User) query.getSingleResult();
 			entityManager.refresh(userFromDB);
 			if(!userFromDB.isEnabled() && query.getResultList().size() == 1 && ifSetIsEnable) return true;

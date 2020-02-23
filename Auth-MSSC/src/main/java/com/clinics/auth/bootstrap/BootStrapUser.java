@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class BootStrapUser implements CommandLineRunner, Role {
@@ -45,15 +46,19 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.build();
 		User userDoctor1 = User
 				.builder()
+				.uuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
+				.isEnable(true)
 				.build();
 		User userDoctor2 = User
 				.builder()
+				.uuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
+				.isEnable(true)
 				.build();
 		User userAssistant1 = User
 				.builder()

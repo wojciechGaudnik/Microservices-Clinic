@@ -44,10 +44,10 @@ public class ExceptionHandlerAuth {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.error("RuntimeException")
+				.error("Runtime Exception")
 				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
 				.webRequest(request)
 				.build();
-		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
