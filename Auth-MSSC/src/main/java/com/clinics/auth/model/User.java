@@ -35,10 +35,9 @@ public class User implements Role, Serializable, UserDetails{
 
 	@Builder.Default
 	@Column(updatable = false, nullable = false)
-	private UUID uuid = UUID.randomUUID();
+	private UUID uuid = UUID.randomUUID(); //todo make auto generate by hibernate !!
 
-	@Column(unique = true)
-//	@UniqueEmailConstraint
+//	@Column(unique = true)
 	@NotBlank(message = "email is mandatory")
 	@Size(min = 3, max = 200, message = "email length out of range")
 	@Email(message = "email invalid")
@@ -54,7 +53,7 @@ public class User implements Role, Serializable, UserDetails{
 	private String role;
 
 	@Builder.Default
-	private boolean isEnable = true;
+	private boolean isEnable = false;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

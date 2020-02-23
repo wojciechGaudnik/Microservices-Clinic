@@ -3,10 +3,8 @@ package com.clinics.auth.service;
 import com.clinics.auth.model.User;
 import com.clinics.auth.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
-import com.clinics.common.ConsoleColors;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +17,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Slf4j
 @Service
 public class UserService implements UserDetailsService, JwtMaker {
 
@@ -51,20 +48,13 @@ public class UserService implements UserDetailsService, JwtMaker {
 	}
 
 	public UserResponseDTO setUserEnable(UUID userUUID) {
-//		log.warn(userUUID + "<--- uid from service ");
-//		log.warn((userUUID.getClass()) + " <--- uid from service class");
 		Optional<User> user = userRepository.findByUuid(userUUID);
 		if (user.isEmpty() || user.get().isEnable()) {
-//			log.warn("Uesr is empty <---------------");
 			throw new NoSuchElementException("User not found");
 		}
-//		log.warn((user.get().getUuid() + " <--- user uuid from repository "));
 		var updatedUser = user.get();
 		updatedUser.setEnable(true);
-//		log.warn(ConsoleColors.RED_BRIGHT + (updatedUser) + ConsoleColors.RESET);
         userRepository.save(updatedUser);
         return modelMapper.map(updatedUser, UserResponseDTO.class);
-
 	}
-
 }

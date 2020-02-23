@@ -2,7 +2,6 @@ package com.clinics.auth.controller;
 
 import com.clinics.auth.service.UserService;
 import com.clinics.common.DTO.request.RegisterUserDTO;
-import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,6 @@ public class UserController {
 
 	@PatchMapping(path = "/users/{userUUID}")
 	public ResponseEntity<UserResponseDTO> setUserEnable(@PathVariable UUID userUUID) {
-//		log.warn(userUUID + " <----------- from controler");
 		return ResponseEntity.status(201).body(userService.setUserEnable(userUUID));
 	}
 }

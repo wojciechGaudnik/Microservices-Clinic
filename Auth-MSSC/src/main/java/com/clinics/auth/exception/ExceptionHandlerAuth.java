@@ -31,12 +31,12 @@ public class ExceptionHandlerAuth {
 	public ResponseEntity<Object> handleNoSuchElementExceptionException(Exception exception, WebRequest request) {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()
-				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.status(HttpStatus.NOT_FOUND)
 				.error("No Such Element Exception")
 				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
 				.webRequest(request)
 				.build();
-		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(RuntimeException.class)
