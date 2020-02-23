@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class UserController {
 
 	@GetMapping(value = "/test")
 	public ResponseEntity<String> getTest(){
+		log.error("---> " );
 		return ResponseEntity.ok().body("Hello world from AUTH");
 	}
 
@@ -34,7 +36,7 @@ public class UserController {
 		return ResponseEntity.status(201).body(userService.saveUser(registerUserDTO));
 	}
 
-	@PatchMapping(path = "/users/{userUUID}")
+	@PutMapping(path = "/users/{userUUID}")
 	public ResponseEntity<UserResponseDTO> setUserEnable(@PathVariable UUID userUUID) {
 		return ResponseEntity.status(201).body(userService.setUserEnable(userUUID));
 	}

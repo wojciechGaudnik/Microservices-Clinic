@@ -3,15 +3,18 @@ package com.clinics.doctors.service;
 import com.clinics.common.DTO.request.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
+import com.clinics.common.security.JwtProperties;
 import com.clinics.doctors.model.Doctor;
 import com.clinics.doctors.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,15 +44,22 @@ public class DoctorService {
 		return new DoctorResponseDTO();
 	}
 
-	public DoctorResponseDTO saveDoctor(RegisterDoctorDTO registerDoctorDTO) {
-		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
+	public DoctorResponseDTO saveDoctor(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
+//		var responseFromAuth = restTemplate.getForEntity("http://auth/auth/test", String.class); todo <--good !!!
+		String url = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctoruuid());
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);
+		ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestFromDoctor, Void.class);
 
-		String url = String.format("http://auth/%s", doctor.getDoctoruuid());
-		var responseFromAuth = restTemplate.getForEntity(url, UserResponseDTO.class);
-		log.warn(responseFromAuth.getStatusCode() + " <---------------- Status Code ");
+		log.error(responseFromAuth + " <---------------- Status Code ");
+		log.error(responseFromAuth.getStatusCode() + " <---------------- Status Code ");
+
+//		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
 
 
-		doctorRepository.save(doctor);
-		return modelMapper.map(doctor, DoctorResponseDTO.class);
+//		doctorRepository.save(doctor);
+//		return modelMapper.map(doctor, DoctorResponseDTO.class);
+		return null;
 	}
 }
