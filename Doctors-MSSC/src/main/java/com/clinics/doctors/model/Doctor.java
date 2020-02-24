@@ -1,8 +1,9 @@
 package com.clinics.doctors.model;
 
-import com.clinics.doctors.exception.validator.UniqueUUIDConstraint;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -15,6 +16,13 @@ import java.util.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 //@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
+@DynamicInsert
+@DynamicUpdate
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "calendars"})
+//@JsonIgnoreProperties({"calendars"})
+//@JsonIdentityInfo(
+//		generator = ObjectIdGenerators.PropertyGenerator.class,
+//		property = "id")
 @Entity(name = "doctor")
 public class Doctor {
 
@@ -27,25 +35,30 @@ public class Doctor {
 	@JsonIgnore
 	private Long id;
 
+//	@JsonView(Views.Public.class)
 	@Column(
 			updatable = false,
-			nullable = false)
-	@UniqueUUIDConstraint
+			nullable = false,
+			unique = true)
 	private UUID doctoruuid; //todo bad name because JPA <---> sqlQuery
 
+//	@JsonView(Views.Public.class)
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
 	private String firstName;
 
+//	@JsonView(Views.Public.class)
 	@NotBlank(message = "lastName is mandatory")
 	@Size(min = 3, max = 100, message = "lastName length out of range")
 	private String lastName;
 
+//	@JsonView(Views.Public.class)
 	@URL
 	@Column(unique = true)
 	@Size(min = 3, max = 500, message = "photoUrl length out of range ")
 	private String photoUrl;
 
+//	@JsonView(Views.Public.class)
 	@Column(nullable = false)
 	private String licence;
 
@@ -57,27 +70,36 @@ public class Doctor {
 //			cascade = CascadeType.ALL,
 //			orphanRemoval = true
 //	)
-	@OneToMany(
-			mappedBy = "doctor",
-			fetch = FetchType.EAGER  //todo <--- to s.... epsułem ?! Powinno być na odwrut ?
+//	@OneToMany(
+//			mappedBy = "doctor",
+////			fetch = FetchType.LAZY
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true
+//			fetch = FetchType.EAGER  //todo <--- to s.... epsułem ?! Powinno być na odwrut ?
 //			todo tutaj cascade all bo po drugiej stronie jest encja a nie lista więc powinien tam zapisać ?!
 //			todo tam po stronie Calendars fetch eager bo wyciągnie i tak tylko 1 ID 1 doktora ?!
-	)
-	final private Collection<Calendar> calendars = new ArrayList<>();
+//	)
+//	final private Collection<Calendar> calendars = new HashSet<>();
+//	@JsonIgnore
+//	@JsonBackReference
+//	@JsonView(Views.Internal.class)
+	@OneToMany(targetEntity=Calendar.class,mappedBy="doctor",cascade={CascadeType.ALL}, fetch = FetchType.LAZY,orphanRemoval=true)
+	Collection<Calendar> calendars = new HashSet<>();
 
 //	@Column(nullable = false)
-	@ManyToMany(
-			targetEntity = Specialization.class)
-	@JoinTable(
-			name = "doctor_specialization",
-			joinColumns = {@JoinColumn(name = "doctor_uuid")},
-			inverseJoinColumns = {@JoinColumn(name = "specialization_id")})
-	private Collection<Specialization> specializations;
+//	@ManyToMany
+////			(
+////			targetEntity = Specialization.class)
+//	@JoinTable(
+//			name = "doctor_specialization",
+//			joinColumns = {@JoinColumn(name = "doctor_id", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "specialization_id", referencedColumnName = "id")})
+//	private Collection<Specialization> specializations = new HashSet<>();
 
-	@JsonIgnore
-	@ElementCollection
-	final private Collection<UUID> patients = new HashSet<>();
-
-	@ElementCollection
-	final private Collection<UUID> medicalUnits = new HashSet<>();
+//	@JsonIgnore
+//	@ElementCollection
+//	final private Collection<UUID> patients = new HashSet<>();
+//
+//	@ElementCollection
+//	final private Collection<UUID> medicalUnits = new HashSet<>();
 }
