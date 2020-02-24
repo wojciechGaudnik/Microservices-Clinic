@@ -1,7 +1,7 @@
-package com.clinics.auth.service;
+package com.clinics.auth.ui.service;
 
-import com.clinics.auth.model.User;
-import com.clinics.auth.repositorie.UserRepository;
+import com.clinics.auth.ui.model.User;
+import com.clinics.auth.ui.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;

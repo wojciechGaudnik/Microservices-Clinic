@@ -74,7 +74,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Doctor doctor1 = Doctor
 				.builder()
-				.doctoruuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
+				.doctoruuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.firstName("Ola")
 				.lastName("Olkowska")
 				.photoUrl("http://ola.pl")
@@ -82,7 +82,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.doctoruuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
+				.doctoruuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
 				.firstName("Ala")
 				.lastName("Alowsla")
 				.photoUrl("http://ala.pl")
@@ -127,6 +127,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 		var specializationsAfter = specializationRepository.findAll();
 
 		System.out.println(ConsoleColors.GREEN_BOLD);
+
 		System.out.println("-------------------------------------------------------");
 		doctorsAfter.forEach(System.out::println);
 		System.out.println("-------------------------------------------------------");
@@ -134,6 +135,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 		System.out.println("-------------------------------------------------------");
 		specializationsAfter.forEach(System.out::println);
 		System.out.println("-------------------------------------------------------");
+
 		System.out.println(ConsoleColors.RESET);
 	}
 }
