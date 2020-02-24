@@ -1,10 +1,9 @@
 package com.clinics.doctors.bootstrap;
 
 import com.clinics.common.ConsoleColors;
-import com.clinics.doctors.model.*;
-import com.clinics.doctors.model.Calendar;
-import com.clinics.doctors.repositorie.*;
-import lombok.extern.slf4j.Slf4j;
+import com.clinics.doctors.ui.model.*;
+import com.clinics.doctors.ui.model.Calendar;
+import com.clinics.doctors.ui.repositorie.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Lazy;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Slf4j
 @Component
 public class BootStrapDoctors implements CommandLineRunner {
 

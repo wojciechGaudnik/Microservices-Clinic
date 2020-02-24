@@ -1,7 +1,6 @@
 package com.clinics.doctors.exception;
 
 import com.clinics.common.exception.ErrorMessageCustom;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import javax.validation.ValidationException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-@Slf4j
 @ControllerAdvice
 public class ExceptionHandlerDoctor {
 

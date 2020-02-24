@@ -1,14 +1,13 @@
 package com.clinics.doctors.exception.validator;
 
 import com.clinics.doctors.bean.BeanFactoryDoctor;
-import com.clinics.doctors.model.Doctor;
+import com.clinics.doctors.ui.model.Doctor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.UUID;
 
 public class UniqueDoctorUUIDValidator implements ConstraintValidator<UniqueDoctorUUIDConstraint, Doctor> {
 
@@ -24,8 +23,6 @@ public class UniqueDoctorUUIDValidator implements ConstraintValidator<UniqueDoct
       try {
          entityManager.setFlushMode(FlushModeType.COMMIT);
          Query query = entityManager.createQuery("SELECT d FROM doctor d WHERE d.doctoruuid=?1");
-//         String query = String.format("SELECT e FROM %s e WHERE e.%suuid=?1", )
-//         Query query = entityManager.createQuery("SELECT d FROM doctor d WHERE d.doctoruuid=?1");
          query.setParameter(1, doctor.getDoctoruuid());
          return query.getResultList().isEmpty();
       } finally {

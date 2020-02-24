@@ -3,7 +3,6 @@ package com.clinics.zuul.security;
 import com.clinics.common.security.JwtProperties;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -34,8 +33,6 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 
 	@Override
 	public boolean shouldFilter() {
-
-		var headers = getCurrentContext().getRequest().getHeaderNames().asIterator();
 		return getCurrentContext().getRequest().getRequestURI().equals("/doctor-mssc/doctors/")  //todo asistant + Patient !!!
 				&& getCurrentContext().getRequest().getMethod().equals("POST");
 	}
@@ -58,7 +55,6 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 		catch (IOException e) {
 			rethrowRuntimeException(e);
 		}
-
 		return null;
 	}
 }

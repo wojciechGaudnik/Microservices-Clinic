@@ -1,12 +1,10 @@
-package com.clinics.doctors.service;
+package com.clinics.doctors.ui.service;
 
 import com.clinics.common.DTO.request.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.DoctorResponseDTO;
-import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
-import com.clinics.doctors.model.Doctor;
-import com.clinics.doctors.repositorie.DoctorRepository;
-import lombok.extern.slf4j.Slf4j;
+import com.clinics.doctors.ui.model.Doctor;
+import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -19,7 +17,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Slf4j
 @Service
 public class DoctorService {
 
@@ -46,35 +43,17 @@ public class DoctorService {
 	}
 
 	public DoctorResponseDTO saveDoctor(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
-//		var responseFromAuth = restTemplate.getForEntity("http://auth/auth/test", String.class); todo <--good !!!
-		log.error("1");
 		String url = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctoruuid());
-		log.error("2");
 		HttpHeaders httpHeaders = new HttpHeaders();
-		log.error("3");
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
-		log.error("4");
 		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);
-		log.error("5");
 		try {
 			ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestFromDoctor, Void.class);
 		} catch (Exception e) {
 			throw new NoSuchElementException("There is no such doctor in AUTH");
 		}
-
-//		ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestFromDoctor, Void.class);
-//		log.error(String.valueOf(responseFromAuth));
-//		log.error(responseFromAuth + " <---------------- Status Code ");
-//		log.error(responseFromAuth.getStatusCode() + " <---------------- Status Code ");
-//		if(responseFromAuth.getStatusCode() != HttpStatus.CREATED)
-//			throw new NoSuchElementException("There is no such doctor in AUTH");
-
-
 		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
-
-
 		doctorRepository.save(doctor);
 		return modelMapper.map(doctor, DoctorResponseDTO.class);
-//		return null;
 	}
 }
