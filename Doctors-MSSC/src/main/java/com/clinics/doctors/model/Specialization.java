@@ -38,7 +38,15 @@ public class Specialization {
 	private String name;
 
 //	@Builder.Default
-//	@ManyToMany(mappedBy = "specializations")
-////	@ManyToMany(targetEntity = Doctor.class)
-//	private Collection<Doctor> doctors = new HashSet<>();
+//	@ManyToMany(
+//			mappedBy = "specializations")
+//			cascade = CascadeType.PERSIST)
+//	@ManyToMany(targetEntity = Doctor.class)
+//	@ManyToMany(mappedBy = "specializations"
+	@ManyToMany(targetEntity = Doctor.class)
+	@JoinTable(
+			name = "doctor_specialization",
+			joinColumns = {@JoinColumn(name = "spacialization_id")},
+			inverseJoinColumns = {@JoinColumn(name = "doctor_id")})
+	Collection<Doctor> doctors;
 }

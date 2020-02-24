@@ -1,9 +1,11 @@
 package com.clinics.doctors.model;
 
+import com.clinics.doctors.exception.validator.UniqueDoctorUUIDConstraint;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import java.util.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
+@ToString
 //@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
 @DynamicInsert
 @DynamicUpdate
@@ -23,6 +26,7 @@ import java.util.*;
 //@JsonIdentityInfo(
 //		generator = ObjectIdGenerators.PropertyGenerator.class,
 //		property = "id")
+@UniqueDoctorUUIDConstraint
 @Entity(name = "doctor")
 public class Doctor {
 
@@ -83,18 +87,30 @@ public class Doctor {
 //	@JsonIgnore
 //	@JsonBackReference
 //	@JsonView(Views.Internal.class)
-	@OneToMany(targetEntity=Calendar.class,mappedBy="doctor",cascade={CascadeType.ALL}, fetch = FetchType.LAZY,orphanRemoval=true)
+	@OneToMany(
+			targetEntity=Calendar.class,
+			mappedBy="doctor",
+			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
+			orphanRemoval=true)
 	Collection<Calendar> calendars = new HashSet<>();
 
+//	@Builder.Default
 //	@Column(nullable = false)
-//	@ManyToMany
-////			(
-////			targetEntity = Specialization.class)
+//	@ManyToMany (
+//			targetEntity = Specialization.class,
+////			fetch = FetchType.EAGER)
+//			cascade = CascadeType.PERSIST)
 //	@JoinTable(
 //			name = "doctor_specialization",
 //			joinColumns = {@JoinColumn(name = "doctor_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "specialization_id", referencedColumnName = "id")})
-//	private Collection<Specialization> specializations = new HashSet<>();
+//	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+	@ManyToMany(targetEntity = Specialization.class)
+	@JoinTable(
+			name = "doctor_specialization",
+			joinColumns = {@JoinColumn(name = "doctor_id")},
+			inverseJoinColumns = {@JoinColumn(name = "spacialization_id")})
+	Collection<Specialization> specializations;
 
 //	@JsonIgnore
 //	@ElementCollection
