@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @DynamicInsert
 @DynamicUpdate
+@ToString
 //@JsonIdentityInfo(
 //		generator = ObjectIdGenerators.PropertyGenerator.class,
 //		property = "id")

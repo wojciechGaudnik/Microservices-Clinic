@@ -1,5 +1,7 @@
 package com.clinics.doctors.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
+@ToString
 @DynamicInsert
 @DynamicUpdate
 @Entity
@@ -37,7 +40,9 @@ public class Specialization {
 	@Column(nullable = false)
 	private String name;
 
-//	@Builder.Default
+	@Builder.Default
+	@JsonBackReference
+
 //	@ManyToMany(
 //			mappedBy = "specializations")
 //			cascade = CascadeType.PERSIST)
@@ -48,5 +53,5 @@ public class Specialization {
 			name = "doctor_specialization",
 			joinColumns = {@JoinColumn(name = "spacialization_id")},
 			inverseJoinColumns = {@JoinColumn(name = "doctor_id")})
-	Collection<Doctor> doctors;
+	Collection<Doctor> doctors = new HashSet<>();
 }

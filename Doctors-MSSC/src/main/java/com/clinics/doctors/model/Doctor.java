@@ -94,7 +94,8 @@ public class Doctor {
 			orphanRemoval=true)
 	Collection<Calendar> calendars = new HashSet<>();
 
-//	@Builder.Default
+	@Builder.Default
+	@JsonIdentityReference
 //	@Column(nullable = false)
 //	@ManyToMany (
 //			targetEntity = Specialization.class,
@@ -110,12 +111,12 @@ public class Doctor {
 			name = "doctor_specialization",
 			joinColumns = {@JoinColumn(name = "doctor_id")},
 			inverseJoinColumns = {@JoinColumn(name = "spacialization_id")})
-	Collection<Specialization> specializations;
+	Collection<Specialization> specializations = new HashSet<>();
 
-//	@JsonIgnore
-//	@ElementCollection
-//	final private Collection<UUID> patients = new HashSet<>();
-//
-//	@ElementCollection
-//	final private Collection<UUID> medicalUnits = new HashSet<>();
+	@JsonIgnore
+	@ElementCollection
+	final private Collection<UUID> patients = new HashSet<>();
+
+	@ElementCollection
+	final private Collection<UUID> medicalUnits = new HashSet<>();
 }
