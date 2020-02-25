@@ -1,6 +1,6 @@
-package com.clinics.doctors.repositorie;
+package com.clinics.doctors.ui.repositorie;
 
-import com.clinics.doctors.model.Doctor;
+import com.clinics.doctors.ui.model.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

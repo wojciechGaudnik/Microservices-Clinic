@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.service.UserService;
+import com.clinics.auth.ui.service.UserService;
 import com.clinics.common.security.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,19 +25,20 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter implements JwtProperties {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	public SecurityConfigurationAUTH(UserService userService, PasswordEncoder passwordEncoder) {
+		this.userService = userService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
 				.cors().disable()
 				.csrf().disable()
-				.formLogin().loginProcessingUrl("/auth/login")
-				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.exceptionHandling().authenticationEntryPoint((request, response, e) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
@@ -45,8 +46,10 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
-				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
+				.antMatchers(HttpMethod.PUT, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
+				.antMatchers("/auth/test/**").permitAll()
+
 				.anyRequest().denyAll();
 
 		http

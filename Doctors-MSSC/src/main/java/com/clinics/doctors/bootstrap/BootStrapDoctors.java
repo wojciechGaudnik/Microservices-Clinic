@@ -1,16 +1,14 @@
 package com.clinics.doctors.bootstrap;
 
 import com.clinics.common.ConsoleColors;
-import com.clinics.doctors.model.Doctor;
-import com.clinics.doctors.model.Calendar;
-import com.clinics.doctors.model.Specialization;
-import com.clinics.doctors.repositorie.CalendarRepository;
-import com.clinics.doctors.repositorie.DoctorRepository;
-import com.clinics.doctors.repositorie.SpecializationRepository;
+import com.clinics.doctors.ui.model.*;
+import com.clinics.doctors.ui.model.Calendar;
+import com.clinics.doctors.ui.repositorie.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -27,7 +25,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 	@Autowired
 	private SpecializationRepository specializationRepository;
 
-
+	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -71,63 +69,70 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.name("Gynecologist Calendar")
 				.build();
 
+
 		Doctor doctor1 = Doctor
 				.builder()
-				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Jan")
-				.lastName("Janjanowski")
-				.photoUrl("http://jan.pl")
+				.doctoruuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
+				.firstName("Ola")
+				.lastName("Olkowska")
+				.photoUrl("http://ola.pl")
 				.licence("Licence example doctor 1")
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Adam")
-				.lastName("Adamowski")
-				.photoUrl("http://adam.pl")
+				.doctoruuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
+				.firstName("Ala")
+				.lastName("Alowsla")
+				.photoUrl("http://ala.pl")
 				.licence("Licence example doctor 2")
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
 				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
-				.firstName("Ola")
-				.lastName("Olkowska")
-				.photoUrl("http://ola.pl")
+				.firstName("Ela")
+				.lastName("Elkowska")
+				.photoUrl("http://ela.pl")
 				.licence("Licence example doctor 3")
 				.build();
 
+
 		calendarGP.setDoctor(doctor1);
-		calendarNeurologist.setDoctor(doctor1);
 		calendarPediatric.setDoctor(doctor1);
+		calendarCardiologist.setDoctor(doctor1);
+		calendarGynecologist.setDoctor(doctor2);
+		calendarNeurologist.setDoctor(doctor2);
+		calendarUrologist.setDoctor(doctor3);
 
-		//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
-		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
+		specializationGP.getDoctors().add(doctor1);
+		specializationGP.getDoctors().add(doctor2);
+		specializationPediatric.getDoctors().add(doctor1);
 
+		doctorRepository.saveAll(Arrays.asList(doctor1, doctor2, doctor3));
+		specializationRepository.saveAll(Arrays.asList(specializationGP, specializationPediatric));
 		calendarRepository.saveAll(Arrays.asList(
-				calendarPediatric,
 				calendarGP,
-				calendarNeurologist,
+				calendarPediatric,
 				calendarCardiologist,
 				calendarGynecologist,
+				calendarNeurologist,
 				calendarUrologist));
-		doctorRepository.save(doctor2);
-		doctorRepository.save(doctor3);
-		specializationRepository.saveAll(Arrays.asList(specializationGP, specializationPediatric));
+
+//	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
+//		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
+
+		var doctorsAfter = doctorRepository.findAll();
+		var calendars1After = calendarRepository.findAll();
+		var specializationsAfter = specializationRepository.findAll();
 
 		System.out.println(ConsoleColors.GREEN_BOLD);
-		var doctor1After = doctorRepository.findById(1L).get();
-		for (Calendar one : doctor1After.getCalendars()) {
-			System.out.println("---> " + one.getName() + " <---");
-		}
 
-		var calendarGPAfter = calendarRepository.findById(1L).get();
-		System.out.println("---> " + calendarGPAfter.getName() + " <---");
-		System.out.println("---> " + calendarGPAfter.getDoctor().getLicence() + " <---");
-
-		List<Calendar> calendars = Arrays.asList(calendarCardiologist, calendarGynecologist, calendarUrologist);
-		Doctor doctorToChange = doctorRepository.findById(2L).get();
-		doctorToChange.getCalendars().addAll(calendars);  //todo BUG doesn't work
-		doctorRepository.save(doctorToChange);
+		System.out.println("-------------------------------------------------------");
+		doctorsAfter.forEach(System.out::println);
+		System.out.println("-------------------------------------------------------");
+		calendars1After.forEach(System.out::println);
+		System.out.println("-------------------------------------------------------");
+		specializationsAfter.forEach(System.out::println);
+		System.out.println("-------------------------------------------------------");
 
 		System.out.println(ConsoleColors.RESET);
 	}

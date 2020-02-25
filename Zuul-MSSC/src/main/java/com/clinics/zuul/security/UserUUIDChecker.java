@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-public class UserUuidChecker {
+public class UserUUIDChecker {
 
 	public boolean checkUserUUID(Authentication authentication, String uuid) {
 		if(

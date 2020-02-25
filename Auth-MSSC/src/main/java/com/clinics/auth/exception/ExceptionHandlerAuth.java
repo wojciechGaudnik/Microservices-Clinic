@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionHandlerAuth {
@@ -26,15 +27,27 @@ public class ExceptionHandlerAuth {
 		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
+	@ExceptionHandler({NoSuchElementException.class})
+	public ResponseEntity<Object> handleNoSuchElementExceptionException(Exception exception, WebRequest request) {
+		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+				.builder()
+				.status(HttpStatus.NOT_FOUND)
+				.error("No Such Element Exception")
+				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+				.webRequest(request)
+				.build();
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	}
+
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<Object> handleRuntimeException(Exception exception, WebRequest request) {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.error("RuntimeException")
+				.error("Runtime Exception")
 				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
 				.webRequest(request)
 				.build();
-		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

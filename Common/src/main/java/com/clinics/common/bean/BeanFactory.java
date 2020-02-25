@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-public class BeansFactory implements ApplicationContextAware {
+public class BeanFactory implements ApplicationContextAware {
 
 	private static ApplicationContext context;
 
@@ -31,7 +31,10 @@ public class BeansFactory implements ApplicationContextAware {
 	@Bean
 	public ModelMapper getModelMapper(){
 		var modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		modelMapper
+				.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setSkipNullEnabled(true);
 		return modelMapper;
 	}
 
