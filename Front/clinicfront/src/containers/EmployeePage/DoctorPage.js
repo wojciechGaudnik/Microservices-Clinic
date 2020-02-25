@@ -54,14 +54,21 @@ export const DoctorPage = (props) => {
 
     //Main HTML return
 
-    // const displayCalendars = () => {
-    //     let calendarsShow = '';
-    //     if (userInformation.calendars !== null){
-    //         for (let calendar in userInformation.calendars){
-    //         calendarsShow += calendar.calendaruuid + "name: " + calendar.name
-    //         }
-    //     }
-    // };
+    const displayCalendars = () => {
+        let calendarsShow = '';
+        for (let item in userInformation.calendars){
+            calendarsShow += userInformation.calendars[item].name + "  ";
+        }
+        return calendarsShow;
+    };
+
+    const displaySpecializations = () => {
+        let specializationsShow = '';
+        for (let item in userInformation.specializations){
+            specializationsShow += userInformation.specializations[item].name + "  ";
+        }
+        return specializationsShow;
+    };
 
     return(
         <div style={styleForMainDiv}>
@@ -72,8 +79,8 @@ export const DoctorPage = (props) => {
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>FirstName:</Col>      <Col style={styleForValueCol}>{userInformation.firstName}</Col>      </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>LastName:</Col>       <Col style={styleForValueCol}>{userInformation.lastName}</Col>       </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Licence:</Col>        <Col style={styleForValueCol}>{userInformation.licence}</Col>        </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Calendars:</Col>      <Col style={styleForValueCol}>{userInformation.calendars}</Col>      </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Specialization:</Col> <Col style={styleForValueCol}>{userInformation.specializations}</Col></Row>
+                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Calendars:</Col>      <Col style={styleForValueCol}>{displayCalendars()}</Col>      </Row>
+                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Specialization:</Col> <Col style={styleForValueCol}>{displaySpecializations()}</Col></Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Medical Units:</Col>  <Col style={styleForValueCol}>{userInformation.medicalUnits}</Col>   </Row>
             </Container>
         </div>
