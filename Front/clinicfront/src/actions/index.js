@@ -62,6 +62,7 @@ export const getInfo = (userUUID, {setUserInformation}) => {
             return response.json();
         })
         .then(results => {
+            console.log(results);
             setUserInformation(results);
         });
 };
@@ -104,7 +105,7 @@ export const registerNewDoctor = (userDetails, uuid, token) => {
         body: JSON.stringify(registerDetails),
         headers: {
             'Authorization': token,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
         }
     })
         .then((response) => {console.log(response); return response.json()})

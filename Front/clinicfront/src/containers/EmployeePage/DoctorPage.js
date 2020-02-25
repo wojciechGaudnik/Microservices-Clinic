@@ -53,6 +53,16 @@ export const DoctorPage = (props) => {
     };
 
     //Main HTML return
+
+    // const displayCalendars = () => {
+    //     let calendarsShow = '';
+    //     if (userInformation.calendars !== null){
+    //         for (let calendar in userInformation.calendars){
+    //         calendarsShow += calendar.calendaruuid + "name: " + calendar.name
+    //         }
+    //     }
+    // };
+
     return(
         <div style={styleForMainDiv}>
             <Container style={styleForContainer}>
