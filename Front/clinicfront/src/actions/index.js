@@ -98,23 +98,17 @@ export const registerNewDoctor = (userDetails, uuid, token) => {
         photoUrl: userDetails.photoURL,
         licence: userDetails.licence
     };
-    const body = JSON.stringify(registerDetails);
-    console.log("This is the body:" + body);
-    if (body.length !== 0){
-        fetch(URL, {
-            method: 'POST',
-            async: false,
-            body: body,
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => {console.log(response); return response.json()})
-            .then((responseData) => {
-                console.log(responseData);
-            });
-    } else {
-        console.log("Gówno")
-    }
+    fetch(URL, {
+        method: 'POST',
+        async: false,
+        body: JSON.stringify(registerDetails),
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+        }
+    })
+        .then((response) => {console.log(response); return response.json()})
+        .then((responseData) => {
+            console.log(responseData);
+        });
 };
