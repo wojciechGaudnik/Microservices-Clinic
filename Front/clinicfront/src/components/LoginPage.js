@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getTokenByGivenLoginDetails, redirectByRole} from "../actions";
-import {Button, Form, OverlayTrigger, Popover, PopoverContent} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({
@@ -16,14 +16,12 @@ export const LoginPage = (props) => {
         }
     }, [userDetails]);
 
-    //PopOver
-    const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-
+    //Handle Change
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
     const handleChange = (event) => {
-        const { name, value} = event.target;
+        const {name, value} = event.target;
         switch (name) {
             case 'password':
                 setPassword(value);
@@ -31,24 +29,6 @@ export const LoginPage = (props) => {
             case 'email':
                 setEmail(value);
                 return;
-        }
-    };
-
-    const popover = (input) => {
-        if (input === null){
-            return (
-                <Popover id="popover-basic">
-                    <PopoverContent>
-                        Fill it!
-                    </PopoverContent>
-                </Popover>)
-        } else {
-            return (
-                <Popover id="popover-basic">
-                    <PopoverContent>
-                        {input}
-                    </PopoverContent>
-                </Popover>)
         }
     };
 
@@ -78,33 +58,21 @@ export const LoginPage = (props) => {
             >
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label style={styleForFormLabel}>Email address</Form.Label>
-                    <OverlayTrigger
-                        overlay={popover(email)}
-                        trigger="focus"
-                        placement="right"
-                    >
-                        <Form.Control
-                            type="email"
-                            onChange={(e) => handleChange(e)}
-                            placeholder="Enter email"
-                            name="email"
-                        />
-                    </OverlayTrigger>
+                    <Form.Control
+                        type="email"
+                        onChange={(e) => handleChange(e)}
+                        placeholder="Enter email"
+                        name="email"
+                    />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label style={styleForFormLabel}>Password</Form.Label>
-                    <OverlayTrigger
-                        overlay={popover(password)}
-                        trigger="focus"
-                        placement="right"
-                    >
-                        <Form.Control
-                            type="password"
-                            onChange={(e) => handleChange(e)}
-                            placeholder="Password"
-                            name="password"/>
-                    </OverlayTrigger>
+                    <Form.Control
+                        type="password"
+                        onChange={(e) => handleChange(e)}
+                        placeholder="Password"
+                        name="password"/>
                 </Form.Group>
 
                 <Button variant="light" type="submit">

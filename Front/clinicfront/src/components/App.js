@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DoctorPage from "../containers/EmployeePage/EmployeeContainers/SetDoctorPage";
 import {PatientPage} from "../containers/EmployeePage/PatientPage";
 import {AssistantPage} from "../containers/EmployeePage/AssistantPage";
+import RegisterPage from "./RegisterPage";
 import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
@@ -17,6 +18,7 @@ const App = () => (
                 <Route path="/doctor" render={() => <DoctorPage/>}/>
                 <Route path="/patient" render={PatientPage}/>
                 <Route path="/assistant" render={AssistantPage}/>
+                <Route path="/register" render={() => <RegisterPage/>}/>
             </Switch>
         </div>
     </BrowserRouter>

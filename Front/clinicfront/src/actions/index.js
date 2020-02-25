@@ -35,7 +35,7 @@ export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) 
     fetch(URL, {
         method: 'POST',
         async: false,
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
     })
         .then((response) => response.json())
         .then((responseData) => {
@@ -43,6 +43,7 @@ export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) 
                 uuid: responseData.uuid,
                 role: responseData.role
             });
+            console.log(responseData.token);
             localStorage.setItem("token", responseData.token);
         });
 };
@@ -63,4 +64,57 @@ export const getInfo = (userUUID, {setUserInformation}) => {
         .then(results => {
             setUserInformation(results);
         });
+};
+
+export const registerNewUser = (registerDetails) => {
+    const URL = "http://localhost:8762/auth/users/";
+    const userDetails = {
+        "email": registerDetails.email,
+        "password": registerDetails.password,
+        "role": registerDetails.role
+    };
+    console.log(registerDetails);
+    fetch(URL, {
+        method: 'POST',
+        async: false,
+        body: JSON.stringify(userDetails),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            registerNewDoctor(registerDetails, responseData.uuid, responseData.token);
+        });
+};
+
+export const registerNewDoctor = (userDetails, uuid, token) => {
+    const URL = "http://localhost:8762/doctor-mssc/doctors/";
+    const registerDetails =  {
+        doctoruuid: uuid,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        photoUrl: userDetails.photoURL,
+        licence: userDetails.licence
+    };
+    const body = JSON.stringify(registerDetails);
+    console.log("This is the body:" + body);
+    if (body.length !== 0){
+        fetch(URL, {
+            method: 'POST',
+            async: false,
+            body: body,
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => {console.log(response); return response.json()})
+            .then((responseData) => {
+                console.log(responseData);
+            });
+    } else {
+        console.log("Gówno")
+    }
 };
