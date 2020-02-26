@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getInfo} from "../../actions";
+import {getInfo, sendRequestByGivenDetails} from "../../actions";
 import {Badge, Row, Container, Col} from "react-bootstrap";
 
 export const DoctorPage = (props) => {
@@ -16,7 +16,15 @@ export const DoctorPage = (props) => {
 
     //Effects after each render
     useEffect(() => {
-        getInfo(props.userDetails.uuid, {setUserInformation});
+        sendRequestByGivenDetails(
+            'http://localhost:8762/doctor-mssc/doctors/' + props.userDetails.uuid,
+            'GET',
+            null,
+            {'Authorization': localStorage.token},
+            (responseData) => setUserInformation(responseData),
+            false
+        );
+        // getInfo(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
     }, [userInformation.doctorUUID]);
 
