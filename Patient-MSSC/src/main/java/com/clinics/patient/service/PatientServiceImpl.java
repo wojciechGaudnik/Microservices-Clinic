@@ -2,17 +2,26 @@ package com.clinics.patient.service;
 
 
 import com.clinics.common.DTO.request.RegisterPatientDTO;
+import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
+import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.repository.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,29 +37,31 @@ public class PatientServiceImpl implements PatientService{
     @Autowired
     PatientClient patientClient;
 
-    @Override
-    public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO) {
-        //TODO implement
-        //TODO map from DTO to patient
-        //TODO call patientClient first
-        //TODO
+    @Autowired
+    RestTemplate restTemplate;
 
-        Patient patient = modelMapper.map(registerPatientDTO, Patient.class);
-        patientClient.activatePatientInAuth(patient);
+    @Override
+    public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
+//        Patient patient = modelMapper.map(registerPatientDTO, Patient.class);
+//        patientClient.activatePatientInAuth(patient);
         //TODO patient save to DB
         //TODO map saved patient to PatientRegisterResponseDTO and return
 
-
-
-
-//        var userAuth = modelMapper.map(registerUserDTO, UserDAO.class);
-//        userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
-//        userRepository.save(userAuth);
-//        var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
-//        String token = makeJwtToken(userAuth);
-//        userResponse.setToken(TOKEN_PREFIX + token);
-//        return userResponse;
-        return null;
+        System.out.println(registerPatientDTO);
+        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+        HttpEntity<String> testName = new HttpEntity<>("Empty Request", httpHeaders);
+        try {
+            System.out.println(url);
+            System.out.println(testName);
+            ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, testName, Void.class);
+        } catch (Exception e) {
+            throw new NoSuchElementException("There is no such patient in AUTH");
+        }
+        var patient = modelMapper.map(registerPatientDTO, Patient.class);
+        patientRepository.save(patient);
+        return modelMapper.map(patient, PatientRegisterResponseDTO.class);
     }
 
     @Override

@@ -12,7 +12,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.netflix.zuul.context.RequestContext.getCurrentContext;
 import static org.springframework.util.ReflectionUtils.rethrowRuntimeException;
@@ -33,8 +36,9 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 
 	@Override
 	public boolean shouldFilter() {
-		return getCurrentContext().getRequest().getRequestURI().equals("/doctor-mssc/doctors/")  //todo asistant + Patient !!!
-				&& getCurrentContext().getRequest().getMethod().equals("POST");
+//		return getCurrentContext().getRequest().getRequestURI().equals("/doctor-mssc/doctors/")  //todo asistant + Patient !!!
+//				&& getCurrentContext().getRequest().getMethod().equals("POST");
+		return ifTest(getCurrentContext().getRequest().getRequestURI()) && getCurrentContext().getRequest().getMethod().equals("POST");
 	}
 
 	public Object run() {
@@ -56,5 +60,15 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 			rethrowRuntimeException(e);
 		}
 		return null;
+	}
+
+	//TODO zenada
+	private boolean ifTest(String myString){
+		List<String> myList = new ArrayList<>(Arrays.asList("/doctor-mssc/doctors/", "/patient-mssc/patient/"));
+
+		if(myString.equals(myList.get(0)) || myList.equals(myList.get(1))){
+			return true;
+		}
+		return false;
 	}
 }
