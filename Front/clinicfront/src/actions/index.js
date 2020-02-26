@@ -1,6 +1,6 @@
 export const setStoreUserDetails = userDetails => ({
-   type: 'SET_USER_DETAILS',
-   userDetails
+    type: 'SET_USER_DETAILS',
+    userDetails
 });
 
 export const setStoreUserInformation = userInformation => ({
@@ -26,26 +26,31 @@ export const redirectByRole = (role, props) => {
     }
 };
 
-export const getTokenByGivenLoginDetails  = (email, password, {setUserDetails}) => {
-    const URL = 'http://localhost:8762/auth/login';
-    const user = {
-        "email": email,
-        "password": password
-    };
-    fetch(URL, {
-        method: 'POST',
+export const sendRequestByGivenDetails = (
+    url,
+    method,
+    body,
+    headers,
+    setFunction,
+    specialFunction,
+) => {
+    fetch(url, {
+        method: method,
         async: false,
-        body: JSON.stringify(user),
+        body: JSON.stringify(body),
+        headers: headers,
     })
         .then((response) => response.json())
-        .then((responseData) => {
-            setUserDetails({
-                uuid: responseData.uuid,
-                role: responseData.role
-            });
-            console.log(responseData.token);
-            localStorage.setItem("token", responseData.token);
-        });
+        .then((responseJSONData) => {
+            if (setFunction && specialFunction){
+                setFunction(responseJSONData);
+                specialFunction(responseJSONData);
+            }else if (setFunction){
+                setFunction(responseJSONData);
+            }else if (specialFunction){
+                specialFunction(responseJSONData);
+            }
+        })
 };
 
 export const getInfo = (userUUID, {setUserInformation}) => {
@@ -92,7 +97,7 @@ export const registerNewUser = (registerDetails) => {
 
 export const registerNewDoctor = (userDetails, uuid, token) => {
     const URL = "http://localhost:8762/doctor-mssc/doctors/";
-    const registerDetails =  {
+    const registerDetails = {
         doctoruuid: uuid,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
@@ -108,7 +113,10 @@ export const registerNewDoctor = (userDetails, uuid, token) => {
             'Content-Type': 'application/json;charset=UTF-8',
         }
     })
-        .then((response) => {console.log(response); return response.json()})
+        .then((response) => {
+            console.log(response);
+            return response.json()
+        })
         .then((responseData) => {
             console.log(responseData);
         });
