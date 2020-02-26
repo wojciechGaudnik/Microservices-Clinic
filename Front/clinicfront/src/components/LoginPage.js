@@ -77,7 +77,6 @@ export const LoginPage = (props) => {
                         setFunction,
                         specialFunction,
                     )
-                    // getTokenByGivenLoginDetails(email, password, {setUserDetails})
                 }}
                 style={styleForForm}
             >
