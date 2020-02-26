@@ -18,6 +18,7 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailCons
 		entityManager = BeanFactoryAuth.getBean(EntityManager.class);
 	}
 
+	// todo https://digitaljoel.nerd-herders.com/2010/12/28/spring-mvc-and-jsr-303-validation-groups/
 	@Override
 	public boolean isValid(User userToValid, ConstraintValidatorContext constraintValidatorContext) {
 		var email = userToValid.getEmail();
