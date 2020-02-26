@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getTokenByGivenLoginDetails, redirectByRole} from "../actions";
+import {redirectByRole, sendRequestByGivenDetails} from "../actions";
 import {Button, Form} from "react-bootstrap";
 
 export const LoginPage = (props) => {
@@ -52,7 +52,32 @@ export const LoginPage = (props) => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    getTokenByGivenLoginDetails(email, password, {setUserDetails})
+
+                    const body = {
+                        "email":email,
+                        "password":password
+                    };
+
+                    const setFunction = (responseData) => {
+                        setUserDetails({
+                            uuid: responseData.uuid,
+                            role: responseData.role
+                        })
+                    };
+
+                    const specialFunction = (responseData) => {
+                        localStorage.setItem("token", responseData.token)
+                    };
+
+                    sendRequestByGivenDetails(
+                        "http://localhost:8762/auth/login",
+                        'POST',
+                        body,
+                        {},
+                        setFunction,
+                        specialFunction,
+                    )
+                    // getTokenByGivenLoginDetails(email, password, {setUserDetails})
                 }}
                 style={styleForForm}
             >
