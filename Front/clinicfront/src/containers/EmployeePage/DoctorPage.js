@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {getInfo, sendRequestByGivenDetails} from "../../actions";
-import {Badge, Row, Container, Col} from "react-bootstrap";
+import {sendRequestByGivenDetails} from "../../actions";
+import {Badge, Col, Container, Row} from "react-bootstrap";
 
 export const DoctorPage = (props) => {
     const [userInformation, setUserInformation] = useState({
@@ -24,7 +24,6 @@ export const DoctorPage = (props) => {
             (responseData) => setUserInformation(responseData),
             false
         );
-        // getInfo(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
     }, [userInformation.doctorUUID]);
 
@@ -87,8 +86,8 @@ export const DoctorPage = (props) => {
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>FirstName:</Col>      <Col style={styleForValueCol}>{userInformation.firstName}</Col>      </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>LastName:</Col>       <Col style={styleForValueCol}>{userInformation.lastName}</Col>       </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Licence:</Col>        <Col style={styleForValueCol}>{userInformation.licence}</Col>        </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Calendars:</Col>      <Col style={styleForValueCol}>{displayCalendars()}</Col>      </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Specialization:</Col> <Col style={styleForValueCol}>{displaySpecializations()}</Col></Row>
+                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Calendars:</Col>      <Col style={styleForValueCol}>{displayCalendars()}</Col>             </Row>
+                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Specialization:</Col> <Col style={styleForValueCol}>{displaySpecializations()}</Col>       </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Medical Units:</Col>  <Col style={styleForValueCol}>{userInformation.medicalUnits}</Col>   </Row>
             </Container>
         </div>
