@@ -80,7 +80,7 @@ function App() {
                     "doctoruuid": results.uuid,
                     "firstName": "Janusz",
                     "lastName": "Kowalski",
-                    "photoUrl": "http://www.januszowo.com",
+                    "photoUrl": "http://www.januszowo666.com",
                     "licence": "111-222-333-444-555"
                 };
 
