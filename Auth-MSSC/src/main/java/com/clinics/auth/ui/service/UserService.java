@@ -9,7 +9,6 @@ import com.clinics.common.DTO.response.UserResponseDTO;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +21,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
-//@EnableCaching
 @Service
 public class UserService implements UserDetailsService, JwtMaker {
 
@@ -31,8 +29,6 @@ public class UserService implements UserDetailsService, JwtMaker {
 	final private PasswordEncoder passwordEncoder;
 	TaskExecutor taskExecutor;
 
-//	final
-//	AsyncUserRepositoryAccess asyncUserRepositoryAccess;
 
 	@Autowired
 	public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, TaskExecutor taskExecutor) {
@@ -40,7 +36,6 @@ public class UserService implements UserDetailsService, JwtMaker {
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 		this.taskExecutor = taskExecutor;
-//		this.asyncUserRepositoryAccess = asyncUserRepositoryAccess;
 	}
 
 	@Override
@@ -58,8 +53,8 @@ public class UserService implements UserDetailsService, JwtMaker {
 		var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
 		String token = makeJwtToken(userAuth);
 		userResponse.setToken(TOKEN_PREFIX + token);
-//		AtomicLong userAuthId = new AtomicLong(userAuth.getId());
-		taskExecutor.execute(new AsyncUserRepositoryAccess(userRepository));
+		AtomicLong userAuthId = new AtomicLong(userAuth.getId());
+		taskExecutor.execute(new AsyncUserRepositoryAccess(userRepository, userAuthId.get()));
 		return userResponse;
 	}
 
