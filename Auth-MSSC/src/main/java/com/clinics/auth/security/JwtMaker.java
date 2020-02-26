@@ -1,6 +1,6 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.model.User;
+import com.clinics.auth.ui.model.User;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,28 +1,28 @@
-package com.clinics.auth.model;
+package com.clinics.auth.ui.model;
 
 import com.clinics.auth.exception.validator.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@ToString
 @Builder(toBuilder = true)
+@UniqueEmailConstraint
 @Entity(name = "auth_user")
 public class User implements Role, Serializable, UserDetails{
 
@@ -33,10 +33,9 @@ public class User implements Role, Serializable, UserDetails{
 
 	@Builder.Default
 	@Column(updatable = false, nullable = false)
-	private UUID uuid = UUID.randomUUID();
+	private UUID uuid = UUID.randomUUID(); //todo make auto generate by hibernate !! after bootstrap off
 
 	@Column(unique = true)
-	@UniqueEmailConstraint
 	@NotBlank(message = "email is mandatory")
 	@Size(min = 3, max = 200, message = "email length out of range")
 	@Email(message = "email invalid")
@@ -52,7 +51,7 @@ public class User implements Role, Serializable, UserDetails{
 	private String role;
 
 	@Builder.Default
-	private boolean isEnable = true;
+	private boolean isEnable = false;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -18,7 +18,13 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 	}
 
 	@Override
-	public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+	public Object beforeBodyWrite(
+			Object o,
+			MethodParameter methodParameter,
+			MediaType mediaType,
+			Class<? extends HttpMessageConverter<?>> aClass,
+			ServerHttpRequest serverHttpRequest,
+			ServerHttpResponse serverHttpResponse) {
 		serverHttpResponse.getHeaders().set("Content-Type", "application/json");
 		return o;
 	}

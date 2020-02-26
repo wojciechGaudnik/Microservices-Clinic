@@ -1,11 +1,10 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.model.User;
+import com.clinics.auth.ui.model.User;
 import com.clinics.common.DTO.request.LoginUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.authentication.AuthenticationManager;

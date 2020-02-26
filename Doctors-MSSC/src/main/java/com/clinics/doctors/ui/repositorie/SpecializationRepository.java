@@ -1,6 +1,6 @@
-package com.clinics.doctors.repositorie;
+package com.clinics.doctors.ui.repositorie;
 
-import com.clinics.doctors.model.Specialization;
+import com.clinics.doctors.ui.model.Specialization;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

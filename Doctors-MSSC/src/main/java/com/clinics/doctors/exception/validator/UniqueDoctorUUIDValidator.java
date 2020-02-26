@@ -1,29 +1,29 @@
 package com.clinics.doctors.exception.validator;
 
-import com.clinics.doctors.beans.BeansFactoryDoctor;
+import com.clinics.doctors.bean.BeanFactoryDoctor;
+import com.clinics.doctors.ui.model.Doctor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.UUID;
 
-public class UniqueUUIDValidator implements ConstraintValidator<UniqueUUIDConstraint, UUID> {
+public class UniqueDoctorUUIDValidator implements ConstraintValidator<UniqueDoctorUUIDConstraint, Doctor> {
 
    private EntityManager entityManager;
 
    @Override
-   public void initialize(UniqueUUIDConstraint constraintAnnotation) {
-      entityManager = BeansFactoryDoctor.getBean(EntityManager.class);
+   public void initialize(UniqueDoctorUUIDConstraint constraintAnnotation) {
+      entityManager = BeanFactoryDoctor.getBean(EntityManager.class);
    }
 
    @Override
-   public boolean isValid(UUID doctoruuid, ConstraintValidatorContext constraintValidatorContext) {
+   public boolean isValid(Doctor doctor, ConstraintValidatorContext constraintValidatorContext) {
       try {
          entityManager.setFlushMode(FlushModeType.COMMIT);
          Query query = entityManager.createQuery("SELECT d FROM doctor d WHERE d.doctoruuid=?1");
-         query.setParameter(1, doctoruuid);
+         query.setParameter(1, doctor.getDoctoruuid());
          return query.getResultList().isEmpty();
       } finally {
          entityManager.setFlushMode(FlushModeType.AUTO);

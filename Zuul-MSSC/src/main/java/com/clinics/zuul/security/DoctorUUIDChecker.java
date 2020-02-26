@@ -39,7 +39,7 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 
 	public Object run() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String uuidFromAuthentication = (String) ((HashMap<String, Object>) authentication.getCredentials()).get("UUID");  //todo sprawdź to, czy ma to sens jeśli autentykacja odbywa sie wcześniej
+		String uuidFromAuthentication = (String) ((HashMap<String, Object>) authentication.getCredentials()).get(TOKEN_CLAIM_UUID);  //todo sprawdź to, czy ma to sens jeśli autentykacja odbywa sie wcześniej
 		try {
 			RequestContext context = getCurrentContext();
 			InputStream in = (InputStream) context.get("requestEntity");

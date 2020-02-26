@@ -26,5 +26,6 @@ public class RegisterDoctorDTO {
 	private String photoUrl;
 
 	@NotBlank(message = "licence is mandatory")
+	@Size(max = 100, message = "licence length out of range ")
 	private String licence;
 }

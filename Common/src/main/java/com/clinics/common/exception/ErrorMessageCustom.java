@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.WordUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -15,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-@Slf4j
 @Data
 @Builder
 @AllArgsConstructor
@@ -50,7 +48,6 @@ public class ErrorMessageCustom {
 	}
 
 	public String getError() {
-		log.warn(error + " <-----");
 		return WordUtils.capitalizeFully(error.replace("_", " ").replaceAll("(\\d)+\\s", ""));
 	}
 }
