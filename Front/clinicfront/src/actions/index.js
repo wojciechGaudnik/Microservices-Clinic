@@ -34,12 +34,17 @@ export const sendRequestByGivenDetails = (
     setFunction,
     specialFunction,
 ) => {
-    fetch(url, {
+    let init = {
         method: method,
         async: false,
-        body: JSON.stringify(body),
         headers: headers,
-    })
+    };
+
+    if (body){
+        init.body = JSON.stringify(body)
+    }
+
+    fetch(url, init)
         .then((response) => response.json())
         .then((responseJSONData) => {
             if (setFunction && specialFunction){
