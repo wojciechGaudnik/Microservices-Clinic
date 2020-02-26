@@ -9,6 +9,7 @@ import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
 @Service
@@ -26,24 +27,34 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public VisitDTO registerVisit(VisitDTO visitDTO, UUID patientUUID) {
-        //uderzanie do doctora - zwrotka true or false
+    public Visit findByUuid(UUID uuid) {
+        return visitRepository.findByUuid(uuid);
+    }
+
+
+    @Override
+    public VisitDTO registerVisit(VisitDTO visitDTO) {
+        //TODO opakowac w try
+
         VisitRegisterResponseDTO resp = patientClient.registerVisit(visitDTO);
-        Patient patient = patientRepository.findByUuid(patientUUID);
+        Patient patient = patientRepository.findByUuid(visitDTO.getPatientUUID());
+
         //make visit out of visitDTO
         Visit visit = modelMapper.map(visitDTO, Visit.class);
-        visitDTO.setUuid(visit.getUuid());
-
-        //Hibernate bidirectional relation
         visit.setPatient(patient);
-        visit.setUuid(UUID.randomUUID());
-        visitDTO.setUuid(visit.getUuid());
-        visitDTO.setPatientUUID(patientUUID);
+        System.out.println(visit);
         patient.getVisits().add(visit);
-
         patientRepository.save(patient);
-
-       //TODO exception handling
         return visitDTO;
     }
+
+    //TODO
+    @Override
+    public Visit findAllDetails(UUID uuid) {
+        Visit visit = findByUuid(uuid);
+        System.out.println(visit);
+        return null;
+    }
+
+
 }

@@ -3,6 +3,8 @@ package com.clinics.patient.service;
 import com.clinics.common.DTO.request.RegisterPatientDTO;
 import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
+import com.clinics.patient.entity.Visit;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -16,4 +18,5 @@ public interface PatientService {
     Optional<Patient> findById(Long ID);
     void deleteById(Long ID);
     Patient editPatient(Patient patient);
+    List<Visit> findAllVisits(UUID UUID);
 }
