@@ -55,7 +55,12 @@ export const RegisterPage = (props) => {
                         <Form.Label style={styleForFormLabel} >Role</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="Role"
-                                      name="role" />
+                                      name="role"
+                                      as="select">
+                            <option>doctor</option>
+                            <option>patient</option>
+                            <option>assistant</option>
+                        </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label style={styleForFormLabel} >First Name</Form.Label>
