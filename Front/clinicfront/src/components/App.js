@@ -10,6 +10,10 @@ import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
 
+//TODO: hooki
+//TODO: browserRouter
+//TODO: redux
+
 const App = () => (
     <BrowserRouter>
         <div className="App">
