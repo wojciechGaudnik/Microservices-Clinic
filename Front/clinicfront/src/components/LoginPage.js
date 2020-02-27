@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {redirectByRole, sendRequestByGivenDetails} from "../actions";
+import {redirectByRole} from "../actions";
 import {Button, Form} from "react-bootstrap";
 
+import {
+    sendFetchRequest,
+    styleForMainDiv, styleForForm, styleForFormLabel
+} from "../containers/SetLoginPage";
+
+
 export const LoginPage = (props) => {
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
@@ -16,10 +24,7 @@ export const LoginPage = (props) => {
         }
     }, [userDetails]);
 
-    //Handle Change
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-
+    //Handle change
     const handleChange = (event) => {
         const {name, value} = event.target;
         switch (name) {
@@ -32,51 +37,13 @@ export const LoginPage = (props) => {
         }
     };
 
-    //CSS stylesheet
-    const styleForFormLabel = {color:'white'};
-
-    const styleForForm = {
-        border: '2px solid white',
-        borderRadius: '5px',
-        padding: '8px'
-    };
-
-    const styleForMainDiv = {
-        margin: '50px auto auto 50px',
-        width: '30%',
-    };
-
     //Main HTML return
     return (
         <div style={styleForMainDiv}>
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-
-                    const body = {
-                        "email":email,
-                        "password":password
-                    };
-
-                    const setFunction = (responseData) => {
-                        setUserDetails({
-                            uuid: responseData.uuid,
-                            role: responseData.role
-                        })
-                    };
-
-                    const specialFunction = (responseData) => {
-                        localStorage.setItem("token", responseData.token)
-                    };
-
-                    sendRequestByGivenDetails(
-                        "http://localhost:8762/auth/login",
-                        'POST',
-                        body,
-                        {},
-                        setFunction,
-                        specialFunction,
-                    )
+                    sendFetchRequest(email, password, {setUserDetails})
                 }}
                 style={styleForForm}
             >
@@ -98,7 +65,6 @@ export const LoginPage = (props) => {
                         placeholder="Password"
                         name="password"/>
                 </Form.Group>
-
                 <Button variant="light" type="submit">
                     Log In
                 </Button>

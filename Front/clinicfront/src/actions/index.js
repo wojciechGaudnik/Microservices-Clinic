@@ -31,7 +31,7 @@ export const sendRequestByGivenDetails = (
     method,
     body,
     headers,
-    setFunction,
+    setInStateFunction,
     specialFunction,
 ) => {
     let init = {
@@ -47,11 +47,11 @@ export const sendRequestByGivenDetails = (
     fetch(url, init)
         .then((response) => response.json())
         .then((responseJSONData) => {
-            if (setFunction && specialFunction){
-                setFunction(responseJSONData);
+            if (setInStateFunction && specialFunction){
+                setInStateFunction(responseJSONData);
                 specialFunction(responseJSONData);
-            }else if (setFunction){
-                setFunction(responseJSONData);
+            }else if (setInStateFunction){
+                setInStateFunction(responseJSONData);
             }else if (specialFunction){
                 specialFunction(responseJSONData);
             }
