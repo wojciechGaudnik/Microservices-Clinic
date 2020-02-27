@@ -39,9 +39,4 @@ public class UserController {
 	public ResponseEntity<UserResponseDTO> setUserEnable(@PathVariable UUID userUUID) {
 		return ResponseEntity.status(201).body(userService.setUserEnable(userUUID));
 	}
-
-	@GetMapping(value = "/test")
-	public ResponseEntity<String> getTest(){
-		return ResponseEntity.ok().body("Hello world from AUTH");
-	}
 }
