@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import DoctorPage from "../DoctorPage";
 import {sendRequestByGivenDetails, setStoreUserInformation} from "../../../actions";
+import {URLs} from "../../../URL's";
 
 const getUserDetails = state => ( state.info.userDetails );
 const getUserInformation = state => ( state.info.userInformation );
@@ -53,7 +54,7 @@ export const styleForMainDiv = {
 };
 
 //Content for fetch request
-export const sendFetchRequest = (uuid, {setUserInformation}) => {
+export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) => {
     const body = null;
 
     const headers = {'Authorization': localStorage.token};
@@ -63,7 +64,7 @@ export const sendFetchRequest = (uuid, {setUserInformation}) => {
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        'http://localhost:8762/doctor-mssc/doctors/' + uuid,
+        URLs.GET_USER_INFORMATION + uuid,
         'GET',
         body,
         headers,

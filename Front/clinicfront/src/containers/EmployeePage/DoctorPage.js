@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Badge, Col, Container, Row} from "react-bootstrap";
 
 import {
-    sendFetchRequest,
+    sendFetchRequestSetUserInformation,
     styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol
 } from "./EmployeeContainers/SetDoctorPage";
 
@@ -21,7 +21,7 @@ export const DoctorPage = (props) => {
 
     //Effects after each render
     useEffect(() => {
-        sendFetchRequest(props.userDetails.uuid, {setUserInformation});
+        sendFetchRequestSetUserInformation(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
     }, [userInformation.doctorUUID]);
 

@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import LoginPage from "../components/LoginPage";
 import {sendRequestByGivenDetails, setStoreUserDetails} from "../actions";
+import {URLs} from "../URL's";
 
 const mapDispatchToProps = dispatch => ({
     setStoreUserDetails: (userDetails) => {dispatch(setStoreUserDetails(userDetails))}
@@ -30,7 +31,7 @@ export const styleForMainDiv = {
 };
 
 //Content for fetch request
-export const sendFetchRequest = (email, password, {setUserDetails}) => {
+export const sendFetchRequestLoginUser = (email, password, {setUserDetails}) => {
     const body = {
         "email":email,
         "password":password
@@ -50,7 +51,7 @@ export const sendFetchRequest = (email, password, {setUserDetails}) => {
     };
 
     sendRequestByGivenDetails(
-        "http://localhost:8762/auth/login",
+        URLs.LOGIN_USER,
         'POST',
         body,
         headers,

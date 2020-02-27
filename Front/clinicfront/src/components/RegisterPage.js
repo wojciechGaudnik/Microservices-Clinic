@@ -3,7 +3,7 @@ import {Button, Col, Form} from "react-bootstrap";
 import {useFormFields} from "../actions";
 
 import {
-    sendFetchRequest,
+    sendFetchRequestRegisterNewDoctor,
     styleForMainDiv, styleForForm, styleForFormLabel
 } from "../containers/SetRegisterPage";
 
@@ -29,7 +29,7 @@ export const RegisterPage = () => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequest(userRegisterInformation)
+                    sendFetchRequestRegisterNewDoctor(userRegisterInformation)
                 }}
                 style={styleForForm}
             >

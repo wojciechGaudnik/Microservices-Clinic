@@ -1,4 +1,5 @@
 import {sendRequestByGivenDetails} from "../actions";
+import {URLs} from "../URL's";
 
 //CSS stylesheet
 export const styleForFormLabel = {
@@ -17,7 +18,7 @@ export const styleForMainDiv = {
 };
 
 //Content for fetch request
-export const sendFetchRequest = (userRegisterInformation) => {
+export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation) => {
     const body = {
         "email": userRegisterInformation.email,
         "password": userRegisterInformation.password,
@@ -49,7 +50,7 @@ export const sendFetchRequest = (userRegisterInformation) => {
         const specialFunction = null;
 
         sendRequestByGivenDetails(
-            "http://localhost:8762/doctor-mssc/doctors/",
+            URLs.REGISTER_DOCTOR,
             'POST',
             body,
             headers,
@@ -59,7 +60,7 @@ export const sendFetchRequest = (userRegisterInformation) => {
     };
 
     sendRequestByGivenDetails(
-        "http://localhost:8762/auth/users/",
+        URLs.REGISTER_USER,
         'POST',
         body,
         headers,

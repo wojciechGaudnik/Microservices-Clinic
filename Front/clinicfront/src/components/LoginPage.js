@@ -3,7 +3,7 @@ import {redirectByRole} from "../actions";
 import {Button, Form} from "react-bootstrap";
 
 import {
-    sendFetchRequest,
+    sendFetchRequestLoginUser,
     styleForMainDiv, styleForForm, styleForFormLabel
 } from "../containers/SetLoginPage";
 
@@ -43,7 +43,7 @@ export const LoginPage = (props) => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequest(email, password, {setUserDetails})
+                    sendFetchRequestLoginUser(email, password, {setUserDetails})
                 }}
                 style={styleForForm}
             >
