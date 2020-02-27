@@ -1,19 +1,4 @@
-import { useState } from "react";
 import {sendRequestByGivenDetails} from "../actions";
-
-export function useFormFields(initialState) {
-    const [fields, setValues] = useState(initialState);
-
-    return [
-        fields,
-        function(event) {
-            setValues({
-                ...fields,
-                [event.target.name]: event.target.value
-            });
-        }
-    ];
-}
 
 //CSS stylesheet
 export const styleForFormLabel = {

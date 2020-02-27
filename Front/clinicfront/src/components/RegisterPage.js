@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Col, Form} from "react-bootstrap";
-import {useFormFields} from "../containers/SetRegisterPage"
+import {useFormFields} from "../actions";
 
 import {
     sendFetchRequest,

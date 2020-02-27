@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 export const setStoreUserDetails = userDetails => ({
     type: 'SET_USER_DETAILS',
     userDetails
@@ -9,6 +11,20 @@ export const setStoreUserInformation = userInformation => ({
 });
 
 //USEFUL FUNCTIONS
+
+export function useFormFields(initialState) {
+    const [fields, setValues] = useState(initialState);
+
+    return [
+        fields,
+        function(event) {
+            setValues({
+                ...fields,
+                [event.target.name]: event.target.value
+            });
+        }
+    ];
+}
 
 export const redirectByRole = (role, props) => {
     switch (role) {
