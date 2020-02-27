@@ -16,10 +16,11 @@ export const RegisterPage = (props) => {
         photoURL:   "",
         email:      "",
         password:   "",
-        role:       ""
+        role:       "doctor"
     });
 
     const handleChange = (event) => {
+        console.log(event.target.value);
         setUserRegisterInformation(event);
     };
 
@@ -57,9 +58,9 @@ export const RegisterPage = (props) => {
                                       placeholder="Role"
                                       name="role"
                                       as="select">
-                            <option>doctor</option>
-                            <option>patient</option>
-                            <option>assistant</option>
+                            <option value="doctor">doctor</option>
+                            <option value="patient">patient</option>
+                            <option value="assistant">assistant</option>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col}>
