@@ -31,13 +31,13 @@ public class VisitServiceImpl implements VisitService {
         return visitRepository.findByUuid(uuid);
     }
 
-
     @Override
     public VisitDTO registerVisit(VisitDTO visitDTO) {
         //TODO opakowac w try
 
         VisitRegisterResponseDTO resp = patientClient.registerVisit(visitDTO);
         Patient patient = patientRepository.findByUuid(visitDTO.getPatientUUID());
+        System.out.println(patient);
 
         //make visit out of visitDTO
         Visit visit = modelMapper.map(visitDTO, Visit.class);
@@ -48,13 +48,10 @@ public class VisitServiceImpl implements VisitService {
         return visitDTO;
     }
 
-    //TODO
+    //TODO dane pacjenta
     @Override
     public Visit findAllDetails(UUID uuid) {
         Visit visit = findByUuid(uuid);
-        System.out.println(visit);
-        return null;
+        return visit;
     }
-
-
 }

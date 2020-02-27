@@ -38,11 +38,13 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
         String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
+        System.out.println(url);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
-        HttpEntity<String> testName = new HttpEntity<>("Empty Request", httpHeaders);
+        HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
+        System.out.println(requestEntity);
         try {
-            ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, testName, Void.class);
+            ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
         } catch (Exception e) {
             throw new NoSuchElementException("There is no such patient in AUTH");
         }

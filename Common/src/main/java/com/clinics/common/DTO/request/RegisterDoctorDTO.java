@@ -29,3 +29,5 @@ public class RegisterDoctorDTO {
 	@Size(max = 100, message = "licence length out of range ")
 	private String licence;
 }
+
+
