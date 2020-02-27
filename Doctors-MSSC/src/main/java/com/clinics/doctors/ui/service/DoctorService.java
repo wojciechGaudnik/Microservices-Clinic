@@ -50,7 +50,7 @@ public class DoctorService {
 		try {
 			ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestFromDoctor, Void.class);
 		} catch (Exception e) {
-			throw new NoSuchElementException("There is no such doctor in AUTH");
+			throw new NoSuchElementException("There is no (dev free) such doctor in AUTH");
 		}
 		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
 		doctorRepository.save(doctor);

@@ -3,6 +3,7 @@ package com.clinics.zuul.security;
 import com.clinics.common.security.JwtProperties;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import java.util.List;
 import static com.netflix.zuul.context.RequestContext.getCurrentContext;
 import static org.springframework.util.ReflectionUtils.rethrowRuntimeException;
 
+@Slf4j
 @Component
 public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 
@@ -51,8 +53,8 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 			}
 			String body = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
 			//todo throw excepiton if "uuid" not exist
-			body = body.replaceAll("(uuid\"(\\s*):(\\s*)\")(.)*\"", "uuid\": \"" +
-					uuidFromAuthentication + "\"");
+			body = body.replaceAll("(?<=uuid\"(\\s):(\\s?))(\"[^\"]*\")", "uuid\":\"" +
+					uuidFromAuthentication);
 			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
 		}
 		catch (IOException e) {
