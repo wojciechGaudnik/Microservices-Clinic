@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Col, Form} from "react-bootstrap";
-import {useFormFields} from "../actions";
+import {redirectByRole, useFormFields} from "../actions";
 
 import {
     sendFetchRequestRegisterNewDoctor,
@@ -8,7 +8,7 @@ import {
 } from "../containers/SetRegisterPage";
 
 
-export const RegisterPage = () => {
+export const RegisterPage = (props) => {
     const [userRegisterInformation, setUserRegisterInformation] = useFormFields({
         firstName:  "",
         lastName:   "",
@@ -29,7 +29,8 @@ export const RegisterPage = () => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequestRegisterNewDoctor(userRegisterInformation)
+                    sendFetchRequestRegisterNewDoctor(userRegisterInformation);
+                    redirectByRole(null, props)
                 }}
                 style={styleForForm}
             >

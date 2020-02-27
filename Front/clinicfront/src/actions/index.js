@@ -37,7 +37,11 @@ export const redirectByRole = (role, props) => {
         case "patient":
             props.history.push("/patient");
             return;
+        case "register":
+            props.history.push("/register");
+            return;
         default:
+            props.history.push("/");
             return;
     }
 };

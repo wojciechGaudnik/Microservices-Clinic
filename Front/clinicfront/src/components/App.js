@@ -22,7 +22,7 @@ const App = () => (
                 <Route path="/doctor" render={() => <DoctorPage/>}/>
                 <Route path="/patient" render={PatientPage}/>
                 <Route path="/assistant" render={AssistantPage}/>
-                <Route path="/register" render={() => <RegisterPage/>}/>
+                <Route path="/register" render={props => <RegisterPage {...props}/>}/>
             </Switch>
         </div>
     </BrowserRouter>
