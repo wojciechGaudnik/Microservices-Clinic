@@ -1,63 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {sendRequestByGivenDetails} from "../../actions";
 import {Badge, Col, Container, Row} from "react-bootstrap";
+
+import {
+    sendFetchRequest,
+    styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol
+} from "./EmployeeContainers/SetDoctorPage";
+
 
 export const DoctorPage = (props) => {
     const [userInformation, setUserInformation] = useState({
-        doctorUUID: "empty",
-        firstName: "empty",
-        lastName: "empty",
-        photoURL: "empty",
-        licence: "empty",
-        calendars: "empty",
-        specializations: "empty",
-        medicalUnits: "empty"
+        doctorUUID:     "",
+        firstName:      "",
+        lastName:       "",
+        photoURL:       "",
+        licence:        "",
+        calendars:      "",
+        specializations:"",
+        medicalUnits:   ""
     });
 
     //Effects after each render
     useEffect(() => {
-        sendRequestByGivenDetails(
-            'http://localhost:8762/doctor-mssc/doctors/' + props.userDetails.uuid,
-            'GET',
-            null,
-            {'Authorization': localStorage.token},
-            (responseData) => setUserInformation(responseData),
-            false
-        );
+        sendFetchRequest(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
     }, [userInformation.doctorUUID]);
-
-    //CSS stylesheet
-    const styleForKeyCol = {
-        textAlign: 'right',
-        border: '2px solid grey',
-        borderRadius: '5px',
-        background: '#cce6ff'
-    };
-
-    const styleForValueCol = {
-        marginLeft: '3px',
-        border: '2px solid grey',
-        borderRadius: '5px',
-        background: '#cce6ff'
-    };
-
-    const styleForRow = {
-        marginBottom: '5px'
-    };
-
-    const styleForContainer = {
-        color: 'black',
-        padding: '10px 30px 10px 30px',
-        width: '50%',
-        border: '2px solid white',
-        borderRadius: '7px',
-
-    };
-
-    const styleForMainDiv = {
-        margin: '30px'
-    };
 
     //Main HTML return
 
