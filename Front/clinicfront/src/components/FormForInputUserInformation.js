@@ -92,5 +92,3 @@ export const FormForInputUserInformation = (props) => {
         </Form>
     );
 };
-
-export default FormForInputUserInformation;
