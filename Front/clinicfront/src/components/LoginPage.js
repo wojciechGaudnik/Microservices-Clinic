@@ -2,11 +2,7 @@ import React, {useEffect, useState} from "react";
 import {redirectByRole} from "../actions";
 import {Button, Form} from "react-bootstrap";
 
-import {
-    sendFetchRequestLoginUser,
-    styleForMainDiv, styleForForm, styleForFormLabel
-} from "../containers/SetLoginPage";
-import {FormForInputUserInformation} from "./FormForInputUserInformation";
+import {sendFetchRequestLoginUser, styleForForm, styleForFormLabel, styleForMainDiv} from "../containers/SetLoginPage";
 
 
 export const LoginPage = (props) => {

@@ -33,7 +33,9 @@ export const DoctorPage = (props) => {
     const displayCalendars = () => {
         let calendarsShow = '';
         for (let item in userInformation.calendars){
-            calendarsShow += userInformation.calendars[item].name + "  ";
+            if (userInformation.calendars.hasOwnProperty(item)){
+                calendarsShow += userInformation.calendars[item].name + "  ";
+            }
         }
         return calendarsShow;
     };
@@ -41,7 +43,9 @@ export const DoctorPage = (props) => {
     const displaySpecializations = () => {
         let specializationsShow = '';
         for (let item in userInformation.specializations){
-            specializationsShow += userInformation.specializations[item].name + "  ";
+            if (userInformation.specializations.hasOwnProperty(item)) {
+                specializationsShow += userInformation.specializations[item].name + "  ";
+            }
         }
         return specializationsShow;
     };
