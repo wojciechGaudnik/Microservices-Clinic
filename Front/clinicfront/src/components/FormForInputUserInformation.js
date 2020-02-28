@@ -1,7 +1,11 @@
-import {sendFetchRequestRegisterNewDoctor, styleForForm, styleForFormLabel} from "../containers/SetRegisterPage";
-import {redirectByRole} from "../actions";
-import {Button, Col, Form} from "react-bootstrap";
 import React from "react";
+
+import {redirectByRole} from "../actions";
+import {sendFetchRequestRegisterNewDoctor} from "../containers/SetRegisterPage";
+
+import {Button, Col, Form} from "react-bootstrap";
+import {styleForForm, styleForFormLabel} from "../containers/SetFormForInputUserInformation";
+
 
 export const FormForInputUserInformation = () => {
     return (

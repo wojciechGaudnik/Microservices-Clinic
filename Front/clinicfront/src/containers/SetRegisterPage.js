@@ -2,16 +2,6 @@ import {sendRequestByGivenDetails} from "../actions";
 import {URLs} from "../URL's";
 
 //CSS stylesheet
-export const styleForFormLabel = {
-    color:'white'
-};
-
-export const styleForForm = {
-    border: '2px solid white',
-    borderRadius: '5px',
-    padding: '8px'
-};
-
 export const styleForMainDiv = {
     margin: '50px auto auto 50px',
     width: '60%',
