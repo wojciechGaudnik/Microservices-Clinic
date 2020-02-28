@@ -99,3 +99,22 @@ export const sendFetchRequestChangeUserInformation = () => {
     //     specialFunction,
     // )
 };
+
+export const sendFetchRequestDeleteUser = () => {
+    // const body = null;
+    //
+    // const headers = {};
+    //
+    // const setInStateFunction = null;
+    //
+    // const specialFunction = null;
+    //
+    // sendRequestByGivenDetails(
+    //     URLs.GET_USER_INFORMATION,
+    //     'GET',
+    //     body,
+    //     headers,
+    //     setInStateFunction,
+    //     specialFunction,
+    // )
+};

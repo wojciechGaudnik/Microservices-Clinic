@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Badge, Col, Container, Row} from "react-bootstrap";
 
 import {
-    sendFetchRequestSetUserInformation, sendFetchRequestChangeUserInformation,
+    sendFetchRequestSetUserInformation, sendFetchRequestChangeUserInformation, sendFetchRequestDeleteUser,
     styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol, styleForSubContainer
 } from "./EmployeeContainers/SetDoctorPage";
 import Button from "react-bootstrap/Button";
@@ -66,6 +66,9 @@ export const DoctorPage = (props) => {
             <Container style={styleForSubContainer}>
                 <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
                     Edit
+                </Button>
+                <Button variant="light" size="sm" block onClick={() => sendFetchRequestDeleteUser()}>
+                    Delete Account
                 </Button>
             </Container>
             {showFormForEdit ? (
