@@ -2,7 +2,9 @@ import React, {useEffect, useState} from "react";
 import {redirectByRole} from "../actions";
 import {Button, Form} from "react-bootstrap";
 
-import {sendFetchRequestLoginUser, styleForForm, styleForFormLabel, styleForMainDiv} from "../containers/SetLoginPage";
+import {sendFetchRequestLoginUser,
+    styleForForm, styleForFormLabel, styleForMainDiv, styleForButton
+} from "../containers/SetLoginPage";
 
 
 export const LoginPage = (props) => {
@@ -62,8 +64,11 @@ export const LoginPage = (props) => {
                         placeholder="Password"
                         name="password"/>
                 </Form.Group>
-                <Button variant="light" type="submit">
+                <Button variant="light" style={styleForButton} type="submit">
                     Log In
+                </Button>
+                <Button variant="light" style={styleForButton} onClick={() => redirectByRole("register", props)}>
+                    Register
                 </Button>
             </Form>
         </div>

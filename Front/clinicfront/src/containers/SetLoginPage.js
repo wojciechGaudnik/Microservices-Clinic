@@ -30,6 +30,12 @@ export const styleForMainDiv = {
     width: '30%',
 };
 
+export const styleForButton = {
+    marginLeft: '0.5%',
+    marginRight: '0.5%',
+    width: '49%'
+};
+
 //Content for fetch request
 export const sendFetchRequestLoginUser = (email, password, {setUserDetails}) => {
     const body = {
