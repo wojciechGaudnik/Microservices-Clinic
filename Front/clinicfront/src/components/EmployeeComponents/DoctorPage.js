@@ -4,9 +4,9 @@ import {Badge, Col, Container, Row} from "react-bootstrap";
 import {
     sendFetchRequestSetUserInformation, sendFetchRequestChangeUserInformation, sendFetchRequestDeleteUser,
     styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol, styleForSubContainer
-} from "./EmployeeContainers/SetDoctorPage";
+} from "../../containers/EmployeeContainers/SetDoctorPage";
 import Button from "react-bootstrap/Button";
-import {FormForInputUserInformation} from "../../components/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../FormForInputUserInformation";
 
 
 export const DoctorPage = (props) => {
