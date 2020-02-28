@@ -1,4 +1,5 @@
-import {useState} from "react";
+import React, {useState} from "react";
+import {Modal} from "react-bootstrap";
 
 export const setStoreUserDetails = userDetails => ({
     type: 'SET_USER_DETAILS',
@@ -10,9 +11,14 @@ export const setStoreUserInformation = userInformation => ({
     userInformation
 });
 
+export const setStoreError = error => ({
+    type: 'SET_ERROR',
+    error
+});
+
 //USEFUL FUNCTIONS
 
-export function useFormFields(initialState) {
+export const useFormFields = (initialState) => {
     const [fields, setValues] = useState(initialState);
 
     return [
@@ -24,7 +30,14 @@ export function useFormFields(initialState) {
             });
         }
     ];
-}
+};
+
+export const checkIsThereError = (props) => {
+    if (localStorage.error){
+        props.setStoreError(true);
+        localStorage.removeItem("error");
+    }
+};
 
 export const redirectByRole = (role, props) => {
     switch (role) {
@@ -44,36 +57,4 @@ export const redirectByRole = (role, props) => {
             props.history.push("/");
             return;
     }
-};
-
-export const sendRequestByGivenDetails = (
-    url,
-    method,
-    body,
-    headers,
-    setInStateFunction,
-    specialFunction,
-) => {
-    let init = {
-        method: method,
-        async: false,
-        headers: headers,
-    };
-
-    if (body){
-        init.body = JSON.stringify(body)
-    }
-
-    fetch(url, init)
-        .then((response) => response.json())
-        .then((responseJSONData) => {
-            if (setInStateFunction && specialFunction){
-                setInStateFunction(responseJSONData);
-                specialFunction(responseJSONData);
-            }else if (setInStateFunction){
-                setInStateFunction(responseJSONData);
-            }else if (specialFunction){
-                specialFunction(responseJSONData);
-            }
-        })
 };

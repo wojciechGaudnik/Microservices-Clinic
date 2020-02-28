@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {redirectByRole} from "../actions";
+
+import {checkIsThereError, redirectByRole, useFormFields} from "../actions";
+
 import {Button, Form} from "react-bootstrap";
 
 import {sendFetchRequestLoginUser,
     styleForForm, styleForFormLabel, styleForMainDiv, styleForButton
 } from "../containers/SetLoginPage";
+import {ErrorModal} from "./ErrorModal";
 
 
 export const LoginPage = (props) => {
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [loginDetails, setLoginDetails] = useFormFields(null);
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
@@ -25,24 +27,18 @@ export const LoginPage = (props) => {
 
     //Handle change
     const handleChange = (event) => {
-        const {name, value} = event.target;
-        switch (name) {
-            case 'password':
-                setPassword(value);
-                return;
-            case 'email':
-                setEmail(value);
-                return;
-        }
+        setLoginDetails(event)
     };
 
     //Main HTML return
     return (
         <div style={styleForMainDiv}>
+            {props.error ? (<ErrorModal/>) : null}
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequestLoginUser(email, password, {setUserDetails})
+                    sendFetchRequestLoginUser(loginDetails, {setUserDetails});
+                    checkIsThereError(props);
                 }}
                 style={styleForForm}
             >

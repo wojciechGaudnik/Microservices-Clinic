@@ -18,7 +18,6 @@ export const FormForInputUserInformation = (props) => {
     });
 
     const handleChange = (event) => {
-        console.log(event.target.value);
         setUserInformation(event);
     };
 

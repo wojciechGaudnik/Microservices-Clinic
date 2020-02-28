@@ -1,5 +1,5 @@
-import {sendRequestByGivenDetails} from "../actions";
-import {URLs} from "../URL's";
+import {sendRequestByGivenDetails} from "../actions/FetchRequest";
+import {URLs} from "../URLs";
 
 //CSS stylesheet
 export const styleForMainDiv = {

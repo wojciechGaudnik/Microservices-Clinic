@@ -1,14 +1,22 @@
 import {connect} from "react-redux";
 import LoginPage from "../components/LoginPage";
-import {sendRequestByGivenDetails, setStoreUserDetails} from "../actions";
-import {URLs} from "../URL's";
+import {setStoreError, setStoreUserDetails} from "../actions";
+import {sendRequestByGivenDetails} from "../actions/FetchRequest";
+import {URLs} from "../URLs";
+
+const getError = state => (state.error);
+
+const mapStateToProps = state => ({
+    error: getError(state)
+});
 
 const mapDispatchToProps = dispatch => ({
-    setStoreUserDetails: (userDetails) => {dispatch(setStoreUserDetails(userDetails))}
+    setStoreUserDetails: (userDetails) => {dispatch(setStoreUserDetails(userDetails))},
+    setStoreError: (error) => {dispatch(setStoreError(error))}
 });
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(LoginPage)
 
@@ -37,10 +45,10 @@ export const styleForButton = {
 };
 
 //Content for fetch request
-export const sendFetchRequestLoginUser = (email, password, {setUserDetails}) => {
+export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}) => {
     const body = {
-        "email":email,
-        "password":password
+        "email":loginDetails.email,
+        "password":loginDetails.password
     };
 
     const headers = ({});
