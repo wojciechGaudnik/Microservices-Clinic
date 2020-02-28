@@ -12,7 +12,7 @@ export const RegisterPage = (props) => {
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-            <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestRegisterNewDoctor}/>
+            <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestRegisterNewDoctor} variant="register"/>
         </div>
 )};
 

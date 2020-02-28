@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import {redirectByRole, useFormFields} from "../actions";
 
@@ -22,12 +22,21 @@ export const FormForInputUserInformation = (props) => {
         setUserInformation(event);
     };
 
+    const checkVariant = (variant) => {
+        switch (variant) {
+            case "register":
+                return "Register";
+            case "edit":
+                return  "Change";
+        }
+    };
+
     return (
         <Form
             onSubmit={e => {
                 e.preventDefault();
                 props.sendFetchRequest(userInformation);
-                redirectByRole(null, props)
+                redirectByRole(null, props);
             }}
             style={styleForForm}
         >
@@ -86,8 +95,8 @@ export const FormForInputUserInformation = (props) => {
                                   name="photoURL"/>
                 </Form.Group>
             </Form.Row>
-            <Button variant="light" type="submit">
-                Register
+            <Button variant="light">
+                {checkVariant(props.variant)}
             </Button>
         </Form>
     );

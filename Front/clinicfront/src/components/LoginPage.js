@@ -6,6 +6,7 @@ import {
     sendFetchRequestLoginUser,
     styleForMainDiv, styleForForm, styleForFormLabel
 } from "../containers/SetLoginPage";
+import {FormForInputUserInformation} from "./FormForInputUserInformation";
 
 
 export const LoginPage = (props) => {

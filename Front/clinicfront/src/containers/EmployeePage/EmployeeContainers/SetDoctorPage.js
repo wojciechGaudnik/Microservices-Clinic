@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import DoctorPage from "../DoctorPage";
 import {sendRequestByGivenDetails, setStoreUserInformation} from "../../../actions";
 import {URLs} from "../../../URL's";
+import React from "react";
 
 const getUserDetails = state => ( state.info.userDetails );
 const getUserInformation = state => ( state.info.userInformation );
@@ -43,10 +44,17 @@ export const styleForRow = {
 export const styleForContainer = {
     color: 'black',
     padding: '10px 30px 10px 30px',
+    marginBottom: '15px',
     width: '50%',
     border: '2px solid white',
     borderRadius: '7px',
+};
 
+export const styleForSubContainer = {
+    color: 'black',
+    padding: '10px 30px 10px 30px',
+    marginBottom: '15px',
+    width: '50%',
 };
 
 export const styleForMainDiv = {
@@ -71,4 +79,23 @@ export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) =
         setInStateFunction,
         specialFunction,
     )
+};
+
+export const sendFetchRequestChangeUserInformation = () => {
+    // const body = null;
+    //
+    // const headers = {};
+    //
+    // const setInStateFunction = null;
+    //
+    // const specialFunction = null;
+    //
+    // sendRequestByGivenDetails(
+    //     URLs.GET_USER_INFORMATION,
+    //     'GET',
+    //     body,
+    //     headers,
+    //     setInStateFunction,
+    //     specialFunction,
+    // )
 };

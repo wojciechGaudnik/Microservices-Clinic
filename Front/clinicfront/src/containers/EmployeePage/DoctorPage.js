@@ -2,12 +2,15 @@ import React, {useEffect, useState} from "react";
 import {Badge, Col, Container, Row} from "react-bootstrap";
 
 import {
-    sendFetchRequestSetUserInformation,
-    styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol
+    sendFetchRequestSetUserInformation, sendFetchRequestChangeUserInformation,
+    styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol, styleForSubContainer
 } from "./EmployeeContainers/SetDoctorPage";
+import Button from "react-bootstrap/Button";
+import {FormForInputUserInformation} from "../../components/FormForInputUserInformation";
 
 
 export const DoctorPage = (props) => {
+    const [showFormForEdit, setShowFormForEdit] = useState(false);
     const [userInformation, setUserInformation] = useState({
         doctorUUID:     "",
         firstName:      "",
@@ -56,6 +59,17 @@ export const DoctorPage = (props) => {
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Specialization:</Col> <Col style={styleForValueCol}>{displaySpecializations()}</Col>       </Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Medical Units:</Col>  <Col style={styleForValueCol}>{userInformation.medicalUnits}</Col>   </Row>
             </Container>
+            <Container style={styleForSubContainer}>
+                <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
+                    Edit
+                </Button>
+            </Container>
+            {showFormForEdit ? (
+                <Container>
+                    <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestChangeUserInformation} variant="edit"/>
+                </Container>
+                ) : null
+            }
         </div>
     )
 };
