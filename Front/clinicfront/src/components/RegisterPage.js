@@ -1,11 +1,10 @@
 import React from "react";
-import {Button, Col, Form} from "react-bootstrap";
-import {redirectByRole, useFormFields} from "../actions";
 
-import {
-    sendFetchRequestRegisterNewDoctor,
-    styleForMainDiv, styleForForm, styleForFormLabel
-} from "../containers/SetRegisterPage";
+import {useFormFields} from "../actions";
+
+import {styleForMainDiv} from "../containers/SetRegisterPage";
+
+import {FormForInputUserInformation} from "./FormForInputUserInformation";
 
 
 export const RegisterPage = (props) => {
@@ -19,15 +18,10 @@ export const RegisterPage = (props) => {
         role:       "doctor"
     });
 
-    const handleChange = (event) => {
-        console.log(event.target.value);
-        setUserRegisterInformation(event);
-    };
-
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-
+            <FormForInputUserInformation {...props} setFunction={setUserRegisterInformation} userInformation = {userRegisterInformation} variant="register"/>
         </div>
 )};
 
