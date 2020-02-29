@@ -1,26 +1,34 @@
 import React, {useEffect, useState} from "react";
 
-import {checkIsThereError, redirectByRole, useFormFields} from "../actions";
+import {redirectByRole, useFormFields} from "../actions";
 
 import {Button, Form} from "react-bootstrap";
+
+import {ErrorModal} from "./ErrorModal";
 
 import {sendFetchRequestLoginUser,
     styleForForm, styleForFormLabel, styleForMainDiv, styleForButton
 } from "../containers/SetLoginPage";
-import {ErrorModal} from "./ErrorModal";
+
 
 
 export const LoginPage = (props) => {
-    const [loginDetails, setLoginDetails] = useFormFields(null);
+    const [loginDetails, setLoginDetails] = useFormFields({
+        email: "",
+        password: ""
+    });
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
     });
 
     //Effects after each render
+    const clearStoreError = () => {props.setStoreError(false)};
+
     useEffect(() => {
         props.setStoreUserDetails(userDetails);
         if (userDetails.role){
+            clearStoreError();
             redirectByRole(userDetails.role, props)
         }
     }, [userDetails]);
@@ -37,8 +45,7 @@ export const LoginPage = (props) => {
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequestLoginUser(loginDetails, {setUserDetails});
-                    checkIsThereError(props);
+                    sendFetchRequestLoginUser(loginDetails, {setUserDetails}, {ifCatchSetErrorInStore: () => {props.setStoreError(true)}});
                 }}
                 style={styleForForm}
             >

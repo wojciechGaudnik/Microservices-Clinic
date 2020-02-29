@@ -5,6 +5,7 @@ export const sendRequestByGivenDetails = (
     headers,
     setInStateFunction,
     specialFunction,
+    ifCatchSetErrorInStore = () => {}
 ) => {
     let init = {
         method: method,
@@ -28,7 +29,7 @@ export const sendRequestByGivenDetails = (
                 specialFunction(responseJSONData);
             }
         })
-        .catch((error) => {
-            localStorage.setItem("error", error);
+        .catch(() => {
+            ifCatchSetErrorInStore();
         })
 };

@@ -32,13 +32,6 @@ export const useFormFields = (initialState) => {
     ];
 };
 
-export const checkIsThereError = (props) => {
-    if (localStorage.error){
-        props.setStoreError(true);
-        localStorage.removeItem("error");
-    }
-};
-
 export const redirectByRole = (role, props) => {
     switch (role) {
         case "doctor":

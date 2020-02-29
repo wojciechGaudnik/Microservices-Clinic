@@ -1,4 +1,4 @@
-import {sendRequestByGivenDetails} from "../actions/FetchRequest";
+import {sendRequestByGivenDetails} from "../actions/fetchRequest";
 import {URLs} from "../URLs";
 
 //CSS stylesheet

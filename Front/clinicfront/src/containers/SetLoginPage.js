@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import LoginPage from "../components/LoginPage";
 import {setStoreError, setStoreUserDetails} from "../actions";
-import {sendRequestByGivenDetails} from "../actions/FetchRequest";
+import {sendRequestByGivenDetails} from "../actions/fetchRequest";
 import {URLs} from "../URLs";
 
 const getError = state => (state.error);
@@ -19,8 +19,6 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(LoginPage)
-
-
 
 //CSS Stylesheet
 export const styleForFormLabel = {
@@ -45,7 +43,7 @@ export const styleForButton = {
 };
 
 //Content for fetch request
-export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}) => {
+export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCatchSetErrorInStore}) => {
     const body = {
         "email":loginDetails.email,
         "password":loginDetails.password
@@ -71,5 +69,6 @@ export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}) => {
         headers,
         setInStateFunction,
         specialFunction,
+        ifCatchSetErrorInStore
     )
 };
