@@ -53,7 +53,7 @@ public class Doctor {
 	@Size(min = 3, max = 500, message = "photoUrl length out of range ")
 	private String photoUrl;
 
-	@Column(nullable = false)
+	@Column(unique = true, nullable = false)
 	private String licence;
 
 	@OneToMany(

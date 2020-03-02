@@ -34,12 +34,14 @@ public class BootStrapUser implements CommandLineRunner, Role {
 	public void init(){
 		User userPatient1 = User
 				.builder()
+				.uuid(UUID.randomUUID())
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
 		User userPatient2 = User
 				.builder()
+				.uuid(UUID.randomUUID())
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
@@ -62,18 +64,21 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.build();
 		User userAssistant1 = User
 				.builder()
+				.uuid(UUID.randomUUID())
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
 		User userAssistant2 = User
 				.builder()
+				.uuid(UUID.randomUUID())
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
 		User creepy = User
 				.builder()
+				.uuid(UUID.randomUUID())
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
 				.role(Role.SYSTEM_ADMIN)

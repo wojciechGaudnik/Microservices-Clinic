@@ -1,6 +1,7 @@
 package com.clinics.common.DTO.request;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Data
 public class RegisterPatientDTO {
+
     @NotNull(message = "uuid cannot be null")
     private UUID uuid;
 
@@ -20,6 +22,7 @@ public class RegisterPatientDTO {
     @Size(min = 3, max = 100, message = "lastName length out of range")
     private String lastName;
 
+    @PESEL
     @NotBlank(message = "pesel is mandatory")
     private String pesel;
 

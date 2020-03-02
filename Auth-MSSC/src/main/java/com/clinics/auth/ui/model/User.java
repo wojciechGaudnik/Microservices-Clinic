@@ -4,6 +4,10 @@ import com.clinics.auth.exception.validator.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,10 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Data
@@ -22,6 +23,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @Builder(toBuilder = true)
+@DynamicInsert
+@DynamicUpdate
 @UniqueEmailConstraint
 @Entity(name = "auth_user")
 public class User implements Role, Serializable, UserDetails{
@@ -31,14 +34,16 @@ public class User implements Role, Serializable, UserDetails{
 	@JsonIgnore
 	private Long id;
 
-	@Builder.Default
+//	@Builder.Default
 	@Column(updatable = false, nullable = false)
-	private UUID uuid = UUID.randomUUID(); //todo make auto generate by hibernate !! after bootstrap off
+//	private UUID uuid = UUID.randomUUID(); //todo make auto generate by hibernate !! after bootstrap off
+	private UUID uuid; //todo uuid should be null if we want edit email or pass
 
-	@Column(unique = true)
-	@NotBlank(message = "email is mandatory")
-	@Size(min = 3, max = 200, message = "email length out of range")
-	@Email(message = "email invalid")
+
+//	@Column(unique = true)
+//	@NotBlank(message = "email is mandatory")
+//	@Size(min = 3, max = 200, message = "email length out of range")
+//	@Email(message = "email invalid")
 	private String email;
 
 
@@ -49,6 +54,16 @@ public class User implements Role, Serializable, UserDetails{
 
 	@Column(nullable = false)
 	private String role;
+
+	@Column(name = "created", updatable = false, nullable = false)
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDateStamp;
+
+	@Column(name = "updated", nullable = false)
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updateDateStamp;
 
 	@Builder.Default
 	private boolean isEnable = false;

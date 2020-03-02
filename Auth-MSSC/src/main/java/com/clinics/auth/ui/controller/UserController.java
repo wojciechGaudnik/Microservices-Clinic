@@ -1,6 +1,7 @@
 package com.clinics.auth.ui.controller;
 
 import com.clinics.auth.ui.service.UserService;
+import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,23 @@ public class UserController {
 		return ResponseEntity.status(201).body(userService.saveUser(registerUserDTO));
 	}
 
+	@PatchMapping(path = "/users/{userUUID}")
+	public ResponseEntity<UserResponseDTO> editUser(
+			@PathVariable UUID userUUID,
+			@Valid @RequestBody EditUserInnerDTO editUserInnerDTO) {
+		log.error(" ---> message from user controller <--- ");
+		log.warn(String.valueOf(editUserInnerDTO));
+		log.warn(String.valueOf(userUUID));
+		return ResponseEntity.status(200).body(userService.editUser(editUserInnerDTO, userUUID));
+	}
+
 	@PutMapping(path = "/users/{userUUID}")
 	public ResponseEntity<UserResponseDTO> setUserEnable(@PathVariable UUID userUUID) {
 		return ResponseEntity.status(201).body(userService.setUserEnable(userUUID));
+	}
+
+	@GetMapping(value = "/test")
+	public ResponseEntity<String> getTest(){
+		return ResponseEntity.ok().body("Hello world from AUTH");
 	}
 }
