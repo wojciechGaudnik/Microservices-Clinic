@@ -34,6 +34,7 @@ public class Specialization {
 			unique = true)
 	@Builder.Default
 	private UUID specializationuuid = UUID.randomUUID(); //todo bad name because JPA <---> sqlQuery
+	//todo move creation uuid into method
 
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
@@ -47,4 +48,5 @@ public class Specialization {
 			joinColumns = {@JoinColumn(name = "spacialization_id")},
 			inverseJoinColumns = {@JoinColumn(name = "doctor_id")})
 	Collection<Doctor> doctors = new HashSet<>();
+	//todo move creation doctors into method
 }

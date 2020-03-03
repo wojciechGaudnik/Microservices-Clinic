@@ -7,23 +7,18 @@ import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.doctors.ui.model.Doctor;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.descriptor.web.WebXml;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Slf4j
 @Service
 public class DoctorService {
 

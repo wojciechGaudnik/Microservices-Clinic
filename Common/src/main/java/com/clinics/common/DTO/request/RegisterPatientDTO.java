@@ -1,6 +1,7 @@
 package com.clinics.common.DTO.request;
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
+@ToString
 public class RegisterPatientDTO {
 
     @NotNull(message = "uuid cannot be null")

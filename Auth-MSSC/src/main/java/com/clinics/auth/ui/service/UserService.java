@@ -8,7 +8,6 @@ import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
@@ -23,7 +22,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Slf4j
 @Service
 public class UserService implements UserDetailsService, JwtMaker {
 
@@ -47,7 +45,6 @@ public class UserService implements UserDetailsService, JwtMaker {
 	}
 
 
-	@SneakyThrows
 	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
 		userAuth.setUuid(UUID.randomUUID());
@@ -80,13 +77,8 @@ public class UserService implements UserDetailsService, JwtMaker {
 			throw new NoSuchElementException("No such user to edit ");
 		}
 		var userToEdit = optionalUserToEdit.get();
-		log.warn("---> password from db" + userToEdit.getPassword());
 		if(editUserInnerDTO.getPassword() != null) userToEdit.setPassword(passwordEncoder.encode(editUserInnerDTO.getPassword()));
 		if(editUserInnerDTO.getEmail() != null) userToEdit.setEmail(editUserInnerDTO.getEmail());
-//		else userToEdit.setEmail(null);
-//		userToEdit = modelMapper.map(editUserInnerDTO, User.class);
-		log.warn("--- editUserInnerDTO" + editUserInnerDTO);
-		log.warn("--- > userToEdit" + userToEdit);
 		userRepository.save(userToEdit);
 		return modelMapper.map(userToEdit, UserResponseDTO.class);
 	}

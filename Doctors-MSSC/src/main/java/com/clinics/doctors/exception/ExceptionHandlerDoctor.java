@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
@@ -24,7 +23,6 @@ public class ExceptionHandlerDoctor {
 			DataIntegrityViolationException.class,
 			ValidationException.class,
 			HttpClientErrorException.class,
-//			TransactionSystemException.class
 	})
 	public ResponseEntity<Object> handlerConstraintViolationException(Exception exception, WebRequest request) {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom

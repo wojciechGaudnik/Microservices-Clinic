@@ -1,6 +1,5 @@
 package com.clinics.auth.ui.model;
 
-//import com.clinics.auth.exception.validator.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -27,7 +26,6 @@ import java.util.*;
 @DynamicInsert
 @DynamicUpdate
 @EqualsAndHashCode
-//@UniqueEmailConstraint
 @Entity(name = "auth_user")
 public class User implements Role, Serializable, UserDetails{
 
@@ -36,11 +34,8 @@ public class User implements Role, Serializable, UserDetails{
 	@JsonIgnore
 	private Long id;
 
-//	@Builder.Default
 	@Column(updatable = false, nullable = false)
-//	private UUID uuid = UUID.randomUUID(); //todo make auto generate by hibernate !! after bootstrap off
 	private UUID uuid; //todo uuid should be null if we want edit email or pass
-
 
 	@Column(unique = true)
 	@NotBlank(message = "email is mandatory")

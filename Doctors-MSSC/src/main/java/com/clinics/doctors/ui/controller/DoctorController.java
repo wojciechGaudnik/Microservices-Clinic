@@ -4,7 +4,6 @@ import com.clinics.common.DTO.request.EditDoctorDTO;
 import com.clinics.common.DTO.request.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
@@ -48,7 +46,6 @@ public class DoctorController {
 			@PathVariable UUID uuid,
 			HttpServletRequest request) {
 		doctorService.edit(editDoctorDTO, uuid, request);
-		log.warn(String.valueOf(editDoctorDTO));
 		return ResponseEntity.ok().build();
 	}
 

@@ -2,11 +2,8 @@ package com.clinics.auth.bootstrap;
 
 import com.clinics.auth.ui.model.User;
 import com.clinics.auth.ui.repositorie.UserRepository;
-import com.clinics.common.ConsoleColors;
 import com.clinics.common.security.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +14,13 @@ import java.util.UUID;
 @Component
 public class BootStrapUser implements CommandLineRunner, Role {
 
-	@Lazy
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
-	@Lazy
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
+	public BootStrapUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -94,16 +90,6 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				creepy);
 
 		userRepository.saveAll(userList);
-
-		System.out.println(ConsoleColors.GREEN_BOLD);
-
-		System.out.println(userRepository);
-		var user = userRepository.findById(1L).get();
-		System.out.println(ConsoleColors.GREEN_BOLD);
-		System.out.println(user.getEmail());
-		System.out.println(user.getPassword());
-
-		System.out.println(ConsoleColors.RESET);
 	}
 }
 

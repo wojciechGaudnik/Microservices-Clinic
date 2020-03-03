@@ -1,12 +1,14 @@
 package com.clinics.common.DTO.request;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@ToString
 public class LoginUserDTO {
 
 	@Email
