@@ -21,7 +21,7 @@ const info = (state = {
                     role: action.userDetails.role
                 }, userInformation: state.userInformation
             };
-        case 'SET_USER_INFORMATION':
+        case 'SET_DOCTOR_INFORMATION':
             return {
                 userDetails: state.userDetails,
                 userInformation: {
@@ -33,6 +33,15 @@ const info = (state = {
                     calendars: action.userInformation.calendars,
                     specializations: action.userInformation.specializations,
                     medicalUnits: action.userInformation.medicalUnits
+                }
+            };
+        case 'SET_PATIENT_INFORMATION':
+            return {
+                userDetails: state.userDetails,
+                userInformation: {
+                    patientuuid: action.userInformation.patientuuid,
+                    firstName: action.userInformation.firstName,
+                    lastName: action.userInformation.lastName,
                 }
             };
         default:

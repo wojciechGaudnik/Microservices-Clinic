@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
-import DoctorPage from "../../components/EmployeeComponents/DoctorPage";
-import {setStoreDoctorInformation} from "../../actions";
+import PatientPage from "../../components/EmployeeComponents/PatientPage";
+import {setStorePatientInformation} from "../../actions";
 import {sendRequestByGivenDetails} from "../../actions/fetchRequest";
 import {URLs} from "../../URLs";
 
@@ -13,32 +13,32 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setStoreUserInformation: (userInformation) => {dispatch(setStoreDoctorInformation(userInformation))}
+    setStoreUserInformation: (userInformation) => {dispatch(setStorePatientInformation(userInformation))}
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(DoctorPage)
+)(PatientPage)
 
 //Content for fetch request
 export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) => {
-    const body = null;
-
-    const headers = {'Authorization': localStorage.token};
-
-    const setInStateFunction = (responseData) => setUserInformation(responseData);
-
-    const specialFunction = null;
-
-    sendRequestByGivenDetails(
-        URLs.GET_USER_INFORMATION + uuid,
-        'GET',
-        body,
-        headers,
-        setInStateFunction,
-        specialFunction,
-    )
+    // const body = null;
+    //
+    // const headers = {'Authorization': localStorage.token};
+    //
+    // const setInStateFunction = (responseData) => setUserInformation(responseData);
+    //
+    // const specialFunction = null;
+    //
+    // sendRequestByGivenDetails(
+    //     URLs.GET_USER_INFORMATION + uuid,
+    //     'GET',
+    //     body,
+    //     headers,
+    //     setInStateFunction,
+    //     specialFunction,
+    // )
 };
 
 export const sendFetchRequestChangeUserInformation = () => {

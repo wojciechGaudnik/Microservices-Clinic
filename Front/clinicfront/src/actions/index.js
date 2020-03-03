@@ -1,13 +1,17 @@
 import React, {useState} from "react";
-import {Modal} from "react-bootstrap";
 
 export const setStoreUserDetails = userDetails => ({
     type: 'SET_USER_DETAILS',
     userDetails
 });
 
-export const setStoreUserInformation = userInformation => ({
-    type: 'SET_USER_INFORMATION',
+export const setStoreDoctorInformation = userInformation => ({
+    type: 'SET_DOCTOR_INFORMATION',
+    userInformation
+});
+
+export const setStorePatientInformation = userInformation => ({
+    type: 'SET_PATIENT_INFORMATION',
     userInformation
 });
 

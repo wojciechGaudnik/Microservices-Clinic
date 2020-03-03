@@ -2,9 +2,19 @@ import React, {useEffect, useState} from "react";
 import {Badge, Col, Container, Row} from "react-bootstrap";
 
 import {
-    sendFetchRequestSetUserInformation, sendFetchRequestChangeUserInformation, sendFetchRequestDeleteUser,
-    styleForMainDiv, styleForContainer, styleForRow, styleForValueCol, styleForKeyCol, styleForSubContainer
+    sendFetchRequestSetUserInformation,
+    sendFetchRequestChangeUserInformation,
+    sendFetchRequestDeleteUser
 } from "../../containers/EmployeeContainers/SetDoctorPage";
+
+import { 
+    styleForMainDiv,
+    styleForContainer,
+    styleForRow,
+    styleForValueCol,
+    styleForKeyCol,
+    styleForSubContainer
+} from "../../containers/EmployeeContainers/SetEmployeePages"
 import Button from "react-bootstrap/Button";
 import {FormForInputUserInformation} from "../FormForInputUserInformation";
 
