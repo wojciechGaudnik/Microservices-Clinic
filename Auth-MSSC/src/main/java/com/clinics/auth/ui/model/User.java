@@ -1,6 +1,6 @@
 package com.clinics.auth.ui.model;
 
-import com.clinics.auth.exception.validator.UniqueEmailConstraint;
+//import com.clinics.auth.exception.validator.UniqueEmailConstraint;
 import com.clinics.common.security.Role;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -25,7 +26,8 @@ import java.util.*;
 @Builder(toBuilder = true)
 @DynamicInsert
 @DynamicUpdate
-@UniqueEmailConstraint
+@EqualsAndHashCode
+//@UniqueEmailConstraint
 @Entity(name = "auth_user")
 public class User implements Role, Serializable, UserDetails{
 
@@ -40,12 +42,11 @@ public class User implements Role, Serializable, UserDetails{
 	private UUID uuid; //todo uuid should be null if we want edit email or pass
 
 
-//	@Column(unique = true)
-//	@NotBlank(message = "email is mandatory")
-//	@Size(min = 3, max = 200, message = "email length out of range")
-//	@Email(message = "email invalid")
+	@Column(unique = true)
+	@NotBlank(message = "email is mandatory")
+	@Size(min = 3, max = 200, message = "email length out of range")
+	@Email(message = "email invalid")
 	private String email;
-
 
 	@NotBlank(message = "password is mandatory")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -57,13 +58,11 @@ public class User implements Role, Serializable, UserDetails{
 
 	@Column(name = "created", updatable = false, nullable = false)
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDateStamp;
+	private LocalDateTime creationDateStamp;
 
 	@Column(name = "updated", nullable = false)
 	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateDateStamp;
+	private LocalDateTime updateDateStamp;
 
 	@Builder.Default
 	private boolean isEnable = false;

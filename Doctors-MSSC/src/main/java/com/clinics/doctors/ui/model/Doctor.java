@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.model;
 
-import com.clinics.doctors.exception.validator.UniqueDoctorUUIDConstraint;
+//import com.clinics.doctors.exception.validator.UniqueDoctorUUIDConstraint;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,10 +17,10 @@ import java.util.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-@ToString
+@ToString(exclude = {"calendars", "specializations"})
 @DynamicInsert
 @DynamicUpdate
-@UniqueDoctorUUIDConstraint
+//@UniqueDoctorUUIDConstraint
 //@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
 @Entity(name = "doctor")
 public class Doctor {
@@ -69,13 +69,16 @@ public class Doctor {
 			name = "doctor_specialization",
 			joinColumns = {@JoinColumn(name = "doctor_id")},
 			inverseJoinColumns = {@JoinColumn(name = "spacialization_id")})
-	Collection<Specialization> specializations = new HashSet<>();
+	private Collection<Specialization> specializations;
+//	Collection<Specialization> specializations = new HashSet<>();
 
 	@JsonIgnore
 	@ElementCollection
-	final private Collection<UUID> patients = new HashSet<>();
+	private Collection<UUID> patients;
+//	final private Collection<UUID> patients = new HashSet<>();
 
 	@ElementCollection
-	final private Collection<UUID> medicalUnits = new HashSet<>();
+	private Collection<UUID> medicalUnits;
+//	private Collection<UUID> medicalUnits = new HashSet<>();
 }
 

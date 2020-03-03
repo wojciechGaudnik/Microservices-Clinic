@@ -21,18 +21,10 @@ public class BeanFactory implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		context = applicationContext;
 	}
-
-	public static <T> T getBean(Class<T> beanClass) {
-		return context.getBean(beanClass);
-	}
-
-	@Bean
-	public ObjectMapper getObjectMapper(){
-		log.warn("----> 1 <----");
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
-		return objectMapper;
-	}
+//
+//	public static <T> T getBean(Class<T> beanClass) {
+//		return context.getBean(beanClass);
+//	}
 
 	@Bean
 	public ModelMapper getModelMapper(){
@@ -48,6 +40,14 @@ public class BeanFactory implements ApplicationContextAware {
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public ObjectMapper getObjectMapper(){
+		log.warn("----> 1 <----");
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+		return objectMapper;
 	}
 
 	@Bean

@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 	Optional<Doctor> findByDoctoruuid(UUID uuid);
+	boolean existsByDoctoruuid(UUID uuid);
 }

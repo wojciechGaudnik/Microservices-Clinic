@@ -15,17 +15,19 @@ import java.util.*;
 @Component
 public class BootStrapDoctors implements CommandLineRunner {
 
-	@Lazy
+	//todo Constructor dependency injection
+
+//	@Lazy
 	@Autowired
 	private DoctorRepository doctorRepository;
-	@Lazy
+//	@Lazy
 	@Autowired
 	private CalendarRepository calendarRepository;
-	@Lazy
+//	@Lazy
 	@Autowired
 	private SpecializationRepository specializationRepository;
 
-	@Transactional
+//	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -126,13 +128,13 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		System.out.println(ConsoleColors.GREEN_BOLD);
 
-		System.out.println("-------------------------------------------------------");
-		doctorsAfter.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
-		calendars1After.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
-		specializationsAfter.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
+//		System.out.println("-------------------------------------------------------");
+//		doctorsAfter.forEach(System.out::println);
+//		System.out.println("-------------------------------------------------------");
+//		calendars1After.forEach(System.out::println);
+//		System.out.println("-------------------------------------------------------");
+//		specializationsAfter.forEach(System.out::println);
+//		System.out.println("-------------------------------------------------------");
 
 		System.out.println(ConsoleColors.RESET);
 	}

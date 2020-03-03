@@ -49,7 +49,6 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.antMatchers(HttpMethod.PUT, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
 				.antMatchers(HttpMethod.PATCH, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
-				.antMatchers(HttpMethod.PATCH, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
 				.antMatchers("/auth/test/**").permitAll()
 
 				.anyRequest().denyAll();
