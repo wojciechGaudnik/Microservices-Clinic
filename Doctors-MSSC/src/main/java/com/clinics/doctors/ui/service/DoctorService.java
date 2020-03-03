@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
@@ -53,7 +54,8 @@ public class DoctorService {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
 		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);  //todo make this better, Void ?
-		//todo remove like in edit !!!
+
+		//todo make the same way as edit !!!
 		try {
 			ResponseEntity<Void> responseFromAuth = restTemplate.exchange(uri, HttpMethod.PUT, requestFromDoctor, Void.class);  //todo remove conmpletely response from Auth ?
 		} catch (Exception e) {
@@ -74,18 +76,10 @@ public class DoctorService {
 			restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, Void.class);
 		}
 		if (doctorRepository.existsByDoctoruuid(uuid)) {
-			log.error("1");
 			var doctorToEdit = doctorRepository.findByDoctoruuid(uuid).get();
-			log.error("2");
 			modelMapper.map(editDoctorDTO, doctorToEdit);
-			log.error(String.valueOf(editDoctorDTO));
-			log.error(String.valueOf(doctorToEdit));
-//			log.error("3");
-//			doctor.setId(id);
-			log.error("4");
 			doctorRepository.save(doctorToEdit);
-			log.error("5");
-		}
 		}
 	}
+}
 

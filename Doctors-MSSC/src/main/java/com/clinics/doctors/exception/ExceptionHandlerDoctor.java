@@ -6,8 +6,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.ValidationException;
@@ -17,7 +19,13 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class ExceptionHandlerDoctor {
 
-	@ExceptionHandler({HttpMessageNotReadableException.class, DataIntegrityViolationException.class, ValidationException.class})
+	@ExceptionHandler({
+			HttpMessageNotReadableException.class,
+			DataIntegrityViolationException.class,
+			ValidationException.class,
+			HttpClientErrorException.class,
+//			TransactionSystemException.class
+	})
 	public ResponseEntity<Object> handlerConstraintViolationException(Exception exception, WebRequest request) {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()

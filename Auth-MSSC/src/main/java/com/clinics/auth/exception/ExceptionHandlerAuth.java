@@ -40,15 +40,15 @@ public class ExceptionHandlerAuth {
 		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 
-//	@ExceptionHandler(RuntimeException.class)
-//	public ResponseEntity<Object> handleRuntimeException(Exception exception, WebRequest request) {
-//		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
-//				.builder()
-//				.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//				.error("Runtime Exception")
-//				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
-//				.webRequest(request)
-//				.build();
-//		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Object> handleRuntimeException(Exception exception, WebRequest request) {
+		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+				.builder()
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.error("Runtime Exception")
+				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+				.webRequest(request)
+				.build();
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
