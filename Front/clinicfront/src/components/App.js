@@ -15,8 +15,8 @@ const App = () => (
         <div className="App">
             <Switch>
                 <Route exact path="/" render={props => <LoginPage {...props}/>}/>
-                <Route path="/doctor" render={() => <DoctorPage/>}/>
-                <Route path="/patient" render={() => <PatientPage/>}/>
+                <Route path="/doctor" render={props => <DoctorPage {...props}/>}/>
+                <Route path="/patient" render={props => <PatientPage {...props}/>}/>
                 <Route path="/assistant" render={AssistantPage}/>
                 <Route path="/register" render={props => <RegisterPage {...props}/>}/>
             </Switch>

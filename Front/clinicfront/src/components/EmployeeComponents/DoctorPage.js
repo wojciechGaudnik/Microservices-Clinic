@@ -17,6 +17,7 @@ import {
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
+import {ErrorModal} from "../AdditionalComponents/ErrorModal";
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
@@ -61,6 +62,7 @@ export const DoctorPage = (props) => {
 
     return(
         <div style={styleForMainDiv}>
+            {props.error ? (<ErrorModal/>) : null}
             <Container style={styleForContainer}>
                 <Row><h5><Badge variant="primary">DOCTOR</Badge></h5></Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>UUID:</Col>           <Col style={styleForValueCol}>{props.userDetails.uuid}</Col>         </Row>

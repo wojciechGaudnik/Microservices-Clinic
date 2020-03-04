@@ -31,15 +31,18 @@ export const FormForInputUserInformation = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (!props.error && isFetchResponseOk){
+            redirectByRole(null, props);
+        }
+    }, [isFetchResponseOk]);
+
     return (
         <Form
             onSubmit={e => {
                 e.preventDefault();
-                props.sendFetchRequest(userInformation, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}});
+                props.sendFetchRequest(userInformation, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}}, {uuid: props.userDetails.uuid});
                 setTimeout(() => {setIsFetchResponseOk(true)}, 1000);
-                if (!props.error && isFetchResponseOk){
-                    redirectByRole(null, props);
-                }
             }}
             style={styleForForm}
         >

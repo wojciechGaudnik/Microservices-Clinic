@@ -1,10 +1,10 @@
 import {sendRequestByGivenDetails} from "../actions/fetchRequest";
 import {URLs} from "../URLs";
-import {setStoreError, setStoreUserDetails} from "../actions";
+import {setStoreError} from "../actions";
 import {connect} from "react-redux";
 import RegisterPage from "../components/RegisterPage";
 
-const getError = state => (state.error);
+const getError = state => ( state.error );
 
 const mapStateToProps = state => ({
     error: getError(state)
