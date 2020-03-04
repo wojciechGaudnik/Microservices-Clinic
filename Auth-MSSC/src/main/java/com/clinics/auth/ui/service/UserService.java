@@ -7,7 +7,10 @@ import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
-import lombok.SneakyThrows;
+import com.clinics.common.security.JwtProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
@@ -17,13 +20,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class UserService implements UserDetailsService, JwtMaker {
+public class UserService implements UserDetailsService, JwtMaker, JwtProperties {
 
 	final private UserRepository userRepository;
 	final private ModelMapper modelMapper;
@@ -81,5 +85,14 @@ public class UserService implements UserDetailsService, JwtMaker {
 		if(editUserInnerDTO.getEmail() != null) userToEdit.setEmail(editUserInnerDTO.getEmail());
 		userRepository.save(userToEdit);
 		return modelMapper.map(userToEdit, UserResponseDTO.class);
+	}
+
+	public UUID getUUID(HttpServletRequest request) {
+		String token = request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
+		Claims claims = Jwts.parser()
+				.setSigningKey(TOKEN_SECRET)
+				.parseClaimsJws(token)
+				.getBody();
+		return UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID)));
 	}
 }

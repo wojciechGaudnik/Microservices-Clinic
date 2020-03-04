@@ -4,12 +4,14 @@ import com.clinics.auth.ui.service.UserService;
 import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -17,11 +19,16 @@ import java.util.UUID;
 @RequestMapping(value = "/auth")
 public class UserController {
 
-	private final UserService userService;
+	final private  UserService userService;
 
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
+	}
+
+	@GetMapping(path = "/users/uuid/")
+	public ResponseEntity<UUID> getUserUUID(HttpServletRequest request) {
+		return ResponseEntity.status(200).body(userService.getUUID(request));
 	}
 
 	@PostMapping(
