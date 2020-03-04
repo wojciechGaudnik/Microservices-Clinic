@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import {redirectByRole, useFormFields} from "../../actions";
 
@@ -7,6 +7,7 @@ import {styleForForm, styleForFormLabel} from "../../containers/SetFormForInputU
 
 
 export const FormForInputUserInformation = (props) => {
+    const [isFetchResponseOk, setIsFetchResponseOk] = useState(false);
     const [userInformation, setUserInformation] = useFormFields({
         firstName:  "",
         lastName:   "",
@@ -35,7 +36,8 @@ export const FormForInputUserInformation = (props) => {
             onSubmit={e => {
                 e.preventDefault();
                 props.sendFetchRequest(userInformation, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}});
-                if (!props.error){
+                setTimeout(() => {setIsFetchResponseOk(true)}, 1000);
+                if (!props.error && isFetchResponseOk){
                     redirectByRole(null, props);
                 }
             }}
@@ -96,7 +98,7 @@ export const FormForInputUserInformation = (props) => {
                                   name="photoURL"/>
                 </Form.Group>
             </Form.Row>
-            <Button variant="light">
+            <Button variant="light" type="submit">
                 {checkVariant(props.variant)}
             </Button>
         </Form>
