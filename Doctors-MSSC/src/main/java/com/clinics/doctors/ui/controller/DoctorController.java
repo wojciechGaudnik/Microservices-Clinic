@@ -5,6 +5,7 @@ import com.clinics.common.DTO.request.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,20 +34,26 @@ public class DoctorController {
 	}
 
 	@PostMapping
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<DoctorResponseDTO> registerDoctor(
 			@Valid @RequestBody RegisterDoctorDTO registerDoctorDTO,
 			HttpServletRequest request) {
 		return ResponseEntity.status(201).body(doctorService.save(registerDoctorDTO, request));
 	}
 
-	@PutMapping(path = "/{uuid}")
+	@PatchMapping(path = "/{uuid}")
 	public ResponseEntity<Void> editDoctor(
 			@Valid @RequestBody EditDoctorDTO editDoctorDTO,
 			@PathVariable UUID uuid,
 			HttpServletRequest request) {
 		doctorService.edit(editDoctorDTO, uuid, request);
 		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(path = "/{uuid}")
+	public ResponseEntity<Void> deleteDoctor(
+			@PathVariable UUID uuid) {
+		doctorService.delete(uuid);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 	@GetMapping(path = "/test")

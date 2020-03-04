@@ -10,7 +10,6 @@ import com.clinics.common.DTO.response.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
@@ -21,11 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Transactional
 @Service
 public class UserService implements UserDetailsService, JwtMaker, JwtProperties {
 
@@ -85,6 +86,10 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		if(editUserInnerDTO.getEmail() != null) userToEdit.setEmail(editUserInnerDTO.getEmail());
 		userRepository.save(userToEdit);
 		return modelMapper.map(userToEdit, UserResponseDTO.class);
+	}
+
+	public Long deleteUser(UUID uuid) {
+		return userRepository.deleteByUuid(uuid);
 	}
 
 	public UUID getUUID(HttpServletRequest request) {

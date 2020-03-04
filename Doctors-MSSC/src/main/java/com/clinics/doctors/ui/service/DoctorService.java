@@ -7,6 +7,7 @@ import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.doctors.ui.model.Doctor;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -15,10 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Transactional
+@Slf4j
 @Service
 public class DoctorService {
 
@@ -45,6 +49,9 @@ public class DoctorService {
 	}
 
 	public DoctorResponseDTO save(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
+		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
+		doctorRepository.save(doctor);
+
 		String uri = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctoruuid());
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
@@ -56,8 +63,8 @@ public class DoctorService {
 		} catch (Exception e) {
 			throw new NoSuchElementException("There is no (dev free) such doctor in AUTH");
 		}
-		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
-		doctorRepository.save(doctor);
+//		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
+//		doctorRepository.save(doctor);
 		return modelMapper.map(doctor, DoctorResponseDTO.class);
 	}
 
@@ -76,5 +83,12 @@ public class DoctorService {
 			doctorRepository.save(doctorToEdit);
 		}
 	}
+
+	public void delete(UUID uuid) {
+		String uri = String.format("http://auth/auth/users/%s", uuid);
+		restTemplate.delete(uri);
+		doctorRepository.deleteByDoctoruuid(uuid);
+	}
 }
+
 
