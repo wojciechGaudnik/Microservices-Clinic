@@ -5,13 +5,15 @@ import {
     sendFetchRequestRegisterNewDoctor
     } from "../containers/SetRegisterPage";
 
-import {FormForInputUserInformation} from "./FormForInputUserInformation";
+import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUserInformation";
+import {ErrorModal} from "./AdditionalComponents/ErrorModal";
 
 
 export const RegisterPage = (props) => {
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
+            {props.error ? (<ErrorModal/>) : null}
             <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestRegisterNewDoctor} variant="register"/>
         </div>
 )};

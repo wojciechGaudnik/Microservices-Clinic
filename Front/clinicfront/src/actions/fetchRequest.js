@@ -18,7 +18,14 @@ export const sendRequestByGivenDetails = (
     }
 
     fetch(url, init)
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok){
+                ifCatchSetErrorInStore(false);
+                return response.json()
+            } else {
+                ifCatchSetErrorInStore(true);
+            }
+        })
         .then((responseJSONData) => {
             if (setInStateFunction && specialFunction){
                 setInStateFunction(responseJSONData);
@@ -29,7 +36,5 @@ export const sendRequestByGivenDetails = (
                 specialFunction(responseJSONData);
             }
         })
-        .catch(() => {
-            ifCatchSetErrorInStore();
-        })
+        .catch(err => console.log(err.message))
 };

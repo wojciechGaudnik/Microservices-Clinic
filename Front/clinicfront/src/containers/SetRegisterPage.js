@@ -1,14 +1,32 @@
 import {sendRequestByGivenDetails} from "../actions/fetchRequest";
 import {URLs} from "../URLs";
+import {setStoreError, setStoreUserDetails} from "../actions";
+import {connect} from "react-redux";
+import RegisterPage from "../components/RegisterPage";
 
-//CSS stylesheet
+const getError = state => (state.error);
+
+const mapStateToProps = state => ({
+    error: getError(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+    setStoreError: (error) => {dispatch(setStoreError(error))}
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegisterPage)
+
+//CSS Stylesheet
 export const styleForMainDiv = {
     margin: '50px auto auto 50px',
     width: '60%',
 };
 
 //Content for fetch request
-export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation) => {
+export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCatchSetErrorInStore}) => {
     const body = {
         "email": userRegisterInformation.email,
         "password": userRegisterInformation.password,
@@ -45,7 +63,8 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation) => {
             body,
             headers,
             setInStateFunction,
-            specialFunction
+            specialFunction,
+            ifCatchSetErrorInStore
         );
     };
 
@@ -55,6 +74,7 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation) => {
         body,
         headers,
         setInStateFunction,
-        specialFunction
+        specialFunction,
+        ifCatchSetErrorInStore
     );
 };

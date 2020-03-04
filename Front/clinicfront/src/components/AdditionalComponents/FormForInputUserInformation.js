@@ -1,9 +1,9 @@
 import React from "react";
 
-import {redirectByRole, useFormFields} from "../actions";
+import {redirectByRole, useFormFields} from "../../actions";
 
 import {Button, Col, Form} from "react-bootstrap";
-import {styleForForm, styleForFormLabel} from "../containers/SetFormForInputUserInformation";
+import {styleForForm, styleForFormLabel} from "../../containers/SetFormForInputUserInformation";
 
 
 export const FormForInputUserInformation = (props) => {
@@ -34,8 +34,10 @@ export const FormForInputUserInformation = (props) => {
         <Form
             onSubmit={e => {
                 e.preventDefault();
-                props.sendFetchRequest(userInformation);
-                redirectByRole(null, props);
+                props.sendFetchRequest(userInformation, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}});
+                if (!props.error){
+                    redirectByRole(null, props);
+                }
             }}
             style={styleForForm}
         >

@@ -5,14 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DoctorPage from "../containers/EmployeeContainers/SetDoctorPage";
 import PatientPage from "../containers/EmployeeContainers/SetPatientPage";
 import {AssistantPage} from "./EmployeeComponents/AssistantPage";
-import RegisterPage from "./RegisterPage";
+import RegisterPage from "../containers/SetRegisterPage";
 import LoginPage from "../containers/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
-
-//TODO: hooki
-//TODO: browserRouter
-//TODO: redux
 
 const App = () => (
     <BrowserRouter>

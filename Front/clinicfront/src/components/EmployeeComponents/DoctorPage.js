@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Badge, Col, Container, Row} from "react-bootstrap";
+import {Badge, Col, Container, Row, Button} from "react-bootstrap";
 
 import {
-    sendFetchRequestSetUserInformation,
     sendFetchRequestChangeUserInformation,
-    sendFetchRequestDeleteUser
+    sendFetchRequestDeleteUser,
+    sendFetchRequestSetUserInformation
 } from "../../containers/EmployeeContainers/SetDoctorPage";
 
 import { 
@@ -15,9 +15,8 @@ import {
     styleForKeyCol,
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
-import Button from "react-bootstrap/Button";
-import {FormForInputUserInformation} from "../FormForInputUserInformation";
 
+import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);

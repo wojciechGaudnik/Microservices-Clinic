@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import {Badge, Col, Container, Row, Button} from "react-bootstrap";
+
 import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
@@ -14,9 +16,7 @@ import {
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
-import {Badge, Col, Container, Row} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import {FormForInputUserInformation} from "../FormForInputUserInformation";
+import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
 
 export const PatientPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
