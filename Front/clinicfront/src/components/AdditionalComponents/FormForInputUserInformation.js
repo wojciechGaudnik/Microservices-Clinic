@@ -22,15 +22,6 @@ export const FormForInputUserInformation = (props) => {
         setUserInformation(event);
     };
 
-    const checkVariant = (variant) => {
-        switch (variant) {
-            case "register":
-                return "Register";
-            case "edit":
-                return  "Change";
-        }
-    };
-
     useEffect(() => {
         if (!props.error && isFetchResponseOk){
             redirectByRole(null, props);
@@ -47,62 +38,80 @@ export const FormForInputUserInformation = (props) => {
             style={styleForForm}
         >
             <Form.Row>
-                <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label style={styleForFormLabel}>Email</Form.Label>
-                    <Form.Control type="email"
-                                  onChange={(e) => handleChange(e)}
-                                  placeholder="Email"
-                                  name="email"/>
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label style={styleForFormLabel}>Password</Form.Label>
-                    <Form.Control type="password"
-                                  onChange={(e) => handleChange(e)}
-                                  placeholder="Password"
-                                  name="password"/>
-                </Form.Group>
+                {props.showEmailForm ? (
+                    <Form.Group as={Col} controlId="formGridEmail">
+                        <Form.Label style={styleForFormLabel}>Email</Form.Label>
+                        <Form.Control type="email"
+                                      onChange={(e) => handleChange(e)}
+                                      placeholder="Email"
+                                      name="email"/>
+                    </Form.Group>
+                ) : null}
+
+                {props.showPasswordForm ? (
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label style={styleForFormLabel}>Password</Form.Label>
+                        <Form.Control type="password"
+                                      onChange={(e) => handleChange(e)}
+                                      placeholder="Password"
+                                      name="password"/>
+                    </Form.Group>
+                ) : null}
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col}>
-                    <Form.Label style={styleForFormLabel}>Role</Form.Label>
-                    <Form.Control onChange={(e) => handleChange(e)}
-                                  placeholder="Role"
-                                  name="role"
-                                  as="select">
-                        <option value="doctor">doctor</option>
-                        <option value="patient">patient</option>
-                        <option value="assistant">assistant</option>
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label style={styleForFormLabel}>First Name</Form.Label>
-                    <Form.Control onChange={(e) => handleChange(e)}
-                                  placeholder="firstName"
-                                  name="firstName"/>
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label style={styleForFormLabel}>Last Name</Form.Label>
-                    <Form.Control onChange={(e) => handleChange(e)}
-                                  placeholder="lastName"
-                                  name="lastName"/>
-                </Form.Group>
+                {props.showRoleForm ? (
+                    <Form.Group as={Col}>
+                        <Form.Label style={styleForFormLabel}>Role</Form.Label>
+                        <Form.Control onChange={(e) => handleChange(e)}
+                                      placeholder="Role"
+                                      name="role"
+                                      as="select">
+                            <option value="doctor">doctor</option>
+                            <option value="patient">patient</option>
+                            <option value="assistant">assistant</option>
+                        </Form.Control>
+                    </Form.Group>
+                ) : null}
+
+                {props.showFirstNameForm ? (
+                    <Form.Group as={Col}>
+                        <Form.Label style={styleForFormLabel}>First Name</Form.Label>
+                        <Form.Control onChange={(e) => handleChange(e)}
+                                      placeholder="firstName"
+                                      name="firstName"/>
+                    </Form.Group>
+                ) : null}
+
+                {props.showLastNameForm ? (
+                    <Form.Group as={Col}>
+                        <Form.Label style={styleForFormLabel}>Last Name</Form.Label>
+                        <Form.Control onChange={(e) => handleChange(e)}
+                                      placeholder="lastName"
+                                      name="lastName"/>
+                    </Form.Group>
+                ) : null}
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col}>
-                    <Form.Label style={styleForFormLabel}>Licence</Form.Label>
-                    <Form.Control onChange={(e) => handleChange(e)}
-                                  placeholder="Licence"
-                                  name="licence"/>
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label style={styleForFormLabel}>PhotoURL</Form.Label>
-                    <Form.Control onChange={(e) => handleChange(e)}
-                                  placeholder="PhotoURL"
-                                  name="photoURL"/>
-                </Form.Group>
+                {props.showLicenceForm ? (
+                    <Form.Group as={Col}>
+                        <Form.Label style={styleForFormLabel}>Licence</Form.Label>
+                        <Form.Control onChange={(e) => handleChange(e)}
+                                      placeholder="Licence"
+                                      name="licence"/>
+                    </Form.Group>
+                ) : null}
+
+                {props.showPhotoURLForm ? (
+                    <Form.Group as={Col}>
+                        <Form.Label style={styleForFormLabel}>PhotoURL</Form.Label>
+                        <Form.Control onChange={(e) => handleChange(e)}
+                                      placeholder="PhotoURL"
+                                      name="photoURL"/>
+                    </Form.Group>
+                ) : null}
             </Form.Row>
             <Button variant="light" type="submit">
-                {checkVariant(props.variant)}
+                {props.submitButtonTitle}
             </Button>
         </Form>
     );
