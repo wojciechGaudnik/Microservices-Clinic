@@ -28,11 +28,23 @@ export const FormForInputUserInformation = (props) => {
         }
     }, [isFetchResponseOk]);
 
+    const sendFetchRequest = () => {
+        const ifCatchSetErrorInStore = (error) => {props.setStoreError(error)};
+        switch (props.variant) {
+            case "register":
+                props.fetchRequest(userInformation, {ifCatchSetErrorInStore});
+                break;
+            case "edit":
+                props.fetchRequest(userInformation, {ifCatchSetErrorInStore, uuid: props.userDetails.uuid});
+                break;
+        }
+    };
+
     return (
         <Form
             onSubmit={e => {
                 e.preventDefault();
-                props.sendFetchRequest(userInformation, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}}, {uuid: props.userDetails.uuid});
+                sendFetchRequest();
                 setTimeout(() => {setIsFetchResponseOk(true)}, 1000);
             }}
             style={styleForForm}
