@@ -28,10 +28,15 @@ export const useFormFields = (initialState) => {
     return [
         fields,
         function(event) {
-            setValues({
-                ...fields,
-                [event.target.name]: event.target.value
-            });
+            if (event.target) {
+                setValues({
+                    ...fields,
+                    [event.target.name]: event.target.value
+                });
+            } else {
+                console.log(event);
+                setValues({event})
+            }
         }
     ];
 };

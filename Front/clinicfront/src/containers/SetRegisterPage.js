@@ -5,9 +5,11 @@ import {connect} from "react-redux";
 import RegisterPage from "../components/RegisterPage";
 
 const getError = state => ( state.error );
+const getUserInformation = state => ( state.userInformation );
 
 const mapStateToProps = state => ({
-    error: getError(state)
+    error: getError(state),
+    userInformation: getUserInformation(state)
 });
 
 const mapDispatchToProps = dispatch => ({

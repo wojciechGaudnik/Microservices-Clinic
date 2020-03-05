@@ -7,14 +7,15 @@ import {styleForForm, styleForFormLabel} from "../../containers/SetFormForInputU
 
 
 export const FormForInputUserInformation = (props) => {
+    let sendFetchRequest;
     const [isFetchResponseOk, setIsFetchResponseOk] = useState(false);
     const [userInformation, setUserInformation] = useFormFields({
-        firstName:  "",
-        lastName:   "",
-        licence:    "",
-        photoURL:   "",
-        email:      "",
-        password:   "",
+        firstName:  null,
+        lastName:   null,
+        licence:    null,
+        photoURL:   null,
+        email:      null,
+        password:   null,
         role:       "doctor"
     });
 
@@ -22,23 +23,24 @@ export const FormForInputUserInformation = (props) => {
         setUserInformation(event);
     };
 
+    const whichFormVariant = () => {
+        const ifCatchSetErrorInStore = (error) => {props.setStoreError(error)};
+        switch (props.variant) {
+            case "register":
+                sendFetchRequest = () => {props.fetchRequest(userInformation, {ifCatchSetErrorInStore})};
+                break;
+            case "edit":
+                sendFetchRequest = () => {props.fetchRequest(userInformation, {ifCatchSetErrorInStore, uuid: props.userDetails.uuid})};
+                break;
+        }
+    };
+
     useEffect(() => {
+        whichFormVariant();
         if (!props.error && isFetchResponseOk){
             redirectByRole(null, props);
         }
     }, [isFetchResponseOk]);
-
-    const sendFetchRequest = () => {
-        const ifCatchSetErrorInStore = (error) => {props.setStoreError(error)};
-        switch (props.variant) {
-            case "register":
-                props.fetchRequest(userInformation, {ifCatchSetErrorInStore});
-                break;
-            case "edit":
-                props.fetchRequest(userInformation, {ifCatchSetErrorInStore, uuid: props.userDetails.uuid});
-                break;
-        }
-    };
 
     return (
         <Form
@@ -56,7 +58,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Control type="email"
                                       onChange={(e) => handleChange(e)}
                                       placeholder="Email"
-                                      name="email"/>
+                                      name="email"
+                        />
                     </Form.Group>
                 ) : null}
 
@@ -90,7 +93,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Label style={styleForFormLabel}>First Name</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="firstName"
-                                      name="firstName"/>
+                                      name="firstName"
+                                      value={props.userInformation ? (props.userInformation.firstName) : ""}/>
                     </Form.Group>
                 ) : null}
 
@@ -99,7 +103,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Label style={styleForFormLabel}>Last Name</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="lastName"
-                                      name="lastName"/>
+                                      name="lastName"
+                                      value={props.userInformation ? (props.userInformation.lastName) : ""}/>
                     </Form.Group>
                 ) : null}
             </Form.Row>
@@ -109,7 +114,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Label style={styleForFormLabel}>Licence</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="Licence"
-                                      name="licence"/>
+                                      name="licence"
+                                      value={props.userInformation ? (props.userInformation.licence) : ""}/>
                     </Form.Group>
                 ) : null}
 
@@ -118,7 +124,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Label style={styleForFormLabel}>PhotoURL</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="PhotoURL"
-                                      name="photoURL"/>
+                                      name="photoURL"
+                                      value={props.userInformation ? (props.userInformation.photoURL) : ""}/>
                     </Form.Group>
                 ) : null}
             </Form.Row>

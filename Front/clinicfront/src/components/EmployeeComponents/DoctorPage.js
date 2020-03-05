@@ -84,7 +84,19 @@ export const DoctorPage = (props) => {
             </Container>
             {showFormForEdit ? (
                 <Container>
-                    <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestChangeUserInformation} variant="edit"/>
+                    <FormForInputUserInformation
+                        {...props}
+                        sendFetchRequest    ={sendFetchRequestChangeUserInformation}
+                        variant             ="edit"
+                        submitButtonTitle   ="Edit"
+                        showEmailForm       ={true}
+                        showPasswordForm    ={true}
+                        showRoleForm        ={true}
+                        showFirstNameForm   ={true}
+                        showLastNameForm    ={true}
+                        showLicenceForm     ={true}
+                        showPhotoURLForm    ={true}
+                    />
                 </Container>
                 ) : null
             }
