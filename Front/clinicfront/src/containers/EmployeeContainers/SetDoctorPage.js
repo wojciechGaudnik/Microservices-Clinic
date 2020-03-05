@@ -54,10 +54,6 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
         "licence":    newUserInformation.licence,
     };
 
-    console.log(body);
-    console.log(localStorage.token);
-    console.log(uuid);
-
     const headers = {
         'Authorization': localStorage.token,
         'Content-Type': 'application/json'
