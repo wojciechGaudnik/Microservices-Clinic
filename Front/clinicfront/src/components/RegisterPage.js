@@ -14,7 +14,18 @@ export const RegisterPage = (props) => {
     return(
         <div style={styleForMainDiv}>
             {props.error ? (<ErrorModal/>) : null}
-            <FormForInputUserInformation {...props} sendFetchRequest={sendFetchRequestRegisterNewDoctor} variant="register"/>
+            <FormForInputUserInformation
+                {...props}
+                sendFetchRequest={sendFetchRequestRegisterNewDoctor}
+                submitButtonTitle="Register"
+                showEmailForm={true}
+                showPasswordForm={true}
+                showRoleForm={true}
+                showFirstNameForm={true}
+                showLastNameForm={true}
+                showLicenceForm={true}
+                showPhotoURLForm={true}
+            />
         </div>
 )};
 
