@@ -86,12 +86,12 @@ export const DoctorPage = (props) => {
                 <Container>
                     <FormForInputUserInformation
                         {...props}
-                        sendFetchRequest    ={sendFetchRequestChangeUserInformation}
+                        fetchRequest        ={sendFetchRequestChangeUserInformation}
                         variant             ="edit"
                         submitButtonTitle   ="Edit"
                         showEmailForm       ={true}
                         showPasswordForm    ={true}
-                        showRoleForm        ={true}
+                        showRoleForm        ={false}
                         showFirstNameForm   ={true}
                         showLastNameForm    ={true}
                         showLicenceForm     ={true}

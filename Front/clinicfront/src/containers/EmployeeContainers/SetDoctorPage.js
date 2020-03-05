@@ -46,13 +46,12 @@ export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) =
 
 export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCatchSetErrorInStore}, {uuid}) => {
     const body = {
+        "email":      newUserInformation.email,
+        "password":   newUserInformation.password,
         "firstName":  newUserInformation.firstName,
         "lastName":   newUserInformation.lastName,
-        "licence":    null,
-        "photoURL":   null,
-        "email":      null,
-        "password":   null,
-        "role":       "doctor"
+        "photoUrl":   newUserInformation.photoURL,
+        "licence":    newUserInformation.licence,
     };
 
     console.log(body);
@@ -69,7 +68,7 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.CHANGE_DOCTOR_INFORMATION + uuid, //http://localhost:8762/doctor-mssc/doctors/ + uuid
+        URLs.CHANGE_DOCTOR_INFORMATION + uuid,
         'PATCH',
         body,
         headers,
