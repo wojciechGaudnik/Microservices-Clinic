@@ -5,7 +5,7 @@ import {
     sendFetchRequestRegisterNewDoctor
     } from "../containers/SetRegisterPage";
 
-import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUserInformation";
+import {FormForInputUserInformation} from "./AdditionalComponents/FolderForFormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "./AdditionalComponents/ErrorModal";
 
 

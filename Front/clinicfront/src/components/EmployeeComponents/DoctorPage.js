@@ -16,7 +16,7 @@ import {
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
-import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../AdditionalComponents/FolderForFormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal";
 import {LogOutButton} from "../AdditionalComponents/LogOutButton";
 import {redirectByRole} from "../../actions";

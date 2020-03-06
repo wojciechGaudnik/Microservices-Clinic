@@ -16,7 +16,7 @@ import {
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
-import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../AdditionalComponents/FolderForFormForInputUseInfo/FormForInputUserInformation";
 
 export const PatientPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
