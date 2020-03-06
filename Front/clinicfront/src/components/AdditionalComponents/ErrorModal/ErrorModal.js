@@ -1,14 +1,11 @@
 import React, {useState} from "react";
+
 import {Container, Modal} from "react-bootstrap";
+
+import {styleForModalContainer} from "./Containers/SetErrorModal";
 
 export const ErrorModal = () => {
     const [showErrorModal, setShowErrorModal] = useState(true);
-
-    const styleForModalContainer = {
-        background: 'red',
-        borderRadius: '7px',
-        border: '2px solid black'
-    };
 
     return (
         <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)} >

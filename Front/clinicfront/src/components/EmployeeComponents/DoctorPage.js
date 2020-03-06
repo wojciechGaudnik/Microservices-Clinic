@@ -17,7 +17,7 @@ import {
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
-import {ErrorModal} from "../AdditionalComponents/ErrorModal";
+import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
 import {LogOutButton} from "../AdditionalComponents/LogOutButton";
 import {redirectByRole} from "../../actions";
 

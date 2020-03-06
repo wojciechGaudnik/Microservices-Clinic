@@ -4,7 +4,7 @@ import {redirectByRole, useFormFields} from "../actions";
 
 import {Button, Form} from "react-bootstrap";
 
-import {ErrorModal} from "./AdditionalComponents/ErrorModal";
+import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
 
 import {
     sendFetchRequestLoginUser, sendFetchRequestIsThereLoginUser,
