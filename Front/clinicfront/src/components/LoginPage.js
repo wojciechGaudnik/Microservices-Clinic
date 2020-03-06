@@ -7,7 +7,7 @@ import {Button, Form} from "react-bootstrap";
 import {ErrorModal} from "./AdditionalComponents/ErrorModal";
 
 import {
-    sendFetchRequestLoginUser,
+    sendFetchRequestLoginUser, sendFetchRequestIsThereLoginUser,
     styleForForm, styleForFormLabel, styleForMainDiv, styleForButton
 } from "../containers/SetLoginPage";
 
@@ -23,10 +23,11 @@ export const LoginPage = (props) => {
 
     //Effects after each render
     useEffect(() => {
+        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails}); console.log("Works")}
+    }, []);
+    useEffect(() => {
         props.setStoreUserDetails(userDetails);
-        if (userDetails.role){
-            redirectByRole(userDetails.role, props)
-        }
+        if (userDetails.role){redirectByRole(userDetails.role, props)}
     }, [userDetails]);
 
     //Handle change
