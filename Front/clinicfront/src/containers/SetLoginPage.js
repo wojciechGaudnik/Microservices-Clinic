@@ -72,3 +72,29 @@ export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCat
         ifCatchSetErrorInStore
     )
 };
+
+export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
+    const body = null;
+
+    const headers = {'Authorization': localStorage.token};
+
+    const setInStateFunction = (responseData) => {
+        console.log(responseData);
+        setUserDetails({
+            uuid: responseData.uuid,
+            role: responseData.role
+        })
+    };
+
+    const specialFunction = null;
+
+    sendRequestByGivenDetails(
+        URLs.GET_UUID_BY_TOKEN,
+        'GET',
+        body,
+        headers,
+        setInStateFunction,
+        specialFunction
+    )
+
+};
