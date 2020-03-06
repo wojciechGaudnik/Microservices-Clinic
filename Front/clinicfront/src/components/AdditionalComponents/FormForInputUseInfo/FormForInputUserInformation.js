@@ -5,13 +5,13 @@ import {redirectByRole, useFormFields} from "../../../actions";
 import {Button, Form} from "react-bootstrap";
 import {styleForForm} from "./Containers/SetFormForInputUserInformation";
 
-import {EmailForm} from "./FormForInputUserInformationElements/EmailForm";
-import {PasswordForm} from "./FormForInputUserInformationElements/PasswordForm";
-import {RoleForm} from "./FormForInputUserInformationElements/RoleForm";
-import {FirstNameForm} from "./FormForInputUserInformationElements/FirstNameForm";
-import {LastNameForm} from "./FormForInputUserInformationElements/LastNameForm";
-import {LicenceForm} from "./FormForInputUserInformationElements/LicenceForm";
-import {PhotoURLForm} from "./FormForInputUserInformationElements/PhotoURLForm";
+import {EmailForm} from "./ElementsForFormForInputUserInformation/EmailForm";
+import {PasswordForm} from "./ElementsForFormForInputUserInformation/PasswordForm";
+import {RoleForm} from "./ElementsForFormForInputUserInformation/RoleForm";
+import {FirstNameForm} from "./ElementsForFormForInputUserInformation/FirstNameForm";
+import {LastNameForm} from "./ElementsForFormForInputUserInformation/LastNameForm";
+import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm";
+import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 
 
 export const FormForInputUserInformation = (props) => {
