@@ -3,14 +3,14 @@ export const styleForKeyCol = {
     textAlign: 'right',
     border: '2px solid grey',
     borderRadius: '5px',
-    background: '#cce6ff'
+    background: 'white'
 };
 
 export const styleForValueCol = {
     marginLeft: '3px',
     border: '2px solid grey',
     borderRadius: '5px',
-    background: '#cce6ff'
+    background: 'white'
 };
 
 export const styleForRow = {

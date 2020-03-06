@@ -46,7 +46,7 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCa
             doctoruuid: responseJSONData.uuid,
             firstName: userRegisterInformation.firstName,
             lastName: userRegisterInformation.lastName,
-            photoUrl: userRegisterInformation.photoURL,
+            photoUrl: userRegisterInformation.photoUrl,
             licence: userRegisterInformation.licence
         };
 
