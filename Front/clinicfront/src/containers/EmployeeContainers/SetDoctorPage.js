@@ -46,17 +46,19 @@ export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) =
 
 export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCatchSetErrorInStore}, {uuid}) => {
     const body = {
-        "email":      newUserInformation.email,
-        "password":   newUserInformation.password,
-        "firstName":  newUserInformation.firstName,
-        "lastName":   newUserInformation.lastName,
-        "photoUrl":   newUserInformation.photoURL,
-        "licence":    newUserInformation.licence,
+        "email" :newUserInformation.email,
+        "password" :newUserInformation.password,
+        "firstName" :newUserInformation.firstName,
+        "lastName" :newUserInformation.lastName,
+        "photoUrl" :newUserInformation.photoUrl,
+        "licence" :newUserInformation.licence,
     };
+
+    console.log(body);
 
     const headers = {
         'Authorization': localStorage.token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     };
 
     const setInStateFunction = null;

@@ -25,7 +25,7 @@ export const DoctorPage = (props) => {
         doctorUUID:     "",
         firstName:      "",
         lastName:       "",
-        photoURL:       "",
+        photoUrl:       "",
         licence:        "",
         calendars:      "",
         specializations:"",
@@ -36,6 +36,7 @@ export const DoctorPage = (props) => {
     useEffect(() => {
         sendFetchRequestSetUserInformation(props.userDetails.uuid, {setUserInformation});
         props.setStoreUserInformation(userInformation);
+        console.log(userInformation.photoUrl)
     }, [userInformation.doctorUUID]);
 
     //Main HTML return

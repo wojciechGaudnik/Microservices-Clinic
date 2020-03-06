@@ -12,7 +12,7 @@ export const FormForInputUserInformation = (props) => {
         firstName:  null,
         lastName:   null,
         licence:    null,
-        photoURL:   null,
+        photoUrl:   null,
         email:      null,
         password:   null,
         role:       "doctor"
@@ -29,7 +29,7 @@ export const FormForInputUserInformation = (props) => {
                 props.fetchRequest(userInformation, {ifCatchSetErrorInStore});
                 break;
             case "edit":
-                console.log(props.userDetails);
+                console.log(props.userInformation);
                 props.fetchRequest(userInformation, {ifCatchSetErrorInStore}, {uuid: props.userDetails.uuid});
                 break;
         }
@@ -73,7 +73,8 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Control type="password"
                                       onChange={(e) => handleChange(e)}
                                       placeholder="Password"
-                                      name="password"/>
+                                      name="password"
+                                      />
                     </Form.Group>
                 ) : null}
             </Form.Row>
@@ -98,6 +99,7 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="firstName"
                                       name="firstName"
+                                      defaultValue={(props.userInformation) ? (props.userInformation.firstName) : null}
                                       />
                     </Form.Group>
                 ) : null}
@@ -108,6 +110,7 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="lastName"
                                       name="lastName"
+                                      defaultValue={(props.userInformation) ? (props.userInformation.lastName) : null}
                                       />
                     </Form.Group>
                 ) : null}
@@ -119,6 +122,7 @@ export const FormForInputUserInformation = (props) => {
                         <Form.Control onChange={(e) => handleChange(e)}
                                       placeholder="Licence"
                                       name="licence"
+                                      defaultValue={(props.userInformation) ? (props.userInformation.licence) : null}
                                       />
                     </Form.Group>
                 ) : null}
@@ -127,8 +131,9 @@ export const FormForInputUserInformation = (props) => {
                     <Form.Group as={Col}>
                         <Form.Label style={styleForFormLabel}>PhotoURL</Form.Label>
                         <Form.Control onChange={(e) => handleChange(e)}
-                                      placeholder="PhotoURL"
-                                      name="photoURL"
+                                      placeholder="PhotoURl"
+                                      name="photoUrl"
+                                      defaultValue={(props.userInformation) ? (props.userInformation.photoUrl) : null}
                                       />
                     </Form.Group>
                 ) : null}
