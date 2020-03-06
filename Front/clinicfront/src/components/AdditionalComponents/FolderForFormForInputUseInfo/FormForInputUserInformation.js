@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 
 import {redirectByRole, useFormFields} from "../../../actions";
 
-import {Button, Col, Form} from "react-bootstrap";
-import {styleForForm, styleForFormLabel} from "../../../containers/SetFormForInputUserInformation";
+import {Button, Form} from "react-bootstrap";
+import {styleForForm} from "../../../containers/SetFormForInputUserInformation";
 
 import {EmailForm} from "./FormForInputUserInformationElements/EmailForm";
 import {PasswordForm} from "./FormForInputUserInformationElements/PasswordForm";
