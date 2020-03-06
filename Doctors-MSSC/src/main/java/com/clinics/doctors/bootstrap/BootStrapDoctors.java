@@ -4,28 +4,24 @@ import com.clinics.common.ConsoleColors;
 import com.clinics.doctors.ui.model.*;
 import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.repositorie.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Component
 public class BootStrapDoctors implements CommandLineRunner {
 
-	@Lazy
-	@Autowired
-	private DoctorRepository doctorRepository;
-	@Lazy
-	@Autowired
-	private CalendarRepository calendarRepository;
-	@Lazy
-	@Autowired
-	private SpecializationRepository specializationRepository;
+	private final DoctorRepository doctorRepository;
+	private final CalendarRepository calendarRepository;
+	private final SpecializationRepository specializationRepository;
 
-	@Transactional
+	public BootStrapDoctors(DoctorRepository doctorRepository, CalendarRepository calendarRepository, SpecializationRepository specializationRepository) {
+		this.doctorRepository = doctorRepository;
+		this.calendarRepository = calendarRepository;
+		this.specializationRepository = specializationRepository;
+	}
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -118,22 +114,6 @@ public class BootStrapDoctors implements CommandLineRunner {
 				calendarUrologist));
 
 //	todo https://stackoverflow.com/questions/3927091/save-child-objects-automatically-using-jpa-hibernate
-//		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work
-
-		var doctorsAfter = doctorRepository.findAll();
-		var calendars1After = calendarRepository.findAll();
-		var specializationsAfter = specializationRepository.findAll();
-
-		System.out.println(ConsoleColors.GREEN_BOLD);
-
-		System.out.println("-------------------------------------------------------");
-		doctorsAfter.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
-		calendars1After.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
-		specializationsAfter.forEach(System.out::println);
-		System.out.println("-------------------------------------------------------");
-
-		System.out.println(ConsoleColors.RESET);
+//		specializationGP.getDoctors().addAll(Arrays.asList(doctor1, doctor2, doctor3)); // todo BUG doesn't work , and shouldn't work without additional methods
 	}
 }

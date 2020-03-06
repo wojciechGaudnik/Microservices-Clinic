@@ -1,6 +1,7 @@
 package com.clinics.common.DTO.request;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
+@ToString
 public class RegisterDoctorDTO {
 
 	@NotNull(message = "uuid cannot be null")
@@ -29,3 +31,5 @@ public class RegisterDoctorDTO {
 	@Size(max = 100, message = "licence length out of range ")
 	private String licence;
 }
+
+

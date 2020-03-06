@@ -1,11 +1,11 @@
 package com.clinics.doctors.ui.controller;
 
+import com.clinics.common.DTO.request.EditDoctorDTO;
 import com.clinics.common.DTO.request.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.DoctorResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
@@ -29,21 +28,35 @@ public class DoctorController {
 		this.restTemplate = restTemplate;
 	}
 
-	@GetMapping(path = "/{UUID}")
-	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID UUID){
-		return ResponseEntity.ok().body(doctorService.getDoctorByUUID(UUID));
+	@GetMapping(path = "/{uuid}")
+	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID uuid){
+		return ResponseEntity.ok().body(doctorService.getByUUID(uuid));
 	}
 
 	@PostMapping
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<DoctorResponseDTO> registerDoctor(
 			@Valid @RequestBody RegisterDoctorDTO registerDoctorDTO,
 			HttpServletRequest request) {
-		log.warn(String.valueOf(registerDoctorDTO));
-		return ResponseEntity.status(201).body(doctorService.saveDoctor(registerDoctorDTO, request));
+		return ResponseEntity.status(201).body(doctorService.save(registerDoctorDTO, request));
 	}
 
-	@GetMapping
+	@PatchMapping(path = "/{uuid}")
+	public ResponseEntity<Void> editDoctor(
+			@Valid @RequestBody EditDoctorDTO editDoctorDTO,
+			@PathVariable UUID uuid,
+			HttpServletRequest request) {
+		doctorService.edit(editDoctorDTO, uuid, request);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(path = "/{uuid}")
+	public ResponseEntity<Void> deleteDoctor(
+			@PathVariable UUID uuid) {
+		doctorService.delete(uuid);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping(path = "/test")
 	public ResponseEntity<String> getDefault(){
 		return ResponseEntity.ok().body("{\"message\":\"Hello world from doctor\"}");
 	}

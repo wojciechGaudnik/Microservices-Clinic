@@ -27,11 +27,12 @@ public class AsyncUserRepositoryAccess implements Runnable{
 		userId = 1L;  //todo bad !!!
 	}
 
-	@SneakyThrows
+
+	@SneakyThrows  //todo simpler than try catch around sleep
 	@Async
 	@Override
 	public void run() {
-		Thread.sleep(5000);
+		Thread.sleep(5000);  //todo move to environmental variable
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent() && !user.get().isEnable()) {
 			userRepository.deleteById(userId);

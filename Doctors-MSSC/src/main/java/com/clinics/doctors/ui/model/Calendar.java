@@ -31,6 +31,7 @@ public class Calendar {
 			unique = true)
 	@Builder.Default
 	private UUID calendaruuid = UUID.randomUUID(); //todo --- bad name because JPA <---> sqlQuery --- remove and put autogenerate in postgres
+	//todo move creation uuid into method !!!
 
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")

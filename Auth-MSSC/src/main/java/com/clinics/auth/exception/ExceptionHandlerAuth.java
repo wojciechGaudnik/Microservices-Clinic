@@ -3,6 +3,7 @@ package com.clinics.auth.exception;
 import com.clinics.common.exception.ErrorMessageCustom;
 import javax.validation.ValidationException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionHandlerAuth {
-	@ExceptionHandler({ValidationException.class})
+	@ExceptionHandler({ValidationException.class, ConstraintViolationException.class})
 	public ResponseEntity<Object> handleConstraintViolationException(Exception exception, WebRequest request) {
 		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
 				.builder()

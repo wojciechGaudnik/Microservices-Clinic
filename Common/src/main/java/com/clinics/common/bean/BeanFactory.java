@@ -1,5 +1,6 @@
 package com.clinics.common.bean;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -7,8 +8,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 public class BeanFactory implements ApplicationContextAware {
 
@@ -19,14 +20,9 @@ public class BeanFactory implements ApplicationContextAware {
 		context = applicationContext;
 	}
 
-	public static <T> T getBean(Class<T> beanClass) {
-		return context.getBean(beanClass);
-	}
-
-	@Bean
-	public ObjectMapper getObjectMapper(){
-		return new ObjectMapper();
-	}
+//	public static <T> T getBean(Class<T> beanClass) {
+//		return context.getBean(beanClass);
+//	}
 
 	@Bean
 	public ModelMapper getModelMapper(){
@@ -34,6 +30,7 @@ public class BeanFactory implements ApplicationContextAware {
 		modelMapper
 				.getConfiguration()
 				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setFieldMatchingEnabled(true)
 				.setSkipNullEnabled(true);
 		return modelMapper;
 	}
@@ -41,5 +38,23 @@ public class BeanFactory implements ApplicationContextAware {
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public ObjectMapper getObjectMapper(){
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+		return objectMapper;
+	}
+
+	@Bean
+	public Jackson2ObjectMapperBuilder objectMapperBuilder(){
+		return new Jackson2ObjectMapperBuilder() {
+			@Override
+			public void configure(ObjectMapper objectMapper) {
+				super.configure(objectMapper);
+				objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+			}
+		};
 	}
 }

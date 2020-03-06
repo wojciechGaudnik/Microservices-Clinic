@@ -1,6 +1,5 @@
 package com.clinics.doctors.ui.model;
 
-import com.clinics.doctors.exception.validator.UniqueDoctorUUIDConstraint;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,10 +16,9 @@ import java.util.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-@ToString
+@ToString(exclude = {"calendars", "specializations"})
 @DynamicInsert
 @DynamicUpdate
-@UniqueDoctorUUIDConstraint
 //@Builder(toBuilder = true, builderMethodName = "hiddenBuilder")
 @Entity(name = "doctor")
 public class Doctor {
@@ -53,7 +51,7 @@ public class Doctor {
 	@Size(min = 3, max = 500, message = "photoUrl length out of range ")
 	private String photoUrl;
 
-	@Column(nullable = false)
+	@Column(unique = true, nullable = false)
 	private String licence;
 
 	@OneToMany(
@@ -69,13 +67,13 @@ public class Doctor {
 			name = "doctor_specialization",
 			joinColumns = {@JoinColumn(name = "doctor_id")},
 			inverseJoinColumns = {@JoinColumn(name = "spacialization_id")})
-	Collection<Specialization> specializations = new HashSet<>();
+	private Collection<Specialization> specializations;
 
 	@JsonIgnore
 	@ElementCollection
-	final private Collection<UUID> patients = new HashSet<>();
+	private Collection<UUID> patients;
 
 	@ElementCollection
-	final private Collection<UUID> medicalUnits = new HashSet<>();
+	private Collection<UUID> medicalUnits;
 }
 
