@@ -5,4 +5,5 @@ export const URLs = {
     GET_USER_INFORMATION: "http://localhost:8762/doctor-mssc/doctors/",
     CHANGE_DOCTOR_INFORMATION: "http://localhost:8762/doctor-mssc/doctors/",
     GET_UUID_BY_TOKEN: "http://localhost:8762/auth/users/uuid/",
+    DELETE_USER: "http://localhost:8762/doctor-mssc/doctors/"
 };
