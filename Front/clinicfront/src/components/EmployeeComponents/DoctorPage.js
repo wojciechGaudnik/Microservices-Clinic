@@ -18,6 +18,8 @@ import {
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal";
+import {LogOutButton} from "../AdditionalComponents/LogOutButton";
+import {redirectByRole} from "../../actions";
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
@@ -64,6 +66,7 @@ export const DoctorPage = (props) => {
     return(
         <div style={styleForMainDiv}>
             {props.error ? (<ErrorModal/>) : null}
+            <LogOutButton {...props}/>
             <Container style={styleForContainer}>
                 <Row><h5><Badge variant="primary">DOCTOR</Badge></h5></Row>
                 <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>UUID:</Col>           <Col style={styleForValueCol}>{props.userDetails.uuid}</Col>         </Row>
@@ -79,7 +82,10 @@ export const DoctorPage = (props) => {
                 <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
                     Edit
                 </Button>
-                <Button variant="light" size="sm" block onClick={() => sendFetchRequestDeleteUser()}>
+                <Button variant="light" size="sm" block onClick={() => {
+                    sendFetchRequestDeleteUser({uuid: props.userDetails.uuid});
+                    redirectByRole(null, props)
+                }}>
                     Delete Account
                 </Button>
             </Container>
