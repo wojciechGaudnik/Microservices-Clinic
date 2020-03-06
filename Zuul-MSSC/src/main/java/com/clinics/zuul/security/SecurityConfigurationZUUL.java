@@ -20,6 +20,8 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter implements Role, JwtProperties {
 
+	//todo 401 Unauthorized – This means the user isn’t not authorized to access a resource. It usually returns when the user isn’t authenticated.
+	//todo 403 Forbidden – This means the user is authenticated, but it’s not allowed to access a resource.
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
@@ -46,7 +48,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
-				.antMatchers(HttpMethod.GET,"/auth/users/uuid/").authenticated()
+				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.anyRequest().denyAll();
 //				.anyRequest().permitAll();

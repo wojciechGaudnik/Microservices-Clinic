@@ -7,6 +7,7 @@ import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
+import com.clinics.common.DTO.response.UserUUIDAndROLE;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -92,12 +93,20 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		return userRepository.deleteByUuid(uuid);
 	}
 
-	public UUID getUUID(HttpServletRequest request) {
+	public UserUUIDAndROLE getUUIDAndRole(HttpServletRequest request) {
 		String token = request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
 		Claims claims = Jwts.parser()
 				.setSigningKey(TOKEN_SECRET)
 				.parseClaimsJws(token)
 				.getBody();
-		return UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID)));
+		return UserUUIDAndROLE
+				.builder()
+				.uuid(UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID))))
+				.role(claims.get(JwtProperties.TOKEN_CLAIM_AUTHORITIES)
+						.toString()
+						.replace("[", "")
+						.replace("]", "")
+						.replace(JwtProperties.TOKEN_PREFIX_ROLE, ""))
+				.build();
 	}
 }

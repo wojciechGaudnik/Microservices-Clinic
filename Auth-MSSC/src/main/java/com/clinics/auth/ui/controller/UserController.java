@@ -4,6 +4,7 @@ import com.clinics.auth.ui.service.UserService;
 import com.clinics.common.DTO.request.EditUserInnerDTO;
 import com.clinics.common.DTO.request.RegisterUserDTO;
 import com.clinics.common.DTO.response.UserResponseDTO;
+import com.clinics.common.DTO.response.UserUUIDAndROLE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,9 +27,9 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping(path = "/users/uuid/")
-	public ResponseEntity<UUID> getUserUUID(HttpServletRequest request) {
-		return ResponseEntity.status(200).body(userService.getUUID(request));
+	@GetMapping(path = "/users/uuidAndRole/")
+	public ResponseEntity<UserUUIDAndROLE> getUserUUID(HttpServletRequest request) {
+		return ResponseEntity.status(200).body(userService.getUUIDAndRole(request));
 	}
 
 	@PostMapping(

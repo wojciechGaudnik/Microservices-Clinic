@@ -46,7 +46,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
-				.antMatchers(HttpMethod.GET, "/auth/users/uuid/").permitAll()
+				.antMatchers(HttpMethod.GET, "/auth/users/uuidAndRole/").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/auth/users/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.antMatchers(HttpMethod.PUT, "/auth/users/**").permitAll() // todo Unlike PUT, PATCH applies a partial up date to the resource.
