@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {redirectByRole, useFormFields} from "../../../actions";
 
 import {Button, Form} from "react-bootstrap";
-import {styleForForm} from "../../../containers/SetFormForInputUserInformation";
+import {styleForForm} from "./Containers/SetFormForInputUserInformation";
 
 import {EmailForm} from "./FormForInputUserInformationElements/EmailForm";
 import {PasswordForm} from "./FormForInputUserInformationElements/PasswordForm";
@@ -26,11 +26,17 @@ export const FormForInputUserInformation = (props) => {
         role:       "doctor"
     });
 
+    useEffect(() => {
+        if (!props.error && isFetchResponseOk){
+            redirectByRole(null, props);
+        }
+    }, [isFetchResponseOk]);
+
     const handleChange = (event) => {
         setUserInformation(event);
     };
 
-    let sendFetchRequest = () => {
+    const sendFetchRequest = () => {
         const ifCatchSetErrorInStore = (error) => {props.setStoreError(error)};
         switch (props.variant) {
             case "register":
@@ -42,17 +48,6 @@ export const FormForInputUserInformation = (props) => {
                 break;
         }
     };
-
-    const whichFormVariant = () => {
-
-    };
-
-    useEffect(() => {
-        whichFormVariant();
-        if (!props.error && isFetchResponseOk){
-            redirectByRole(null, props);
-        }
-    }, [isFetchResponseOk]);
 
     const onSubmit = (e) => {
         e.preventDefault();

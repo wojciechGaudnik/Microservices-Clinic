@@ -89,7 +89,7 @@ export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.GET_UUID_BY_TOKEN,
+        URLs.GET_DETAILS_BY_TOKEN,
         'GET',
         body,
         headers,

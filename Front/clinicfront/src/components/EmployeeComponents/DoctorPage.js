@@ -16,7 +16,7 @@ import {
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
-import {FormForInputUserInformation} from "../AdditionalComponents/FolderForFormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal";
 import {LogOutButton} from "../AdditionalComponents/LogOutButton";
 import {redirectByRole} from "../../actions";
@@ -84,7 +84,8 @@ export const DoctorPage = (props) => {
                 </Button>
                 <Button variant="light" size="sm" block onClick={() => {
                     sendFetchRequestDeleteUser({uuid: props.userDetails.uuid});
-                    redirectByRole(null, props)
+                    localStorage.removeItem("token");
+                    redirectByRole(null, props);
                 }}>
                     Delete Account
                 </Button>

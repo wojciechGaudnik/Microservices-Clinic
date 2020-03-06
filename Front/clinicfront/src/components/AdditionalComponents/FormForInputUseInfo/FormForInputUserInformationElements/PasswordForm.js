@@ -1,5 +1,5 @@
 import {Col, Form} from "react-bootstrap";
-import {styleForFormLabel} from "../../../../containers/SetFormForInputUserInformation";
+import {styleForFormLabel} from "../Containers/SetFormForInputUserInformation";
 import React from "react";
 
 export const PasswordForm = (props) => (
