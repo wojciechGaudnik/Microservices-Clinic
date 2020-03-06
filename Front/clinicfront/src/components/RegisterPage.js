@@ -13,7 +13,7 @@ export const RegisterPage = (props) => {
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-            {props.error ? (<ErrorModal/>) : null}
+            {props.error ? (<ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"} />) : null}
             <FormForInputUserInformation
                 {...props}
                 fetchRequest        ={sendFetchRequestRegisterNewDoctor}
