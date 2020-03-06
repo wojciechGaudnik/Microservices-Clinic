@@ -74,21 +74,24 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
     )
 };
 
-export const sendFetchRequestDeleteUser = () => {
-    // const body = null;
-    //
-    // const headers = {};
-    //
-    // const setInStateFunction = null;
-    //
-    // const specialFunction = null;
-    //
-    // sendRequestByGivenDetails(
-    //     URLs.GET_USER_INFORMATION,
-    //     'GET',
-    //     body,
-    //     headers,
-    //     setInStateFunction,
-    //     specialFunction,
-    // )
+export const sendFetchRequestDeleteUser = ({uuid}) => {
+    const body = null;
+
+    const headers = {
+        'Authorization': localStorage.token,
+        'Content-Type': 'application/json',
+    };
+
+    const setInStateFunction = null;
+
+    const specialFunction = null;
+
+    sendRequestByGivenDetails(
+        URLs.DELETE_DOCTOR + uuid,
+        'DELETE',
+        body,
+        headers,
+        setInStateFunction,
+        specialFunction,
+    )
 };
