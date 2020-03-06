@@ -5,7 +5,7 @@ export const sendRequestByGivenDetails = (
     headers,
     setInStateFunction,
     specialFunction,
-    ifCatchSetErrorInStore = () => {}
+    ifCatchSetErrorInStore = (error) => {}
 ) => {
     let init = {
         method: method,
