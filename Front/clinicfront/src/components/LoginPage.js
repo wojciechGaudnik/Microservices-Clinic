@@ -38,10 +38,7 @@ export const LoginPage = (props) => {
     //Main HTML return
     return (
         <div style={styleForMainDiv}>
-
-            {/*Modal for fetch error*/}
-            {props.error ? (<ErrorModal/>) : null}
-
+            {props.error ? ( <ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"}/> ) : null}
             <Form
                 onSubmit={e => {
                     e.preventDefault();
