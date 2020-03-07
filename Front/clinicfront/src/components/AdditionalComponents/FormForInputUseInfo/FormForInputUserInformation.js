@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 import {Button, Form} from "react-bootstrap";
 
 import {styleForForm} from "./Containers/SetFormForInputUserInformation";
 
-import {redirectByRole, useFormFields} from "../../../actions";
+import {useFormFields} from "../../../actions";
 
 import {EmailForm} from "./ElementsForFormForInputUserInformation/EmailForm";
 import {PasswordForm} from "./ElementsForFormForInputUserInformation/PasswordForm";
@@ -16,7 +16,6 @@ import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLFor
 
 
 export const FormForInputUserInformation = (props) => {
-    const [isFetchResponseOk, setIsFetchResponseOk] = useState(false);
     const [userInformation, setUserInformation] = useFormFields({
         firstName:  null,
         lastName:   null,
@@ -27,12 +26,6 @@ export const FormForInputUserInformation = (props) => {
         role:       "doctor"
     });
 
-    useEffect(() => {
-        if (!props.error && isFetchResponseOk){
-            redirectByRole(null, props);
-        }
-    }, [isFetchResponseOk]);
-
     const handleChange = (event) => {
         setUserInformation(event);
     };
@@ -40,7 +33,6 @@ export const FormForInputUserInformation = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         props.fetchRequest(userInformation);
-        setTimeout(() => {setIsFetchResponseOk(true)}, 1000);
     };
 
     return (
