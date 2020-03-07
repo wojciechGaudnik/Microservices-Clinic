@@ -8,13 +8,13 @@ import {
     sendFetchRequestSetUserInformation,
     styleForMainDiv,
     styleForSubContainer
-} from "../../containers/EmployeeContainers/SetDoctorPage";
+} from "./SetDoctorPage";
 
-import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
-import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
-import {LogOutButton} from "../AdditionalComponents/LogOutBtn/LogOutButton";
-import {ContainerForUserInformation} from "../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
-import {DelAccountBtn} from "../AdditionalComponents/DelAccountBtn/DelAccountBtn";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
+import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
+import {ContainerForUserInformation} from "../../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
+import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccountBtn";
 
 
 export const DoctorPage = (props) => {

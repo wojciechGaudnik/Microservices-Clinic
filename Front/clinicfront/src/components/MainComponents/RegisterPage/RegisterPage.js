@@ -3,11 +3,11 @@ import React from "react";
 import {
     styleForMainDiv,
     sendFetchRequestRegisterNewDoctor
-    } from "../containers/SetRegisterPage";
+    } from "./SetRegisterPage";
 
-import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
-import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
+import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
 
 
 export const RegisterPage = (props) => {

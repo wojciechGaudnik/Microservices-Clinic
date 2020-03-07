@@ -5,7 +5,7 @@ import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
     sendFetchRequestSetUserInformation
-} from "../../containers/EmployeeContainers/SetPatientPage";
+} from "./SetPatientPage";
 
 import {
 
@@ -14,14 +14,14 @@ import {
     styleForValueCol,
     styleForKeyCol,
 
-} from "../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
+} from "../../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
 
 import {
     styleForMainDiv,
     styleForSubContainer
-} from "../../containers/EmployeeContainers/SetPatientPage"
+} from "./SetPatientPage"
 
-import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
 export const PatientPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);

@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
-import RegisterPage from "../components/RegisterPage";
-import {setStoreError} from "../actions";
-import {sendRequestByGivenDetails} from "../actions/fetchRequest";
-import {URLs} from "../URLs";
+import RegisterPage from "./RegisterPage";
+import {setStoreError} from "../../../actions";
+import {sendRequestByGivenDetails} from "../../../actions/fetchRequest";
+import {URLs} from "../../../URLs";
 
 const getError = state => ( state.error );
 const getUserInformation = state => ( state.userInformation );

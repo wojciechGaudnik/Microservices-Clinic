@@ -7,13 +7,13 @@ import {
     sendFetchRequestLoginUser,
     styleForButton,
     styleForMainDiv
-} from "../containers/SetLoginPage";
+} from "./SetLoginPage";
 
-import {redirectByRole} from "../actions";
+import {redirectByRole} from "../../../actions";
 
-import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
+import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
 
-import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
 export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({

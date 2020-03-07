@@ -2,11 +2,11 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route, Switch} from "react-router";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DoctorPage from "../containers/EmployeeContainers/SetDoctorPage";
-import PatientPage from "../containers/EmployeeContainers/SetPatientPage";
-import {AssistantPage} from "./EmployeeComponents/AssistantPage";
-import RegisterPage from "../containers/SetRegisterPage";
-import LoginPage from "../containers/SetLoginPage";
+import DoctorPage from "./EmployeeComponents/DoctorPage/SetDoctorPage";
+import PatientPage from "./EmployeeComponents/PatientPage/SetPatientPage";
+import {AssistantPage} from "./EmployeeComponents/AssistantPage/AssistantPage";
+import RegisterPage from "./MainComponents/RegisterPage/SetRegisterPage";
+import LoginPage from "./MainComponents/LoginPage/SetLoginPage";
 
 //TODO:Sprawdzanie już zalogowanego użytkownika
 

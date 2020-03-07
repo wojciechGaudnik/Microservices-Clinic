@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
-import LoginPage from "../components/LoginPage";
-import {setStoreError, setStoreUserDetails} from "../actions";
-import {sendRequestByGivenDetails} from "../actions/fetchRequest";
-import {URLs} from "../URLs";
+import LoginPage from "./LoginPage";
+import {setStoreError, setStoreUserDetails} from "../../../actions";
+import {sendRequestByGivenDetails} from "../../../actions/fetchRequest";
+import {URLs} from "../../../URLs";
 
 const getError = state => (state.error);
 

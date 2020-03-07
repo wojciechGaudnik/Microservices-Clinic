@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
-import DoctorPage from "../../components/EmployeeComponents/DoctorPage";
-import {setStoreDoctorInformation, setStoreError} from "../../actions";
-import {sendRequestByGivenDetails} from "../../actions/fetchRequest";
-import {URLs} from "../../URLs";
+import DoctorPage from "./DoctorPage";
+import {setStoreDoctorInformation, setStoreError} from "../../../actions";
+import {sendRequestByGivenDetails} from "../../../actions/fetchRequest";
+import {URLs} from "../../../URLs";
 
 const getUserDetails = state => ( state.info.userDetails );
 const getUserInformation = state => ( state.info.userInformation );
