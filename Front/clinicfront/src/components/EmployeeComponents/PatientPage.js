@@ -8,13 +8,18 @@ import {
 } from "../../containers/EmployeeContainers/SetPatientPage";
 
 import {
-    styleForMainDiv,
+
     styleForContainer,
     styleForRow,
     styleForValueCol,
     styleForKeyCol,
-    styleForSubContainer
+
 } from "../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
+
+import {
+    styleForMainDiv,
+    styleForSubContainer
+} from "../../containers/EmployeeContainers/SetPatientPage"
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 

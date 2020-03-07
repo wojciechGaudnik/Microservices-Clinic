@@ -21,16 +21,6 @@ export default connect(
 )(LoginPage)
 
 //CSS Stylesheet
-export const styleForFormLabel = {
-    color:'white'
-};
-
-export const styleForForm = {
-    border: '2px solid white',
-    borderRadius: '5px',
-    padding: '8px'
-};
-
 export const styleForMainDiv = {
     margin: '50px auto auto 50px',
     width: '30%',
@@ -79,7 +69,6 @@ export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
     const headers = {'Authorization': localStorage.token};
 
     const setInStateFunction = (responseData) => {
-        console.log(responseData);
         setUserDetails({
             uuid: responseData.uuid,
             role: responseData.role

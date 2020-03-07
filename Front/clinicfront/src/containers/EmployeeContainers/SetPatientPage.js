@@ -21,6 +21,18 @@ export default connect(
     mapDispatchToProps
 )(PatientPage)
 
+//CSS Stylesheet
+export const styleForMainDiv = {
+    margin: '30px'
+};
+
+export const styleForSubContainer = {
+    color: 'black',
+    padding: '10px 30px 10px 30px',
+    marginBottom: '15px',
+    width: '50%',
+};
+
 //Content for fetch request
 export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) => {
     // const body = null;

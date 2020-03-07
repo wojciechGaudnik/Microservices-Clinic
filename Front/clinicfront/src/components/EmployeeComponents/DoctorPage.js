@@ -5,12 +5,10 @@ import {Button, Container} from "react-bootstrap";
 import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
-    sendFetchRequestSetUserInformation
+    sendFetchRequestSetUserInformation,
+    styleForMainDiv,
+    styleForSubContainer
 } from "../../containers/EmployeeContainers/SetDoctorPage";
-
-import {styleForMainDiv, styleForSubContainer} from "../../containers/EmployeeContainers/SetDoctorPage"
-
-import {redirectByRole} from "../../actions";
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
@@ -21,15 +19,28 @@ import {DelAccountBtn} from "../AdditionalComponents/DelAccountBtn/DelAccountBtn
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
-    //Main HTML return
 
+    //Fetch requests
+    const fetchRequestForContainerForUserInformation    = ({setUserInformation}) => sendFetchRequestSetUserInformation(
+        props.userDetails.uuid,
+        {setUserInformation});
+
+    const fetchRequestForDelAccountBtn                  = ()                     => sendFetchRequestDeleteUser(
+        {uuid: props.userDetails.uuid});
+
+    const fetchRequestForFormForInputUserInformation    = (newUserInformation)   => sendFetchRequestChangeUserInformation(
+        newUserInformation,
+        {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
+        {uuid: props.userDetails.uuid});
+
+    //Main HTML return
     return(
         <div style={styleForMainDiv}>
             {props.error ? (<ErrorModal/>) : null}
             <LogOutButton {...props}/>
             <ContainerForUserInformation
                 {...props}
-                fetchRequest={({setUserInformation}) => sendFetchRequestSetUserInformation(props.userDetails.uuid, {setUserInformation})}
+                fetchRequest={fetchRequestForContainerForUserInformation}
                 setStoreUserInformation={(userInformation) => props.setStoreUserInformation(userInformation)}
                 titleRole={"DOCTOR"}
                 firstName={true}
@@ -43,18 +54,16 @@ export const DoctorPage = (props) => {
                 <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
                     Edit
                 </Button>
-                <DelAccountBtn {...props} fetchRequest={() => sendFetchRequestDeleteUser({uuid: props.userDetails.uuid})}/>
+                <DelAccountBtn
+                    {...props}
+                    fetchRequest={fetchRequestForDelAccountBtn}
+                />
             </Container>
             {showFormForEdit ? (
                 <Container>
                     <FormForInputUserInformation
                         {...props}
-                        fetchRequest        ={(newUserInformation) => {
-                            sendFetchRequestChangeUserInformation(
-                                newUserInformation,
-                                {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
-                                {uuid: props.userDetails.uuid})
-                        }}
+                        fetchRequest        ={fetchRequestForFormForInputUserInformation}
                         submitButtonTitle   ="Edit"
                         showEmailForm       ={true}
                         showPasswordForm    ={true}
