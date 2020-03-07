@@ -10,7 +10,7 @@ export const ErrorModal = (props) => {
     const onHideClick = () => setShowErrorModal(false);
 
     return (
-        <Modal show={showErrorModal} onHide={onHideClick()} >
+        <Modal show={showErrorModal} onHide={() => onHideClick()} >
             <Container style={styleForModalContainer}>
                 <Modal.Header closeButton>
                     <Modal.Title> {props.modalTitle} </Modal.Title>
