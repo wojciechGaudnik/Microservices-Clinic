@@ -22,7 +22,7 @@ export const LoginPage = (props) => {
 
     //Effects after each render
     useEffect(() => {
-        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails}); console.log("Works")}
+        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
     }, []);
     useEffect(() => {
         props.setStoreUserDetails(userDetails);
@@ -37,7 +37,7 @@ export const LoginPage = (props) => {
     //Main HTML return
     return (
         <div style={styleForMainDiv}>
-            {props.error ? ( <ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"}/> ) : null}
+            {props.error ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
             <FormForInputUserInformation
                 {...props}
                 fetchRequest        ={(userDetails) => {
