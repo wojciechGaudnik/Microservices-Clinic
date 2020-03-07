@@ -36,22 +36,9 @@ export const FormForInputUserInformation = (props) => {
         setUserInformation(event);
     };
 
-    const sendFetchRequest = () => {
-        const ifCatchSetErrorInStore = (error) => {props.setStoreError(error)};
-        switch (props.variant) {
-            case "register":
-                props.fetchRequest(userInformation, {ifCatchSetErrorInStore});
-                break;
-            case "edit":
-                console.log(props.userInformation);
-                props.fetchRequest(userInformation, {ifCatchSetErrorInStore}, {uuid: props.userDetails.uuid});
-                break;
-        }
-    };
-
     const onSubmit = (e) => {
         e.preventDefault();
-        sendFetchRequest();
+        props.fetchRequest(userInformation);
         setTimeout(() => {setIsFetchResponseOk(true)}, 1000);
     };
 

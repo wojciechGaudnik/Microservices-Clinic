@@ -10,6 +10,7 @@ import {
     sendFetchRequestLoginUser, sendFetchRequestIsThereLoginUser,
     styleForForm, styleForFormLabel, styleForMainDiv, styleForButton
 } from "../containers/SetLoginPage";
+import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
 export const LoginPage = (props) => {
     const [loginDetails, setLoginDetails] = useFormFields({
@@ -39,11 +40,29 @@ export const LoginPage = (props) => {
     return (
         <div style={styleForMainDiv}>
             {props.error ? ( <ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"}/> ) : null}
+            <FormForInputUserInformation
+                {...props}
+                fetchRequest        ={(userDetails) => {
+                    sendFetchRequestLoginUser(
+                        userDetails,
+                        {setUserDetails},
+                        {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
+                }}
+                variant             ="login"
+                submitButtonTitle   ="Log In"
+                showEmailForm       ={true}
+                showPasswordForm    ={true}
+                showRoleForm        ={false}
+                showFirstNameForm   ={false}
+                showLastNameForm    ={false}
+                showLicenceForm     ={false}
+                showPhotoURLForm    ={false}
+            />
+
             <Form
                 onSubmit={e => {
                     e.preventDefault();
-                    sendFetchRequestLoginUser(loginDetails, {setUserDetails}, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}});
-                }}
+                    sendFetchRequestLoginUser(loginDetails, {setUserDetails}, {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})}}
                 style={styleForForm}
             >
                 <Form.Group controlId="formBasicEmail">

@@ -16,7 +16,11 @@ export const RegisterPage = (props) => {
             {props.error ? (<ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"} />) : null}
             <FormForInputUserInformation
                 {...props}
-                fetchRequest        ={sendFetchRequestRegisterNewDoctor}
+                fetchRequest        ={(registerDetails) => {
+                    sendFetchRequestRegisterNewDoctor(
+                        registerDetails,
+                        {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
+                }}
                 variant             ="register"
                 submitButtonTitle   ="Register"
                 showEmailForm       ={true}

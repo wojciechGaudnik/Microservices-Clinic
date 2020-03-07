@@ -94,7 +94,12 @@ export const DoctorPage = (props) => {
                 <Container>
                     <FormForInputUserInformation
                         {...props}
-                        fetchRequest        ={sendFetchRequestChangeUserInformation}
+                        fetchRequest        ={(newUserInformation) => {
+                            sendFetchRequestChangeUserInformation(
+                                newUserInformation,
+                                {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
+                                {uuid: props.userDetails.uuid})
+                        }}
                         variant             ="edit"
                         submitButtonTitle   ="Edit"
                         showEmailForm       ={true}
@@ -105,8 +110,7 @@ export const DoctorPage = (props) => {
                         showLicenceForm     ={true}
                         showPhotoURLForm    ={true}
                     />
-                </Container>
-                ) : null
+                </Container>) : null
             }
         </div>
     )
