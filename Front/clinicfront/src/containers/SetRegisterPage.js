@@ -29,6 +29,10 @@ export const styleForMainDiv = {
 
 //Content for fetch request
 export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCatchSetErrorInStore}) => {
+    const url = URLs.REGISTER_USER;
+
+    const method = 'POST';
+
     const body = {
         "email": userRegisterInformation.email,
         "password": userRegisterInformation.password,
@@ -42,6 +46,10 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCa
     const setInStateFunction = null;
 
     const specialFunction = (responseJSONData) => {
+        const url = URLs.REGISTER_DOCTOR;
+
+        const method = 'POST';
+
         const body = {
             doctoruuid: responseJSONData.uuid,
             firstName: userRegisterInformation.firstName,
@@ -60,8 +68,8 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCa
         const specialFunction = null;
 
         sendRequestByGivenDetails(
-            URLs.REGISTER_DOCTOR,
-            'POST',
+            url,
+            method,
             body,
             headers,
             setInStateFunction,
@@ -71,8 +79,8 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCa
     };
 
     sendRequestByGivenDetails(
-        URLs.REGISTER_USER,
-        'POST',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,

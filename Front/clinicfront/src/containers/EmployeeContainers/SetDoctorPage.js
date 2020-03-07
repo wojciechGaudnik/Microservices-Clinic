@@ -38,6 +38,10 @@ export const styleForSubContainer = {
 
 //Content for fetch request
 export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction) => {
+    const url = URLs.GET_USER_INFORMATION + alreadyLoginUserUuid;
+
+    const method = 'GET';
+
     const body = null;
 
     const headers = {'Authorization': localStorage.token};
@@ -47,8 +51,8 @@ export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUser
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.GET_USER_INFORMATION + alreadyLoginUserUuid,
-        'GET',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,
@@ -57,6 +61,10 @@ export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUser
 };
 
 export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCatchSetErrorInStore}, alreadyLoginUserUuid) => {
+    const url = URLs.CHANGE_DOCTOR_INFORMATION + alreadyLoginUserUuid;
+
+    const method = 'PATCH';
+
     const body = {
         "email" :newUserInformation.email,
         "password" :newUserInformation.password,
@@ -76,8 +84,8 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.CHANGE_DOCTOR_INFORMATION + alreadyLoginUserUuid,
-        'PATCH',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,
@@ -86,7 +94,11 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
     )
 };
 
-export const sendFetchRequestDeleteUser = ({uuid}) => {
+export const sendFetchRequestDeleteUser = (alreadyLoginUserUuid) => {
+    const url = URLs.DELETE_DOCTOR + alreadyLoginUserUuid;
+
+    const method = 'DELETE';
+
     const body = null;
 
     const headers = {
@@ -99,8 +111,8 @@ export const sendFetchRequestDeleteUser = ({uuid}) => {
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.DELETE_DOCTOR + uuid,
-        'DELETE',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,

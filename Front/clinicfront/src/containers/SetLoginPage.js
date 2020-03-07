@@ -34,6 +34,10 @@ export const styleForButton = {
 
 //Content for fetch request
 export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCatchSetErrorInStore}) => {
+    const url = URLs.LOGIN_USER;
+
+    const method = 'POST';
+
     const body = {
         "email":loginDetails.email,
         "password":loginDetails.password
@@ -53,8 +57,8 @@ export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCat
     };
 
     sendRequestByGivenDetails(
-        URLs.LOGIN_USER,
-        'POST',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,
@@ -64,6 +68,10 @@ export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCat
 };
 
 export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
+    const url = URLs.GET_DETAILS_BY_TOKEN;
+
+    const method = 'GET';
+
     const body = null;
 
     const headers = {'Authorization': localStorage.token};
@@ -78,8 +86,8 @@ export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.GET_DETAILS_BY_TOKEN,
-        'GET',
+        url,
+        method,
         body,
         headers,
         setInStateFunction,

@@ -26,7 +26,7 @@ export const DoctorPage = (props) => {
         setUserInformation);
 
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
-        {uuid: props.userDetails.uuid});
+        props.userDetails.uuid);
 
     const fetchRequestForFormForInputUserInformation = (inputNewUserInformation) => sendFetchRequestChangeUserInformation(
         inputNewUserInformation,
