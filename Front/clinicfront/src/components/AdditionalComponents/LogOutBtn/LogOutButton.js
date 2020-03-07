@@ -1,6 +1,6 @@
 import {Button} from "react-bootstrap";
 import React from "react";
-import {redirectByRole} from "../../actions";
+import {redirectByRole} from "../../../actions";
 
 export const LogOutButton = (props) => {
     return (

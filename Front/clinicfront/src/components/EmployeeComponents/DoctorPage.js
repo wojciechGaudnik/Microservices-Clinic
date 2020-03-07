@@ -18,7 +18,7 @@ import {
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
-import {LogOutButton} from "../AdditionalComponents/LogOutButton";
+import {LogOutButton} from "../AdditionalComponents/LogOutBtn/LogOutButton";
 import {redirectByRole} from "../../actions";
 
 export const DoctorPage = (props) => {
