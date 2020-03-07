@@ -26,13 +26,5 @@ export const styleForContainer = {
     borderRadius: '7px',
 };
 
-export const styleForSubContainer = {
-    color: 'black',
-    padding: '10px 30px 10px 30px',
-    marginBottom: '15px',
-    width: '50%',
-};
 
-export const styleForMainDiv = {
-    margin: '30px'
-};
+

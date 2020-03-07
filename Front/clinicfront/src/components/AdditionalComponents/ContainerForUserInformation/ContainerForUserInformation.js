@@ -4,7 +4,7 @@ import {
     styleForKeyCol,
     styleForRow,
     styleForValueCol
-} from "../../../containers/EmployeeContainers/SetEmployeePages";
+} from "./Containers/SetContainerForUserInfo";
 import {Badge, Col, Container, Row} from "react-bootstrap";
 
 export const ContainerForUserInformation = (props) => {

@@ -14,7 +14,7 @@ import {
     styleForValueCol,
     styleForKeyCol,
     styleForSubContainer
-} from "../../containers/EmployeeContainers/SetEmployeePages"
+} from "../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
 
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 

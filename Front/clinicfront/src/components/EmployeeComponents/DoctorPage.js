@@ -8,7 +8,7 @@ import {
     sendFetchRequestSetUserInformation
 } from "../../containers/EmployeeContainers/SetDoctorPage";
 
-import {styleForMainDiv, styleForSubContainer} from "../../containers/EmployeeContainers/SetEmployeePages"
+import {styleForMainDiv, styleForSubContainer} from "../../containers/EmployeeContainers/SetDoctorPage"
 
 import {redirectByRole} from "../../actions";
 
@@ -16,6 +16,7 @@ import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputU
 import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
 import {LogOutButton} from "../AdditionalComponents/LogOutBtn/LogOutButton";
 import {ContainerForUserInformation} from "../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
+import {DelAccountBtn} from "../AdditionalComponents/DelAccountBtn/DelAccountBtn";
 
 
 export const DoctorPage = (props) => {
@@ -42,13 +43,7 @@ export const DoctorPage = (props) => {
                 <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
                     Edit
                 </Button>
-                <Button variant="light" size="sm" block onClick={() => {
-                    sendFetchRequestDeleteUser({uuid: props.userDetails.uuid});
-                    localStorage.removeItem("token");
-                    redirectByRole(null, props);
-                }}>
-                    Delete Account
-                </Button>
+                <DelAccountBtn {...props} fetchRequest={() => sendFetchRequestDeleteUser({uuid: props.userDetails.uuid})}/>
             </Container>
             {showFormForEdit ? (
                 <Container>
