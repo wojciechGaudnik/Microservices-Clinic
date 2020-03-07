@@ -19,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,19 +29,16 @@ import java.util.UUID;
 public class DoctorService {
 
 	final private DoctorRepository doctorRepository;
-	final private CalendarRepository calendarRepository;
 	final private ModelMapper modelMapper;
 	final private RestTemplate restTemplate;
 	final private Environment environment;
 
 	public DoctorService(
 			DoctorRepository doctorRepository,
-			CalendarRepository calendarRepository,
 			ModelMapper modelMapper,
 			RestTemplate restTemplate,
 			Environment environment) {
 		this.doctorRepository = doctorRepository;
-		this.calendarRepository = calendarRepository;
 		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;

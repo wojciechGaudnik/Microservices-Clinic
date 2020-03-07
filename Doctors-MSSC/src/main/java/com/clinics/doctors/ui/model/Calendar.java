@@ -31,6 +31,7 @@ public class Calendar {
 			unique = true)
 	private UUID calendaruuid;
 
+	@Column(unique = true)
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
