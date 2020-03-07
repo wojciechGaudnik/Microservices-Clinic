@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
-import {Badge, Col, Container, Row, Button} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 
 import {
     sendFetchRequestChangeUserInformation,
@@ -8,14 +8,7 @@ import {
     sendFetchRequestSetUserInformation
 } from "../../containers/EmployeeContainers/SetDoctorPage";
 
-import { 
-    styleForMainDiv,
-    styleForContainer,
-    styleForRow,
-    styleForValueCol,
-    styleForKeyCol,
-    styleForSubContainer
-} from "../../containers/EmployeeContainers/SetEmployeePages"
+import {styleForMainDiv, styleForSubContainer} from "../../containers/EmployeeContainers/SetEmployeePages"
 
 import {redirectByRole} from "../../actions";
 
