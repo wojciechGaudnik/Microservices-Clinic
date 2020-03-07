@@ -37,17 +37,17 @@ export const styleForSubContainer = {
 };
 
 //Content for fetch request
-export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) => {
+export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction) => {
     const body = null;
 
     const headers = {'Authorization': localStorage.token};
 
-    const setInStateFunction = (responseData) => setUserInformation(responseData);
+    const setInStateFunction = (responseData) => setUserInformationInStateFunction(responseData);
 
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.GET_USER_INFORMATION + uuid,
+        URLs.GET_USER_INFORMATION + alreadyLoginUserUuid,
         'GET',
         body,
         headers,
@@ -56,7 +56,7 @@ export const sendFetchRequestSetUserInformation = (uuid, {setUserInformation}) =
     )
 };
 
-export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCatchSetErrorInStore}, {uuid}) => {
+export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCatchSetErrorInStore}, alreadyLoginUserUuid) => {
     const body = {
         "email" :newUserInformation.email,
         "password" :newUserInformation.password,
@@ -76,7 +76,7 @@ export const sendFetchRequestChangeUserInformation = (newUserInformation, {ifCat
     const specialFunction = null;
 
     sendRequestByGivenDetails(
-        URLs.CHANGE_DOCTOR_INFORMATION + uuid,
+        URLs.CHANGE_DOCTOR_INFORMATION + alreadyLoginUserUuid,
         'PATCH',
         body,
         headers,

@@ -12,7 +12,7 @@ export const ContainerForUserInformation = (props) => {
 
     //Effects after each render
     useEffect(() => {
-        props.fetchRequest({setUserInformation});
+        props.fetchRequest(setUserInformation);
         props.setStoreUserInformation(userInformation);
     }, [userInformation]);
 

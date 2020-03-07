@@ -21,17 +21,17 @@ export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
 
     //Fetch requests
-    const fetchRequestForContainerForUserInformation    = ({setUserInformation}) => sendFetchRequestSetUserInformation(
+    const fetchRequestForContainerForUserInformation = (setUserInformation)    => sendFetchRequestSetUserInformation(
         props.userDetails.uuid,
-        {setUserInformation});
+        setUserInformation);
 
-    const fetchRequestForDelAccountBtn                  = ()                     => sendFetchRequestDeleteUser(
+    const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
         {uuid: props.userDetails.uuid});
 
-    const fetchRequestForFormForInputUserInformation    = (newUserInformation)   => sendFetchRequestChangeUserInformation(
-        newUserInformation,
+    const fetchRequestForFormForInputUserInformation = (inputNewUserInformation) => sendFetchRequestChangeUserInformation(
+        inputNewUserInformation,
         {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
-        {uuid: props.userDetails.uuid});
+        props.userDetails.uuid);
 
     //Main HTML return
     return(
