@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+
 import {Badge, Col, Container, Row, Button} from "react-bootstrap";
 
 import {
@@ -16,10 +17,12 @@ import {
     styleForSubContainer
 } from "../../containers/EmployeeContainers/SetEmployeePages"
 
+import {redirectByRole} from "../../actions";
+
 import {FormForInputUserInformation} from "../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 import {ErrorModal} from "../AdditionalComponents/ErrorModal/ErrorModal";
 import {LogOutButton} from "../AdditionalComponents/LogOutBtn/LogOutButton";
-import {redirectByRole} from "../../actions";
+
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);

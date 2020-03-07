@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {redirectByRole} from "../actions";
-
 import {Button} from "react-bootstrap";
-
-import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
 
 import {
     sendFetchRequestIsThereLoginUser,
@@ -12,6 +8,11 @@ import {
     styleForButton,
     styleForMainDiv
 } from "../containers/SetLoginPage";
+
+import {redirectByRole} from "../actions";
+
+import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
+
 import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
 export const LoginPage = (props) => {

@@ -6,6 +6,7 @@ import {
     } from "../containers/SetRegisterPage";
 
 import {FormForInputUserInformation} from "./AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+
 import {ErrorModal} from "./AdditionalComponents/ErrorModal/ErrorModal";
 
 
