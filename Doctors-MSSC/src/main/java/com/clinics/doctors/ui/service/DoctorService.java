@@ -1,11 +1,13 @@
 package com.clinics.doctors.ui.service;
 
-import com.clinics.common.DTO.request.EditDoctorDTO;
-import com.clinics.common.DTO.request.EditUserInnerDTO;
-import com.clinics.common.DTO.request.RegisterDoctorDTO;
-import com.clinics.common.DTO.response.DoctorResponseDTO;
+import com.clinics.common.DTO.request.outer.EditDoctorDTO;
+import com.clinics.common.DTO.request.inner.EditUserDTO;
+import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
+import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
+import com.clinics.doctors.ui.repositorie.CalendarRepository;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,13 +30,19 @@ import java.util.UUID;
 public class DoctorService {
 
 	final private DoctorRepository doctorRepository;
+	final private CalendarRepository calendarRepository;
 	final private ModelMapper modelMapper;
 	final private RestTemplate restTemplate;
 	final private Environment environment;
 
-	@Autowired
-	public DoctorService(DoctorRepository doctorRepository, ModelMapper modelMapper, RestTemplate restTemplate, Environment environment) {
+	public DoctorService(
+			DoctorRepository doctorRepository,
+			CalendarRepository calendarRepository,
+			ModelMapper modelMapper,
+			RestTemplate restTemplate,
+			Environment environment) {
 		this.doctorRepository = doctorRepository;
+		this.calendarRepository = calendarRepository;
 		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
@@ -73,8 +82,8 @@ public class DoctorService {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
 		if (editDoctorDTO.getPassword() != null || editDoctorDTO.getEmail() != null) {
-			EditUserInnerDTO editUserInnerDTO = modelMapper.map(editDoctorDTO, EditUserInnerDTO.class);
-			HttpEntity<EditUserInnerDTO> httpEntity = new HttpEntity<>(editUserInnerDTO, httpHeaders);
+			EditUserDTO editUserDTO = modelMapper.map(editDoctorDTO, EditUserDTO.class);
+			HttpEntity<EditUserDTO> httpEntity = new HttpEntity<>(editUserDTO, httpHeaders);
 			restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, Void.class);
 		}
 		if (doctorRepository.existsByDoctoruuid(uuid)) {
@@ -89,6 +98,10 @@ public class DoctorService {
 		restTemplate.delete(uri);
 		doctorRepository.deleteByDoctoruuid(uuid);
 	}
+
+//	public List<Calendar> getDoctorCalendars(UUID uuid) {
+//		return calendarRepository.getAllByDoctor_Doctoruuid(uuid);
+//	}
 }
 
 

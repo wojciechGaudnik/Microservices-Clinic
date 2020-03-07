@@ -1,7 +1,7 @@
 package com.clinics.patient.service;
 
-import com.clinics.common.DTO.request.VisitDTO;
-import com.clinics.common.DTO.response.VisitRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;

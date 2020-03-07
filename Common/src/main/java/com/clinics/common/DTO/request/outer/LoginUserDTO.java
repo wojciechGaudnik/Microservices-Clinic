@@ -1,4 +1,4 @@
-package com.clinics.common.DTO.request;
+package com.clinics.common.DTO.request.outer;
 
 import lombok.Data;
 import lombok.ToString;

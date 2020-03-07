@@ -11,6 +11,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class BeanFactory implements ApplicationContextAware {
 
 	private static ApplicationContext context;
@@ -42,6 +47,8 @@ public class BeanFactory implements ApplicationContextAware {
 
 	@Bean
 	public ObjectMapper getObjectMapper(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
 		return objectMapper;

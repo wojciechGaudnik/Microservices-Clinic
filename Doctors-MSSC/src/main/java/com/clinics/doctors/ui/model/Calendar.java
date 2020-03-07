@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.UUID;
 
 @Data
@@ -25,17 +26,16 @@ public class Calendar {
 	@JsonIgnore
 	private Long id;
 
-	@Column(
-			updatable = false,
+	@Column(updatable = false,
 			nullable = false,
 			unique = true)
-	@Builder.Default
-	private UUID calendaruuid = UUID.randomUUID(); //todo --- bad name because JPA <---> sqlQuery --- remove and put autogenerate in postgres
-	//todo move creation uuid into method !!!
+	private UUID calendaruuid;
 
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
+
+	private UUID medicalunit;
 
 	@JsonIgnore
 	@ManyToOne(
@@ -43,4 +43,12 @@ public class Calendar {
 			fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
+
+	@OneToMany(
+			targetEntity=Appointment.class,
+			mappedBy="calendar",
+			cascade={CascadeType.ALL},
+			fetch = FetchType.LAZY,
+			orphanRemoval=true)
+	private Collection<Appointment> appointments;
 }

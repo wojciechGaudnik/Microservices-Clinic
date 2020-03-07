@@ -1,7 +1,7 @@
 package com.clinics.patient.client;
 
-import com.clinics.common.DTO.request.VisitDTO;
-import com.clinics.common.DTO.response.VisitRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

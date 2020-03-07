@@ -1,10 +1,10 @@
 package com.clinics.auth.ui.controller;
 
 import com.clinics.auth.ui.service.UserService;
-import com.clinics.common.DTO.request.EditUserInnerDTO;
-import com.clinics.common.DTO.request.RegisterUserDTO;
-import com.clinics.common.DTO.response.UserResponseDTO;
-import com.clinics.common.DTO.response.UserUUIDAndROLE;
+import com.clinics.common.DTO.request.inner.EditUserDTO;
+import com.clinics.common.DTO.request.outer.RegisterUserDTO;
+import com.clinics.common.DTO.response.outer.UserResponseDTO;
+import com.clinics.common.DTO.response.outer.UserUUIDAndROLE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,8 +44,8 @@ public class UserController {
 	@PatchMapping(path = "/users/{userUUID}")
 	public ResponseEntity<UserResponseDTO> editUser(
 			@PathVariable UUID userUUID,
-			@Valid @RequestBody EditUserInnerDTO editUserInnerDTO) {
-		return ResponseEntity.status(200).body(userService.editUser(editUserInnerDTO, userUUID));
+			@Valid @RequestBody EditUserDTO editUserDTO) {
+		return ResponseEntity.status(200).body(userService.editUser(editUserDTO, userUUID));
 	}
 
 	@PutMapping(path = "/users/{userUUID}")

@@ -1,4 +1,4 @@
-package com.clinics.common.DTO.response;
+package com.clinics.common.DTO.response.outer;
 
 import lombok.*;
 

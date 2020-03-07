@@ -1,4 +1,4 @@
-package com.clinics.common.DTO.request;
+package com.clinics.common.DTO.request.outer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

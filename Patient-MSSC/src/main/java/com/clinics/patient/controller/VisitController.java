@@ -1,6 +1,6 @@
 package com.clinics.patient.controller;
 
-import com.clinics.common.DTO.request.VisitDTO;
+import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.VisitService;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/patient/visit")
+@RequestMapping(value = "/patient/visit") //todo after patient there should be patient's uuid
 public class VisitController {
     final private VisitService visitService;
 

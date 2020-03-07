@@ -32,8 +32,7 @@ public class Doctor {
 	@JsonIgnore
 	private Long id;
 
-	@Column(
-			updatable = false,
+	@Column(updatable = false,
 			nullable = false,
 			unique = true)
 	private UUID doctoruuid; //todo bad name because JPA <---> sqlQuery
@@ -59,7 +58,7 @@ public class Doctor {
 			mappedBy="doctor",
 			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
 			orphanRemoval=true)
-	Collection<Calendar> calendars = new HashSet<>();
+	Collection<Calendar> calendars;
 
 	@JsonIdentityReference
 	@ManyToMany(targetEntity = Specialization.class)

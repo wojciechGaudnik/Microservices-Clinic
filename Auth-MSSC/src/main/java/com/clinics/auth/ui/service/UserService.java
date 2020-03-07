@@ -4,10 +4,10 @@ import com.clinics.auth.configuration.AsyncUserRepositoryAccess;
 import com.clinics.auth.ui.model.User;
 import com.clinics.auth.ui.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
-import com.clinics.common.DTO.request.EditUserInnerDTO;
-import com.clinics.common.DTO.request.RegisterUserDTO;
-import com.clinics.common.DTO.response.UserResponseDTO;
-import com.clinics.common.DTO.response.UserUUIDAndROLE;
+import com.clinics.common.DTO.request.inner.EditUserDTO;
+import com.clinics.common.DTO.request.outer.RegisterUserDTO;
+import com.clinics.common.DTO.response.outer.UserResponseDTO;
+import com.clinics.common.DTO.response.outer.UserUUIDAndROLE;
 import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -77,14 +77,14 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 	}
 
 
-	public UserResponseDTO editUser(EditUserInnerDTO editUserInnerDTO, UUID userUUID) {
+	public UserResponseDTO editUser(EditUserDTO editUserDTO, UUID userUUID) {
 		var optionalUserToEdit = userRepository.findByUuid(userUUID);
 		if (optionalUserToEdit.isEmpty()) {
 			throw new NoSuchElementException("No such user to edit ");
 		}
 		var userToEdit = optionalUserToEdit.get();
-		if(editUserInnerDTO.getPassword() != null) userToEdit.setPassword(passwordEncoder.encode(editUserInnerDTO.getPassword()));
-		if(editUserInnerDTO.getEmail() != null) userToEdit.setEmail(editUserInnerDTO.getEmail());
+		if(editUserDTO.getPassword() != null) userToEdit.setPassword(passwordEncoder.encode(editUserDTO.getPassword()));
+		if(editUserDTO.getEmail() != null) userToEdit.setEmail(editUserDTO.getEmail());
 		userRepository.save(userToEdit);
 		return modelMapper.map(userToEdit, UserResponseDTO.class);
 	}

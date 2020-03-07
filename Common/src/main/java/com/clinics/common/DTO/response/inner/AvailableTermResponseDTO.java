@@ -1,4 +1,6 @@
-package com.clinics.common.DTO.response;
+package com.clinics.common.DTO.response.inner;
+
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,7 @@
 package com.clinics.patient.service;
 
-import com.clinics.common.DTO.request.RegisterPatientDTO;
-import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;

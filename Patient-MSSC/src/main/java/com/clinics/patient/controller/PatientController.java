@@ -1,7 +1,7 @@
 package com.clinics.patient.controller;
 
-import com.clinics.common.DTO.request.RegisterPatientDTO;
-import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.PatientService;
@@ -10,13 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/patient")
+@RequestMapping(value = "/patient") //todo patients
 public class PatientController {
     final private PatientService patientService;
 
@@ -38,14 +37,14 @@ public class PatientController {
     @GetMapping(path = "/id/{ID}")
     public Optional<Patient> getPatientByID(@PathVariable Long ID){
         return patientService.findById(ID);
-    } //Do we need this if we should not expose DB id ?
+    } //Do we need this if we should not expose DB id ? <--- exactly
 
     @PostMapping(path = "/")
     public ResponseEntity<PatientRegisterResponseDTO> registerPatient(@RequestBody RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
         return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
     }
 
-    @DeleteMapping(path = "/id/{ID}")
+    @DeleteMapping(path = "/id/{ID}") //todo id ?
     public void deletePatientByID(@PathVariable Long ID){
         patientService.deleteById(ID);
     }

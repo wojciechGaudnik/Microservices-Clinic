@@ -1,8 +1,9 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.EditDoctorDTO;
-import com.clinics.common.DTO.request.RegisterDoctorDTO;
-import com.clinics.common.DTO.response.DoctorResponseDTO;
+import com.clinics.common.DTO.request.outer.EditDoctorDTO;
+import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
+import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -55,6 +57,19 @@ public class DoctorController {
 		doctorService.delete(uuid);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+
+//	@GetMapping(path = "/{uuid}/calendars")
+//	public ResponseEntity<List<Calendar>> getDoctorCalendars(@PathVariable UUID uuid){
+//		return ResponseEntity.ok().body(doctorService.getDoctorCalendars(uuid));
+//	}
+
+
+
+
+
+
+
+
 
 	@GetMapping(path = "/test")
 	public ResponseEntity<String> getDefault(){
