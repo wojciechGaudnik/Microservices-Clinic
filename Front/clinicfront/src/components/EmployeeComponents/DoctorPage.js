@@ -100,7 +100,6 @@ export const DoctorPage = (props) => {
                                 {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
                                 {uuid: props.userDetails.uuid})
                         }}
-                        variant             ="edit"
                         submitButtonTitle   ="Edit"
                         showEmailForm       ={true}
                         showPasswordForm    ={true}

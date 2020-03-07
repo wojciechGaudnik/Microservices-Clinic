@@ -21,7 +21,6 @@ export const RegisterPage = (props) => {
                         registerDetails,
                         {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
                 }}
-                variant             ="register"
                 submitButtonTitle   ="Register"
                 showEmailForm       ={true}
                 showPasswordForm    ={true}

@@ -48,7 +48,6 @@ export const LoginPage = (props) => {
                         {setUserDetails},
                         {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
                 }}
-                variant             ="login"
                 submitButtonTitle   ="Log In"
                 showEmailForm       ={true}
                 showPasswordForm    ={true}
