@@ -63,9 +63,7 @@ public class CalendarService {
 	}
 
 	public void delete(UUID calendarUUID) {
-		log.error("---> 3 <---");
 		calendarRepository.deleteByCalendaruuid(calendarUUID);
-		log.error("---> 4 <---");
 	}
 
 	private Doctor getDoctor(UUID doctorUUID) {

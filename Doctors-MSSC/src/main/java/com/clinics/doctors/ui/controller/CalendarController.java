@@ -49,9 +49,7 @@ public class CalendarController {
 	@DeleteMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> delCalendar(
 			@PathVariable UUID calendarUUID) {
-		log.error("---> 1 <---");
 		calendarService.delete(calendarUUID);
-		log.error("---> 2 <---");
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }
