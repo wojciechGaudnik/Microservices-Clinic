@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @ToString
-public class AddCalendarDTO {
+public class AddEditCalendarDTO {
 
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")

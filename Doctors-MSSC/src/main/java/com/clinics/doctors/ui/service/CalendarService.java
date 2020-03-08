@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.service;
 
-import com.clinics.common.DTO.request.outer.AddCalendarDTO;
+import com.clinics.common.DTO.request.outer.AddEditCalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
 import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -46,16 +47,40 @@ public class CalendarService {
 		return calendarRepository.getAllByDoctor_Doctoruuid(uuid);
 	}
 
-	public CalendarResponseDTO save(AddCalendarDTO addCalendarDTO, UUID doctorUUID) {
-		Optional<Doctor> optionalDoctor = doctorRepository.findByDoctoruuid(doctorUUID);
-		if (optionalDoctor.isEmpty()) {
-			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID ));
-		}
-		Doctor doctor = optionalDoctor.get();
-		Calendar calendar = modelMapper.map(addCalendarDTO, Calendar.class);
+	public CalendarResponseDTO save(AddEditCalendarDTO addEditCalendarDTO, UUID doctorUUID) {
+		Doctor doctor = getDoctor(doctorUUID);
+		Calendar calendar = modelMapper.map(addEditCalendarDTO, Calendar.class);
 		calendar.setCalendaruuid(UUID.randomUUID());
 		calendar.setDoctor(doctor);
 		calendarRepository.save(calendar);
 		return modelMapper.map(calendar, CalendarResponseDTO.class);
+	}
+
+	public void edit(AddEditCalendarDTO addEditCalendarDTO, UUID calendarUUID) {
+		Calendar calendar = getCalendar(calendarUUID);
+		modelMapper.map(addEditCalendarDTO, calendar);
+		calendarRepository.save(calendar);
+	}
+
+	public void delete(UUID calendarUUID) {
+		log.error("---> 3 <---");
+		calendarRepository.deleteByCalendaruuid(calendarUUID);
+		log.error("---> 4 <---");
+	}
+
+	private Doctor getDoctor(UUID doctorUUID) {
+		Optional<Doctor> optionalDoctor = doctorRepository.findByDoctoruuid(doctorUUID);
+		if (optionalDoctor.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID ));
+		}
+		return optionalDoctor.get();
+	}
+
+	private Calendar getCalendar(UUID calendarUUID) {
+		Optional<Calendar> optionalCalendar = calendarRepository.getCalendarByCalendaruuid(calendarUUID);
+		if (optionalCalendar.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such calendar in system %s", calendarUUID ));
+		}
+		return optionalCalendar.get();
 	}
 }

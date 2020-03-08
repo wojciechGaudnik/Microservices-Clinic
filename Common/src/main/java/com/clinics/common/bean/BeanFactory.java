@@ -51,6 +51,7 @@ public class BeanFactory implements ApplicationContextAware {
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+		objectMapper.setDateFormat(dateFormat);
 		return objectMapper;
 	}
 
@@ -60,7 +61,10 @@ public class BeanFactory implements ApplicationContextAware {
 			@Override
 			public void configure(ObjectMapper objectMapper) {
 				super.configure(objectMapper);
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
 				objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+				objectMapper.setDateFormat(dateFormat);
 			}
 		};
 	}
