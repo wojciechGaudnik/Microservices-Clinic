@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {
-    sendFetchRequestIsThereLoginUser,
-    sendFetchRequestLoginUser
-} from "./SetLoginPage";
+import {sendFetchRequestIsThereLoginUser, sendFetchRequestLoginUser} from "./SetLoginPage";
 
 import {redirectByRole} from "../../../actions";
 
@@ -26,11 +23,6 @@ export const LoginPage = (props) => {
         props.setStoreUserDetails(userDetails);
         if (userDetails.role){redirectByRole(userDetails.role, props)}
     }, [userDetails]);
-
-    const registerButtonClick = () => {
-        props.setStoreError(false) ;
-        redirectByRole("register", props)
-    };
 
     //Main HTML return
     return (
