@@ -1,5 +1,6 @@
 export const URLs = {
     REGISTER_USER:              "http://localhost:8762/auth/users/",
+    REGISTER_PATIENT:           "http://localhost:8762/patient-mssc/patient/",
     REGISTER_DOCTOR:            "http://localhost:8762/doctor-mssc/doctors/",
     GET_USER_INFORMATION:       "http://localhost:8762/doctor-mssc/doctors/",
     GET_DETAILS_BY_TOKEN:       "http://localhost:8762/auth/users/uuidAndRole/",

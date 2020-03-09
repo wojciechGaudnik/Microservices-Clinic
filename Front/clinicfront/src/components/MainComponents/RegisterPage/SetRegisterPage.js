@@ -81,23 +81,27 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
             break;
         case "patient":
             specialFunction = (responseJSONData) => {
-                const url = URLs.REGISTER_DOCTOR;
-
+                const url = URLs.REGISTER_PATIENT;
+                console.log("DANE JAKIE OTRZYMUJE PO ZAREJESTROWANIU UŻYTKOWNIKA");
+                console.log(responseJSONData);
                 const method = 'POST';
 
                 const body = {
-                    doctoruuid: responseJSONData.uuid,
+                    uuid: responseJSONData.uuid,
                     firstName: userRegisterInformation.firstName,
                     lastName: userRegisterInformation.lastName,
                     photoUrl: userRegisterInformation.photoUrl,
-                    licence: userRegisterInformation.licence
+                    pesel: userRegisterInformation.pesel
                 };
 
                 const headers = {
                     'Authorization': responseJSONData.token,
                     'Content-Type': 'application/json;charset=UTF-8',
                 };
-
+                console.log("BODY KTÓRE WYSYŁAM PRZY REJESTROWANIU PACJENTA: ");
+                console.log(body);
+                console.log("HEADRY KTÓRE WSYŁAM PRZY REJESTROWANIU PACJENTA: ");
+                console.log(headers);
                 const setInStateFunction = null;
 
                 const specialFunction = null;
