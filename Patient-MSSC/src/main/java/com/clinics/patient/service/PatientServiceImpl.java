@@ -38,11 +38,9 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
         String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
-        System.out.println(url);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
         HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
-        System.out.println(requestEntity);
         try {
             ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
         } catch (Exception e) {
@@ -99,6 +97,5 @@ public class PatientServiceImpl implements PatientService{
         // TODO patient data validation
         // TODO Throw exception if f.ex pesel is wrong
     }
-
 
 }

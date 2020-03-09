@@ -15,7 +15,6 @@ import java.util.UUID;
 public class VisitController {
     final private VisitService visitService;
 
-    @Autowired
     public VisitController(VisitService visitService) {
         this.visitService = visitService;
     }
@@ -25,13 +24,9 @@ public class VisitController {
     public VisitDTO registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO){
         return visitService.registerVisit(uuid, visitDTO);
     }
-    //TODO otworz swoja historie wizyt
-    //TODO getVisitsByPatientById()
-    //TODO odwolaj wizyte
 
-    //dane pacjenta dla wizyty
     @GetMapping(path = "/{uuid}")
-    public Visit getPatientDetailsForVisit(@PathVariable UUID UUID){
+    public Visit getVisit(@PathVariable UUID UUID){
         return visitService.findAllDetails(UUID);
     }
 }

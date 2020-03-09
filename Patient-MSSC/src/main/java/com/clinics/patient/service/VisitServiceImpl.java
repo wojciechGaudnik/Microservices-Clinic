@@ -39,10 +39,6 @@ public class VisitServiceImpl implements VisitService {
     @Override
     @Transactional
     public VisitDTO registerVisit(UUID patientuuid, VisitDTO visitDTO) {
-        //TODO opakowac w try
-
-        //1. Proba zapisu wizyty ppo stronie pacjenta w stanie (pending)
-//        VisitRegisterResponseDTO resp = patientClient.registerVisit(visitDTO);
         Patient patient = patientRepository.findByuuid(patientuuid);
 
         //make visit out of visitDTO
@@ -51,21 +47,17 @@ public class VisitServiceImpl implements VisitService {
         patient.getVisits().add(visit);
         patientRepository.save(patient);
 
-        //2. uderzamy do doctora ..... z zapisem tej wizyty
         try{
-            //uderzenie do doctora
             patientClient.registerVisit(visitDTO);
-            //throw new RuntimeException("blad");
         }catch (Exception e){
             visitRepository.deleteByuuid(visit.getUuid());
             throw e;
         }
 
-        //3. jeeli doctor odpowie OK, to zmieniamy statuzs wizyty po stronie pacjenta na ACTIVE
+        //TODO 3. jezeli doctor odpowie OK, to zmieniamy statuzs wizyty po stronie pacjenta na ACTIVE, nie usuwamy od razu, do przemyslenia
 
-        //??? kartoteki, historia choroby....
-        //??? endpointy wystawione dla doctora
-        //tutaj tylko zwrotka 200 albo 204 - no content jeżeli OK
+        //??? kartoteki, historia choroby, recepty, badania, wyniki
+
         return visitDTO;
     }
 
