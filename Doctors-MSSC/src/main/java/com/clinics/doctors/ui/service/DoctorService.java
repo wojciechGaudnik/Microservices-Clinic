@@ -45,6 +45,10 @@ public class DoctorService {
 	}
 
 	//todo Optional !!! if not throw Exception and send response message from Advisor !!!  //		doctor.ifPresentOrElse
+	//	Optional<MedicalUnit> optionalMedicalUnit = medicalUnitRepository.findByMedicalunituuid(UUID);
+//		return modelMapper
+//				.map(optionalMedicalUnit.
+//				orElseThrow(NoSuchElementException::new), MedicalUnitResponseDTO .class);
 	public DoctorResponseDTO getByUUID(UUID UUID) {
 		Optional<Doctor> doctor = doctorRepository.findByDoctoruuid(UUID);
 		if (doctor.isPresent()) {

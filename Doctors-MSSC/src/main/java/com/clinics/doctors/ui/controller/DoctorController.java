@@ -3,6 +3,7 @@ package com.clinics.doctors.ui.controller;
 import com.clinics.common.DTO.request.outer.EditDoctorDTO;
 import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
+import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -55,7 +58,6 @@ public class DoctorController {
 		doctorService.delete(uuid);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
 
 
 
