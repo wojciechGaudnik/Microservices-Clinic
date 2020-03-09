@@ -43,11 +43,11 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.PATCH, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/").hasAnyRole(Role.PATIENT)
-				.antMatchers(HttpMethod.GET, "/patient-mssc/patient/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
-				.antMatchers(HttpMethod.POST, "/patient-mssc/patient/{uuid}/visit").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/{uuid}/visit").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				//Redundant ?? look 3 lines above
-				.antMatchers(HttpMethod.GET, "/patient-mssc/patient/{uuid}/visits").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{uuid}/visits").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 //				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()

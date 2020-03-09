@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/patient/{uuid}/visit")
+@RequestMapping(value = "/patients/{uuid}/visit")
 public class VisitController {
     final private VisitService visitService;
 

@@ -1,6 +1,6 @@
 package com.clinics.auth.ui.service;
 
-import com.clinics.auth.configuration.AsyncUserRepositoryAccess;
+import com.clinics.auth.configuration.InactiveUserRemover;
 import com.clinics.auth.ui.model.User;
 import com.clinics.auth.ui.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
@@ -12,8 +12,8 @@ import com.clinics.common.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,18 +32,20 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class UserService implements UserDetailsService, JwtMaker, JwtProperties {
 
-	final private UserRepository userRepository;
-	final private ModelMapper modelMapper;
-	final private PasswordEncoder passwordEncoder;
-	TaskExecutor taskExecutor;
+	private final UserRepository userRepository;
+	private final ModelMapper modelMapper;
+	private final PasswordEncoder passwordEncoder;
+	private TaskScheduler taskScheduler;
+
+	@Value("${auth.unfinished.registration.removal.timeout.millis}")
+	private Long autoRemovalTimeout;
 
 
-	@Autowired
-	public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, TaskExecutor taskExecutor) {
+	public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, TaskScheduler taskScheduler) {
 		this.userRepository = userRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
-		this.taskExecutor = taskExecutor;
+		this.taskScheduler = taskScheduler;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		String token = makeJwtToken(userAuth);
 		userResponse.setToken(TOKEN_PREFIX + token);
 		AtomicLong userAuthId = new AtomicLong(userAuth.getId());
-		taskExecutor.execute(new AsyncUserRepositoryAccess(userRepository, userAuthId.get()));
+		taskScheduler.schedule(new InactiveUserRemover(userRepository, userAuthId.get()), new Date( System.currentTimeMillis() + autoRemovalTimeout));
 		return userResponse;
 	}
 

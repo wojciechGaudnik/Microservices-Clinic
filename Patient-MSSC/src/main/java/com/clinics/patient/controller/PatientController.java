@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/patient") //todo patients
+@RequestMapping(value = "/patients")
 public class PatientController {
     final private PatientService patientService;
     final private VisitService visitService;
