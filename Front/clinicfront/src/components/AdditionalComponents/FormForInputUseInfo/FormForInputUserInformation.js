@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {Button} from "@material-ui/core";
 
@@ -21,8 +21,15 @@ export const FormForInputUserInformation = (props) => {
         photoUrl:   null,
         email:      null,
         password:   null,
-        role:       "doctor"
+        role:       props.role
     });
+
+    useEffect(() => {
+        setUserInformation({
+            ...userInformation,
+            role: props.role
+        })
+    }, [props.role]);
 
     const handleChange = (event) => {
         setUserInformation(event);

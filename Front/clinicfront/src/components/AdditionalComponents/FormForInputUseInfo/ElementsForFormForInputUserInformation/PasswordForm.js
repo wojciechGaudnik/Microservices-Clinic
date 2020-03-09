@@ -7,6 +7,7 @@ export const PasswordForm = (props) => (
         <TextField
             onChange={(e) => props.handleChange(e)}
             name="password"
+            type="password"
             label="Password"
             variant="outlined"
         />

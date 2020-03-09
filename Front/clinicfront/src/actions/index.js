@@ -34,8 +34,7 @@ export const useFormFields = (initialState) => {
                     [event.target.name]: event.target.value
                 });
             } else {
-                console.log(event);
-                setValues({event})
+                setValues(event)
             }
         }
     ];
