@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
 
-import {Button} from "react-bootstrap";
-
 import {
     sendFetchRequestIsThereLoginUser,
-    sendFetchRequestLoginUser,
-    styleForButton
+    sendFetchRequestLoginUser
 } from "./SetLoginPage";
 
 import {redirectByRole} from "../../../actions";
@@ -56,12 +53,6 @@ export const LoginPage = (props) => {
                 showLicenceForm     ={false}
                 showPhotoURLForm    ={false}
             />
-            <Button
-                variant="light"
-                style={styleForButton}
-                onClick={() => registerButtonClick()}>
-                Register
-            </Button>
         </Container>
     );
 };
