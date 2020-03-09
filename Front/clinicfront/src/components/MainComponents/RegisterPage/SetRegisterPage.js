@@ -22,10 +22,7 @@ export default connect(
 )(RegisterPage)
 
 //CSS Stylesheet
-export const styleForMainDiv = {
-    margin: '50px auto auto 50px',
-    width: '60%',
-};
+
 
 //Content for fetch request
 export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCatchSetErrorInStore}) => {

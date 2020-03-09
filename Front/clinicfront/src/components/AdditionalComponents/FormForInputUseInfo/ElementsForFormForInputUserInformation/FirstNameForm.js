@@ -1,14 +1,15 @@
 import {Col, Form} from "react-bootstrap";
-import {styleForFormLabel} from "../Containers/SetFormForInputUserInformation";
 import React from "react";
+import {TextField} from "@material-ui/core";
 
 export const FirstNameForm = (props) => (
     <Form.Group as={Col}>
-        <Form.Label style={styleForFormLabel}>First Name</Form.Label>
-        <Form.Control onChange={(e) => props.handleChange(e)}
-                      placeholder="firstName"
-                      name="firstName"
-                      defaultValue={(props.userInformation) ? (props.userInformation.firstName) : null}
+        <TextField
+            onChange={(e) => props.handleChange(e)}
+            name="firstName"
+            label="First Name"
+            variant="outlined"
+            defaultValue={(props.userInformation) ? (props.userInformation.firstName) : null}
         />
     </Form.Group>
 );

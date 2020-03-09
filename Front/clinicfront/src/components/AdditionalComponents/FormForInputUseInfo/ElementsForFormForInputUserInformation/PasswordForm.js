@@ -1,14 +1,14 @@
 import {Col, Form} from "react-bootstrap";
-import {styleForFormLabel} from "../Containers/SetFormForInputUserInformation";
 import React from "react";
+import {TextField} from "@material-ui/core";
 
 export const PasswordForm = (props) => (
     <Form.Group as={Col} controlId="formGridPassword">
-        <Form.Label style={styleForFormLabel}>Password</Form.Label>
-        <Form.Control type="password"
-                      onChange={(e) => props.handleChange(e)}
-                      placeholder="Password"
-                      name="password"
+        <TextField
+            onChange={(e) => props.handleChange(e)}
+            name="password"
+            label="Password"
+            variant="outlined"
         />
     </Form.Group>
 );
