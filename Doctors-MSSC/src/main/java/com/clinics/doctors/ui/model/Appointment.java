@@ -33,6 +33,10 @@ public class Appointment {
 
 	private UUID patientuuid;
 
+	private String firstName;
+	private String secondName;
+
+
 	private LocalDateTime dateTime;
 
 	private Duration duration;

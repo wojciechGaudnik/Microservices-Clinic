@@ -58,8 +58,8 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userService.deleteUser(userUUID));
 	}
 
-	@GetMapping(value = "/test")
-	public ResponseEntity<String> getTest() {
-		return ResponseEntity.ok().body("Hello world from AUTH");
+	@GetMapping(value = "/test/{text}")
+	public ResponseEntity<String> getTest(@PathVariable String text) {
+		return ResponseEntity.ok().body("Hello world from AUTH plus text : " + text);
 	}
 }

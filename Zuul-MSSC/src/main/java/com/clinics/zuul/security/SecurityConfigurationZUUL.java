@@ -34,7 +34,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 
-				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/test").permitAll()
+				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/test/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers("/doctor-mssc/doctors/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
@@ -48,7 +48,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.GET, "/patient-mssc/patient/{uuid}/visits").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
-				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
+//				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.anyRequest().denyAll();

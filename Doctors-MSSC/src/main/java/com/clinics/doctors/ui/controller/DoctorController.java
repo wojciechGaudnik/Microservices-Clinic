@@ -67,6 +67,6 @@ public class DoctorController {
 
 	@GetMapping(path = "/test/{text}")
 	public ResponseEntity<String> getTestFromAuth(@PathVariable String text){
-		return ResponseEntity.ok().body(restTemplate.getForObject("http://auth/users/" + text, String.class));
+		return ResponseEntity.ok().body(restTemplate.getForObject("http://auth/auth/test/" + text, String.class));
 	}
 }
