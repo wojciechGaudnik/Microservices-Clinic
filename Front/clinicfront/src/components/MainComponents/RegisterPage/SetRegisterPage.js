@@ -25,7 +25,7 @@ export default connect(
 
 
 //Content for fetch request
-export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCatchSetErrorInStore}) => {
+export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatchSetErrorInStore}) => {
     const url = URLs.REGISTER_USER;
 
     const method = 'POST';
@@ -42,38 +42,47 @@ export const sendFetchRequestRegisterNewDoctor = (userRegisterInformation, {ifCa
 
     const setInStateFunction = null;
 
-    const specialFunction = (responseJSONData) => {
-        const url = URLs.REGISTER_DOCTOR;
+    let specialFunction;
 
-        const method = 'POST';
+    switch (userRegisterInformation.role) {
+        case "doctor":
+            specialFunction = (responseJSONData) => {
+                const url = URLs.REGISTER_DOCTOR;
 
-        const body = {
-            doctoruuid: responseJSONData.uuid,
-            firstName: userRegisterInformation.firstName,
-            lastName: userRegisterInformation.lastName,
-            photoUrl: userRegisterInformation.photoUrl,
-            licence: userRegisterInformation.licence
-        };
+                const method = 'POST';
 
-        const headers = {
-            'Authorization': responseJSONData.token,
-            'Content-Type': 'application/json;charset=UTF-8',
-        };
+                const body = {
+                    doctorUUID: responseJSONData.uuid,
+                    firstName: userRegisterInformation.firstName,
+                    lastName: userRegisterInformation.lastName,
+                    photoUrl: userRegisterInformation.photoUrl,
+                    licence: userRegisterInformation.licence
+                };
 
-        const setInStateFunction = null;
+                const headers = {
+                    'Authorization': responseJSONData.token,
+                    'Content-Type': 'application/json;charset=UTF-8',
+                };
 
-        const specialFunction = null;
+                const setInStateFunction = null;
 
-        sendRequestByGivenDetails(
-            url,
-            method,
-            body,
-            headers,
-            setInStateFunction,
-            specialFunction,
-            ifCatchSetErrorInStore
-        );
-    };
+                const specialFunction = null;
+
+                sendRequestByGivenDetails(
+                    url,
+                    method,
+                    body,
+                    headers,
+                    setInStateFunction,
+                    specialFunction,
+                    ifCatchSetErrorInStore
+                );
+            };
+            break;
+        case "patient":
+            specialFunction = () => {console.log("Patient register")}
+    }
+
 
     sendRequestByGivenDetails(
         url,

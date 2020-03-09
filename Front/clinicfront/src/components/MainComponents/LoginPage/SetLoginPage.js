@@ -22,12 +22,6 @@ export default connect(
 
 //CSS Stylesheet
 
-export const styleForButton = {
-    marginLeft: '0.5%',
-    marginRight: '0.5%',
-    width: '49%'
-};
-
 //Content for fetch request
 export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCatchSetErrorInStore}) => {
     const url = URLs.LOGIN_USER;

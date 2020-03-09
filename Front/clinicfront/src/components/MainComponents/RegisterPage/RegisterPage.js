@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import {sendFetchRequestRegisterNewDoctor} from "./SetRegisterPage";
+import {sendFetchRequestRegisterNewUser} from "./SetRegisterPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
@@ -21,7 +21,7 @@ export const RegisterPage = (props) => {
                     <FormForInputUserInformation
                         {...props}
                         fetchRequest        ={(registerDetails) => {
-                            sendFetchRequestRegisterNewDoctor(
+                            sendFetchRequestRegisterNewUser(
                                 registerDetails,
                                 {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
                         }}
@@ -40,7 +40,7 @@ export const RegisterPage = (props) => {
                     <FormForInputUserInformation
                         {...props}
                         fetchRequest        ={(registerDetails) => {
-                            sendFetchRequestRegisterNewDoctor(
+                            sendFetchRequestRegisterNewUser(
                                 registerDetails,
                                 {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
                         }}
