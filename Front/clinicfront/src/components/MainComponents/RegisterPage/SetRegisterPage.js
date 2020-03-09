@@ -52,7 +52,7 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 const method = 'POST';
 
                 const body = {
-                    doctorUUID: responseJSONData.uuid,
+                    doctoruuid: responseJSONData.uuid,
                     firstName: userRegisterInformation.firstName,
                     lastName: userRegisterInformation.lastName,
                     photoUrl: userRegisterInformation.photoUrl,
@@ -80,9 +80,40 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
             };
             break;
         case "patient":
-            specialFunction = () => {console.log("Patient register")}
-    }
+            specialFunction = (responseJSONData) => {
+                const url = URLs.REGISTER_DOCTOR;
 
+                const method = 'POST';
+
+                const body = {
+                    doctoruuid: responseJSONData.uuid,
+                    firstName: userRegisterInformation.firstName,
+                    lastName: userRegisterInformation.lastName,
+                    photoUrl: userRegisterInformation.photoUrl,
+                    licence: userRegisterInformation.licence
+                };
+
+                const headers = {
+                    'Authorization': responseJSONData.token,
+                    'Content-Type': 'application/json;charset=UTF-8',
+                };
+
+                const setInStateFunction = null;
+
+                const specialFunction = null;
+
+                sendRequestByGivenDetails(
+                    url,
+                    method,
+                    body,
+                    headers,
+                    setInStateFunction,
+                    specialFunction,
+                    ifCatchSetErrorInStore
+                );
+            };
+            break;
+    }
 
     sendRequestByGivenDetails(
         url,

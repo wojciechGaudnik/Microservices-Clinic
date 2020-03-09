@@ -50,6 +50,8 @@ export const RegisterPage = (props) => {
                         showPasswordForm    ={true}
                         showFirstNameForm   ={true}
                         showLastNameForm    ={true}
+                        showPhotoURLForm    ={true}
+                        showPeselForm       ={true}
                     />
                 );
         }

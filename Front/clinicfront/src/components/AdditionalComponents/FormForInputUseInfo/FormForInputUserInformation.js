@@ -11,6 +11,7 @@ import {LastNameForm} from "./ElementsForFormForInputUserInformation/LastNameFor
 import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm";
 import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 import {Form} from "react-bootstrap";
+import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
 
 
 export const FormForInputUserInformation = (props) => {
@@ -21,6 +22,7 @@ export const FormForInputUserInformation = (props) => {
         photoUrl:   null,
         email:      null,
         password:   null,
+        pesel:      null,
         role:       props.role
     });
 
@@ -33,6 +35,7 @@ export const FormForInputUserInformation = (props) => {
 
     const handleChange = (event) => {
         setUserInformation(event);
+        console.log(userInformation)
     };
 
     const onSubmit = (e) => {
@@ -55,6 +58,9 @@ export const FormForInputUserInformation = (props) => {
             <Form.Row>
                 {props.showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  /> ) : null}
                 {props.showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  /> ) : null}
+            </Form.Row>
+            <Form.Row>
+                {props.showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  /> ) : null}
             </Form.Row>
             <Button variant="contained"
                     color="primary"

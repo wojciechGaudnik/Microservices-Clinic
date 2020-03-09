@@ -1,16 +1,16 @@
 import {Col, Form} from "react-bootstrap";
-import React from "react";
 import {TextField} from "@material-ui/core";
+import React from "react";
 
-export const PhotoURLForm = (props) => (
+export const PeselForm = (props) => (
     <Form.Group as={Col}>
         <TextField
-            fullWidth
             onChange={(e) => props.handleChange(e)}
-            name="photoUrl"
-            label="Photo URL"
+            name="pesel"
+            label="Pesel"
             variant="outlined"
-            defaultValue={(props.userInformation) ? (props.userInformation.photoUrl) : null}
+            fullWidth
+            defaultValue={(props.userInformation) ? (props.userInformation.pesel) : null}
         />
     </Form.Group>
 );
