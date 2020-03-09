@@ -11,9 +11,15 @@ import java.util.UUID;
 @ToString
 public class VisitDTO {
     //TODO na localDateTime
+
+    //for creation of path to call doctor service:
+    private UUID doctorUUID;
+    private String appointmentId;
+    private String calendarId;
+
+    //patient only :
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date date;
 
-    private UUID doctorUUID;
-    private UUID patientUUID;
+    private String visitNotes;
 }

@@ -18,7 +18,13 @@ public class PatientClient {
     public VisitRegisterResponseDTO registerVisit(VisitDTO visitDTO){
         //TODO uderzanie do doctora - zwrotka true or false
         //TODO VisitRegisterResponseDTO
-        //TODO return restTemplate.postForObject("http://doctor/registerVisit/", registerVisitDTO, VisitRegisterResponseDTO.class);
+        //TODO return restTemplate.postForObject("http://doctor-mssc/doctors/{UUID_doctor}/calendars/{UUID_calendar}/appointments              }{UUID}/calendar/uuidCal/registerVisit/", registerVisitDTO, VisitRegisterResponseDTO.class);
+
+        //DOCTOR POST http://doctor-mssc/doctors/{UUID_doctor}/calendars/{UUID_calendar}/appointments (w body ??) doktor ustala woly termin z front-endu
+
+
+        //PATIENT z serwisu z patient-client PATCH/PUT http://doctor-mssc/doctors/{UUID_doctor}/calendars/{UUID_calendar}/appointments/{UUID_appointment} (W body nulle i UUID-patient)
+
         return new VisitRegisterResponseDTO();
     }
 }

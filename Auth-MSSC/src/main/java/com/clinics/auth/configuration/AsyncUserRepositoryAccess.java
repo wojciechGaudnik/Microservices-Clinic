@@ -32,7 +32,7 @@ public class AsyncUserRepositoryAccess implements Runnable{
 	@Async
 	@Override
 	public void run() {
-		Thread.sleep(5000);  //todo move to environmental variable
+		Thread.sleep(60* 60 * 1000);  //todo move to environmental variable
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent() && !user.get().isEnable()) {
 			userRepository.deleteById(userId);

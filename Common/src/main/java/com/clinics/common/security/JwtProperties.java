@@ -2,6 +2,7 @@ package com.clinics.common.security;
 
 public interface JwtProperties {
 	String TOKEN_LOGIN_URI = "/auth/login";
+	//CONFUSING NAME, CHANGE TO AUTHORIZATION OR STH
 	String TOKEN_REQUEST_HEADER = "Authorization";
 	String TOKEN_PREFIX = "Bearer ";
 	String TOKEN_PREFIX_ROLE = "ROLE_";

@@ -5,23 +5,23 @@ import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.clinics.patient.service.VisitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/patient") //todo patients
 public class PatientController {
     final private PatientService patientService;
+    final private VisitService visitService;
 
-    @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, VisitService visitService) {
         this.patientService = patientService;
+        this.visitService = visitService;
     }
 
     @GetMapping(path = "")
@@ -34,19 +34,9 @@ public class PatientController {
         return patientService.findByUuid(UUID);
     }
 
-    @GetMapping(path = "/id/{ID}")
-    public Optional<Patient> getPatientByID(@PathVariable Long ID){
-        return patientService.findById(ID);
-    } //Do we need this if we should not expose DB id ? <--- exactly
-
     @PostMapping(path = "/")
     public ResponseEntity<PatientRegisterResponseDTO> registerPatient(@RequestBody RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
         return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
-    }
-
-    @DeleteMapping(path = "/id/{ID}") //todo id ?
-    public void deletePatientByID(@PathVariable Long ID){
-        patientService.deleteById(ID);
     }
 
     @PutMapping
@@ -54,9 +44,13 @@ public class PatientController {
         return patientService.editPatient(patient);
     }
 
-    //wszystkie wizyty dla pacjenta
     @GetMapping(path = "/{UUID}/visits")
     public List<Visit> getAllVisits(@PathVariable UUID UUID) {
         return patientService.findAllVisits(UUID);
+    }
+
+    @DeleteMapping(path = "/{UUID}")
+    public void cancelVisit(@PathVariable UUID UUID){
+        visitService.deleteByUuid(UUID);
     }
 }

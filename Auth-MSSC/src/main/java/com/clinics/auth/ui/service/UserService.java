@@ -50,7 +50,6 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		return this.userRepository.findByEmail(email).orElseThrow();
 	}
 
-
 	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
 		userAuth.setUuid(UUID.randomUUID());

@@ -15,7 +15,7 @@ public interface PatientService {
     List<Patient> findAll();
     Patient findByUuid(UUID UUID);
     Optional<Patient> findById(Long ID);
-    void deleteById(Long ID);
+    void deleteByUuid(UUID UUID);
     Patient editPatient(Patient patient);
     List<Visit> findAllVisits(UUID UUID);
 }

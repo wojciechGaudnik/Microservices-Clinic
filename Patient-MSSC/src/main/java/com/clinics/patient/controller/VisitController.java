@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/patient/visit") //todo after patient there should be patient's uuid
+@RequestMapping(value = "/patient/{uuid}/visit")
 public class VisitController {
     final private VisitService visitService;
 
@@ -22,16 +22,16 @@ public class VisitController {
 
     @PostMapping
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public VisitDTO registerVisit(@RequestBody VisitDTO visitDTO){
-        return visitService.registerVisit(visitDTO);
+    public VisitDTO registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO){
+        return visitService.registerVisit(uuid, visitDTO);
     }
     //TODO otworz swoja historie wizyt
     //TODO getVisitsByPatientById()
     //TODO odwolaj wizyte
 
     //dane pacjenta dla wizyty
-    @GetMapping(path = "/{UUID}")
-    public Visit getAllDetails(@PathVariable UUID UUID){
+    @GetMapping(path = "/{uuid}")
+    public Visit getPatientDetailsForVisit(@PathVariable UUID UUID){
         return visitService.findAllDetails(UUID);
     }
 }

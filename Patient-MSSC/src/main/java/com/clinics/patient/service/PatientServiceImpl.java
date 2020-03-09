@@ -46,7 +46,7 @@ public class PatientServiceImpl implements PatientService{
         try {
             ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
         } catch (Exception e) {
-            throw new NoSuchElementException("There is no such patient in AUTH");
+            throw new NoSuchElementException("There is no such user in AUTH or something else went wrong");
         }
         var patient = modelMapper.map(registerPatientDTO, Patient.class);
         patientRepository.save(patient);
@@ -60,7 +60,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient findByUuid(UUID UUID) {
-        return patientRepository.findByUuid(UUID);
+        return patientRepository.findByuuid(UUID);
     }
 
     @Override
@@ -69,8 +69,8 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void deleteById(Long ID) {
-        patientRepository.deleteById(ID);
+    public void deleteByUuid(UUID UUID) {
+        patientRepository.deleteByuuid(UUID);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public List<Visit> findAllVisits(UUID UUID) {
-        Patient patient = patientRepository.findByUuid(UUID);
+        Patient patient = patientRepository.findByuuid(UUID);
         return patient.getVisits();
     }
 
