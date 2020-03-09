@@ -21,10 +21,6 @@ export default connect(
 )(LoginPage)
 
 //CSS Stylesheet
-export const styleForMainDiv = {
-    margin: '50px auto auto 50px',
-    width: '30%',
-};
 
 export const styleForButton = {
     marginLeft: '0.5%',

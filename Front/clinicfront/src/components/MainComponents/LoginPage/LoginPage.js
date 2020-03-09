@@ -5,8 +5,7 @@ import {Button} from "react-bootstrap";
 import {
     sendFetchRequestIsThereLoginUser,
     sendFetchRequestLoginUser,
-    styleForButton,
-    styleForMainDiv
+    styleForButton
 } from "./SetLoginPage";
 
 import {redirectByRole} from "../../../actions";
@@ -14,6 +13,7 @@ import {redirectByRole} from "../../../actions";
 import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {Container} from "@material-ui/core";
 
 export const LoginPage = (props) => {
     const [userDetails, setUserDetails] = useState({
@@ -37,7 +37,7 @@ export const LoginPage = (props) => {
 
     //Main HTML return
     return (
-        <div style={styleForMainDiv}>
+        <Container>
             {props.error ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
             <FormForInputUserInformation
                 {...props}
@@ -62,7 +62,7 @@ export const LoginPage = (props) => {
                 onClick={() => registerButtonClick()}>
                 Register
             </Button>
-        </div>
+        </Container>
     );
 };
 

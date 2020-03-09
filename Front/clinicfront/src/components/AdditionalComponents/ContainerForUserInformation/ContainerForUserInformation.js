@@ -59,12 +59,12 @@ export const ContainerForUserInformation = (props) => {
             {props.calendars        ? (
                 <Row style={styleForRow}>
                     <Col xs={3} style={styleForKeyCol}>Calendars:</Col>
-                    <Col style={styleForValueCol}>{displayCalendars() ? (userInformation.calendars) : (<Spinner animation="border" size="sm" />)}</Col>
+                    <Col style={styleForValueCol}>{userInformation.calendars ? (displayCalendars()) : (<Spinner animation="border" size="sm" />)}</Col>
                 </Row>) : null}
             {props.specializations  ? (
                 <Row style={styleForRow}>
                     <Col xs={3} style={styleForKeyCol}>Specialization:</Col>
-                    <Col style={styleForValueCol}>{displaySpecializations() ? (userInformation.specializations) : (<Spinner animation="border" size="sm" />)}</Col>
+                    <Col style={styleForValueCol}>{userInformation.specializations ? (displaySpecializations()) : (<Spinner animation="border" size="sm" />)}</Col>
                 </Row>) : null}
             {props.medicalUnits     ? (
                 <Row style={styleForRow}>
