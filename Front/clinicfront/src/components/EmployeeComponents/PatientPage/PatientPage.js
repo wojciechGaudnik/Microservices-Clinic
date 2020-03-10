@@ -9,10 +9,7 @@ import {
 
 import {
 
-    styleForContainer,
-    styleForRow,
-    styleForValueCol,
-    styleForKeyCol,
+    styleForContainer
 
 } from "../../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
 
@@ -42,10 +39,6 @@ export const PatientPage = (props) => {
         <div style={styleForMainDiv}>
             <Container style={styleForContainer}>
                 <Row><h5><Badge variant="primary">PATIENT</Badge></h5></Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>UUID:</Col>           <Col style={styleForValueCol}>{props.userDetails.uuid}</Col>         </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>Role:</Col>           <Col style={styleForValueCol}>{props.userDetails.role}</Col>         </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>FirstName:</Col>      <Col style={styleForValueCol}>{userInformation.firstName}</Col>      </Row>
-                <Row style={styleForRow}><Col xs={3} style={styleForKeyCol}>LastName:</Col>       <Col style={styleForValueCol}>{userInformation.lastName}</Col>       </Row>
             </Container>
             <Container style={styleForSubContainer}>
                 <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
