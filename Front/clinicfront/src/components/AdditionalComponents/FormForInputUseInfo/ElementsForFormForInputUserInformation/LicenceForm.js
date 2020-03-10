@@ -9,6 +9,7 @@ export const LicenceForm = (props) => (
             name="licence"
             label="Licence"
             variant="outlined"
+            fullWidth
             defaultValue={(props.userInformation) ? (props.userInformation.licence) : null}
         />
     </Form.Group>

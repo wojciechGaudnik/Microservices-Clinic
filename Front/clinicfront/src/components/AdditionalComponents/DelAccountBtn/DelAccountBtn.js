@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Button} from "react-bootstrap";
+import {Button} from "@material-ui/core";
 
 import {redirectByRole} from "../../../actions";
 
@@ -12,7 +12,7 @@ export const DelAccountBtn = (props) => {
     };
 
     return(
-        <Button variant="light" size="sm" block onClick={() => delUserBtnOnClick()}>
+        <Button variant="contained" color="primary" disableElevation fullWidth block onClick={() => delUserBtnOnClick()}>
             Delete Account
         </Button>
     )

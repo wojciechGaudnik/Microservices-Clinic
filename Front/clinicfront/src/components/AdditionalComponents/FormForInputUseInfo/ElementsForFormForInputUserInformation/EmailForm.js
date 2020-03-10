@@ -10,6 +10,7 @@ export const EmailForm = (props) => (
             name="email"
             label="Email"
             variant="outlined"
+            fullWidth
         />
     </Form.Group>
 );

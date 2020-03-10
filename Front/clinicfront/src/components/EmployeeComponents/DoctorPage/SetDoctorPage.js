@@ -26,14 +26,14 @@ export default connect(
 
 //CSS Stylesheet
 export const styleForMainDiv = {
-    margin: '30px'
+    margin: '30px',
 };
 
-export const styleForSubContainer = {
-    color: 'black',
-    padding: '10px 30px 10px 30px',
+export const styleForMainGrid = {
     marginBottom: '15px',
-    width: '50%',
+    marginRight: '25%',
+    marginLeft: '25%',
+    width: '50%'
 };
 
 //Content for fetch request

@@ -9,6 +9,7 @@ export const LastNameForm = (props) => (
             name="lastName"
             label="Last Name"
             variant="outlined"
+            fullWidth
             defaultValue={(props.userInformation) ? (props.userInformation.lastName) : null}
         />
     </Form.Group>

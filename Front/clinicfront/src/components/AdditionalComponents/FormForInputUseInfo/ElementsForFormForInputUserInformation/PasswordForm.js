@@ -10,6 +10,7 @@ export const PasswordForm = (props) => (
             type="password"
             label="Password"
             variant="outlined"
+            fullWidth
         />
     </Form.Group>
 );

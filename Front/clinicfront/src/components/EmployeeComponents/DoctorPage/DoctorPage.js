@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 
-import {Button, Container} from "react-bootstrap";
+import {Button, Grid} from "@material-ui/core";
+import {Container} from "react-bootstrap";
 
 import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
     sendFetchRequestSetUserInformation,
     styleForMainDiv,
-    styleForSubContainer
+    styleForMainGrid
 } from "./SetDoctorPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
@@ -50,31 +51,42 @@ export const DoctorPage = (props) => {
                 specializations={true}
                 medicalUnits={true}
             />
-            <Container style={styleForSubContainer}>
-                <Button variant="light" size="sm" block onClick={() => setShowFormForEdit(!showFormForEdit)}>
-                    Edit
-                </Button>
-                <DelAccountBtn
-                    {...props}
-                    fetchRequest={fetchRequestForDelAccountBtn}
-                />
-            </Container>
-            {showFormForEdit ? (
-                <Container>
-                    <FormForInputUserInformation
-                        {...props}
-                        fetchRequest        ={fetchRequestForFormForInputUserInformation}
-                        submitButtonTitle   ="Edit"
-                        showEmailForm       ={true}
-                        showPasswordForm    ={true}
-                        showRoleForm        ={false}
-                        showFirstNameForm   ={true}
-                        showLastNameForm    ={true}
-                        showLicenceForm     ={true}
-                        showPhotoURLForm    ={true}
-                    />
-                </Container>) : null
-            }
+                <Grid
+                    style={styleForMainGrid}
+                    container
+                    direction="column"
+                    justify="space-around"
+                    alignItems="stretch"
+                    spacing={3}
+                >
+                    <Grid item>
+                        <Button variant="contained" color="primary" disableElevation block fullWidth onClick={() => setShowFormForEdit(!showFormForEdit)}>
+                            Edit
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <DelAccountBtn
+                            {...props}
+                            fetchRequest={fetchRequestForDelAccountBtn}
+                        />
+                    </Grid>
+                        {showFormForEdit ? (
+                            <Grid item>
+                                <FormForInputUserInformation
+                                    {...props}
+                                    fetchRequest        ={fetchRequestForFormForInputUserInformation}
+                                    submitButtonTitle   ="Edit"
+                                    showEmailForm       ={true}
+                                    showPasswordForm    ={true}
+                                    showRoleForm        ={false}
+                                    showFirstNameForm   ={true}
+                                    showLastNameForm    ={true}
+                                    showLicenceForm     ={true}
+                                    showPhotoURLForm    ={true}
+                                />
+                            </Grid>) : null
+                        }
+                </Grid>
         </div>
     )
 };

@@ -1,7 +1,6 @@
 import React from "react";
 
-import {Button} from "react-bootstrap";
-
+import {Button} from "@material-ui/core";
 import {redirectByRole} from "../../../actions";
 
 export const LogOutButton = (props) => {
@@ -11,7 +10,7 @@ export const LogOutButton = (props) => {
     };
 
     return (
-        <Button onClick={() => logOutButtonClick()}>
+        <Button variant="contained" color="primary" disableElevation onClick={() => logOutButtonClick()}>
             Log Out
         </Button>
     )

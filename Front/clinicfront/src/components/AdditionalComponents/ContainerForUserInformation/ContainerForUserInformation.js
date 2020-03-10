@@ -6,6 +6,7 @@ import {
     styleForValueCol
 } from "./Containers/SetContainerForUserInfo";
 import {Badge, Col, Container, Row, Spinner} from "react-bootstrap";
+import {Grid, Paper} from "@material-ui/core";
 
 export const ContainerForUserInformation = (props) => {
     const [userInformation, setUserInformation] = useState({});
@@ -71,6 +72,12 @@ export const ContainerForUserInformation = (props) => {
                     <Col xs={3} style={styleForKeyCol}>Medical Units:</Col>
                     <Col style={styleForValueCol}>{userInformation.medicalUnits}</Col>
                 </Row>) : null}
+            {props.pesel     ? (
+                <Row style={styleForRow}>
+                    <Col xs={3} style={styleForKeyCol}>Pesel:</Col>
+                    <Col style={styleForValueCol}>{userInformation.pesel}</Col>
+                </Row>) : null}
         </Container>
+
     )
 };
