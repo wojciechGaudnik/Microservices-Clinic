@@ -32,9 +32,8 @@ public class MedicalUnitController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> add(@Valid @RequestBody RegisterMedicalUnitDTO registerMedicalUnitDTO) {
-		medicalUnitService.save(registerMedicalUnitDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<MedicalUnitResponseDTO> add(@Valid @RequestBody RegisterMedicalUnitDTO registerMedicalUnitDTO) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(medicalUnitService.save(registerMedicalUnitDTO));
 	}
 
 

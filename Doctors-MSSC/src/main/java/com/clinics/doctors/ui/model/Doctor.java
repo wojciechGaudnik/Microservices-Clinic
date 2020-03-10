@@ -35,7 +35,7 @@ public class Doctor {
 	@Column(updatable = false,
 			nullable = false,
 			unique = true)
-	private UUID doctoruuid; //todo bad name because JPA <---> sqlQuery
+	private UUID doctorUUID;
 
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
@@ -54,7 +54,7 @@ public class Doctor {
 	private String licence;
 
 	@OneToMany(
-			targetEntity=Calendar.class,
+			targetEntity= Calendar.class,
 			mappedBy="doctor",
 			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
 			orphanRemoval=true)
@@ -70,9 +70,9 @@ public class Doctor {
 
 	@JsonIgnore
 	@ElementCollection
-	private Collection<UUID> patients;
+	private Collection<UUID> patientsUUID;
 
 	@ElementCollection
-	private Collection<UUID> medicalUnits;
+	private Collection<UUID> medicalUnitsUUID;
 }
 

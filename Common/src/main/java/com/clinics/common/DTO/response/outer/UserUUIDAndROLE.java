@@ -9,6 +9,6 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 public class UserUUIDAndROLE {
-	private UUID uuid;
+	private UUID userUUID;
 	private String role;
 }

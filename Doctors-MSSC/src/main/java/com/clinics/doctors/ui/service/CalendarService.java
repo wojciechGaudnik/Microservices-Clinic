@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.service;
 
-import com.clinics.common.DTO.request.outer.AddEditCalendarDTO;
+import com.clinics.common.DTO.request.outer.doctor.AddEditCalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
 import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
@@ -12,12 +12,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -43,42 +43,45 @@ public class CalendarService {
 		this.environment = environment;
 	}
 
-	public List<Calendar> getDoctorCalendars(UUID uuid) {
-		return calendarRepository.getAllByDoctor_Doctoruuid(uuid);
+	public List<com.clinics.common.DTO.response.outer.CalendarResponseDTO> getDoctorCalendars(UUID doctorUUID) {
+		return calendarRepository
+				.getCalendarsByDoctor_DoctorUUID(doctorUUID).stream()
+				.map(doctor -> modelMapper.map(doctor, com.clinics.common.DTO.response.outer.CalendarResponseDTO.class))
+				.collect(Collectors.toList());
 	}
 
 	public CalendarResponseDTO save(AddEditCalendarDTO addEditCalendarDTO, UUID doctorUUID) {
-		Doctor doctor = getDoctor(doctorUUID);
+		Optional<Doctor> optionalDoctor = doctorRepository.findByDoctorUUID(doctorUUID);
+		if (optionalDoctor.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID));
+		}
 		Calendar calendar = modelMapper.map(addEditCalendarDTO, Calendar.class);
-		calendar.setCalendaruuid(UUID.randomUUID());
-		calendar.setDoctor(doctor);
+		calendar.setCalendarUUID(UUID.randomUUID());
+		calendar.setDoctor(optionalDoctor.get());
 		calendarRepository.save(calendar);
 		return modelMapper.map(calendar, CalendarResponseDTO.class);
 	}
 
+
 	public void edit(AddEditCalendarDTO addEditCalendarDTO, UUID calendarUUID) {
-		Calendar calendar = getCalendar(calendarUUID);
+		Optional<Calendar> optionalCalendar = calendarRepository.getCalendarByCalendarUUID(calendarUUID);
+		if (optionalCalendar.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such calendar in system %s", calendarUUID ));
+		}
+		var calendar = optionalCalendar.get();
 		modelMapper.map(addEditCalendarDTO, calendar);
 		calendarRepository.save(calendar);
 	}
 
 	public void delete(UUID calendarUUID) {
-		calendarRepository.deleteByCalendaruuid(calendarUUID);
+		calendarRepository.deleteByCalendarUUID(calendarUUID);
 	}
 
-	private Doctor getDoctor(UUID doctorUUID) {
-		Optional<Doctor> optionalDoctor = doctorRepository.findByDoctoruuid(doctorUUID);
-		if (optionalDoctor.isEmpty()) {
-			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID ));
-		}
-		return optionalDoctor.get();
-	}
-
-	private Calendar getCalendar(UUID calendarUUID) {
-		Optional<Calendar> optionalCalendar = calendarRepository.getCalendarByCalendaruuid(calendarUUID);
+	private CalendarResponseDTO get(UUID calendarUUID) {
+		Optional<Calendar> optionalCalendar = calendarRepository.getCalendarByCalendarUUID(calendarUUID);
 		if (optionalCalendar.isEmpty()) {
 			throw new NoSuchElementException(String.format("No such calendar in system %s", calendarUUID ));
 		}
-		return optionalCalendar.get();
+		return modelMapper.map(optionalCalendar.get(), CalendarResponseDTO.class);
 	}
 }

@@ -11,7 +11,10 @@ import java.util.UUID;
 @Repository
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
-	List<Calendar> getAllByDoctor_Doctoruuid(UUID uuid);
-	Optional<Calendar> getCalendarByCalendaruuid(UUID uuid);
-	void deleteByCalendaruuid(UUID uuid);
+//	List<Calendar> getAllByDoctor_Doctoruuid(UUID uuid);
+//	Optional<Calendar> getCalendarByCalendaruuid(UUID uuid);
+//	void deleteByCalendaruuid(UUID uuid);
+	List<Calendar> getCalendarsByDoctor_DoctorUUID(UUID doctorUUID);
+	Optional<Calendar> getCalendarByCalendarUUID(UUID calendarUUID);
+	void deleteByCalendarUUID(UUID uuid);
 }

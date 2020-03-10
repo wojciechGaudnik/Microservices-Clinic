@@ -35,7 +35,7 @@ public class User implements Role, Serializable, UserDetails{
 	private Long id;
 
 	@Column(updatable = false, nullable = false)
-	private UUID uuid; //todo uuid should be null if we want edit email or pass
+	private UUID userUUID; //todo UUID should be null if we want edit email or pass <--- HE ?!?!?!
 
 	@Column(unique = true)
 	@NotBlank(message = "email is mandatory")

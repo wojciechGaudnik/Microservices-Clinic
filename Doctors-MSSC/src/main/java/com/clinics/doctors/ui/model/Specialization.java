@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.UUID;
 
 @Data
@@ -32,21 +31,18 @@ public class Specialization {
 			updatable = false,
 			nullable = false,
 			unique = true)
-	@Builder.Default
-	private UUID specializationuuid = UUID.randomUUID(); //todo bad name because JPA <---> sqlQuery
-	//todo move creation uuid into method
+	private UUID specializationUUID;
 
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
 
-	@Builder.Default
 	@JsonBackReference
 	@ManyToMany(targetEntity = Doctor.class)
 	@JoinTable(
 			name = "doctor_specialization",
 			joinColumns = {@JoinColumn(name = "spacialization_id")},
 			inverseJoinColumns = {@JoinColumn(name = "doctor_id")})
-	Collection<Doctor> doctors = new HashSet<>();
+	Collection<Doctor> doctors;
 	//todo move creation doctors into method
 }

@@ -51,9 +51,9 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 	}
 
 
-	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
+	public UserResponseDTO save(RegisterUserDTO registerUserDTO) {
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
-		userAuth.setUuid(UUID.randomUUID());
+		userAuth.setUserUUID(UUID.randomUUID());
 		userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
 		userAuth.setEnable(false);
 		userRepository.save(userAuth);
@@ -65,20 +65,8 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		return userResponse;
 	}
 
-	public UserResponseDTO setUserEnable(UUID userUUID) {
-		Optional<User> user = userRepository.findByUuid(userUUID);
-		if (user.isEmpty() || user.get().isEnable()) {
-			throw new NoSuchElementException("User not found");
-		}
-		var updatedUser = user.get();
-		updatedUser.setEnable(true);
-        userRepository.save(updatedUser);
-        return modelMapper.map(updatedUser, UserResponseDTO.class);
-	}
-
-
-	public UserResponseDTO editUser(EditUserDTO editUserDTO, UUID userUUID) {
-		var optionalUserToEdit = userRepository.findByUuid(userUUID);
+	public void edit(EditUserDTO editUserDTO, UUID userUUID) {
+		var optionalUserToEdit = userRepository.findByUserUUID(userUUID);
 		if (optionalUserToEdit.isEmpty()) {
 			throw new NoSuchElementException("No such user to edit ");
 		}
@@ -86,14 +74,25 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		if(editUserDTO.getPassword() != null) userToEdit.setPassword(passwordEncoder.encode(editUserDTO.getPassword()));
 		if(editUserDTO.getEmail() != null) userToEdit.setEmail(editUserDTO.getEmail());
 		userRepository.save(userToEdit);
-		return modelMapper.map(userToEdit, UserResponseDTO.class);
 	}
 
-	public Long deleteUser(UUID uuid) {
-		return userRepository.deleteByUuid(uuid);
+	public void delete(UUID userUUID) {
+		userRepository.deleteByUserUUID(userUUID);
 	}
 
-	public UserUUIDAndROLE getUUIDAndRole(HttpServletRequest request) {
+	public void setUserEnable(UUID userUUID) {
+		Optional<User> user = userRepository.findByUserUUID(userUUID);
+		if (user.isEmpty() || user.get().isEnable()) {
+			throw new NoSuchElementException("User not found");
+		}
+		var updatedUser = user.get();
+		updatedUser.setEnable(true);
+        userRepository.save(updatedUser);
+		modelMapper.map(updatedUser, UserResponseDTO.class);
+	}
+
+
+	public UserUUIDAndROLE getUUIDAndROLE(HttpServletRequest request) {
 		String token = request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
 		Claims claims = Jwts.parser()
 				.setSigningKey(TOKEN_SECRET)
@@ -101,7 +100,7 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 				.getBody();
 		return UserUUIDAndROLE
 				.builder()
-				.uuid(UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID))))
+				.userUUID(UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID))))
 				.role(claims.get(JwtProperties.TOKEN_CLAIM_AUTHORITIES)
 						.toString()
 						.replace("[", "")

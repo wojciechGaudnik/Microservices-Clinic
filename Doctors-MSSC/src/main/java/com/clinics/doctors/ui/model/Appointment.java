@@ -1,6 +1,5 @@
 package com.clinics.doctors.ui.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -29,21 +28,18 @@ public class Appointment {
 	@Column(updatable = false,
 			nullable = false,
 			unique = true)
-	private UUID appointmentuuid; //todo bad name because JPA <---> sqlQuery
+	private UUID appointmentUUID;
 
-	private UUID patientuuid;
-
-	private String firstName;
-	private String secondName;
-
+	private UUID patientUUID;
+	private String patientFirstName;
+	private String patientSecondName;
 
 	private LocalDateTime dateTime;
-
 	private Duration duration;
 
 	@JsonIgnore
 	@ManyToOne(
-			targetEntity=Calendar.class,
+			targetEntity= Calendar.class,
 			fetch = FetchType.LAZY)
 	@JoinColumn(name="calendar_id")
 	private Calendar calendar;

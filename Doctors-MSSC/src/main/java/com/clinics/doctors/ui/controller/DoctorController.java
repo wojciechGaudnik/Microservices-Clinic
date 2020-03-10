@@ -1,9 +1,8 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.EditDoctorDTO;
-import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.EditDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
-import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -31,20 +29,26 @@ public class DoctorController {
 		this.restTemplate = restTemplate;
 	}
 
+	@GetMapping
+	public ResponseEntity<List<DoctorResponseDTO>> getAll(@PathVariable UUID uuid){
+		return ResponseEntity.ok().body(doctorService.getAll());
+	}
+
+
 	@GetMapping(path = "/{uuid}")
-	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID uuid){
+	public ResponseEntity<DoctorResponseDTO> getByUUID(@PathVariable UUID uuid){
 		return ResponseEntity.ok().body(doctorService.getByUUID(uuid));
 	}
 
 	@PostMapping
-	public ResponseEntity<DoctorResponseDTO> registerDoctor(
+	public ResponseEntity<DoctorResponseDTO> add(
 			@Valid @RequestBody RegisterDoctorDTO registerDoctorDTO,
 			HttpServletRequest request) {
-		return ResponseEntity.status(201).body(doctorService.save(registerDoctorDTO, request));
+		return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.save(registerDoctorDTO, request));
 	}
 
 	@PatchMapping(path = "/{uuid}")
-	public ResponseEntity<Void> editDoctor(
+	public ResponseEntity<Void> edit(
 			@Valid @RequestBody EditDoctorDTO editDoctorDTO,
 			@PathVariable UUID uuid,
 			HttpServletRequest request) {
@@ -53,10 +57,10 @@ public class DoctorController {
 	}
 
 	@DeleteMapping(path = "/{uuid}")
-	public ResponseEntity<Void> deleteDoctor(
+	public ResponseEntity<Void> delete(
 			@PathVariable UUID uuid) {
 		doctorService.delete(uuid);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok().build();
 	}
 
 

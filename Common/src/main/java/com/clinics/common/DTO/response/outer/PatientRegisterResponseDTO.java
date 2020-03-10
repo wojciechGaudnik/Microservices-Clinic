@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 public class PatientRegisterResponseDTO {
-    private UUID uuid;
+    private UUID patientUUID;
     private String firstName;
     private String lastName;
     private String photoUrl;

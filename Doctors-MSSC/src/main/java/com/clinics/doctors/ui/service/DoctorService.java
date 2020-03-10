@@ -1,17 +1,14 @@
 package com.clinics.doctors.ui.service;
 
-import com.clinics.common.DTO.request.outer.EditDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.EditDoctorDTO;
 import com.clinics.common.DTO.request.inner.EditUserDTO;
-import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
-import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
-import com.clinics.doctors.ui.repositorie.CalendarRepository;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,9 +16,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Transactional
 @Slf4j
@@ -44,24 +41,26 @@ public class DoctorService {
 		this.environment = environment;
 	}
 
-	//todo Optional !!! if not throw Exception and send response message from Advisor !!!  //		doctor.ifPresentOrElse
-	//	Optional<MedicalUnit> optionalMedicalUnit = medicalUnitRepository.findByMedicalunituuid(UUID);
-//		return modelMapper
-//				.map(optionalMedicalUnit.
-//				orElseThrow(NoSuchElementException::new), MedicalUnitResponseDTO .class);
+	public List<DoctorResponseDTO> getAll(){
+		return doctorRepository
+				.findAll()
+				.stream()
+				.map(doctor -> modelMapper.map(doctor, DoctorResponseDTO.class))
+				.collect(Collectors.toList());
+	}
+
 	public DoctorResponseDTO getByUUID(UUID UUID) {
-		Optional<Doctor> doctor = doctorRepository.findByDoctoruuid(UUID);
-		if (doctor.isPresent()) {
-			return modelMapper.map(doctor.get(), DoctorResponseDTO.class);
-		}
-		return new DoctorResponseDTO();
+		return modelMapper
+				.map(doctorRepository
+						.findByDoctorUUID(UUID)
+						.orElseThrow(NoSuchElementException::new), DoctorResponseDTO.class);
 	}
 
 	public DoctorResponseDTO save(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
 		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
 		doctorRepository.save(doctor);
 
-		String uri = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctoruuid());
+		String uri = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctorUUID());
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
 		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);  //todo make this better, Void ?
@@ -86,8 +85,8 @@ public class DoctorService {
 			HttpEntity<EditUserDTO> httpEntity = new HttpEntity<>(editUserDTO, httpHeaders);
 			restTemplate.exchange(uri, HttpMethod.PATCH, httpEntity, Void.class);
 		}
-		if (doctorRepository.existsByDoctoruuid(uuid)) {
-			var doctorToEdit = doctorRepository.findByDoctoruuid(uuid).get();
+		if (doctorRepository.existsByDoctorUUID(uuid)) {
+			var doctorToEdit = doctorRepository.findByDoctorUUID(uuid).get();
 			modelMapper.map(editDoctorDTO, doctorToEdit);
 			doctorRepository.save(doctorToEdit);
 		}
@@ -96,7 +95,7 @@ public class DoctorService {
 	public void delete(UUID uuid) {
 		String uri = String.format("http://auth/auth/users/%s", uuid);
 		restTemplate.delete(uri);
-		doctorRepository.deleteByDoctoruuid(uuid);
+		doctorRepository.deleteByDoctorUUID(uuid);
 	}
 
 //	public List<Calendar> getDoctorCalendars(UUID uuid) {

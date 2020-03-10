@@ -8,9 +8,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-public class UserResponseDTO {
-	private String token; //todo token in body is less secure than in header ? maybe we should hide this field ?
-	private UUID userUUID;
-	private String email;
-	private String role;
+public class SpecializationResponseDTO {
+	private UUID specializationUUID;
+	private String name;
 }

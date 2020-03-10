@@ -10,16 +10,16 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
 public class DoctorResponseDTO {
-	private UUID doctoruuid;
+	private UUID doctorUUID;
 	private String firstName;
 	private String lastName;
 	private String photoUrl;
 	private String licence;
 
-	private Collection<Object> calendars;
-	private Collection<Object> specializations;
+	private Collection<UUID> calendarsUUID;
+	private Collection<UUID> specializationsUUID;
 
 //	private Collection<UUID> patientsUUIDs; todo get ALL cannot show patients ? however there will be only uuid so ... ?
-	private Collection<UUID> medicalUnits;
+	private Collection<UUID> medicalUnitsUUID;
 
 }

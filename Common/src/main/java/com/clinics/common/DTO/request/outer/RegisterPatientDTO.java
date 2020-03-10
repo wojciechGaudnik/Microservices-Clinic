@@ -13,7 +13,7 @@ import java.util.UUID;
 @ToString
 public class RegisterPatientDTO {
 
-    @NotNull(message = "uuid cannot be null")
+    @NotNull(message = "UUID cannot be null")
     private UUID uuid;
 
     @NotBlank(message = "fistName is mandatory")

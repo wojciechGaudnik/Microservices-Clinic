@@ -17,5 +17,5 @@ public class RegisterMedicalUnitDTO {
 	@Size(min = 3, max = 100, message = "address length out of range")
 	private String address;
 
-	private Collection<UUID> doctors;
+	private Collection<UUID> doctors;  //todo remove !!!
 }

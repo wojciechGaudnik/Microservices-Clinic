@@ -1,10 +1,8 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.AddEditCalendarDTO;
+import com.clinics.common.DTO.request.outer.doctor.AddEditCalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
-import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.service.CalendarService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -26,20 +25,22 @@ public class CalendarController {
 		this.calendarService = calendarService;
 	}
 
+	//todo getAll ? <--- separate controller
+
 	@GetMapping
-	public ResponseEntity<List<Calendar>> getDoctorCalendars(@PathVariable UUID doctorUUID){
+	public ResponseEntity<List<CalendarResponseDTO>> getDoctorCalendars(@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(calendarService.getDoctorCalendars(doctorUUID));
 	}
 
 	@PostMapping
-	public ResponseEntity<CalendarResponseDTO> addCalendar(
+	public ResponseEntity<CalendarResponseDTO> add(
 			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(201).body(calendarService.save(addEditCalendarDTO, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(addEditCalendarDTO, doctorUUID));
 	}
 
 	@PatchMapping(value = "/{calendarUUID}")
-	public ResponseEntity<Void> editCalendar(
+	public ResponseEntity<Void> edit(
 			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
 			@PathVariable UUID calendarUUID) {
 		calendarService.edit(addEditCalendarDTO, calendarUUID);
@@ -47,9 +48,9 @@ public class CalendarController {
 	}
 
 	@DeleteMapping(value = "/{calendarUUID}")
-	public ResponseEntity<Void> delCalendar(
+	public ResponseEntity<Void> del(
 			@PathVariable UUID calendarUUID) {
 		calendarService.delete(calendarUUID);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok().build();
 	}
 }

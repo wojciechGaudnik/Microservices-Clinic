@@ -30,21 +30,21 @@ public class BootStrapUser implements CommandLineRunner, Role {
 	public void init(){
 		User userPatient1 = User
 				.builder()
-				.uuid(UUID.randomUUID())
+				.userUUID(UUID.randomUUID())
 				.email("jan@jan.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
 		User userPatient2 = User
 				.builder()
-				.uuid(UUID.randomUUID())
+				.userUUID(UUID.randomUUID())
 				.email("adam@adam.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
 		User userDoctor1 = User
 				.builder()
-				.uuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
+				.userUUID(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.email("ola@ola.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
@@ -52,7 +52,7 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.build();
 		User userDoctor2 = User
 				.builder()
-				.uuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
+				.userUUID(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
 				.email("ala@ala.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.DOCTOR)
@@ -60,21 +60,21 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.build();
 		User userAssistant1 = User
 				.builder()
-				.uuid(UUID.randomUUID())
+				.userUUID(UUID.randomUUID())
 				.email("zeta@zeta.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
 		User userAssistant2 = User
 				.builder()
-				.uuid(UUID.randomUUID())
+				.userUUID(UUID.randomUUID())
 				.email("anna@anna.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.ASSISTANT)
 				.build();
 		User creepy = User
 				.builder()
-				.uuid(UUID.randomUUID())
+				.userUUID(UUID.randomUUID())
 				.email("creepy@creepy.pl")
 				.password(passwordEncoder.encode("666"))
 				.role(Role.SYSTEM_ADMIN)

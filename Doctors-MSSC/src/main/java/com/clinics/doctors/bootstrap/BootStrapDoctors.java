@@ -36,54 +36,56 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Specialization specializationPediatric = Specialization
 				.builder()
+				.specializationUUID(UUID.randomUUID())
 				.name("Pediatric Specialization")
 				.build();
 
 		Specialization specializationGP = Specialization
 				.builder()
+				.specializationUUID(UUID.randomUUID())
 				.name("GP Specialization")
 				.build();
 
 		Calendar calendarPediatric = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("edcec296-2566-412f-9e58-b574562e8891"))
+				.calendarUUID(UUID.fromString("edcec296-2566-412f-9e58-b574562e8891"))
 				.name("Pediatric Calendar")
 				.build();
 
 		Calendar calendarGP = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("2d22b701-56e4-4dca-8216-0cec4a06279d"))
+				.calendarUUID(UUID.fromString("2d22b701-56e4-4dca-8216-0cec4a06279d"))
 				.name("GP Calendar")
 				.build();
 
 		Calendar calendarNeurologist = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("63c7bedf-b6a5-4d83-a8a6-aa2e57f21dcd"))
+				.calendarUUID(UUID.fromString("63c7bedf-b6a5-4d83-a8a6-aa2e57f21dcd"))
 				.name("Neurologist Calendar")
 				.build();
 
 		Calendar calendarCardiologist = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("f87a24bb-6e98-4dbf-b674-97e406a43344"))
+				.calendarUUID(UUID.fromString("f87a24bb-6e98-4dbf-b674-97e406a43344"))
 				.name("Cardiologist Calendar")
 				.build();
 
 		Calendar calendarUrologist = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("39efd271-8448-40d8-932b-182ee14d4a2b"))
+				.calendarUUID(UUID.fromString("39efd271-8448-40d8-932b-182ee14d4a2b"))
 				.name("Urologist Calendar")
 				.build();
 
 		Calendar calendarGynecologist = Calendar
 				.builder()
-				.calendaruuid(UUID.fromString("fb6b8084-82b4-4830-9b0d-339e1e3a325c"))
+				.calendarUUID(UUID.fromString("fb6b8084-82b4-4830-9b0d-339e1e3a325c"))
 				.name("Gynecologist Calendar")
 				.build();
 
 
 		Doctor doctor1 = Doctor
 				.builder()
-				.doctoruuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
+				.doctorUUID(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.firstName("Ola")
 				.lastName("Olkowska")
 				.photoUrl("http://ola.pl")
@@ -91,7 +93,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()
-				.doctoruuid(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
+				.doctorUUID(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
 				.firstName("Ala")
 				.lastName("Alowsla")
 				.photoUrl("http://ala.pl")
@@ -99,7 +101,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.build();
 		Doctor doctor3 = Doctor
 				.builder()
-				.doctoruuid(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
+				.doctorUUID(UUID.randomUUID())  //todo <--- get from auth, how ?! when I make boostrap there aren't any UUID !
 				.firstName("Ela")
 				.lastName("Elkowska")
 				.photoUrl("http://ela.pl")
@@ -108,28 +110,28 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Appointment appointment1 = Appointment
 				.builder()
-				.appointmentuuid(UUID.randomUUID())
+				.appointmentUUID(UUID.randomUUID())
 				.dateTime(LocalDateTime.now())
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment2 = Appointment
 				.builder()
-				.appointmentuuid(UUID.randomUUID())
+				.appointmentUUID(UUID.randomUUID())
 				.dateTime(LocalDateTime.now().plusMinutes(60))
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment3 = Appointment
 				.builder()
-				.appointmentuuid(UUID.randomUUID())
+				.appointmentUUID(UUID.randomUUID())
 				.dateTime(LocalDateTime.now().plusMinutes(120))
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment4 = Appointment
 				.builder()
-				.appointmentuuid(UUID.randomUUID())
+				.appointmentUUID(UUID.randomUUID())
 				.dateTime(LocalDateTime.now().plusMinutes(180))
 				.duration(Duration.ofMinutes(60))
 				.build();
@@ -143,6 +145,9 @@ public class BootStrapDoctors implements CommandLineRunner {
 		calendarGynecologist.setDoctor(doctor2);
 		calendarNeurologist.setDoctor(doctor2);
 		calendarUrologist.setDoctor(doctor3);
+
+		specializationGP.setDoctors(new HashSet<>());
+		specializationPediatric.setDoctors(new HashSet<>());
 
 		specializationGP.getDoctors().add(doctor1);
 		specializationGP.getDoctors().add(doctor2);

@@ -42,9 +42,9 @@ public class MedicalUnit {
 
 	@JsonIgnore
 	@ElementCollection
-	private Collection<UUID> patientsuuid;
+	private Collection<UUID> patientsUUID;
 
 	@ElementCollection
-	private Collection<UUID> doctorsuuid;
+	private Collection<UUID> doctorsUUID;
 }
 

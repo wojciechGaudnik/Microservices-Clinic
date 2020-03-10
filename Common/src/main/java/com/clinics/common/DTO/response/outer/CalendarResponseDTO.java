@@ -9,7 +9,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class CalendarResponseDTO {
 
-	private UUID calendaruuid;
+	private UUID calendarUUID;
 	private String name;
-	private UUID medicalunit;
+	private UUID medicalUnitUUID;
 }

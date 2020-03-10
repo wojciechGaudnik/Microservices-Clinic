@@ -29,14 +29,13 @@ public class Calendar {
 	@Column(updatable = false,
 			nullable = false,
 			unique = true)
-	private UUID calendaruuid;
+	private UUID calendarUUID;
 
-	@Column(unique = true)
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
 
-	private UUID medicalunit;
+	private UUID medicalUnit;
 
 	@JsonIgnore
 	@ManyToOne(
