@@ -35,13 +35,13 @@ public class VisitServiceImpl implements VisitService {
     @Override
     @Transactional
     public void deleteByUuid(UUID uuid) {
-        Visit visit = findByUuid(uuid);
+        Optional<Visit> visit = visitRepository.findByuuid(uuid);
 
-        if(visit == null){
-            throw new VisitNotFoundException("Visit not found: " + uuid);
+        if(visit.isEmpty()){
+            throw new VisitNotFoundException(uuid);
         }
-        if(visit.getStatus().equals(VisitStatus.FINISHED)){
-            throw new RemovalOfFinishedVisitException("Tried to removed visit with UUID: " + uuid);
+        if(visit.get().getStatus().equals(VisitStatus.FINISHED)){
+            throw new RemovalOfFinishedVisitException(uuid);
         }else {
             visitRepository.deleteByuuid(uuid);
         }
@@ -49,16 +49,18 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void editVisit(UUID uuid, VisitDTO visitDTO) {
-        Visit visit = visitRepository.findByuuid(uuid);
+        Optional<Visit> visit = visitRepository.findByuuid(uuid);
 
-        if(visit == null){
-            throw new VisitNotFoundException("Visit not found: " + uuid);
+        if(visit.isEmpty()){
+            throw new VisitNotFoundException(uuid);
         }
 
-        visit.setStatus(visitDTO.getStatus());
-        visit.setDescription(visitDTO.getDescription());
+        visit.ifPresent(theVisit -> {
+            theVisit.setStatus(visitDTO.getStatus());
+            theVisit.setDescription(visitDTO.getDescription());
 
-        visitRepository.save(visit);
+            visitRepository.save(theVisit);
+        });
     }
 
     @Override
@@ -68,38 +70,36 @@ public class VisitServiceImpl implements VisitService {
         Visit visit = modelMapper.map(visitDTO, Visit.class);
 
         if(patient.isEmpty()){
-            throw new PatientNotFoundException("patient has not been found " + patientuuid);
+            throw new PatientNotFoundException(patientuuid);
         }
 
-        visit.setPatient(patient.get());
-        patient.get().getVisits().add(visit);
-        patientRepository.save(patient.get());
+        patient.ifPresent(thePatient-> {
+            visit.setPatient(thePatient);
+            thePatient.getVisits().add(visit);
+            patientRepository.save(thePatient);
 
-        visit.setPatient(patient.get());
-        patient.get().getVisits().add(visit);
-        patientRepository.save(patient.get());
+            visit.setPatient(thePatient);
+            thePatient.getVisits().add(visit);
+            patientRepository.save(thePatient);
 
-        try{
-            patientClient.registerVisit(visitDTO);
-        }catch (Exception e){
-            visitRepository.deleteByuuid(visit.getUuid());
-            throw e;
-        }
-
+            try{
+                patientClient.registerVisit(visitDTO);
+            }catch (Exception e){
+                visitRepository.deleteByuuid(visit.getUuid());
+                throw e;
+            }
+        });
         return visit;
-        //make visit out of visitDTO
-
-
     }
 
     @Override
     public Visit findByUuid(UUID uuid) {
-        Visit visit = visitRepository.findByuuid(uuid);
+        Optional<Visit> visit = visitRepository.findByuuid(uuid);
 
-        if(visit == null){
-            throw new VisitNotFoundException("Visit not found: " + uuid);
+        if(visit.isPresent()) {
+            return visit.get();
+        }else{
+            throw new VisitNotFoundException(uuid);
         }
-
-        return visit;
     }
 }

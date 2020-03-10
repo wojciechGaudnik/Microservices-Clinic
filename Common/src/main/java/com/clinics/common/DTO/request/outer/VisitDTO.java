@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 

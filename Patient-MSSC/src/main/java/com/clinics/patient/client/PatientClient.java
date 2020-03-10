@@ -22,9 +22,7 @@ public class PatientClient {
 
         //DOCTOR POST http://doctor-mssc/doctors/{UUID_doctor}/calendars/{UUID_calendar}/appointments (w body ??) doktor ustala woly termin z front-endu
 
-
         //PATIENT z serwisu z patient-client PATCH/PUT http://doctor-mssc/doctors/{UUID_doctor}/calendars/{UUID_calendar}/appointments/{UUID_appointment} (W body nulle i UUID-patient)
-
         return new VisitRegisterResponseDTO();
     }
 }

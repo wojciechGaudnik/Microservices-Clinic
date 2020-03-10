@@ -66,9 +66,8 @@ public class PatientServiceImpl implements PatientService{
         if(patient.isPresent()){
             return patient.get();
         }else{
-            throw new PatientNotFoundException("Patient not found " + UUID);
+            throw new PatientNotFoundException(UUID);
         }
-
     }
 
     @Override
@@ -93,7 +92,7 @@ public class PatientServiceImpl implements PatientService{
             existingPatient.get().setPesel(patient.getPesel());
             return patientRepository.save(existingPatient.get());
         }else{
-            throw new PatientNotFoundException("Patient has not been found " + UUID);
+            throw new PatientNotFoundException(UUID);
         }
     }
 
@@ -104,7 +103,7 @@ public class PatientServiceImpl implements PatientService{
         if(patient.isPresent()) {
             return patient.get().getVisits();
         }else{
-            throw new PatientNotFoundException("Patient has not been found " + UUID);
+            throw new PatientNotFoundException(UUID);
         }
     }
 

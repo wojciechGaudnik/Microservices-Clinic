@@ -25,7 +25,7 @@ public class PatientController {
         this.visitService = visitService;
     }
 
-    @GetMapping(path = "")
+    @GetMapping
     public List<Patient> list() {
         return patientService.findAll();
     }
