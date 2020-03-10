@@ -1,5 +1,6 @@
 package com.clinics.patient.controller;
 
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
 import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
 import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
@@ -39,9 +40,9 @@ public class PatientController {
         return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
     }
 
-    @PutMapping
-    public void editPatient(@RequestBody Patient patient) {
-        patientService.editPatient(patient);
+    @PatchMapping(path = "/{uuid}")
+    public void editPatient(@PathVariable UUID uuid, @RequestBody EditPatientDTO patient) {
+        patientService.editPatient(uuid, patient);
     }
 
     @GetMapping(path = "/{uuid}/visits")

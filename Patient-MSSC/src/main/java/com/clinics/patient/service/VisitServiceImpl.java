@@ -5,13 +5,17 @@ import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.PatientNotFoundException;
 import com.clinics.patient.exception.RemovalOfFinishedVisitException;
+import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,12 +32,15 @@ public class VisitServiceImpl implements VisitService {
         this.modelMapper = modelMapper;
     }
 
-
-
     @Override
     @Transactional
     public void deleteByUuid(UUID uuid) {
-        if(findByUuid(uuid).getStatus().equals(VisitStatus.FINISHED)){
+        Visit visit = findByUuid(uuid);
+
+        if(visit == null){
+            throw new VisitNotFoundException("Visit not found: " + uuid);
+        }
+        if(visit.getStatus().equals(VisitStatus.FINISHED)){
             throw new RemovalOfFinishedVisitException("Tried to removed visit with UUID: " + uuid);
         }else {
             visitRepository.deleteByuuid(uuid);
@@ -42,7 +49,11 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void editVisit(UUID uuid, VisitDTO visitDTO) {
-        Visit visit = findByUuid(uuid);
+        Visit visit = visitRepository.findByuuid(uuid);
+
+        if(visit == null){
+            throw new VisitNotFoundException("Visit not found: " + uuid);
+        }
 
         visit.setStatus(visitDTO.getStatus());
         visit.setDescription(visitDTO.getDescription());
@@ -52,14 +63,21 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     @Transactional
-    public VisitDTO registerVisit(UUID patientuuid, VisitDTO visitDTO) {
-        Patient patient = patientRepository.findByuuid(patientuuid);
-
-        //make visit out of visitDTO
+    public Visit registerVisit(UUID patientuuid, VisitDTO visitDTO) {
+        Optional<Patient> patient = patientRepository.findByuuid(patientuuid);
         Visit visit = modelMapper.map(visitDTO, Visit.class);
-        visit.setPatient(patient);
-        patient.getVisits().add(visit);
-        patientRepository.save(patient);
+
+        if(patient.isEmpty()){
+            throw new PatientNotFoundException("patient has not been found " + patientuuid);
+        }
+
+        visit.setPatient(patient.get());
+        patient.get().getVisits().add(visit);
+        patientRepository.save(patient.get());
+
+        visit.setPatient(patient.get());
+        patient.get().getVisits().add(visit);
+        patientRepository.save(patient.get());
 
         try{
             patientClient.registerVisit(visitDTO);
@@ -68,27 +86,20 @@ public class VisitServiceImpl implements VisitService {
             throw e;
         }
 
-        //TODO 3. jezeli doctor odpowie OK, to zmieniamy statuzs wizyty po stronie pacjenta na ACTIVE, nie usuwamy od razu, do przemyslenia
-
-        //??? kartoteki, historia choroby, recepty, badania, wyniki
-
-        return visitDTO;
-    }
-
-    //TODO dane pacjenta
-    @Override
-    public Visit findAllDetails(UUID uuid) {
-        Visit visit = findByUuid(uuid);
         return visit;
+        //make visit out of visitDTO
+
+
     }
 
     @Override
     public Visit findByUuid(UUID uuid) {
-        return visitRepository.findByuuid(uuid);
-    }
+        Visit visit = visitRepository.findByuuid(uuid);
 
-//    @Override
-//    public Visit findByUuid(UUID uuid) {
-//        return visitRepository.findByUUID(uuid);
-//    }
+        if(visit == null){
+            throw new VisitNotFoundException("Visit not found: " + uuid);
+        }
+
+        return visit;
+    }
 }

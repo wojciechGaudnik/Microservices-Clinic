@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface PatientRepository extends  JpaRepository<Patient, Long> {
-	Patient findByuuid(UUID uuid);
+	Optional<Patient> findByuuid(UUID uuid);
 	Optional<Patient> findById(Long id);
 	void deleteByuuid(UUID uuid);
 	List<Patient> findAll();

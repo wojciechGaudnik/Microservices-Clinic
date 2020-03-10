@@ -25,4 +25,16 @@ public class ExceptionHandlerPatient {
                 .build();
         return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler({VisitNotFoundException.class})
+    public ResponseEntity<Object> removalOfNotFoundVisitException(Exception exception, WebRequest request) {
+        ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+                .builder()
+                .status(HttpStatus.NOT_FOUND)
+                .error("Visit not found")
+                .errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+                .webRequest(request)
+                .build();
+        return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
 }

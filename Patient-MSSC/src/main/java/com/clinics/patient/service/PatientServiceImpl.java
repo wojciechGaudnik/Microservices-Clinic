@@ -1,11 +1,13 @@
 package com.clinics.patient.service;
 
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
 import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
 import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.PatientNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 
 @Service
@@ -58,7 +61,14 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient findByUuid(UUID UUID) {
-        return patientRepository.findByuuid(UUID);
+        Optional<Patient> patient = patientRepository.findByuuid(UUID);
+
+        if(patient.isPresent()){
+            return patient.get();
+        }else{
+            throw new PatientNotFoundException("Patient not found " + UUID);
+        }
+
     }
 
     @Override
@@ -72,30 +82,34 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient editPatient(Patient patient) {
+    public Patient editPatient(UUID UUID, EditPatientDTO patient) {
 
         patientValid(patient);
-        Optional<Patient> existingPatient = patientRepository.findById(patient.getId());
+        Optional<Patient> existingPatient = patientRepository.findByuuid(UUID);
 
         if(existingPatient.isPresent())
         {
-            //TODO change patient data
+            //TODO change other patient data
             existingPatient.get().setPesel(patient.getPesel());
             return patientRepository.save(existingPatient.get());
         }else{
-            return null;
+            throw new PatientNotFoundException("Patient has not been found " + UUID);
         }
     }
 
     @Override
     public List<Visit> findAllVisits(UUID UUID) {
-        Patient patient = patientRepository.findByuuid(UUID);
-        return patient.getVisits();
+        Optional<Patient> patient = patientRepository.findByuuid(UUID);
+
+        if(patient.isPresent()) {
+            return patient.get().getVisits();
+        }else{
+            throw new PatientNotFoundException("Patient has not been found " + UUID);
+        }
     }
 
-    private void patientValid(Patient patient){
-        // TODO patient data validation
-        // TODO Throw exception if f.ex pesel is wrong
+    private void patientValid(EditPatientDTO patient){
+       //TODO Perform validation with annotations @Valid
     }
 
 }

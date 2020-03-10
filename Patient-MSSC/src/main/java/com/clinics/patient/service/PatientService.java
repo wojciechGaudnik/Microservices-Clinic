@@ -1,5 +1,6 @@
 package com.clinics.patient.service;
 
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
 import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
 import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
@@ -16,6 +17,6 @@ public interface PatientService {
     Patient findByUuid(UUID UUID);
     Optional<Patient> findById(Long ID);
     void deleteByUuid(UUID UUID);
-    Patient editPatient(Patient patient);
+    Patient editPatient(UUID UUID, EditPatientDTO patient);
     List<Visit> findAllVisits(UUID UUID);
 }

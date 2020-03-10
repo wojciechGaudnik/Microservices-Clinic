@@ -1,13 +1,10 @@
 package com.clinics.patient.controller;
 
-import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
-import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.VisitService;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +23,13 @@ public class VisitController {
 
     @PostMapping
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public ResponseEntity<VisitDTO> registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
+    public ResponseEntity<Visit> registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
         return ResponseEntity.status(201).body(visitService.registerVisit(uuid, visitDTO));
     }
 
     @GetMapping(value = "/{visitUUID}")
-    public Visit getVisit(UUID visitUUID){
-        return visitService.findAllDetails(visitUUID);
+    public Visit getVisit(@PathVariable UUID visitUUID){
+        return visitService.findByUuid(visitUUID);
     }
 
     @DeleteMapping(value = "/{visitUUID}")

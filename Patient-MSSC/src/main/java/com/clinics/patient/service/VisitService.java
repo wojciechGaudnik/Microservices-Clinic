@@ -7,8 +7,7 @@ import java.util.UUID;
 
 
 public interface VisitService {
-    VisitDTO registerVisit(UUID patientuuid, VisitDTO visitDTO);
-    Visit findAllDetails(UUID uuid);
+    Visit registerVisit(UUID patientuuid, VisitDTO visitDTO);
     Visit findByUuid(UUID uuid);
     void deleteByUuid(UUID uuid);
     void editVisit(UUID uuid, VisitDTO visitDTO);
