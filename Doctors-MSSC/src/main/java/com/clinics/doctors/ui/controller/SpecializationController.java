@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.AddEditSpecializationDTO;
+import com.clinics.common.DTO.request.outer.doctor.AddEditSpecializationDTO;
 import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
 import com.clinics.doctors.ui.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;

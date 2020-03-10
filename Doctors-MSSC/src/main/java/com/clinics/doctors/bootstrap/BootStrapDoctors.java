@@ -90,6 +90,9 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.lastName("Olkowska")
 				.photoUrl("http://ola.pl")
 				.licence("Licence example doctor 1")
+				.medicalUnitsUUID(Arrays.asList(
+						UUID.fromString("17d25fda-fece-4294-9adb-34037445ca77"),
+						UUID.fromString("2d43f0c5-3338-46fc-8a44-9e50e20c256d")))
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()

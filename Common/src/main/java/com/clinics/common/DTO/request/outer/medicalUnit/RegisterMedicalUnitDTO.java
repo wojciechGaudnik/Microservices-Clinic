@@ -1,4 +1,4 @@
-package com.clinics.common.DTO.request.outer;
+package com.clinics.common.DTO.request.outer.medicalUnit;
 
 import lombok.Data;
 import lombok.ToString;

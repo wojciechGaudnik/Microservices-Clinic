@@ -25,8 +25,6 @@ public class CalendarController {
 		this.calendarService = calendarService;
 	}
 
-	//todo getAll ? <--- separate controller
-
 	@GetMapping
 	public ResponseEntity<List<CalendarResponseDTO>> getDoctorCalendars(@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(calendarService.getDoctorCalendars(doctorUUID));

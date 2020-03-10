@@ -2,7 +2,7 @@ package com.clinics.auth.ui.controller;
 
 import com.clinics.auth.ui.service.UserService;
 import com.clinics.common.DTO.request.inner.EditUserDTO;
-import com.clinics.common.DTO.request.outer.RegisterUserDTO;
+import com.clinics.common.DTO.request.outer.user.RegisterUserDTO;
 import com.clinics.common.DTO.response.outer.UserResponseDTO;
 import com.clinics.common.DTO.response.outer.UserUUIDAndROLE;
 import org.springframework.beans.factory.annotation.Autowired;

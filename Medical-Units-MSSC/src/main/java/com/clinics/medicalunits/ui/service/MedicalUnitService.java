@@ -1,6 +1,6 @@
 package com.clinics.medicalunits.ui.service;
 
-import com.clinics.common.DTO.request.outer.RegisterMedicalUnitDTO;
+import com.clinics.common.DTO.request.outer.medicalUnit.RegisterMedicalUnitDTO;
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
 import com.clinics.medicalunits.ui.model.MedicalUnit;
 import com.clinics.medicalunits.ui.repositorie.MedicalUnitRepository;
@@ -46,6 +46,14 @@ public class MedicalUnitService {
 		var medicalUnit = modelMapper.map(registerMedicalUnitDTO, MedicalUnit.class);
 		medicalUnit.setMedicalUnitUUID(UUID.randomUUID());
 		return modelMapper.map(medicalUnitRepository.save(medicalUnit), MedicalUnitResponseDTO.class);
+	}
+
+	public MedicalUnitResponseDTO getByUUID(UUID medicalUnitUUID) {
+		var medicalUnit = medicalUnitRepository.findByMedicalUnitUUID(medicalUnitUUID);
+		if (medicalUnit.isEmpty()) {
+			throw new NoSuchElementException("No such medial unit in system");
+		}
+		return modelMapper.map(medicalUnit.get(), MedicalUnitResponseDTO.class);
 	}
 }
 

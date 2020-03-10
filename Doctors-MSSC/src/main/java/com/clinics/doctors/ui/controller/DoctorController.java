@@ -30,14 +30,14 @@ public class DoctorController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<DoctorResponseDTO>> getAll(@PathVariable UUID uuid){
+	public ResponseEntity<List<DoctorResponseDTO>> getAll(){
 		return ResponseEntity.ok().body(doctorService.getAll());
 	}
 
 
-	@GetMapping(path = "/{uuid}")
-	public ResponseEntity<DoctorResponseDTO> getByUUID(@PathVariable UUID uuid){
-		return ResponseEntity.ok().body(doctorService.getByUUID(uuid));
+	@GetMapping(path = "/{doctorUUID}")
+	public ResponseEntity<DoctorResponseDTO> getByUUID(@PathVariable UUID doctorUUID){
+		return ResponseEntity.ok().body(doctorService.getByUUID(doctorUUID));
 	}
 
 	@PostMapping
@@ -47,19 +47,19 @@ public class DoctorController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.save(registerDoctorDTO, request));
 	}
 
-	@PatchMapping(path = "/{uuid}")
+	@PatchMapping(path = "/{doctorUUID}")
 	public ResponseEntity<Void> edit(
 			@Valid @RequestBody EditDoctorDTO editDoctorDTO,
-			@PathVariable UUID uuid,
+			@PathVariable UUID doctorUUID,
 			HttpServletRequest request) {
-		doctorService.edit(editDoctorDTO, uuid, request);
+		doctorService.edit(editDoctorDTO, doctorUUID, request);
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping(path = "/{uuid}")
+	@DeleteMapping(path = "/{doctorUUID}")
 	public ResponseEntity<Void> delete(
-			@PathVariable UUID uuid) {
-		doctorService.delete(uuid);
+			@PathVariable UUID doctorUUID) {
+		doctorService.delete(doctorUUID);
 		return ResponseEntity.ok().build();
 	}
 

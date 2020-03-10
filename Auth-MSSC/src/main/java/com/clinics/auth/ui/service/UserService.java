@@ -5,7 +5,7 @@ import com.clinics.auth.ui.model.User;
 import com.clinics.auth.ui.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.inner.EditUserDTO;
-import com.clinics.common.DTO.request.outer.RegisterUserDTO;
+import com.clinics.common.DTO.request.outer.user.RegisterUserDTO;
 import com.clinics.common.DTO.response.outer.UserResponseDTO;
 import com.clinics.common.DTO.response.outer.UserUUIDAndROLE;
 import com.clinics.common.security.JwtProperties;
