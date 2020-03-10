@@ -8,11 +8,13 @@ import {List, ListItemText, Typography} from "@material-ui/core";
 export const ContainerForUserInformation = (props) => {
     const [userInformation, setUserInformation] = useState({});
 
+    const { fetchRequest, setStoreUserInformation} = props;
+
     //Effects after each render
     useEffect(() => {
-        props.fetchRequest(setUserInformation);
-        props.setStoreUserInformation(userInformation);
-    }, [userInformation]);
+        fetchRequest(setUserInformation);
+        setStoreUserInformation(userInformation);
+    }, [fetchRequest, setStoreUserInformation, userInformation]);
 
     //Main HTML return
     const displayCalendars = () => {
