@@ -1,13 +1,18 @@
 package com.clinics.patient.controller;
 
+import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.VisitService;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -21,13 +26,25 @@ public class VisitController {
 
     @PostMapping
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public VisitDTO registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO){
-        return visitService.registerVisit(uuid, visitDTO);
+    public ResponseEntity<VisitDTO> registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
+        return ResponseEntity.status(201).body(visitService.registerVisit(uuid, visitDTO));
     }
 
-    @GetMapping(path = "/{uuid}")
-    public Visit getVisit(@PathVariable UUID UUID){
-        return visitService.findAllDetails(UUID);
+    @GetMapping(value = "/{visitUUID}")
+    public Visit getVisit(UUID visitUUID){
+        return visitService.findAllDetails(visitUUID);
+    }
+
+    @DeleteMapping(value = "/{visitUUID}")
+    public void cancelVisit(@PathVariable UUID visitUUID){
+        System.out.println(visitUUID);
+        visitService.deleteByUuid(visitUUID);
+    }
+
+    //change description or status ONLY
+    @PatchMapping(value = "/{visitUUID}")
+    public void editVisit(@PathVariable UUID visitUUID, @Valid @RequestBody VisitDTO visitDTO){
+        visitService.editVisit(visitUUID, visitDTO);
     }
 }
 

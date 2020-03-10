@@ -1,9 +1,11 @@
 package com.clinics.patient.service;
 
 import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
 import org.modelmapper.ModelMapper;
@@ -26,14 +28,26 @@ public class VisitServiceImpl implements VisitService {
         this.modelMapper = modelMapper;
     }
 
+
+
     @Override
-    public Visit findByUuid(UUID uuid) {
-        return visitRepository.findByuuid(uuid);
+    @Transactional
+    public void deleteByUuid(UUID uuid) {
+        if(findByUuid(uuid).getStatus().equals(VisitStatus.FINISHED)){
+            throw new RemovalOfFinishedVisitException("Tried to removed visit with UUID: " + uuid);
+        }else {
+            visitRepository.deleteByuuid(uuid);
+        }
     }
 
     @Override
-    public void deleteByUuid(UUID uuid) {
-        visitRepository.deleteByuuid(uuid);
+    public void editVisit(UUID uuid, VisitDTO visitDTO) {
+        Visit visit = findByUuid(uuid);
+
+        visit.setStatus(visitDTO.getStatus());
+        visit.setDescription(visitDTO.getDescription());
+
+        visitRepository.save(visit);
     }
 
     @Override
@@ -67,4 +81,14 @@ public class VisitServiceImpl implements VisitService {
         Visit visit = findByUuid(uuid);
         return visit;
     }
+
+    @Override
+    public Visit findByUuid(UUID uuid) {
+        return visitRepository.findByuuid(uuid);
+    }
+
+//    @Override
+//    public Visit findByUuid(UUID uuid) {
+//        return visitRepository.findByUUID(uuid);
+//    }
 }

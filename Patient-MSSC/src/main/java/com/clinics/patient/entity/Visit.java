@@ -1,8 +1,8 @@
 package com.clinics.patient.entity;
 
+import com.clinics.common.patient.VisitStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -43,4 +43,7 @@ public class Visit {
     private Patient patient;
 
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private VisitStatus status;
 }

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -43,18 +44,14 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.PATCH, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/").hasAnyRole(Role.PATIENT)
-				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
-				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/{uuid}/visit").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
-
-				//Redundant ?? look 3 lines above
-				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{uuid}/visits").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/{uuid}/visit/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.DELETE, "/patient-mssc/patients/{uuid}/visit/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
+				.antMatchers(HttpMethod.PATCH, "/patient-mssc/patients/{uuid}/visit/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
-//				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 				.anyRequest().denyAll();
-//				.anyRequest().permitAll();
 		http
 				.headers()
 				.addHeaderWriter(new StaticHeadersWriter("Content-Type", "application/json"));

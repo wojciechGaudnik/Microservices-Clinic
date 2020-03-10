@@ -1,9 +1,11 @@
 package com.clinics.common.DTO.request.outer;
 
+import com.clinics.common.patient.VisitStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,5 +23,7 @@ public class VisitDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date date;
 
-    private String visitNotes;
+    private String description;
+
+    private VisitStatus status = VisitStatus.NEW;
 }

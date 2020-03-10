@@ -11,4 +11,5 @@ public interface VisitService {
     Visit findAllDetails(UUID uuid);
     Visit findByUuid(UUID uuid);
     void deleteByUuid(UUID uuid);
+    void editVisit(UUID uuid, VisitDTO visitDTO);
 }

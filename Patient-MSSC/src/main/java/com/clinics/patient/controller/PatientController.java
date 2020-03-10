@@ -29,9 +29,9 @@ public class PatientController {
         return patientService.findAll();
     }
 
-    @GetMapping(path = "/{UUID}")
-    public Patient getPatientByUUID(@PathVariable UUID UUID){
-        return patientService.findByUuid(UUID);
+    @GetMapping(path = "/{uuid}")
+    public Patient getPatientByUUID(@PathVariable UUID uuid){
+        return patientService.findByUuid(uuid);
     }
 
     @PostMapping(path = "/")
@@ -40,17 +40,17 @@ public class PatientController {
     }
 
     @PutMapping
-    public Patient editPatient(@RequestBody Patient patient) {
-        return patientService.editPatient(patient);
+    public void editPatient(@RequestBody Patient patient) {
+        patientService.editPatient(patient);
     }
 
-    @GetMapping(path = "/{UUID}/visits")
-    public List<Visit> getAllVisits(@PathVariable UUID UUID) {
-        return patientService.findAllVisits(UUID);
+    @GetMapping(path = "/{uuid}/visits")
+    public List<Visit> getAllVisits(@PathVariable UUID uuid) {
+        return patientService.findAllVisits(uuid);
     }
 
-    @DeleteMapping(path = "/{UUID}")
-    public void cancelVisit(@PathVariable UUID UUID){
-        visitService.deleteByUuid(UUID);
+    @DeleteMapping(path = "/{uuid}")
+    public void cancelVisit(@PathVariable UUID uuid){
+        visitService.deleteByUuid(uuid);
     }
 }
