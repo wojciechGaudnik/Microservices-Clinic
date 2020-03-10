@@ -54,6 +54,8 @@ export const RegisterPage = (props) => {
                         showPeselForm       ={true}
                     />
                 );
+            default:
+                return null;
         }
     };
 
