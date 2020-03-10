@@ -1,22 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {Badge, Col, Container, Row, Button} from "react-bootstrap";
+import {Badge, Button, Container, Row} from "react-bootstrap";
 
 import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
-    sendFetchRequestSetUserInformation
-} from "./SetPatientPage";
-
-import {
-
-    styleForContainer
-
-} from "../../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
-
-import {
+    sendFetchRequestSetUserInformation,
     styleForMainDiv,
     styleForSubContainer
-} from "./SetPatientPage"
+} from "./SetPatientPage";
+
+import {styleForContainer} from "../../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 

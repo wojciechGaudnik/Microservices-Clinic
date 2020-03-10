@@ -117,6 +117,8 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 );
             };
             break;
+        default:
+            break;
     }
 
     sendRequestByGivenDetails(
