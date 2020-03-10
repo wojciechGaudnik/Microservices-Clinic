@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 
 export const setStoreUserDetails = userDetails => ({
     type: 'SET_USER_DETAILS',
