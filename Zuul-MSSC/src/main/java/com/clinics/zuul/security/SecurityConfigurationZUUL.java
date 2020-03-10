@@ -47,6 +47,9 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.POST, "/patient-mssc/patient/visit/").hasAnyRole(Role.PATIENT)
 				.antMatchers(HttpMethod.GET, "/patient-mssc/patient/{uuid}/visits").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 
+				.antMatchers("/medical-units-mssc/**").permitAll()
+
+
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 //				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
