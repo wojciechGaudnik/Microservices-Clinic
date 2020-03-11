@@ -15,6 +15,8 @@ export const LoginPage = (props) => {
         role: null
     });
 
+    const { error,setStoreError } = props;
+
     //Effects after each render
     useEffect(() => {
         if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
@@ -25,14 +27,14 @@ export const LoginPage = (props) => {
     //Main HTML return
     return (
         <Container>
-            {props.error ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
+            {error ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
             <FormForInputUserInformation
                 {...props}
                 fetchRequest        ={(userDetails) => {
                     sendFetchRequestLoginUser(
                         userDetails,
                         {setUserDetails},
-                        {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
+                        {ifCatchSetErrorInStore: (error) => {setStoreError(error)}})
                 }}
                 submitButtonTitle   ="Log In"
                 showEmailForm       ={true}

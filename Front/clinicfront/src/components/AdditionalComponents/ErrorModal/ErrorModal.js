@@ -7,13 +7,15 @@ import {styleForModalContainer} from "./Containers/SetErrorModal";
 export const ErrorModal = (props) => {
     const [showErrorModal, setShowErrorModal] = useState(true);
 
+    const { modalTitle } =props;
+
     const onHideClick = () => setShowErrorModal(false);
 
     return (
         <Modal show={showErrorModal} onHide={() => onHideClick()} >
             <Container style={styleForModalContainer}>
                 <Modal.Header closeButton>
-                    <Modal.Title> {props.modalTitle} </Modal.Title>
+                    <Modal.Title> {modalTitle} </Modal.Title>
                 </Modal.Header>
             </Container>
         </Modal>

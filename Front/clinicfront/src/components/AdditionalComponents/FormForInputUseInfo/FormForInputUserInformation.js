@@ -15,7 +15,19 @@ import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
 
 
 export const FormForInputUserInformation = (props) => {
-    const { role } = props;
+    const {
+        role,
+        fetchRequest,
+        showEmailForm,
+        showPasswordForm,
+        showFirstNameForm,
+        showLastNameForm,
+        showLicenceForm,
+        showPhotoURLForm,
+        showPeselForm,
+        submitButtonTitle
+    } = props;
+
     const [registerAs, setRegisterAs] = useState(role);
     const [userInformation, setUserInformation] = useFormFields({
         firstName:  null,
@@ -37,7 +49,7 @@ export const FormForInputUserInformation = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        props.fetchRequest({...userInformation, role: registerAs});
+        fetchRequest({...userInformation, role: registerAs});
     };
 
     return (
@@ -45,26 +57,26 @@ export const FormForInputUserInformation = (props) => {
             onSubmit={e => onSubmit(e)}
         >
             <Form.Row>
-                {props.showEmailForm        ? ( <EmailForm      handleChange={handleChange}             />) : null}
-                {props.showPasswordForm     ? ( <PasswordForm   handleChange={handleChange}             />) : null}
+                {showEmailForm        ? ( <EmailForm      handleChange={handleChange}             />) : null}
+                {showPasswordForm     ? ( <PasswordForm   handleChange={handleChange}             />) : null}
             </Form.Row>
             <Form.Row>
-                {props.showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} {...props}  /> ) : null}
-                {props.showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} {...props}  /> ) : null}
+                {showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} {...props}  /> ) : null}
+                {showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} {...props}  /> ) : null}
             </Form.Row>
             <Form.Row>
-                {props.showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  /> ) : null}
-                {props.showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  /> ) : null}
+                {showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  /> ) : null}
+                {showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  /> ) : null}
             </Form.Row>
             <Form.Row>
-                {props.showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  /> ) : null}
+                {showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  /> ) : null}
             </Form.Row>
             <Button variant="contained"
                     color="primary"
                     type="submit"
                     disableElevation
             >
-                {props.submitButtonTitle}
+                {submitButtonTitle}
             </Button>
         </Form>
     );

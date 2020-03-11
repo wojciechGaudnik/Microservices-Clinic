@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Button, Grid} from "@material-ui/core";
 
@@ -19,29 +19,40 @@ import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccount
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
+    const [userInformation, setUserInformation] = useState({});
+
+    const {
+        userDetails,
+        setStoreUserInformation,
+        setStoreError,
+        error,
+    } = props;
+
+    //Effects after each render
+    useEffect(() => {
+        sendFetchRequestSetUserInformation(
+            userDetails.uuid,
+            setUserInformation);
+        setStoreUserInformation(userInformation);
+    }, [userInformation, setStoreUserInformation, userDetails.uuid]);
 
     //Fetch requests
-    const fetchRequestForContainerForUserInformation = (setUserInformation)    => sendFetchRequestSetUserInformation(
-        props.userDetails.uuid,
-        setUserInformation);
-
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
-        props.userDetails.uuid);
+        userDetails.uuid);
 
     const fetchRequestForFormForInputUserInformation = (inputNewUserInformation) => sendFetchRequestChangeUserInformation(
         inputNewUserInformation,
-        {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}},
-        props.userDetails.uuid);
+        {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
+        userDetails.uuid);
 
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-            {props.error ? (<ErrorModal/>) : null}
+            {error ? (<ErrorModal/>) : null}
             <LogOutButton {...props}/>
             <ContainerForUserInformation
                 {...props}
-                fetchRequest={fetchRequestForContainerForUserInformation}
-                setStoreUserInformation={(userInformation) => props.setStoreUserInformation(userInformation)}
+                userInformation={userInformation}
                 titleRole={"DOCTOR"}
                 firstName={true}
                 lastName={true}

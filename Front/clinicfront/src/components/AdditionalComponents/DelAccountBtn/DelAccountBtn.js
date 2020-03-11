@@ -5,8 +5,10 @@ import {Button} from "@material-ui/core";
 import {redirectByRole} from "../../../actions";
 
 export const DelAccountBtn = (props) => {
+    const { fetchRequest } = props;
+
     const delUserBtnOnClick = () => {
-        props.fetchRequest();
+        fetchRequest();
         localStorage.removeItem("token");
         redirectByRole(null, props);
     };

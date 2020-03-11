@@ -14,6 +14,8 @@ import {RoleForm} from "../../AdditionalComponents/RoleForm/RoleForm";
 export const RegisterPage = (props) => {
     const [registerAs, setRegisterAs] = useState("doctor");
 
+    const { setStoreError } = props;
+
     const whichForm = () => {
         switch (registerAs) {
             case "doctor":
@@ -23,7 +25,7 @@ export const RegisterPage = (props) => {
                         fetchRequest        ={(registerDetails) => {
                             sendFetchRequestRegisterNewUser(
                                 registerDetails,
-                                {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
+                                {ifCatchSetErrorInStore: (error) => {setStoreError(error)}})
                         }}
                         role                ={registerAs}
                         submitButtonTitle   ="Register"
@@ -42,7 +44,7 @@ export const RegisterPage = (props) => {
                         fetchRequest        ={(registerDetails) => {
                             sendFetchRequestRegisterNewUser(
                                 registerDetails,
-                                {ifCatchSetErrorInStore: (error) => {props.setStoreError(error)}})
+                                {ifCatchSetErrorInStore: (error) => {setStoreError(error)}})
                         }}
                         role                ={registerAs}
                         submitButtonTitle   ="Register"

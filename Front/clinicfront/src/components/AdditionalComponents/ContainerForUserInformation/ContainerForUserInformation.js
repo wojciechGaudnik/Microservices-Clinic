@@ -1,18 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {styleForContainer} from "./Containers/SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
 
 export const ContainerForUserInformation = (props) => {
-    const [userInformation, setUserInformation] = useState({});
 
-    const { fetchRequest, setStoreUserInformation } = props;
+    const {
+        userInformation,
+        firstName,
+        lastName,
+        licence,
+        calendars,
+        specializations,
+        medicalUnits,
+        pesel,
+        titleRole
+    } = props;
 
-    //Effects after each render
-    useEffect(() => {
-        fetchRequest(setUserInformation);
-        setStoreUserInformation(userInformation);
-    }, [userInformation]);
 
     //Main HTML return
     const displayCalendars = () => {
@@ -46,7 +50,6 @@ export const ContainerForUserInformation = (props) => {
                 break;
             default:
                 value = info;
-
         }
         return (
             <ListItemText
@@ -79,14 +82,14 @@ export const ContainerForUserInformation = (props) => {
     return(
         <Container style={styleForContainer}>
             <List>
-                <Row><h5><Badge variant="primary">{props.titleRole}</Badge></h5></Row>
-                {props.firstName        ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
-                {props.lastName         ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
-                {props.licence          ? (displayEachInfo(userInformation.licence, "Licence")) : null}
-                {props.calendars        ? (displayEachInfo(userInformation.calendars, "Calendars")) : null}
-                {props.specializations  ? (displayEachInfo(userInformation.specializations, "Specializations")) : null}
-                {props.medicalUnits     ? (displayEachInfo(userInformation.medicalUnits, "Medical Units")) : null}
-                {props.pesel            ? (displayEachInfo(userInformation.pesel, "PESEL")) : null}
+                <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
+                {firstName        ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
+                {lastName         ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
+                {licence          ? (displayEachInfo(userInformation.licence, "Licence")) : null}
+                {calendars        ? (displayEachInfo(userInformation.calendars, "Calendars")) : null}
+                {specializations  ? (displayEachInfo(userInformation.specializations, "Specializations")) : null}
+                {medicalUnits     ? (displayEachInfo(userInformation.medicalUnits, "Medical Units")) : null}
+                {pesel            ? (displayEachInfo(userInformation.pesel, "PESEL")) : null}
             </List>
         </Container>
 
