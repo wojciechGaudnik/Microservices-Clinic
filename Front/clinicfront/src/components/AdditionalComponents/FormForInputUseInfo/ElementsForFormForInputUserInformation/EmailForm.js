@@ -3,23 +3,33 @@ import React, {useState} from "react";
 import {TextField} from "@material-ui/core";
 
 export const EmailForm = (props) => {
-    const { handleChange, validation} = props;
+    const { handleChange, validation, setIsCorrectInputInForms } = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+    const setGoodInputInAllStates = () => {
+        setIsCorrectInput(true);
+        setIsCorrectInputInForms({emailForm: true});
+    };
+
+    const setWrongInputInAllStates = () => {
+        setIsCorrectInput(false);
+        setIsCorrectInputInForms({emailForm: false});
+    };
+
     //Validation for input data
     const checkInputCorrect = (e) => {
         if (e.target.value.length === 0){
-            setIsCorrectInput(false);
-            setMessageForIncorrectInput("The field cannot be empty")
+            setWrongInputInAllStates();
+            setMessageForIncorrectInput("The field cannot be empty");
         } else if (!e.target.value.match(emailFormat)){
-            setIsCorrectInput(false);
-            setMessageForIncorrectInput("The text in field is not email")
+            setWrongInputInAllStates();
+            setMessageForIncorrectInput("The text in field is not email");
         } else {
-            setIsCorrectInput(true);
+            setGoodInputInAllStates();
             setMessageForIncorrectInput(null);
         }
     };

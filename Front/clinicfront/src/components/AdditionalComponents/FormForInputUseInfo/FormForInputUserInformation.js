@@ -12,6 +12,7 @@ import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm"
 import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 import {Form} from "react-bootstrap";
 import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
+import {keys} from "@material-ui/core/styles/createBreakpoints";
 
 
 export const FormForInputUserInformation = (props) => {
@@ -39,14 +40,54 @@ export const FormForInputUserInformation = (props) => {
         password:   null,
         pesel:      null,
     });
+    const [isCorrectInputInEachForms, setIsCorrectInputFromEachForms] = useState({
+        emailForm:      !showEmailForm,
+        firstNameForm:  !showFirstNameForm,
+        lastNameForm:   !showLastNameForm,
+        licenceForm:    !showLicenceForm,
+        passwordForm:   !showPasswordForm,
+        peselForm:      !showPeselForm ,
+        photoURLForm:   !showPhotoURLForm,
+    });
 
     useEffect(() => {
         setRegisterAs(role);
-    }, [role, setRegisterAs]);
+        setIsCorrectInputFromEachForms({
+            emailForm:      !showEmailForm,
+            firstNameForm:  !showFirstNameForm,
+            lastNameForm:   !showLastNameForm,
+            licenceForm:    !showLicenceForm,
+            passwordForm:   !showPasswordForm,
+            peselForm:      !showPeselForm ,
+            photoURLForm:   !showPhotoURLForm,
+        });
+    }, [role,
+        setRegisterAs,
+        showEmailForm,
+        showFirstNameForm,
+        showLastNameForm,
+        showLicenceForm,
+        showPasswordForm,
+        showPeselForm ,
+        showPhotoURLForm,]);
 
     useEffect(() => {
         setValidation(submitButtonTitle !== "Log In")
     }, [submitButtonTitle]);
+
+    const setIsCorrectInputInForms = (isInputCorrectObject) => {
+        console.log(isInputCorrectObject);
+        setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject}); console.log("Works")};
+
+    const checkCorrectInputInAllFormsForButtonAvailable = () => {
+        console.log(isCorrectInputInEachForms);
+        for (const isCorrectInput in isCorrectInputInEachForms){
+            if (isCorrectInputInEachForms[isCorrectInput] === false){
+                return false;
+            }
+        }
+        return true;
+    };
 
     const handleChange = (event) => {
         setUserInformation(event);
@@ -62,23 +103,24 @@ export const FormForInputUserInformation = (props) => {
             onSubmit={e => onSubmit(e)}
         >
             <Form.Row>
-                {showEmailForm        ? ( <EmailForm      handleChange={handleChange}             validation={validation}/> ) : null}
-                {showPasswordForm     ? ( <PasswordForm   handleChange={handleChange}             validation={validation}/> ) : null}
+                {showEmailForm        ? ( <EmailForm      handleChange={handleChange}             validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+                {showPasswordForm     ? ( <PasswordForm   handleChange={handleChange}             validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
             </Form.Row>
             <Form.Row>
-                {showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} {...props}  validation={validation}/> ) : null}
-                {showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} {...props}  validation={validation}/> ) : null}
+                {showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+                {showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
             </Form.Row>
             <Form.Row>
-                {showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  validation={validation}/> ) : null}
-                {showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  validation={validation}/> ) : null}
+                {showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+                {showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
             </Form.Row>
             <Form.Row>
-                {showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  validation={validation}/> ) : null}
+                {showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
             </Form.Row>
             <Button variant="contained"
                     color="primary"
                     type="submit"
+                    disabled={!checkCorrectInputInAllFormsForButtonAvailable() && validation}
                     disableElevation
             >
                 {submitButtonTitle}

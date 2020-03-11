@@ -3,18 +3,28 @@ import React, {useState} from "react";
 import {TextField} from "@material-ui/core";
 
 export const PasswordForm = (props) => {
-    const { handleChange, validation } = props;
+    const { handleChange, validation, setIsCorrectInputInForms } = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
+    const setGoodInputInAllStates = () => {
+        setIsCorrectInput(true);
+        setIsCorrectInputInForms({passwordForm: true});
+    };
+
+    const setWrongInputInAllStates = () => {
+        setIsCorrectInput(false);
+        setIsCorrectInputInForms({passwordForm: false});
+    };
+
     //Validation for input data
     const checkInputCorrect = (e) => {
-        if (e.target.value.length < 8 || e.target.value.length > 16){
-            setIsCorrectInput(false);
+        if (e.target.value.length < 9 || e.target.value.length > 16){
+            setWrongInputInAllStates();
             setMessageForIncorrectInput("Must contain between 8 and 16 characters")
         } else {
-            setIsCorrectInput(true);
+            setGoodInputInAllStates();
             setMessageForIncorrectInput(null);
         }
     };

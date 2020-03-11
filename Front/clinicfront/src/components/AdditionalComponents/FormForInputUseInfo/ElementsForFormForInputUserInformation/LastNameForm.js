@@ -3,18 +3,28 @@ import React, {useState} from "react";
 import {TextField} from "@material-ui/core";
 
 export const LastNameForm = (props) => {
-    const { handleChange, validation, userInformation } = props;
+    const { handleChange, validation, setIsCorrectInputInForms, userInformation } = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
+    const setGoodInputInAllStates = () => {
+        setIsCorrectInput(true);
+        setIsCorrectInputInForms({lastNameForm: true});
+    };
+
+    const setWrongInputInAllStates = () => {
+        setIsCorrectInput(false);
+        setIsCorrectInputInForms({lastNameForm: false});
+    };
+
     //Validation for input data
     const checkInputCorrect = (e) => {
         if (e.target.value.length === 0){
-            setIsCorrectInput(false);
+            setWrongInputInAllStates();
             setMessageForIncorrectInput("The field cannot be empty")
         } else {
-            setIsCorrectInput(true);
+            setGoodInputInAllStates();
             setMessageForIncorrectInput(null);
         }
     };

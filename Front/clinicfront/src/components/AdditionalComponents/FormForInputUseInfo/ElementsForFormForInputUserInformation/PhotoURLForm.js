@@ -3,18 +3,29 @@ import React, {useState} from "react";
 import {TextField} from "@material-ui/core";
 
 export const PhotoURLForm = (props) => {
-    const { handleChange, validation, userInformation} = props;
+    const { handleChange, validation, userInformation, setIsCorrectInputInForms} = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
+    const setGoodInputInAllStates = () => {
+        console.log("photo true");
+        setIsCorrectInput(true);
+        setIsCorrectInputInForms({photoURLForm: true});
+    };
+
+    const setWrongInputInAllStates = () => {
+        setIsCorrectInput(false);
+        setIsCorrectInputInForms({photoURLForm: false});
+    };
+
     //Validation for input data
     const checkInputCorrect = (e) => {
         if (e.target.value.length === 0){
-            setIsCorrectInput(false);
+            setWrongInputInAllStates();
             setMessageForIncorrectInput("The field cannot be empty")
         } else {
-            setIsCorrectInput(true);
+            setGoodInputInAllStates();
             setMessageForIncorrectInput(null);
         }
     };

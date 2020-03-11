@@ -3,21 +3,31 @@ import {TextField} from "@material-ui/core";
 import React, {useState} from "react";
 
 export const PeselForm = (props) => {
-    const { handleChange, validation, userInformation } = props;
+    const { handleChange, validation, userInformation, setIsCorrectInputInForms } = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
+    const setGoodInputInAllStates = () => {
+        setIsCorrectInput(true);
+        setIsCorrectInputInForms({peselForm: true});
+    };
+
+    const setWrongInputInAllStates = () => {
+        setIsCorrectInput(false);
+        setIsCorrectInputInForms({peselForm: false});
+    };
+
     //Validation for input data
     const checkInputCorrect = (e) => {
         if (e.target.value.length === 0){
-            setIsCorrectInput(false);
+            setWrongInputInAllStates();
             setMessageForIncorrectInput("The field cannot be empty")
         } else if (e.target.value.length !== 11){
-            setIsCorrectInput(false);
+            setWrongInputInAllStates();
             setMessageForIncorrectInput("PESEL contain 11 numbers")
         } else {
-            setIsCorrectInput(true);
+            setGoodInputInAllStates();
             setMessageForIncorrectInput(null);
         }
     };

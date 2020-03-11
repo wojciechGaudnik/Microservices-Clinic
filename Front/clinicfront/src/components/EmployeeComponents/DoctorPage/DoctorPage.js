@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from "react";
 
-import {Button, Grid} from "@material-ui/core";
+import {
+    Button,
+    Grid,
+    Typography
+} from "@material-ui/core";
 
 import {
     sendFetchRequestChangeUserInformation,
@@ -74,28 +78,37 @@ export const DoctorPage = (props) => {
                             Edit
                         </Button>
                     </Grid>
+                    {showFormForEdit ? (
+                        <Grid item>
+                            <Typography
+                                color="primary"
+                                align="center"
+                                variant="subtitle2"
+                                gutterBottom={true}
+                            >
+                                Fill or change only variables which you want to change
+                            </Typography>
+                            <FormForInputUserInformation
+                                {...props}
+                                fetchRequest        ={fetchRequestForFormForInputUserInformation}
+                                submitButtonTitle   ="Edit"
+                                showEmailForm       ={true}
+                                showPasswordForm    ={true}
+                                showRoleForm        ={false}
+                                showFirstNameForm   ={true}
+                                showLastNameForm    ={true}
+                                showLicenceForm     ={true}
+                                showPhotoURLForm    ={true}
+                            />
+                        </Grid>) : null
+                    }
                     <Grid item>
                         <DelAccountBtn
                             {...props}
                             fetchRequest={fetchRequestForDelAccountBtn}
                         />
                     </Grid>
-                        {showFormForEdit ? (
-                            <Grid item>
-                                <FormForInputUserInformation
-                                    {...props}
-                                    fetchRequest        ={fetchRequestForFormForInputUserInformation}
-                                    submitButtonTitle   ="Edit"
-                                    showEmailForm       ={true}
-                                    showPasswordForm    ={true}
-                                    showRoleForm        ={false}
-                                    showFirstNameForm   ={true}
-                                    showLastNameForm    ={true}
-                                    showLicenceForm     ={true}
-                                    showPhotoURLForm    ={true}
-                                />
-                            </Grid>) : null
-                        }
+
                 </Grid>
         </div>
     )
