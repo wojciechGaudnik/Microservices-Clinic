@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 
 import {Button, Grid} from "@material-ui/core";
-import {Container} from "react-bootstrap";
 
 import {
     sendFetchRequestChangeUserInformation,
@@ -60,7 +59,7 @@ export const DoctorPage = (props) => {
                     spacing={3}
                 >
                     <Grid item>
-                        <Button variant="contained" color="primary" disableElevation block fullWidth onClick={() => setShowFormForEdit(!showFormForEdit)}>
+                        <Button variant="contained" color="primary" disableElevation fullWidth onClick={() => setShowFormForEdit(!showFormForEdit)}>
                             Edit
                         </Button>
                     </Grid>

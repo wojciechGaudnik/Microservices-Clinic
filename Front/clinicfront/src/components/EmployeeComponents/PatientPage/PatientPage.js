@@ -21,11 +21,13 @@ export const PatientPage = (props) => {
         lastName:       ""
     });
 
+    const { userDetails, setStoreUserInformation } = props;
+
     //Effects after each render
     useEffect(() => {
-        sendFetchRequestSetUserInformation(props.userDetails.uuid, {setUserInformation});
-        props.setStoreUserInformation(userInformation);
-    }, [userInformation.patientUUID]);
+        sendFetchRequestSetUserInformation(userDetails.uuid, {setUserInformation});
+        setStoreUserInformation(userInformation);
+    }, [userInformation.patientUUID, userInformation, userDetails, setStoreUserInformation]);
 
     //Main HTML return
     return(

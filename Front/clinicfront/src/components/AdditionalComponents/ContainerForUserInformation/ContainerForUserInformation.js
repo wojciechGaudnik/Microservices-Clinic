@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {
-    styleForContainer
-} from "./Containers/SetContainerForUserInfo";
-import {Badge, Container, Row, Spinner} from "react-bootstrap";
-import {List, ListItemText, Typography} from "@material-ui/core";
+import {styleForContainer} from "./Containers/SetContainerForUserInfo";
+import {Badge, Container, Row} from "react-bootstrap";
+import {List, ListItemText, Typography,} from "@material-ui/core";
 
 export const ContainerForUserInformation = (props) => {
     const [userInformation, setUserInformation] = useState({});
 
-    const { fetchRequest, setStoreUserInformation} = props;
+    const { fetchRequest, setStoreUserInformation } = props;
 
     //Effects after each render
     useEffect(() => {
         fetchRequest(setUserInformation);
         setStoreUserInformation(userInformation);
-    }, [fetchRequest, setStoreUserInformation, userInformation]);
+    }, [userInformation]);
 
     //Main HTML return
     const displayCalendars = () => {
@@ -70,7 +68,7 @@ export const ContainerForUserInformation = (props) => {
                             variant="h6"
                             color="primary"
                         >
-                            {info ? (value) : (<Spinner animation="border" size="sm" />)}
+                            {info ? (value) : null}
                         </Typography>
                     </React.Fragment>
                 }

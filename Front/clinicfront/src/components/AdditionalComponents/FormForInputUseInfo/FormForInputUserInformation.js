@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Button} from "@material-ui/core";
 
@@ -15,6 +15,8 @@ import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
 
 
 export const FormForInputUserInformation = (props) => {
+    const { role } = props;
+    const [registerAs, setRegisterAs] = useState(role);
     const [userInformation, setUserInformation] = useFormFields({
         firstName:  null,
         lastName:   null,
@@ -23,24 +25,19 @@ export const FormForInputUserInformation = (props) => {
         email:      null,
         password:   null,
         pesel:      null,
-        role:       props.role
     });
 
     useEffect(() => {
-        setUserInformation({
-            ...userInformation,
-            role: props.role
-        })
-    }, [props.role]);
+        setRegisterAs(role);
+    }, [role, setRegisterAs]);
 
     const handleChange = (event) => {
         setUserInformation(event);
-        console.log(userInformation)
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        props.fetchRequest(userInformation);
+        props.fetchRequest({...userInformation, role: registerAs});
     };
 
     return (

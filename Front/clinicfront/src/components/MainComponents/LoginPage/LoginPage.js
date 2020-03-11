@@ -18,11 +18,9 @@ export const LoginPage = (props) => {
     //Effects after each render
     useEffect(() => {
         if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
-    }, []);
-    useEffect(() => {
         props.setStoreUserDetails(userDetails);
         if (userDetails.role){redirectByRole(userDetails.role, props)}
-    }, [userDetails]);
+    }, [userDetails, userDetails.role, props]);
 
     //Main HTML return
     return (

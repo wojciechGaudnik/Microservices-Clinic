@@ -12,7 +12,7 @@ export const DelAccountBtn = (props) => {
     };
 
     return(
-        <Button variant="contained" color="primary" disableElevation fullWidth block onClick={() => delUserBtnOnClick()}>
+        <Button variant="contained" color="primary" disableElevation fullWidth onClick={() => delUserBtnOnClick()}>
             Delete Account
         </Button>
     )
