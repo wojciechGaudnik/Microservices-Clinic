@@ -13,26 +13,26 @@ export const PasswordForm = (props) => {
         if (e.target.value.length < 8 || e.target.value.length > 16){
             setIsCorrectInput(false);
             setMessageForIncorrectInput("Must contain between 8 and 16 characters")
-        }
-        else {
+        } else {
             setIsCorrectInput(true);
             setMessageForIncorrectInput(null);
         }
     };
 
-    return (<Form.Group as={Col} controlId="formGridPassword">
-        <TextField
-            onChange={(e) => {
-                handleChange(e);
-                if (validation){checkInputCorrect(e);}
-            }}
-            name="password"
-            type="password"
-            label="Password"
-            variant="outlined"
-            error={!isCorrectInput}
-            helperText={messageForIncorrectInput}
-            fullWidth
-        />
-    </Form.Group>)
+    return (
+        <Form.Group as={Col} controlId="formGridPassword">
+            <TextField
+                onChange={(e) => {
+                    handleChange(e);
+                    if (validation){checkInputCorrect(e)}
+                }}
+                name="password"
+                type="password"
+                label="Password"
+                variant="outlined"
+                error={!isCorrectInput}
+                helperText={messageForIncorrectInput}
+                fullWidth
+            />
+        </Form.Group>)
 };
