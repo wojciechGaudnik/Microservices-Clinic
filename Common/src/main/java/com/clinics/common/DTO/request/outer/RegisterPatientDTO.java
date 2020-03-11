@@ -14,7 +14,7 @@ import java.util.UUID;
 public class RegisterPatientDTO {
 
     @NotNull(message = "uuid cannot be null")
-    private UUID uuid;
+    private UUID patientUUID;
 
     @NotBlank(message = "fistName is mandatory")
     @Size(min = 2, max = 100, message = "firstName length out of range")
@@ -24,8 +24,8 @@ public class RegisterPatientDTO {
     @Size(min = 3, max = 100, message = "lastName length out of range")
     private String lastName;
 
-    @PESEL
     @NotBlank(message = "pesel is mandatory")
+    @Size(min = 11, max = 11, message = "Pesel must be exactly 11 digits long")
     private String pesel;
 
     @Size(max = 500, message = "photoUrl length out of range ")

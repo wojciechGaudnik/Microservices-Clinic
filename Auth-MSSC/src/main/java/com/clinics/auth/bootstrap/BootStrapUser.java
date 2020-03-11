@@ -42,6 +42,13 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
 				.build();
+		User userPatient3 = User
+				.builder()
+				.uuid(UUID.fromString("11f0f891-b243-4547-803b-605f72b11b11"))
+				.email("maciej@maciej.pl")
+				.password(passwordEncoder.encode("12345"))
+				.role(Role.PATIENT)
+				.build();
 		User userDoctor1 = User
 				.builder()
 				.uuid(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
@@ -83,6 +90,7 @@ public class BootStrapUser implements CommandLineRunner, Role {
 		List<User> userList = Arrays.asList(
 				userPatient1,
 				userPatient2,
+				userPatient3,
 				userDoctor1,
 				userDoctor2,
 				userAssistant1,

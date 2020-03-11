@@ -5,13 +5,10 @@ import com.clinics.common.DTO.request.inner.EditUserDTO;
 import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
-import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
-import com.clinics.doctors.ui.repositorie.CalendarRepository;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -63,7 +60,7 @@ public class DoctorService {
 
 		String uri = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctoruuid());
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+		httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
 		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);  //todo make this better, Void ?
 
 		//todo make the same way as edit !!!
@@ -80,7 +77,7 @@ public class DoctorService {
 	public void edit(EditDoctorDTO editDoctorDTO, UUID uuid, HttpServletRequest request) {
 		String uri = String.format("http://auth/auth/users/%s", uuid);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+		httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
 		if (editDoctorDTO.getPassword() != null || editDoctorDTO.getEmail() != null) {
 			EditUserDTO editUserDTO = modelMapper.map(editDoctorDTO, EditUserDTO.class);
 			HttpEntity<EditUserDTO> httpEntity = new HttpEntity<>(editUserDTO, httpHeaders);
