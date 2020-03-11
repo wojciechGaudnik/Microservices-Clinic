@@ -5,9 +5,9 @@ import {TextField} from "@material-ui/core";
 export const EmailForm = (props) => (
     <Form.Group as={Col} controlId="formGridEmail">
         <TextField
-            type="email"
             onChange={(e) => props.handleChange(e)}
             name="email"
+            type="email"
             label="Email"
             variant="outlined"
             fullWidth
