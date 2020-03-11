@@ -35,7 +35,7 @@ public class PatientController {
         return patientService.findByUuid(uuid);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping
     public ResponseEntity<PatientRegisterResponseDTO> registerPatient(@RequestBody RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
         return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
     }

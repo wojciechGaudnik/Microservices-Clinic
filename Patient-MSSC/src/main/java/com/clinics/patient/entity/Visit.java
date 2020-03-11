@@ -8,6 +8,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ public class Visit {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date date;
 
+    @Column(updatable = false, nullable = false)
     private UUID doctorUUID;
 
     @JsonIgnore
@@ -42,7 +45,8 @@ public class Visit {
     @JoinColumn(name="patient_id")
     private Patient patient;
 
-    private String description;
+    @Size(max = 1000, message = "Description length out of range")
+    private String description = null;
 
     @Enumerated(EnumType.STRING)
     private VisitStatus status;

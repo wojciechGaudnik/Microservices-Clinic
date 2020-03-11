@@ -1,5 +1,6 @@
 package com.clinics.patient.controller;
 
+import com.clinics.common.DTO.request.outer.EditVisitDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.VisitService;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
+@JsonDeserialize(using = LocalDateDeserializer.class)
 @RequestMapping(value = "/patients/{uuid}/visit")
 public class VisitController {
     final private VisitService visitService;
@@ -22,7 +24,6 @@ public class VisitController {
     }
 
     @PostMapping
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     public ResponseEntity<Visit> registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
         return ResponseEntity.status(201).body(visitService.registerVisit(uuid, visitDTO));
     }
@@ -34,14 +35,13 @@ public class VisitController {
 
     @DeleteMapping(value = "/{visitUUID}")
     public void cancelVisit(@PathVariable UUID visitUUID){
-        System.out.println(visitUUID);
         visitService.deleteByUuid(visitUUID);
     }
 
     //change description or status ONLY
     @PatchMapping(value = "/{visitUUID}")
-    public void editVisit(@PathVariable UUID visitUUID, @Valid @RequestBody VisitDTO visitDTO){
-        visitService.editVisit(visitUUID, visitDTO);
+    public void editVisit(@PathVariable UUID visitUUID, @Valid @RequestBody EditVisitDTO editVisitDTO){
+        visitService.editVisit(visitUUID, editVisitDTO);
     }
 }
 

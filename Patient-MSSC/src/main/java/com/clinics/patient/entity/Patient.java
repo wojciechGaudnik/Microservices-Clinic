@@ -26,7 +26,7 @@ public class Patient {
     private Long id;
 
     @Column(updatable = false, nullable = false)
-    private UUID uuid = UUID.randomUUID();
+    private UUID patientUUID = UUID.randomUUID();
 
     @PESEL
     private String pesel;

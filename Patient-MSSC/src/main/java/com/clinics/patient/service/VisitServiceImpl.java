@@ -1,5 +1,6 @@
 package com.clinics.patient.service;
 
+import com.clinics.common.DTO.request.outer.EditVisitDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.client.PatientClient;
@@ -10,7 +11,6 @@ import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
-import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public void editVisit(UUID uuid, VisitDTO visitDTO) {
+    public void editVisit(UUID uuid, EditVisitDTO editVisitDTO) {
         Optional<Visit> visit = visitRepository.findByuuid(uuid);
 
         if(visit.isEmpty()){
@@ -56,8 +56,8 @@ public class VisitServiceImpl implements VisitService {
         }
 
         visit.ifPresent(theVisit -> {
-            theVisit.setStatus(visitDTO.getStatus());
-            theVisit.setDescription(visitDTO.getDescription());
+            theVisit.setStatus(editVisitDTO.getStatus());
+            theVisit.setDescription(editVisitDTO.getDescription());
 
             visitRepository.save(theVisit);
         });
@@ -65,19 +65,15 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     @Transactional
-    public Visit registerVisit(UUID patientuuid, VisitDTO visitDTO) {
-        Optional<Patient> patient = patientRepository.findByuuid(patientuuid);
+    public Visit registerVisit(UUID patientUUID, VisitDTO visitDTO) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
         Visit visit = modelMapper.map(visitDTO, Visit.class);
 
         if(patient.isEmpty()){
-            throw new PatientNotFoundException(patientuuid);
+            throw new PatientNotFoundException(patientUUID);
         }
 
         patient.ifPresent(thePatient-> {
-            visit.setPatient(thePatient);
-            thePatient.getVisits().add(visit);
-            patientRepository.save(thePatient);
-
             visit.setPatient(thePatient);
             thePatient.getVisits().add(visit);
             patientRepository.save(thePatient);

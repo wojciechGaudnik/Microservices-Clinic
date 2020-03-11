@@ -13,7 +13,6 @@ import java.util.HashMap;
 @ControllerAdvice
 public class ExceptionHandlerPatient {
 
-    //niedozwolony delete 409
     @ExceptionHandler({RemovalOfFinishedVisitException.class})
     public ResponseEntity<Object> removalOfFinishedVisitException(Exception exception, WebRequest request) {
         ErrorMessageCustom errorMessageCustom = ErrorMessageCustom

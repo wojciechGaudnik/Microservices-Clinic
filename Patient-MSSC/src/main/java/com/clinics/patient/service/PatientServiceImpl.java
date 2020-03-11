@@ -20,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.*;
 
 @Service
@@ -40,7 +39,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
-        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
+        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getPatientUUID());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
         HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
@@ -61,7 +60,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient findByUuid(UUID UUID) {
-        Optional<Patient> patient = patientRepository.findByuuid(UUID);
+        Optional<Patient> patient = patientRepository.findByPatientUUID(UUID);
 
         if(patient.isPresent()){
             return patient.get();
@@ -77,28 +76,28 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public void deleteByUuid(UUID UUID) {
-        patientRepository.deleteByuuid(UUID);
+        patientRepository.deleteByPatientUUID(UUID);
     }
 
     @Override
-    public Patient editPatient(UUID UUID, EditPatientDTO patient) {
+    public void editPatient(UUID patientUUID, EditPatientDTO patient) {
+        Optional<Patient> existingPatient = patientRepository.findByPatientUUID(patientUUID);
 
-        patientValid(patient);
-        Optional<Patient> existingPatient = patientRepository.findByuuid(UUID);
-
-        if(existingPatient.isPresent())
-        {
-            //TODO change other patient data
-            existingPatient.get().setPesel(patient.getPesel());
-            return patientRepository.save(existingPatient.get());
-        }else{
-            throw new PatientNotFoundException(UUID);
+        if(existingPatient.isEmpty()){
+            throw new PatientNotFoundException(patientUUID);
         }
+
+        existingPatient.ifPresent(thePatient-> {
+            thePatient.setPesel(patient.getPesel());
+            thePatient.setFirstName(patient.getFirstName());
+            thePatient.setLastName(patient.getLastName());
+            thePatient.setPhotoUrl(patient.getPhotoUrl());
+        });
     }
 
     @Override
     public List<Visit> findAllVisits(UUID UUID) {
-        Optional<Patient> patient = patientRepository.findByuuid(UUID);
+        Optional<Patient> patient = patientRepository.findByPatientUUID(UUID);
 
         if(patient.isPresent()) {
             return patient.get().getVisits();
@@ -106,9 +105,4 @@ public class PatientServiceImpl implements PatientService{
             throw new PatientNotFoundException(UUID);
         }
     }
-
-    private void patientValid(EditPatientDTO patient){
-       //TODO Perform validation with annotations @Valid
-    }
-
 }
