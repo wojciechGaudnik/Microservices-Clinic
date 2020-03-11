@@ -28,7 +28,7 @@ public class Visit {
     private Long id;
 
     @Column(updatable = false, nullable = false)
-    private UUID uuid = UUID.randomUUID();
+    private UUID visitUUID = UUID.randomUUID();
 
     //TODO na localDateTime
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

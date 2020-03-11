@@ -18,11 +18,9 @@ import java.util.UUID;
 @RequestMapping(value = "/patients")
 public class PatientController {
     final private PatientService patientService;
-    final private VisitService visitService;
 
-    public PatientController(PatientService patientService, VisitService visitService) {
+    public PatientController(PatientService patientService) {
         this.patientService = patientService;
-        this.visitService = visitService;
     }
 
     @GetMapping
@@ -30,9 +28,9 @@ public class PatientController {
         return patientService.findAll();
     }
 
-    @GetMapping(path = "/{uuid}")
-    public Patient getPatientByUUID(@PathVariable UUID uuid){
-        return patientService.findByUuid(uuid);
+    @GetMapping(path = "/{patientUUID}")
+    public Patient getPatientByUUID(@PathVariable UUID patientUUID){
+        return patientService.findByUuid(patientUUID);
     }
 
     @PostMapping
@@ -40,18 +38,13 @@ public class PatientController {
         return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
     }
 
-    @PatchMapping(path = "/{uuid}")
-    public void editPatient(@PathVariable UUID uuid, @RequestBody EditPatientDTO patient) {
-        patientService.editPatient(uuid, patient);
+    @PatchMapping(path = "/{patientUUID}")
+    public void editPatient(@PathVariable UUID patientUUID, @RequestBody EditPatientDTO patient) {
+        patientService.editPatient(patientUUID, patient);
     }
 
-    @GetMapping(path = "/{uuid}/visits")
-    public List<Visit> getAllVisits(@PathVariable UUID uuid) {
-        return patientService.findAllVisits(uuid);
-    }
-
-    @DeleteMapping(path = "/{uuid}")
-    public void cancelVisit(@PathVariable UUID uuid){
-        visitService.deleteByUuid(uuid);
+    @GetMapping(path = "/{patientUUID}/visits")
+    public List<Visit> getAllVisits(@PathVariable UUID patientUUID) {
+        return patientService.findAllVisits(patientUUID);
     }
 }

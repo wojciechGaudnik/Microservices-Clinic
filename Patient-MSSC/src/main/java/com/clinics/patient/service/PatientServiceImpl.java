@@ -59,13 +59,13 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient findByUuid(UUID UUID) {
-        Optional<Patient> patient = patientRepository.findByPatientUUID(UUID);
+    public Patient findByUuid(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
 
         if(patient.isPresent()){
             return patient.get();
         }else{
-            throw new PatientNotFoundException(UUID);
+            throw new PatientNotFoundException(patientUUID);
         }
     }
 
@@ -75,8 +75,8 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void deleteByUuid(UUID UUID) {
-        patientRepository.deleteByPatientUUID(UUID);
+    public void deleteByUuid(UUID patientUUID) {
+        patientRepository.deleteByPatientUUID(patientUUID);
     }
 
     @Override
@@ -96,13 +96,13 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public List<Visit> findAllVisits(UUID UUID) {
-        Optional<Patient> patient = patientRepository.findByPatientUUID(UUID);
+    public List<Visit> findAllVisits(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
 
         if(patient.isPresent()) {
             return patient.get().getVisits();
         }else{
-            throw new PatientNotFoundException(UUID);
+            throw new PatientNotFoundException(patientUUID);
         }
     }
 }

@@ -8,8 +8,8 @@ import java.util.UUID;
 
 
 public interface VisitService {
-    Visit registerVisit(UUID patientuuid, VisitDTO visitDTO);
-    Visit findByUuid(UUID uuid);
-    void deleteByUuid(UUID uuid);
-    void editVisit(UUID uuid, EditVisitDTO editVisitDTO);
+    Visit registerVisit(UUID patientUUID, VisitDTO visitDTO);
+    Visit findByUuid(UUID visitUUID);
+    void deleteByUuid(UUID visitUUID);
+    void editVisit(UUID visitUUID, EditVisitDTO editVisitDTO);
 }

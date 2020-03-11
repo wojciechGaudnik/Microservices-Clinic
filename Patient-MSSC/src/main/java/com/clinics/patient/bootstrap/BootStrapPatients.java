@@ -32,7 +32,7 @@ public class BootStrapPatients implements CommandLineRunner {
 				.description("Tralala")
 				.doctorUUID(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.status(VisitStatus.NEW)
-				.uuid(UUID.randomUUID())
+				.visitUUID(UUID.randomUUID())
 				.build();
 
 		Patient patient1 = Patient

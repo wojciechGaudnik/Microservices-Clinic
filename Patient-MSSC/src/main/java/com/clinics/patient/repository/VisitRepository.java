@@ -8,8 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface VisitRepository  extends JpaRepository<Visit, Long> {
-    Optional<Visit> findByuuid(UUID uuid);
+    Optional<Visit> findByVisitUUID(UUID uuid);
 
     @Modifying
-    void deleteByuuid(UUID uuid);
+    void deleteByVisitUUID(UUID uuid);
 }

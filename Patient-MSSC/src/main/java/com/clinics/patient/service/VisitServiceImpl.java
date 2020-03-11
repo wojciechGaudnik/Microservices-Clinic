@@ -34,25 +34,25 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     @Transactional
-    public void deleteByUuid(UUID uuid) {
-        Optional<Visit> visit = visitRepository.findByuuid(uuid);
+    public void deleteByUuid(UUID visitUUID) {
+        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
 
         if(visit.isEmpty()){
-            throw new VisitNotFoundException(uuid);
+            throw new VisitNotFoundException(visitUUID);
         }
         if(visit.get().getStatus().equals(VisitStatus.FINISHED)){
-            throw new RemovalOfFinishedVisitException(uuid);
+            throw new RemovalOfFinishedVisitException(visitUUID);
         }else {
-            visitRepository.deleteByuuid(uuid);
+            visitRepository.deleteByVisitUUID(visitUUID);
         }
     }
 
     @Override
-    public void editVisit(UUID uuid, EditVisitDTO editVisitDTO) {
-        Optional<Visit> visit = visitRepository.findByuuid(uuid);
+    public void editVisit(UUID visitUUID, EditVisitDTO editVisitDTO) {
+        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
 
         if(visit.isEmpty()){
-            throw new VisitNotFoundException(uuid);
+            throw new VisitNotFoundException(visitUUID);
         }
 
         visit.ifPresent(theVisit -> {
@@ -81,7 +81,7 @@ public class VisitServiceImpl implements VisitService {
             try{
                 patientClient.registerVisit(visitDTO);
             }catch (Exception e){
-                visitRepository.deleteByuuid(visit.getUuid());
+                visitRepository.deleteByVisitUUID(visit.getVisitUUID());
                 throw e;
             }
         });
@@ -89,13 +89,13 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public Visit findByUuid(UUID uuid) {
-        Optional<Visit> visit = visitRepository.findByuuid(uuid);
+    public Visit findByUuid(UUID visitUUID) {
+        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
 
         if(visit.isPresent()) {
             return visit.get();
         }else{
-            throw new VisitNotFoundException(uuid);
+            throw new VisitNotFoundException(visitUUID);
         }
     }
 }

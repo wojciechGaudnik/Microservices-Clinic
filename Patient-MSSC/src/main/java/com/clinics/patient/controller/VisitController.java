@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @JsonDeserialize(using = LocalDateDeserializer.class)
-@RequestMapping(value = "/patients/{uuid}/visit")
+@RequestMapping(value = "/patients/{patientUUID}/visit")
 public class VisitController {
     final private VisitService visitService;
 
@@ -24,8 +24,8 @@ public class VisitController {
     }
 
     @PostMapping
-    public ResponseEntity<Visit> registerVisit(@PathVariable UUID uuid, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
-        return ResponseEntity.status(201).body(visitService.registerVisit(uuid, visitDTO));
+    public ResponseEntity<Visit> registerVisit(@PathVariable UUID patientUUID, @RequestBody VisitDTO visitDTO, HttpServletRequest request){
+        return ResponseEntity.status(201).body(visitService.registerVisit(patientUUID, visitDTO));
     }
 
     @GetMapping(value = "/{visitUUID}")

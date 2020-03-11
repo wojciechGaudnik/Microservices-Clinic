@@ -14,9 +14,9 @@ import java.util.UUID;
 public interface PatientService {
     PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request);
     List<Patient> findAll();
-    Patient findByUuid(UUID UUID);
+    Patient findByUuid(UUID patientUUID);
     Optional<Patient> findById(Long ID);
-    void deleteByUuid(UUID UUID);
+    void deleteByUuid(UUID patientUUID);
     void editPatient(UUID patientUUID, EditPatientDTO patient);
-    List<Visit> findAllVisits(UUID UUID);
+    List<Visit> findAllVisits(UUID patientUUID);
 }
