@@ -41,7 +41,7 @@ public class PatientServiceImpl implements PatientService{
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
         String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getPatientUUID());
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+        httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
         HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
         try {
             ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);

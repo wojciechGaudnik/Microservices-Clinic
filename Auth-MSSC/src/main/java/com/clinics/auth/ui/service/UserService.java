@@ -96,7 +96,7 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 	}
 
 	public UserUUIDAndROLE getUUIDAndRole(HttpServletRequest request) {
-		String token = request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER).replace(TOKEN_PREFIX, "");
+		String token = request.getHeader(JwtProperties.AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, "");
 		Claims claims = Jwts.parser()
 				.setSigningKey(TOKEN_SECRET)
 				.parseClaimsJws(token)
