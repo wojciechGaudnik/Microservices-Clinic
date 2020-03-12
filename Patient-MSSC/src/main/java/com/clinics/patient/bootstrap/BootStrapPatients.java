@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -16,11 +17,9 @@ import java.util.*;
 public class BootStrapPatients implements CommandLineRunner {
 
 	private final PatientRepository patientRepository;
-	private final VisitRepository visitRepository;
 
-	public BootStrapPatients(PatientRepository patientRepository, VisitRepository visitRepository) {
+	public BootStrapPatients(PatientRepository patientRepository) {
 		this.patientRepository = patientRepository;
-		this.visitRepository = visitRepository;
 	}
 
 	@Override
@@ -28,7 +27,7 @@ public class BootStrapPatients implements CommandLineRunner {
 
 		Visit visit1 = Visit
 				.builder()
-				.date(new Date())
+				.date(LocalDateTime.now())
 				.description("Tralala")
 				.doctorUUID(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
 				.status(VisitStatus.NEW)

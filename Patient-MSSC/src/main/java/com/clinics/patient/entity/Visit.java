@@ -1,8 +1,9 @@
 package com.clinics.patient.entity;
 
 import com.clinics.common.patient.VisitStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -10,7 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -30,9 +30,8 @@ public class Visit {
     @Column(updatable = false, nullable = false)
     private UUID visitUUID = UUID.randomUUID();
 
-    //TODO na localDateTime
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime date;
 
     @Column(updatable = false, nullable = false)
     private UUID doctorUUID;
