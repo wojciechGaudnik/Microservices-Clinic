@@ -12,7 +12,6 @@ import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm"
 import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 import {Form} from "react-bootstrap";
 import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
-import {keys} from "@material-ui/core/styles/createBreakpoints";
 
 
 export const FormForInputUserInformation = (props) => {
@@ -29,6 +28,7 @@ export const FormForInputUserInformation = (props) => {
         submitButtonTitle
     } = props;
 
+    const [submitButtonAvailable, setSubmitButtonAvailable] = useState(false);
     const [validation, setValidation] = useState(true);
     const [registerAs, setRegisterAs] = useState(role);
     const [userInformation, setUserInformation] = useFormFields({
@@ -72,22 +72,36 @@ export const FormForInputUserInformation = (props) => {
         showPhotoURLForm,]);
 
     useEffect(() => {
-        setValidation(submitButtonTitle !== "Log In")
+        setValidation(submitButtonTitle !== "Log In");
+        if (submitButtonTitle === "Edit"){
+            setIsCorrectInputFromEachForms({
+                emailForm:      true,
+                firstNameForm:  true,
+                lastNameForm:   true,
+                licenceForm:    true,
+                passwordForm:   true,
+                peselForm:      true,
+                photoURLForm:   true,
+            })
+        }
     }, [submitButtonTitle]);
 
-    const setIsCorrectInputInForms = (isInputCorrectObject) => {
-        console.log(isInputCorrectObject);
-        setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject}); console.log("Works")};
 
-    const checkCorrectInputInAllFormsForButtonAvailable = () => {
-        console.log(isCorrectInputInEachForms);
-        for (const isCorrectInput in isCorrectInputInEachForms){
-            if (isCorrectInputInEachForms[isCorrectInput] === false){
-                return false;
+    useEffect(() => {
+        const checkCorrectInputInAllFormsForButtonAvailable = () => {
+            for (const isCorrectInput in isCorrectInputInEachForms){
+                if (isCorrectInputInEachForms[isCorrectInput] === false){
+                    return false;
+                }
             }
-        }
-        return true;
-    };
+            return true;
+        };
+
+        setSubmitButtonAvailable(() => checkCorrectInputInAllFormsForButtonAvailable())
+    }, [isCorrectInputInEachForms]);
+
+    const setIsCorrectInputInForms = (isInputCorrectObject) => {
+        setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject}); console.log("Works")};
 
     const handleChange = (event) => {
         setUserInformation(event);
@@ -120,7 +134,7 @@ export const FormForInputUserInformation = (props) => {
             <Button variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={!checkCorrectInputInAllFormsForButtonAvailable() && validation}
+                    disabled={!submitButtonAvailable && validation}
                     disableElevation
             >
                 {submitButtonTitle}
