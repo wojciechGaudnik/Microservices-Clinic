@@ -30,17 +30,6 @@ public class BeanFactory implements ApplicationContextAware {
 //	}
 
 	@Bean
-	public ModelMapper getModelMapper(){
-		var modelMapper = new ModelMapper();
-		modelMapper
-				.getConfiguration()
-				.setMatchingStrategy(MatchingStrategies.STRICT)
-				.setFieldMatchingEnabled(true)
-				.setSkipNullEnabled(true);
-		return modelMapper;
-	}
-
-	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
@@ -67,5 +56,18 @@ public class BeanFactory implements ApplicationContextAware {
 				objectMapper.setDateFormat(dateFormat);
 			}
 		};
+	}
+
+	@Bean
+	public ModelMapper getModelMapper(){
+		var modelMapper = new ModelMapper();
+		modelMapper
+				.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setSkipNullEnabled(true);
+//				.setFieldMatchingEnabled(true)
+//				.setCollectionsMergeEnabled(true)
+//				.setDeepCopyEnabled(false);
+		return modelMapper;
 	}
 }

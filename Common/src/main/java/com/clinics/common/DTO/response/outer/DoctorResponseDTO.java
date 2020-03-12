@@ -3,6 +3,7 @@ package com.clinics.common.DTO.response.outer;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,9 +18,10 @@ public class DoctorResponseDTO {
 	private String licence;
 
 	private Collection<UUID> calendarsUUID;
-	private Collection<UUID> specializationsUUID;
+//	private Collection<CalendarResponseDTO> calendars;
+	private Collection<SpecializationResponseDTO> specializations;
 
-//	private Collection<UUID> patientsUUIDs; todo get ALL cannot show patients ? however there will be only uuid so ... ?
+	private Collection<UUID> patientsUUIDs; //todo get ALL cannot show patients ? however there will be only uuid so ... ?
 	private Collection<UUID> medicalUnitsUUID;
 
 }

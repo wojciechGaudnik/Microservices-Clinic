@@ -53,13 +53,6 @@ public class Doctor {
 	@Column(unique = true, nullable = false)
 	private String licence;
 
-	@OneToMany(
-			targetEntity= Calendar.class,
-			mappedBy="doctor",
-			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
-			orphanRemoval=true)
-	Collection<Calendar> calendars;
-
 	@JsonIdentityReference
 	@ManyToMany(targetEntity = Specialization.class)
 	@JoinTable(
@@ -68,7 +61,15 @@ public class Doctor {
 			inverseJoinColumns = {@JoinColumn(name = "spacialization_id")})
 	private Collection<Specialization> specializations;
 
-	@JsonIgnore
+	@OneToMany(
+			targetEntity= Calendar.class,
+			mappedBy="doctor",
+			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
+			orphanRemoval=true)
+	private Collection<Calendar> calendars;
+
+
+//	@JsonIgnore
 	@ElementCollection
 	private Collection<UUID> patientsUUID;
 

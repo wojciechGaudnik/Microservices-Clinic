@@ -5,10 +5,12 @@ import com.clinics.common.DTO.request.inner.EditUserDTO;
 import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
+import com.clinics.doctors.ui.model.Calendar;
 import com.clinics.doctors.ui.model.Doctor;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
+import org.modelmapper.*;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-@Transactional
+@Transactional  //todo https://dzone.com/articles/how-does-spring-transactional
 @Slf4j
 @Service
 public class DoctorService {
@@ -42,6 +43,7 @@ public class DoctorService {
 	}
 
 	public List<DoctorResponseDTO> getAll(){
+		modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
 		return doctorRepository
 				.findAll()
 				.stream()
@@ -49,10 +51,10 @@ public class DoctorService {
 				.collect(Collectors.toList());
 	}
 
-	public DoctorResponseDTO getByUUID(UUID UUID) {
+	public DoctorResponseDTO getByUUID(UUID doctorUUID) {
 		return modelMapper
 				.map(doctorRepository
-						.findByDoctorUUID(UUID)
+						.findByDoctorUUID(doctorUUID)
 						.orElseThrow(NoSuchElementException::new), DoctorResponseDTO.class);
 	}
 
@@ -96,6 +98,23 @@ public class DoctorService {
 		String uri = String.format("http://auth/auth/users/%s", uuid);
 		restTemplate.delete(uri);
 		doctorRepository.deleteByDoctorUUID(uuid);
+	}
+
+	private Converter<Doctor, DoctorResponseDTO> getConverterDoctorIntoDTO() {
+		Converter<Doctor, DoctorResponseDTO> converter = new Converter<>() {
+			@Override
+			public DoctorResponseDTO convert(MappingContext<Doctor, DoctorResponseDTO> context) {
+				Collection<Calendar> calendars = context.getSource().getCalendars();
+				context
+						.getDestination()
+						.setCalendarsUUID(calendars
+								.stream()
+								.map(Calendar::getCalendarUUID)
+								.collect(Collectors.toList()));
+				return context.getDestination();
+			}
+		};
+		return converter;
 	}
 
 //	public List<Calendar> getDoctorCalendars(UUID uuid) {

@@ -1,6 +1,8 @@
 package com.clinics.common.DTO.response.outer;
 
 import lombok.*;
+
+import java.util.Collection;
 import java.util.UUID;
 
 @Data
@@ -12,4 +14,5 @@ public class CalendarResponseDTO {
 	private UUID calendarUUID;
 	private String name;
 	private UUID medicalUnitUUID;
+//	private Collection<Appointment>
 }

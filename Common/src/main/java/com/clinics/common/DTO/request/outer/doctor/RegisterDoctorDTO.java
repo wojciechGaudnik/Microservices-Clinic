@@ -15,6 +15,7 @@ public class RegisterDoctorDTO {
 	@NotNull(message = "uuid cannot be null")
 	private UUID doctorUUID;
 
+
 	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
 	private String firstName;
@@ -27,8 +28,9 @@ public class RegisterDoctorDTO {
 	@Size(max = 500, message = "photoUrl length out of range ")
 	private String photoUrl;
 
-	@NotBlank(message = "licence is mandatory")
-	@Size(max = 100, message = "licence length out of range ")
+//	todo @PESEL for test
+//	@NotBlank(message = "licence is mandatory")
+//	@Size(max = 100, message = "licence length out of range ")
 	private String licence;
 }
 
