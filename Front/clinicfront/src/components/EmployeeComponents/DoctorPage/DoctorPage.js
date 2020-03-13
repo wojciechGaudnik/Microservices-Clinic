@@ -36,9 +36,13 @@ export const DoctorPage = (props) => {
     useEffect(() => {
         sendFetchRequestSetUserInformation(
             userDetails.uuid,
-            setUserInformation);
-        setStoreUserInformation(userInformation);
+            setUserInformation,
+            {ifCatchSetErrorInStore: (error) => {setStoreError(error)}}
+            );
+        if(!error.isError){setStoreUserInformation(userInformation)}
     }, [userInformation, setStoreUserInformation, userDetails.uuid]);
+
+    useEffect(() => {console.log(error)}, [error]);
 
     //Fetch requests
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
@@ -52,27 +56,28 @@ export const DoctorPage = (props) => {
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-            {error ? (<ErrorModal/>) : null}
-            <LogOutButton {...props}/>
-            <ContainerForUserInformation
-                {...props}
-                userInformation={userInformation}
-                titleRole={"DOCTOR"}
-                firstName={true}
-                lastName={true}
-                licence={true}
-                calendars={true}
-                specializations={true}
-                medicalUnits={true}
-            />
-                <Grid
-                    style={styleForMainGrid}
-                    container
-                    direction="column"
-                    justify="space-around"
-                    alignItems="stretch"
-                    spacing={3}
-                >
+            {error.isError ? (<ErrorModal/>) : (
+                <div>
+                    <LogOutButton {...props}/>
+                    <ContainerForUserInformation
+                        {...props}
+                        userInformation={userInformation}
+                        titleRole={"DOCTOR"}
+                        firstName={true}
+                        lastName={true}
+                        licence={true}
+                        calendars={true}
+                        specializations={true}
+                        medicalUnits={true}
+                    />
+                    <Grid
+                        style={styleForMainGrid}
+                        container
+                        direction="column"
+                        justify="space-around"
+                        alignItems="stretch"
+                        spacing={3}
+                    >
                     <Grid item>
                         <Button variant="contained" color="primary" disableElevation fullWidth onClick={() => setShowFormForEdit(!showFormForEdit)}>
                             Edit
@@ -104,12 +109,13 @@ export const DoctorPage = (props) => {
                     }
                     <Grid item>
                         <DelAccountBtn
-                            {...props}
-                            fetchRequest={fetchRequestForDelAccountBtn}
+                        {...props}
+                        fetchRequest={fetchRequestForDelAccountBtn}
                         />
                     </Grid>
-
-                </Grid>
+                    </Grid>
+                </div>
+            )}
         </div>
     )
 };

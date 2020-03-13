@@ -19,11 +19,19 @@ export const sendRequestByGivenDetails = (
 
     fetch(url, init)
         .then((response) => {
+            console.log(response);
             if (response.ok){
-                ifCatchSetErrorInStore(false);
+                ifCatchSetErrorInStore({
+                    isError: false,
+                    responseStatus: null
+                });
                 return response.json()
             } else {
-                ifCatchSetErrorInStore(true);
+                console.log("Error");
+                ifCatchSetErrorInStore({
+                    isError: true,
+                    responseStatus: response.status
+                });
             }
         })
         .then((responseJSONData) => {

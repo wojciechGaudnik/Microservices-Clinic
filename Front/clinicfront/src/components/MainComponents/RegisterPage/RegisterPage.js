@@ -64,7 +64,6 @@ export const RegisterPage = (props) => {
     //Main HTML return
     return(
         <Container>
-            {props.error ? (<ErrorModal modalTitle={"Wrong Input"} modalMessage={"Wrong login details"} />) : null}
             <Grid
                 container
                 direction="column"

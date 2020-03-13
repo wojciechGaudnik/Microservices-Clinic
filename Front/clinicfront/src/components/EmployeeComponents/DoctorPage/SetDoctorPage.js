@@ -37,7 +37,7 @@ export const styleForMainGrid = {
 };
 
 //Content for fetch request
-export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction) => {
+export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction, {ifCatchSetErrorInStore}) => {
     const url = URLs.GET_USER_INFORMATION + alreadyLoginUserUuid;
 
     const method = 'GET';
@@ -57,6 +57,7 @@ export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUser
         headers,
         setInStateFunction,
         specialFunction,
+        ifCatchSetErrorInStore
     )
 };
 

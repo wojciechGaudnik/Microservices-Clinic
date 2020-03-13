@@ -15,7 +15,7 @@ export const LoginPage = (props) => {
         role: null
     });
 
-    const { error,setStoreError } = props;
+    const { error, setStoreError } = props;
 
     //Effects after each render
     useEffect(() => {
@@ -27,7 +27,7 @@ export const LoginPage = (props) => {
     //Main HTML return
     return (
         <Container>
-            {error ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
+            {error.isError ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
             <FormForInputUserInformation
                 {...props}
                 fetchRequest        ={(userDetails) => {
