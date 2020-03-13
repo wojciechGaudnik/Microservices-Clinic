@@ -23,7 +23,7 @@ export const sendRequestByGivenDetails = (
             if (response.ok){
                 ifCatchSetErrorInStore({
                     isError: false,
-                    responseStatus: null
+                    responseStatus: response.status
                 });
                 return response.json()
             } else {

@@ -11,6 +11,7 @@ import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
 
 export const LoginPage = (props) => {
     const { error, setStoreError, setStoreUserDetails } = props;
+    const [showWarningMessage, setShowWarningMessage] = useState(error["isError"]);
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
@@ -23,12 +24,16 @@ export const LoginPage = (props) => {
         if (userDetails.role){redirectByRole(userDetails.role, props)}
     }, [userDetails, userDetails.role, props]);
 
+    useEffect(() => {
+        setShowWarningMessage(error["isError"])
+    }, [error["isError"]]);
+
     //Main HTML return
     return (
         <Container>
             <AlertMessage
-                error={error}
-                setStoreError={setStoreError}
+                show={showWarningMessage}
+                onClose={() => {setStoreError(false)}}
                 message="Wrong Login Details"
                 type="error"
             />

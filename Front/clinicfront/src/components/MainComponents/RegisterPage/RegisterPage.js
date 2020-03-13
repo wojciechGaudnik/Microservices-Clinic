@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {sendFetchRequestRegisterNewUser} from "./SetRegisterPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
-import {Alert} from "../../AdditionalComponents/Alert/AlertMessage";
+import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
 
 import {Container, Grid} from "@material-ui/core";
 
@@ -12,9 +12,20 @@ import {RoleForm} from "../../AdditionalComponents/RoleForm/RoleForm";
 
 
 export const RegisterPage = (props) => {
-    const [registerAs, setRegisterAs] = useState("doctor");
+    const { setStoreError, error } = props;
 
-    const { setStoreError } = props;
+    const [registerAs, setRegisterAs] = useState("doctor");
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+    useEffect(() => {
+        console.log(error);
+        if (error.responseStatus === 201){setShowSuccessMessage(true); console.log("workkdskdskds")}
+    }, [error]);
+
+    useEffect(() => {
+        setShowErrorMessage(error["isError"])
+    }, [error["isError"]]);
 
     const whichForm = () => {
         switch (registerAs) {
@@ -64,6 +75,18 @@ export const RegisterPage = (props) => {
     //Main HTML return
     return(
         <Container>
+            <AlertMessage
+                show={showSuccessMessage}
+                onClose={() => setShowSuccessMessage(false)}
+                message="Successful Register"
+                type="success"
+            />
+            <AlertMessage
+                show={showErrorMessage}
+                onClose={() => {setStoreError(false)}}
+                message="Wrong details please use another"
+                type="error"
+            />
             <Grid
                 container
                 direction="column"
