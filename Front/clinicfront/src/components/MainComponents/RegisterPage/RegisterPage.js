@@ -4,7 +4,7 @@ import {sendFetchRequestRegisterNewUser} from "./SetRegisterPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 
-import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
+import {Alert} from "../../AdditionalComponents/Alert/AlertMessage";
 
 import {Container, Grid} from "@material-ui/core";
 

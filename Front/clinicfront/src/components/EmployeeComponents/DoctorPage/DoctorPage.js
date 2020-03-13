@@ -15,7 +15,7 @@ import {
 } from "./SetDoctorPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
-import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
+import Alert from "../../AdditionalComponents/Alert/AlertMessage";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import {ContainerForUserInformation} from "../../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
 import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccountBtn";
@@ -40,9 +40,7 @@ export const DoctorPage = (props) => {
             {ifCatchSetErrorInStore: (error) => {setStoreError(error)}}
             );
         if(!error.isError){setStoreUserInformation(userInformation)}
-    }, [userInformation, setStoreUserInformation, userDetails.uuid]);
-
-    useEffect(() => {console.log(error)}, [error]);
+    }, [setStoreUserInformation, userDetails.uuid]);
 
     //Fetch requests
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
@@ -56,7 +54,7 @@ export const DoctorPage = (props) => {
     //Main HTML return
     return(
         <div style={styleForMainDiv}>
-            {error.isError ? (<ErrorModal/>) : (
+            {error.isError ? (<Alert/>) : (
                 <div>
                     <LogOutButton {...props}/>
                     <ContainerForUserInformation

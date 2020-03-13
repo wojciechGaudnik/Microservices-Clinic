@@ -25,7 +25,8 @@ export const FormForInputUserInformation = (props) => {
         showLicenceForm,
         showPhotoURLForm,
         showPeselForm,
-        submitButtonTitle
+        submitButtonTitle,
+        submitButtonAdditionalActions = () => {}
     } = props;
 
     const [submitButtonAvailable, setSubmitButtonAvailable] = useState(false);
@@ -110,6 +111,7 @@ export const FormForInputUserInformation = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         fetchRequest({...userInformation, role: registerAs});
+        submitButtonAdditionalActions();
     };
 
     return (

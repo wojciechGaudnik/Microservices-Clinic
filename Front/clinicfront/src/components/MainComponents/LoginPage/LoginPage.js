@@ -4,30 +4,34 @@ import {sendFetchRequestIsThereLoginUser, sendFetchRequestLoginUser} from "./Set
 
 import {redirectByRole} from "../../../actions";
 
-import {ErrorModal} from "../../AdditionalComponents/ErrorModal/ErrorModal";
-
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
 import {Container} from "@material-ui/core";
+import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
+
 
 export const LoginPage = (props) => {
+    const { error, setStoreError, setStoreUserDetails } = props;
     const [userDetails, setUserDetails] = useState({
         uuid: null,
         role: null
     });
 
-    const { error, setStoreError } = props;
-
     //Effects after each render
     useEffect(() => {
         if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
-        props.setStoreUserDetails(userDetails);
+        setStoreUserDetails(userDetails);
         if (userDetails.role){redirectByRole(userDetails.role, props)}
     }, [userDetails, userDetails.role, props]);
 
     //Main HTML return
     return (
         <Container>
-            {error.isError ? ( <ErrorModal modalTitle={"Wrong Input"}/> ) : null}
+            <AlertMessage
+                error={error}
+                setStoreError={setStoreError}
+                message="Wrong Login Details"
+                type="error"
+            />
             <FormForInputUserInformation
                 {...props}
                 fetchRequest        ={(userDetails) => {
