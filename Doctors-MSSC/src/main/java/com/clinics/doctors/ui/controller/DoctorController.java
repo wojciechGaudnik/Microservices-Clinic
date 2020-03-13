@@ -36,7 +36,8 @@ public class DoctorController {
 
 
 	@GetMapping(path = "/{doctorUUID}")
-	public ResponseEntity<DoctorResponseDTO> getByUUID(@PathVariable UUID doctorUUID){
+	public ResponseEntity<DoctorResponseDTO> getByUUID(
+			@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(doctorService.getByUUID(doctorUUID));
 	}
 

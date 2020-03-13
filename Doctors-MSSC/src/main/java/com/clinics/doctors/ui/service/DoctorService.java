@@ -11,6 +11,7 @@ import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.*;
 import org.modelmapper.spi.MappingContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -40,10 +41,11 @@ public class DoctorService {
 		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
+		modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
 	}
 
 	public List<DoctorResponseDTO> getAll(){
-		modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
+
 		return doctorRepository
 				.findAll()
 				.stream()
@@ -115,6 +117,14 @@ public class DoctorService {
 			}
 		};
 		return converter;
+	}
+
+	public Doctor getDoctor(UUID doctorUUID) {
+		var optionalDoctor = doctorRepository.findByDoctorUUID(doctorUUID);
+		if (optionalDoctor.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID));
+		}
+		return optionalDoctor.get();
 	}
 
 //	public List<Calendar> getDoctorCalendars(UUID uuid) {

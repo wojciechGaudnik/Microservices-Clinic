@@ -14,5 +14,5 @@ public class CalendarResponseDTO {
 	private UUID calendarUUID;
 	private String name;
 	private UUID medicalUnitUUID;
-//	private Collection<Appointment>
+	private Collection<UUID> appointmentsUUID;
 }

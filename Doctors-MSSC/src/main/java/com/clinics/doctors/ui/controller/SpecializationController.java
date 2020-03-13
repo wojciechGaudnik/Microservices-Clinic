@@ -30,7 +30,8 @@ public class SpecializationController {
 	}
 
 	@GetMapping(value = "/{specializationUUID}")
-	public ResponseEntity<SpecializationResponseDTO> getByUUID(@PathVariable UUID specializationUUID){
+	public ResponseEntity<SpecializationResponseDTO> getByUUID(
+			@PathVariable UUID specializationUUID){
 		return ResponseEntity.ok().body(specializationService.getByUUID(specializationUUID));
 	}
 

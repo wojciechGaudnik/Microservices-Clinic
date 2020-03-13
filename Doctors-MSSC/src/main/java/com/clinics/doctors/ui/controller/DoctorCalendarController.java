@@ -16,18 +16,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping(value = "/doctors/{doctorUUID}/calendars")
-public class CalendarController {
+public class DoctorCalendarController {
 
 	final private CalendarService calendarService;
 
-	public CalendarController(
+	public DoctorCalendarController(
 			CalendarService calendarService){
 		this.calendarService = calendarService;
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CalendarResponseDTO>> getDoctorCalendars(@PathVariable UUID doctorUUID){
+	public ResponseEntity<List<CalendarResponseDTO>> getDoctorCalendars(
+			@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(calendarService.getDoctorCalendars(doctorUUID));
+	}
+
+	@GetMapping(value = "/{calendarUUID}")
+	public ResponseEntity<CalendarResponseDTO> getDoctorCalendar(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID){
+		return ResponseEntity.ok().body(calendarService.getDoctorCalendar(doctorUUID, calendarUUID));
 	}
 
 	@PostMapping

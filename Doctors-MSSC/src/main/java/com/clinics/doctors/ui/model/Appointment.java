@@ -30,12 +30,12 @@ public class Appointment {
 			unique = true)
 	private UUID appointmentUUID;
 
+	private LocalDateTime dateTime;
+	private Duration duration;
+
 	private UUID patientUUID;
 	private String patientFirstName;
 	private String patientSecondName;
-
-	private LocalDateTime dateTime;
-	private Duration duration;
 
 	@JsonIgnore
 	@ManyToOne(

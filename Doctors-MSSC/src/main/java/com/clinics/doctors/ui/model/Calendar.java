@@ -35,7 +35,7 @@ public class Calendar {
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
 
-	private UUID medicalUnit;
+	private UUID medicalUnitUUID;
 
 	@JsonIgnore
 	@ManyToOne(

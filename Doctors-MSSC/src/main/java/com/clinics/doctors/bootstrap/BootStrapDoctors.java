@@ -36,25 +36,27 @@ public class BootStrapDoctors implements CommandLineRunner {
 
 		Specialization specializationPediatric = Specialization
 				.builder()
-				.specializationUUID(UUID.randomUUID())
+				.specializationUUID(UUID.fromString("1b43c197-3d83-4184-ae9c-3471625d062e"))
 				.name("Pediatric Specialization")
 				.build();
 
 		Specialization specializationGP = Specialization
 				.builder()
-				.specializationUUID(UUID.randomUUID())
+				.specializationUUID(UUID.fromString("4386506b-c48c-4daa-864c-0e0a77448f86"))
 				.name("GP Specialization")
 				.build();
 
 		Calendar calendarPediatric = Calendar
 				.builder()
 				.calendarUUID(UUID.fromString("edcec296-2566-412f-9e58-b574562e8891"))
+				.medicalUnitUUID(UUID.fromString("17d25fda-fece-4294-9adb-34037445ca77"))
 				.name("Pediatric Calendar")
 				.build();
 
 		Calendar calendarGP = Calendar
 				.builder()
 				.calendarUUID(UUID.fromString("2d22b701-56e4-4dca-8216-0cec4a06279d"))
+				.medicalUnitUUID(UUID.fromString("17d25fda-fece-4294-9adb-34037445ca77"))
 				.name("GP Calendar")
 				.build();
 
@@ -67,6 +69,7 @@ public class BootStrapDoctors implements CommandLineRunner {
 		Calendar calendarCardiologist = Calendar
 				.builder()
 				.calendarUUID(UUID.fromString("f87a24bb-6e98-4dbf-b674-97e406a43344"))
+				.medicalUnitUUID(UUID.fromString("0b18f17d-098a-404d-a949-4b1ad394d43a"))
 				.name("Cardiologist Calendar")
 				.build();
 
