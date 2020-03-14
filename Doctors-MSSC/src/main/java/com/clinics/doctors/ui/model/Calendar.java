@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,6 +33,7 @@ public class Calendar {
 			unique = true)
 	private UUID calendarUUID;
 
+	@Column(unique = true)
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;

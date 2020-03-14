@@ -18,7 +18,6 @@ public class DoctorResponseDTO {
 	private String licence;
 
 	private Collection<UUID> calendarsUUID;
-//	private Collection<CalendarResponseDTO> calendars;
 	private Collection<SpecializationResponseDTO> specializations;
 
 	private Collection<UUID> patientsUUIDs; //todo get ALL cannot show patients ? however there will be only uuid so ... ?

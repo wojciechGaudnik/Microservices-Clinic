@@ -76,8 +76,9 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.builder()
 				.userUUID(UUID.randomUUID())
 				.email("creepy@creepy.pl")
-				.password(passwordEncoder.encode("666"))
+				.password(passwordEncoder.encode("666999"))
 				.role(Role.SYSTEM_ADMIN)
+				.isEnable(true)
 				.build();
 
 		List<User> userList = Arrays.asList(
