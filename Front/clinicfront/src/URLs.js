@@ -8,3 +8,5 @@ export const URLs = {
     CHANGE_DOCTOR_INFORMATION:  "http://localhost:8762/doctor-mssc/doctors/",
     DELETE_DOCTOR:              "http://localhost:8762/doctor-mssc/doctors/",
 };
+
+export const PATHs = {};

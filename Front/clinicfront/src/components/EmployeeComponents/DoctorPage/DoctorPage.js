@@ -11,14 +11,16 @@ import {
     sendFetchRequestDeleteUser,
     sendFetchRequestSetUserInformation,
     styleForMainDiv,
-    styleForMainGrid
+    styleForMainDivError,
+    styleForMainGrid,
+    styleForBackToLoginPageButton
 } from "./SetDoctorPage";
 
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
-import Alert from "../../AdditionalComponents/Alert/AlertMessage";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import {ContainerForUserInformation} from "../../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
 import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccountBtn";
+import {redirectByRole} from "../../../actions";
 
 
 export const DoctorPage = (props) => {
@@ -51,10 +53,27 @@ export const DoctorPage = (props) => {
         {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
         userDetails.uuid);
 
+    //BackToLoginPageButton
+    const onClickBackToLoginPageButton = () => {
+        setStoreError({isError: false, response: null});
+        redirectByRole(null, props);
+    };
+
     //Main HTML return
-    return(
-        <div style={styleForMainDiv}>
-            {error.isError ? (<Alert/>) : (
+    return(<div>
+        {error.isError ? (
+            <div style={styleForMainDivError}>
+                <Button
+                    style={styleForBackToLoginPageButton}
+                    variant="outlined"
+                    size="large"
+                    onClick={() => onClickBackToLoginPageButton()}
+                >
+                    Back to login site
+                </Button>
+            </div>
+            ) : (
+            <div style={styleForMainDiv}>
                 <div>
                     <LogOutButton {...props}/>
                     <ContainerForUserInformation
@@ -113,7 +132,8 @@ export const DoctorPage = (props) => {
                     </Grid>
                     </Grid>
                 </div>
-            )}
+            </div>
+        )}
         </div>
     )
 };

@@ -3,6 +3,7 @@ import DoctorPage from "./DoctorPage";
 import {setStoreDoctorInformation, setStoreError} from "../../../actions";
 import {sendRequestByGivenDetails} from "../../../actions/fetchRequest";
 import {URLs} from "../../../URLs";
+import error_401 from "../../../images/error_401.jpg"
 
 const getUserDetails = state => ( state.info.userDetails );
 const getUserInformation = state => ( state.info.userInformation );
@@ -27,6 +28,18 @@ export default connect(
 //CSS Stylesheet
 export const styleForMainDiv = {
     margin: '30px',
+    width: '100%'
+};
+
+export const styleForMainDivError = {
+    margin: '0px',
+    textAlign: 'center',
+    width: '100vw',
+    height: '100vh',
+    backgroundImage: `url(${error_401})`,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
 };
 
 export const styleForMainGrid = {
@@ -34,6 +47,11 @@ export const styleForMainGrid = {
     marginRight: '25%',
     marginLeft: '25%',
     width: '50%'
+};
+
+export const styleForBackToLoginPageButton = {
+    marginTop: '10px',
+    border: '2px solid black'
 };
 
 //Content for fetch request
