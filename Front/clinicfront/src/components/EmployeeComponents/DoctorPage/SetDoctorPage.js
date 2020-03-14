@@ -55,7 +55,7 @@ export const styleForBackToLoginPageButton = {
 };
 
 //Content for fetch request
-export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction, {ifCatchSetErrorInStore}) => {
+export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction, setStoreUserInformation, {ifCatchSetErrorInStore}) => {
     const url = URLs.GET_USER_INFORMATION + alreadyLoginUserUuid;
 
     const method = 'GET';
@@ -66,7 +66,7 @@ export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUser
 
     const setInStateFunction = (responseData) => setUserInformationInStateFunction(responseData);
 
-    const specialFunction = null;
+    const specialFunction = (responseData) => setStoreUserInformation(responseData);
 
     sendRequestByGivenDetails(
         url,

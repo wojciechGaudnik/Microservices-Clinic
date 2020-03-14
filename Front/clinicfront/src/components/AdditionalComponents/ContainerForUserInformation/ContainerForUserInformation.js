@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {styleForContainer} from "./Containers/SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
@@ -6,7 +6,8 @@ import {List, ListItemText, Typography,} from "@material-ui/core";
 export const ContainerForUserInformation = (props) => {
 
     const {
-        userInformation,
+        userInformationHasBeenEdit,
+        fetchRequest,
         firstName,
         lastName,
         licence,
@@ -16,6 +17,13 @@ export const ContainerForUserInformation = (props) => {
         pesel,
         titleRole
     } = props;
+
+    const [userInformation, setUserInformation] = useState({});
+
+    //Effects after each render
+    useEffect(() => {
+        fetchRequest(setUserInformation);
+    }, [userInformationHasBeenEdit]);
 
 
     //Main HTML return

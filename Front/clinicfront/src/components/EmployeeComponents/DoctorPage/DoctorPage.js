@@ -25,7 +25,7 @@ import {redirectByRole} from "../../../actions";
 
 export const DoctorPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);
-    const [userInformation, setUserInformation] = useState({});
+    const [userInformationHasBeenEdit, setUserInformationHasBeenEdit] = useState(false);
 
     const {
         userDetails,
@@ -34,17 +34,14 @@ export const DoctorPage = (props) => {
         error,
     } = props;
 
-    //Effects after each render
-    useEffect(() => {
-        sendFetchRequestSetUserInformation(
-            userDetails.uuid,
-            setUserInformation,
-            {ifCatchSetErrorInStore: (error) => {setStoreError(error)}}
-            );
-        if(!error.isError){setStoreUserInformation(userInformation)}
-    }, [setStoreUserInformation, userDetails.uuid]);
-
     //Fetch requests
+    const fetchRequestForContainerForUserInformation = (setUserInformation)    => sendFetchRequestSetUserInformation(
+        userDetails.uuid,
+        setUserInformation,
+        setStoreUserInformation,
+        {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
+        );
+
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
         userDetails.uuid);
 
@@ -78,7 +75,8 @@ export const DoctorPage = (props) => {
                     <LogOutButton {...props}/>
                     <ContainerForUserInformation
                         {...props}
-                        userInformation={userInformation}
+                        fetchRequest={fetchRequestForContainerForUserInformation}
+                        userInformationHasBeenEdit={userInformationHasBeenEdit}
                         titleRole={"DOCTOR"}
                         firstName={true}
                         lastName={true}
@@ -113,6 +111,7 @@ export const DoctorPage = (props) => {
                             <FormForInputUserInformation
                                 {...props}
                                 fetchRequest        ={fetchRequestForFormForInputUserInformation}
+                                submitButtonAdditionalActions = {() => setUserInformationHasBeenEdit(true)}
                                 submitButtonTitle   ="Edit"
                                 showEmailForm       ={true}
                                 showPasswordForm    ={true}
