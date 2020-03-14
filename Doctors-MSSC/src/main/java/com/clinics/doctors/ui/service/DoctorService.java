@@ -11,7 +11,6 @@ import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.*;
 import org.modelmapper.spi.MappingContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -28,20 +27,20 @@ import java.util.stream.Collectors;
 public class DoctorService {
 
 	final private DoctorRepository doctorRepository;
-	final private ModelMapper modelMapper;
 	final private RestTemplate restTemplate;
 	final private Environment environment;
+	private ModelMapper modelMapper;
 
 	public DoctorService(
 			DoctorRepository doctorRepository,
-			ModelMapper modelMapper,
 			RestTemplate restTemplate,
-			Environment environment) {
+			Environment environment,
+			ModelMapper modelMapper) {
 		this.doctorRepository = doctorRepository;
-		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
-		modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
+		this.modelMapper = modelMapper;
+		this.modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
 	}
 
 	public List<DoctorResponseDTO> getAll(){
@@ -61,8 +60,8 @@ public class DoctorService {
 	}
 
 	public DoctorResponseDTO save(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
-		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
-		doctorRepository.save(doctor);
+//		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
+//		doctorRepository.save(doctor);
 
 		String uri = String.format("http://auth/auth/users/%s", registerDoctorDTO.getDoctorUUID());
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -75,8 +74,9 @@ public class DoctorService {
 		} catch (Exception e) {
 			throw new NoSuchElementException("There is no (dev free) such doctor in AUTH");
 		}
-//		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
-//		doctorRepository.save(doctor);
+		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
+		doctorRepository.save(doctor);
+		log.error(String.valueOf(doctor));
 		return modelMapper.map(doctor, DoctorResponseDTO.class);
 	}
 
@@ -107,6 +107,7 @@ public class DoctorService {
 			@Override
 			public DoctorResponseDTO convert(MappingContext<Doctor, DoctorResponseDTO> context) {
 				Collection<Calendar> calendars = context.getSource().getCalendars();
+				if(calendars == null) return context.getDestination();
 				context
 						.getDestination()
 						.setCalendarsUUID(calendars

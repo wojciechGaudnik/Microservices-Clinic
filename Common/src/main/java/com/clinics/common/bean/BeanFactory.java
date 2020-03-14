@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 public class BeanFactory implements ApplicationContextAware {
@@ -58,12 +57,14 @@ public class BeanFactory implements ApplicationContextAware {
 		};
 	}
 
+
 	@Bean
 	public ModelMapper getModelMapper(){
 		var modelMapper = new ModelMapper();
 		modelMapper
 				.getConfiguration()
 				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setFieldMatchingEnabled(true)
 				.setSkipNullEnabled(true);
 //				.setFieldMatchingEnabled(true)
 //				.setCollectionsMergeEnabled(true)

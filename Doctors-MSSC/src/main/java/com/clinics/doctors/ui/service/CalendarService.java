@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -102,6 +103,7 @@ public class CalendarService {
 			@Override
 			public CalendarResponseDTO convert(MappingContext<Calendar, CalendarResponseDTO> context) {
 				Collection<Appointment> appointments = context.getSource().getAppointments();
+				if(appointments == null) return context.getDestination();
 				context
 						.getDestination()
 						.setAppointmentsUUID(appointments
