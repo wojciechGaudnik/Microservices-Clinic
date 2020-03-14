@@ -29,10 +29,13 @@ export const DoctorPage = (props) => {
 
     const {
         userDetails,
+        userInformation,
         setStoreUserInformation,
         setStoreError,
         error,
     } = props;
+
+    useEffect(() => {setUserInformationHasBeenEdit(false)}, [userInformation]);
 
     //Fetch requests
     const fetchRequestForContainerForUserInformation = (setUserInformation)    => sendFetchRequestSetUserInformation(

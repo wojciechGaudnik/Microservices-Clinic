@@ -23,6 +23,11 @@ export const ContainerForUserInformation = (props) => {
     //Effects after each render
     useEffect(() => {
         fetchRequest(setUserInformation);
+    }, []);
+
+    useEffect(() => {
+
+        if (userInformationHasBeenEdit){fetchRequest(setUserInformation);console.log("howmanytimes");}
     }, [userInformationHasBeenEdit]);
 
 
