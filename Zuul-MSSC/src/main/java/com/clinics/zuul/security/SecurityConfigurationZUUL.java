@@ -38,8 +38,6 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers("/doctor-mssc/doctors/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
-				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/").hasAnyRole(Role.SYSTEM_ADMIN)
-//				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.SYSTEM_ADMIN) //todo uncomment when all tests done
 				.antMatchers(HttpMethod.DELETE, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.PUT, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.PATCH, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
@@ -56,6 +54,9 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 //				.antMatchers(HttpMethod.GET,"/auth/test/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
+
+				.antMatchers("/**").hasRole(Role.SYSTEM_ADMIN)
+
 				.anyRequest().denyAll();
 //				.anyRequest().permitAll();
 		http
