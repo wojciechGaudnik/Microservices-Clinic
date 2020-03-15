@@ -102,7 +102,7 @@ export const FormForInputUserInformation = (props) => {
     }, [isCorrectInputInEachForms]);
 
     const setIsCorrectInputInForms = (isInputCorrectObject) => {
-        setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject}); console.log("Works")};
+        setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject})};
 
     const handleChange = (event) => {
         setUserInformation(event);

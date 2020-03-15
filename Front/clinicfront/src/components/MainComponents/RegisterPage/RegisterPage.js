@@ -19,13 +19,11 @@ export const RegisterPage = (props) => {
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
     useEffect(() => {
-        console.log(error);
-        if (error.responseStatus === 201){setShowSuccessMessage(true); console.log("workkdskdskds")}
+        if (error.responseStatus === 201){setShowSuccessMessage(true)}
     }, [error]);
 
     useEffect(() => {
         setShowErrorMessage(error["isError"]);
-        console.log("Check 3")
     }, [error.isError, error]);
 
     const whichForm = () => {

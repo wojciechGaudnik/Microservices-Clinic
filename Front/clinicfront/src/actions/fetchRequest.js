@@ -5,7 +5,7 @@ export const sendRequestByGivenDetails = (
     headers,
     setInStateFunction,
     specialFunction,
-    ifCatchSetErrorInStore = (error) => {}
+    ifCatchSetErrorInStore = () => {}
 ) => {
     let init = {
         method: method,
@@ -19,7 +19,6 @@ export const sendRequestByGivenDetails = (
 
     fetch(url, init)
         .then((response) => {
-            console.log(response);
             if (response.ok){
                 ifCatchSetErrorInStore({
                     isError: false,
@@ -27,7 +26,6 @@ export const sendRequestByGivenDetails = (
                 });
                 return response.json()
             } else {
-                console.log("Error");
                 ifCatchSetErrorInStore({
                     isError: true,
                     responseStatus: response.status
