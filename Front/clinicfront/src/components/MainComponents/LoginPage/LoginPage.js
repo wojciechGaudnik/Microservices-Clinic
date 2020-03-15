@@ -19,21 +19,24 @@ export const LoginPage = (props) => {
 
     //Effects after each render
     useEffect(() => {
-        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
         setStoreUserDetails(userDetails);
         if (userDetails.role){redirectByRole(userDetails.role, props)}
-    }, [userDetails, userDetails.role, props]);
+    }, [userDetails.role, userDetails, props, setStoreUserDetails]);
 
     useEffect(() => {
-        setShowWarningMessage(error["isError"])
-    }, [error["isError"]]);
+        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})};
+    }, [userDetails.role]);
+
+    useEffect(() => {
+        setShowWarningMessage(error["isError"]);
+    }, [error.isError, error]);
 
     //Main HTML return
     return (
         <Container>
             <AlertMessage
                 show={showWarningMessage}
-                onClose={() => {setStoreError(false)}}
+                onClose={() => {setStoreError({isError: false, responseStatus: null})}}
                 message="Wrong Login Details"
                 type="error"
             />

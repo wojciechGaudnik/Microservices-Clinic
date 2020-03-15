@@ -21,13 +21,16 @@ export const ContainerForUserInformation = (props) => {
     const [userInformation, setUserInformation] = useState({});
 
     //Effects after each render
+    //Here we have loop
     useEffect(() => {
         fetchRequest(setUserInformation);
+        console.log("check 1")
     }, []);
 
+    //Here we have loop
     useEffect(() => {
-
-        if (userInformationHasBeenEdit){fetchRequest(setUserInformation);console.log("howmanytimes");}
+        if (userInformationHasBeenEdit){fetchRequest(setUserInformation);}
+        console.log("check 2")
     }, [userInformationHasBeenEdit]);
 
 

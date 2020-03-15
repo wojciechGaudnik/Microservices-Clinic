@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Fade, Snackbar} from "@material-ui/core";
+import React from "react";
+import {Snackbar} from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 
 export default function AlertMessage(props) {

@@ -24,8 +24,9 @@ export const RegisterPage = (props) => {
     }, [error]);
 
     useEffect(() => {
-        setShowErrorMessage(error["isError"])
-    }, [error["isError"]]);
+        setShowErrorMessage(error["isError"]);
+        console.log("Check 3")
+    }, [error.isError, error]);
 
     const whichForm = () => {
         switch (registerAs) {
@@ -83,7 +84,7 @@ export const RegisterPage = (props) => {
             />
             <AlertMessage
                 show={showErrorMessage}
-                onClose={() => {setStoreError(false)}}
+                onClose={() => setStoreError({isError: false, responseStatus: null})}
                 message="Wrong details please use another"
                 type="error"
             />
