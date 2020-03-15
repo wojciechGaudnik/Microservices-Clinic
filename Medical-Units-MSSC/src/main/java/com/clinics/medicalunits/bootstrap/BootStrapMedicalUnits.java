@@ -26,6 +26,10 @@ public class BootStrapMedicalUnits implements CommandLineRunner {
 				.medicalUnitUUID(UUID.fromString("17d25fda-fece-4294-9adb-34037445ca77"))
 				.name("Medical Unit Clinic")
 				.address("ul. zbożowa 55/55 44-333 Żytowo")
+				.doctorsUUID(Arrays.asList(
+						UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"),
+						UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d")
+				))
 				.build();
 
 		var medicalUnit2 = MedicalUnit

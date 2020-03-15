@@ -9,10 +9,12 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-public class MedicalUnitResponseDTO {
-	private UUID medicalUnitUUID;
-	private String name;
-	private String address;
+public class PatientResponseDTO { //todo patientRegisterResponse <---> the same as this ?
+	private UUID patientUUID;
+	private String firstName;
+	private String lastName;
+	private String photoUrl;
+	private String pesel;
 
-	private Collection<UUID> doctorsUUID;
+	private Collection<UUID> visits;
 }

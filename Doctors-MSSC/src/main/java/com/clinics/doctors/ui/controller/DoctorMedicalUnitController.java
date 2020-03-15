@@ -1,15 +1,13 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.medicalUnit.AddMedicalUnitUUID_DTO;
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
-import com.clinics.doctors.ui.service.DoctorMedicalUnitsService;
+import com.clinics.doctors.ui.service.DoctorMedicalUnitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,11 +17,11 @@ import java.util.UUID;
 public class DoctorMedicalUnitController {
 
 
-	final private DoctorMedicalUnitsService doctorMedicalUnitsService;
+	final private DoctorMedicalUnitService doctorMedicalUnitService;
 
 	public DoctorMedicalUnitController(
-			DoctorMedicalUnitsService doctorMedicalUnitsService) {
-		this.doctorMedicalUnitsService = doctorMedicalUnitsService;
+			DoctorMedicalUnitService doctorMedicalUnitService) {
+		this.doctorMedicalUnitService = doctorMedicalUnitService;
 	}
 
 	//todo 1) doctor return only UUID   front--->   doctor-mssc--->     response UUID--->       front--->  medical-unit-mssc--->  front
@@ -32,7 +30,7 @@ public class DoctorMedicalUnitController {
 
 	@GetMapping
 	public ResponseEntity<List<MedicalUnitResponseDTO>> getDoctorsMedicalUnits(@PathVariable UUID doctorUUID){
-		return ResponseEntity.ok().body(doctorMedicalUnitsService.getAll(doctorUUID));
+		return ResponseEntity.ok().body(doctorMedicalUnitService.getAll(doctorUUID));
 	}
 
 	@GetMapping(value = "/{medicalUnitUUID}")
@@ -40,21 +38,21 @@ public class DoctorMedicalUnitController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID medicalUnitUUID
 	){
-		return ResponseEntity.ok().body(doctorMedicalUnitsService.get(doctorUUID, medicalUnitUUID));
+		return ResponseEntity.ok().body(doctorMedicalUnitService.get(doctorUUID, medicalUnitUUID));
 	}
 
-	@PostMapping
+	@PostMapping(value = "/{medicalUnitUUID}")
 	public ResponseEntity<MedicalUnitResponseDTO> add(
-			@Valid @RequestBody AddMedicalUnitUUID_DTO addMedicalUnitUUIDDTO,
+			@PathVariable UUID medicalUnitUUID,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(doctorMedicalUnitsService.save(addMedicalUnitUUIDDTO, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(doctorMedicalUnitService.save(medicalUnitUUID, doctorUUID));
 	}
 
 	@DeleteMapping(value = "/{medicalUnitUUID}")
 	public ResponseEntity<Void> del(
 			@PathVariable UUID medicalUnitUUID,
 			@PathVariable UUID doctorUUID) {
-		doctorMedicalUnitsService.delete(doctorUUID, medicalUnitUUID);
+		doctorMedicalUnitService.delete(doctorUUID, medicalUnitUUID);
 		return ResponseEntity.ok().build();
 	}
 }

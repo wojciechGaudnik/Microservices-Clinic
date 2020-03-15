@@ -96,6 +96,9 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.medicalUnitsUUID(Arrays.asList(
 						UUID.fromString("17d25fda-fece-4294-9adb-34037445ca77"),
 						UUID.fromString("2d43f0c5-3338-46fc-8a44-9e50e20c256d")))
+				.patientsUUID(Arrays.asList(
+						UUID.fromString("11f0f891-b243-4547-803b-605f72b11b11")
+				))
 				.build();
 		Doctor doctor2 = Doctor
 				.builder()

@@ -29,9 +29,9 @@ public class MedicalUnitService {
 			RestTemplate restTemplate,
 			Environment environment) {
 		this.medicalUnitRepository = medicalUnitRepository;
-		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
+		this.modelMapper = modelMapper;
 	}
 
 	public List<MedicalUnitResponseDTO> getAll() {
@@ -39,6 +39,7 @@ public class MedicalUnitService {
 		for (var one :medicalUnitRepository.findAll()) {
 			medicalUnitResponseDTOList.add(modelMapper.map(one, MedicalUnitResponseDTO.class));
 		}
+
 		return medicalUnitResponseDTOList;
 	}
 
