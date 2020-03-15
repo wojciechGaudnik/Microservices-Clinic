@@ -7,8 +7,6 @@ import PatientPage from "./EmployeeComponents/PatientPage/SetPatientPage";
 import {AssistantPage} from "./EmployeeComponents/AssistantPage/AssistantPage";
 import {MainPage} from "./MainComponents/MainPage/MainPage";
 
-//TODO:Sprawdzanie już zalogowanego użytkownika
-
 const App = () => (
     <BrowserRouter>
         <div className="App">

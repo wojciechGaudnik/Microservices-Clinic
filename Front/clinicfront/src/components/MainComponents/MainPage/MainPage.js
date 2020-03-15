@@ -3,7 +3,6 @@ import Tabs from "@material-ui/core/Tabs";
 import React, {useState} from "react";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import * as PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 import LoginPage from "../LoginPage/SetLoginPage";
 import RegisterPage from "../RegisterPage/SetRegisterPage";
@@ -24,12 +23,6 @@ function TabPanel(props) {
         </Typography>
     );
 }
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
 
 export const MainPage = (props) => {
     const [value, setValue] = useState(0);

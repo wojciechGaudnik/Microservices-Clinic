@@ -8,9 +8,5 @@ export const styleForContainer = {
     borderRadius: '7px',
 };
 
-export const styleForList = {
-
-};
-
 
 
