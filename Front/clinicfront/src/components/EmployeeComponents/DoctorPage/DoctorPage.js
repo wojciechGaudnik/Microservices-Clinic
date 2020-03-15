@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {
     Button,
@@ -38,12 +38,12 @@ export const DoctorPage = (props) => {
     useEffect(() => {setUserInformationHasBeenEdit(false)}, [userInformation]);
 
     //Fetch requests
-    const fetchRequestForContainerForUserInformation = (setUserInformation)    => sendFetchRequestSetUserInformation(
+    const fetchRequestForContainerForUserInformation = useCallback((setUserInformation)    => sendFetchRequestSetUserInformation(
         userDetails.uuid,
         setUserInformation,
         setStoreUserInformation,
         {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
-        );
+        ), [userDetails.uuid, setStoreUserInformation, setStoreError]);
 
     const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
         userDetails.uuid);

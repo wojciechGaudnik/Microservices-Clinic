@@ -24,14 +24,12 @@ export const ContainerForUserInformation = (props) => {
     //Here we have loop
     useEffect(() => {
         fetchRequest(setUserInformation);
-        console.log("check 1")
-    }, []);
+    }, [fetchRequest]);
 
     //Here we have loop
     useEffect(() => {
         if (userInformationHasBeenEdit){fetchRequest(setUserInformation);}
-        console.log("check 2")
-    }, [userInformationHasBeenEdit]);
+    }, [userInformationHasBeenEdit, fetchRequest]);
 
 
     //Main HTML return
