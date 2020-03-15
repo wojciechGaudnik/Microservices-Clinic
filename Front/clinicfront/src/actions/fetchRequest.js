@@ -42,5 +42,5 @@ export const sendRequestByGivenDetails = (
                 specialFunction(responseJSONData);
             }
         })
-        .catch(err => console.log(err.message))
+        .catch(() => console.log("Something goes wrong"))
 };
