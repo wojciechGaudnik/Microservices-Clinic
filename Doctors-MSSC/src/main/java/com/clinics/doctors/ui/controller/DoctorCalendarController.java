@@ -45,6 +45,14 @@ public class DoctorCalendarController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(addEditCalendarDTO, doctorUUID));
 	}
 
+	@PostMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
+	public ResponseEntity<CalendarResponseDTO> addMedicalUniteIntoCalendar(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID,
+			@PathVariable UUID medicalUniteUUID) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(doctorUUID, calendarUUID, medicalUniteUUID));
+	}
+
 	@PatchMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> edit(
 			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,

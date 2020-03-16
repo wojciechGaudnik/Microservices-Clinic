@@ -1,19 +1,15 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
-import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.common.DTO.response.outer.PatientResponseDTO;
-import com.clinics.doctors.ui.service.DoctorMedicalUnitService;
 import com.clinics.doctors.ui.service.DoctorPatientService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller

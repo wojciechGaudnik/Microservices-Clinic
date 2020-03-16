@@ -128,7 +128,7 @@ public class DoctorService {
 		return optionalDoctor.get();
 	}
 
-//	public List<Calendar> getDoctorCalendars(UUID uuid) {
+	//	public List<Calendar> getDoctorCalendars(UUID uuid) {
 //		return calendarRepository.getAllByDoctor_Doctoruuid(uuid);
 //	}
 }

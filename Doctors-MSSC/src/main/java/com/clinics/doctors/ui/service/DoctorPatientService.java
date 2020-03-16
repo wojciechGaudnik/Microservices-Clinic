@@ -43,9 +43,6 @@ public class DoctorPatientService {
 				.noneMatch(uuid -> uuid.equals(patientUUID))) {
 			throw new NoSuchElementException("Doctor doesn't have such patient");
 		}
-//		try{
-//
-//		} catch ()
 		return getPatientResponseDTO(patientUUID);
 	}
 

@@ -42,9 +42,6 @@ public class MedicalUnitController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(medicalUnitService.save(registerMedicalUnitDTO));
 	}
 
-
-
-
 	@GetMapping(path = "/test")
 	public ResponseEntity<String> getDefault(){
 		return ResponseEntity.ok().body("{\"message\":\"Hello world from medical unit\"}");

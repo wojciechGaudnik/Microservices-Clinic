@@ -14,5 +14,5 @@ public class MedicalUnitResponseDTO {
 	private String name;
 	private String address;
 
-	private Collection<UUID> doctorsUUID;
+//	private Collection<UUID> doctorsUUID;
 }

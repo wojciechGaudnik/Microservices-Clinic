@@ -24,10 +24,6 @@ public class DoctorMedicalUnitController {
 		this.doctorMedicalUnitService = doctorMedicalUnitService;
 	}
 
-	//todo 1) doctor return only UUID   front--->   doctor-mssc--->     response UUID--->       front--->  medical-unit-mssc--->  front
-	//todo 2) doctor return All         front--->   doctor-mssc--->     medical-unit-mssc--->   doctor---> front
-	//todo 1) + crossing zuul
-
 	@GetMapping
 	public ResponseEntity<List<MedicalUnitResponseDTO>> getDoctorsMedicalUnits(@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(doctorMedicalUnitService.getAll(doctorUUID));

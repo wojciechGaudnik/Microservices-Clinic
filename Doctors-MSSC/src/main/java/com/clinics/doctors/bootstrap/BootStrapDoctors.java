@@ -120,32 +120,30 @@ public class BootStrapDoctors implements CommandLineRunner {
 		Appointment appointment1 = Appointment
 				.builder()
 				.appointmentUUID(UUID.randomUUID())
-				.dateTime(LocalDateTime.now())
+				.localDateTime(LocalDateTime.now())
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment2 = Appointment
 				.builder()
 				.appointmentUUID(UUID.randomUUID())
-				.dateTime(LocalDateTime.now().plusMinutes(60))
+				.localDateTime(LocalDateTime.now().plusMinutes(60))
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment3 = Appointment
 				.builder()
 				.appointmentUUID(UUID.randomUUID())
-				.dateTime(LocalDateTime.now().plusMinutes(120))
+				.localDateTime(LocalDateTime.now().plusMinutes(120))
 				.duration(Duration.ofMinutes(60))
 				.build();
 
 		Appointment appointment4 = Appointment
 				.builder()
 				.appointmentUUID(UUID.randomUUID())
-				.dateTime(LocalDateTime.now().plusMinutes(180))
+				.localDateTime(LocalDateTime.now().plusMinutes(180))
 				.duration(Duration.ofMinutes(60))
 				.build();
-
-
 
 
 		calendarGP.setDoctor(doctor1);

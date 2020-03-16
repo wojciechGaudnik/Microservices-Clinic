@@ -14,4 +14,7 @@ public interface SpecializationRepository extends JpaRepository<Specialization, 
 
 	Optional<Specialization> findBySpecializationUUID(UUID specializationUUID);
 	List<Specialization> findAllByDoctors(Doctor doctor);
+	Boolean existsByName(String name);
+	Boolean existsBySpecializationUUID(UUID specializationUUID);
+	Specialization findByName(String name);
 }

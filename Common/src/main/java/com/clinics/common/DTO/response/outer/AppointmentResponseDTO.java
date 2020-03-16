@@ -14,7 +14,7 @@ public class AppointmentResponseDTO {
 
 	private UUID appointmentUUID;
 
-	private LocalDateTime dateTime;
+	private LocalDateTime localDateTime;
 	private Duration duration;
 
 	private UUID patientUUID;

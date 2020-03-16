@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.time.DurationMax;
+import org.hibernate.validator.constraints.time.DurationMin;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -30,7 +32,11 @@ public class Appointment {
 			unique = true)
 	private UUID appointmentUUID;
 
-	private LocalDateTime dateTime;
+	@Column(unique = true)
+	private LocalDateTime localDateTime;
+
+	@DurationMax(minutes = 60)
+	@DurationMin(minutes = 10)
 	private Duration duration;
 
 	private UUID patientUUID;

@@ -15,5 +15,5 @@ public interface MedicalUnitRepository extends JpaRepository<MedicalUnit, Long> 
 	@Query("SELECT m FROM medical_unit m")
 	List<MedicalUnit> getAll();
 	Optional<MedicalUnit> findByMedicalUnitUUID(UUID medicalUnitUUID);
-	Optional<MedicalUnit> findByDoctorsUUID(UUID doctorsUUID);
+//	Optional<MedicalUnit> findByDoctorsUUID(UUID doctorsUUID);
 }

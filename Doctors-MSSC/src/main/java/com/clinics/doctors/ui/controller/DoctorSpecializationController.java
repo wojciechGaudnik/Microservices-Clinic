@@ -42,13 +42,20 @@ public class DoctorSpecializationController {
 		return ResponseEntity.ok().body(specializationService.getDoctorSpecialization(doctorUUID, specializationUUID));
 	}
 
-//	@PostMapping
-//	public ResponseEntity<SpecializationResponseDTO> add(
-//			@Valid @RequestBody AddEditSpecializationDTO addEditSpecializationDTO,
-//			@PathVariable UUID doctorUUID) {
-//		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(addEditSpecializationDTO, doctorUUID));
-//	}
-//
+	@PostMapping
+	public ResponseEntity<SpecializationResponseDTO> add(
+			@Valid @RequestBody AddEditSpecializationDTO addEditSpecializationDTO,
+			@PathVariable UUID doctorUUID) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(addEditSpecializationDTO, doctorUUID));
+	}
+
+	@PostMapping(value = "/{specializationUUID}")
+	public ResponseEntity<SpecializationResponseDTO> add(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID specializationUUID) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(doctorUUID, specializationUUID));
+	}
+
 //	@PatchMapping(value = "/{specializationUUID}")
 //	public ResponseEntity<Void> edit(
 //			@Valid @RequestBody AddEditSpecializationDTO addEditCalendarDTO,

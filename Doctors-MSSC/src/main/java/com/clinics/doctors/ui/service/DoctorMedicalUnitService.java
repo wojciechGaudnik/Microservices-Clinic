@@ -1,7 +1,6 @@
 package com.clinics.doctors.ui.service;
 
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
-import com.clinics.doctors.ui.model.Doctor;
 import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -70,7 +69,7 @@ public class DoctorMedicalUnitService {
 		doctorRepository.save(doctor);
 	}
 
-	private MedicalUnitResponseDTO getMedicalUnitResponseDTO(UUID medicalUnitUUID) {
+	public MedicalUnitResponseDTO getMedicalUnitResponseDTO(UUID medicalUnitUUID) {
 		var medicalUnit = restTemplate
 				.getForObject("http://medical-units-mssc/medical-units/" + medicalUnitUUID,
 						MedicalUnitResponseDTO.class);
@@ -78,4 +77,16 @@ public class DoctorMedicalUnitService {
 			throw new NoSuchElementException("No such medical unit");
 		return medicalUnit;
 	}
+
+//	private MedicalUnitResponseDTO getHandleMedicalUnitResponseDTO(UUID medicalUniteUUID) {
+//		MedicalUnitResponseDTO medicalUnitResponseDTO = null;
+//		try {
+//			medicalUnitResponseDTO = getMedicalUnitResponseDTO(medicalUniteUUID);
+//		} catch (HttpClientErrorException e) {
+//			var doctors = doctorRepository.findAllByMedicalUnitsUUID(medicalUniteUUID);
+//			doctors.forEach(doctor -> doctor.getMedicalUnitsUUID().remove(medicalUniteUUID));
+//			doctorRepository.saveAll(doctors);
+//		}
+//		return medicalUnitResponseDTO;
+//	}
 }

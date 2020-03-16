@@ -2,17 +2,13 @@ package com.clinics.doctors.ui.service;
 
 import com.clinics.common.DTO.request.outer.doctor.AddEditCalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
-import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.doctors.ui.model.Appointment;
 import com.clinics.doctors.ui.model.Calendar;
-import com.clinics.doctors.ui.model.Doctor;
 import com.clinics.doctors.ui.repositorie.CalendarRepository;
-import com.clinics.doctors.ui.repositorie.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +24,7 @@ public class CalendarService {
 
 	final private CalendarRepository calendarRepository;
 	final private DoctorService doctorService;
+	final private DoctorMedicalUnitService doctorMedicalUnitService;
 	final private ModelMapper modelMapper;
 	final private RestTemplate restTemplate;
 	final private Environment environment;
@@ -35,11 +32,13 @@ public class CalendarService {
 	public CalendarService(
 			CalendarRepository calendarRepository,
 			DoctorService doctorService,
+			DoctorMedicalUnitService doctorMedicalUnitService,
 			RestTemplate restTemplate,
 			Environment environment,
 			ModelMapper modelMapper) {
 		this.calendarRepository = calendarRepository;
 		this.doctorService = doctorService;
+		this.doctorMedicalUnitService = doctorMedicalUnitService;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
 		this.modelMapper = modelMapper;
@@ -67,6 +66,18 @@ public class CalendarService {
 		Calendar calendar = modelMapper.map(addEditCalendarDTO, Calendar.class);
 		calendar.setCalendarUUID(UUID.randomUUID());
 		calendar.setDoctor(doctor);
+		calendarRepository.save(calendar);
+		return modelMapper.map(calendar, CalendarResponseDTO.class);
+	}
+
+	public CalendarResponseDTO save(UUID doctorUUID, UUID calendarUUID, UUID medicalUniteUUID) {
+		doctorService.getDoctor(doctorUUID);
+		doctorMedicalUnitService.getMedicalUnitResponseDTO(medicalUniteUUID);
+		var calendar = getCalendar(calendarUUID);
+		if (calendar.getMedicalUnitUUID() != null) {
+			throw new NoSuchElementException("Calendar already assigned to medicalUnite");
+		}
+		calendar.setMedicalUnitUUID(medicalUniteUUID);
 		calendarRepository.save(calendar);
 		return modelMapper.map(calendar, CalendarResponseDTO.class);
 	}
