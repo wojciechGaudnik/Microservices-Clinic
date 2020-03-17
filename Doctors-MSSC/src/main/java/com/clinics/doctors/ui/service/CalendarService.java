@@ -84,7 +84,7 @@ public class CalendarService {
 
 
 	public void edit(AddEditCalendarDTO addEditCalendarDTO, UUID calendarUUID) {
-		Optional<Calendar> optionalCalendar = calendarRepository.getCalendarByCalendarUUID(calendarUUID);
+		var optionalCalendar = calendarRepository.getCalendarByCalendarUUID(calendarUUID);
 		if (optionalCalendar.isEmpty()) {
 			throw new NoSuchElementException(String.format("No such calendar in system %s", calendarUUID ));
 		}
@@ -94,7 +94,22 @@ public class CalendarService {
 	}
 
 	public void delete(UUID calendarUUID) {
-		calendarRepository.deleteByCalendarUUID(calendarUUID);
+		var calendar = getCalendar(calendarUUID);
+		calendarRepository.delete(calendar);
+	}
+
+	public void delete(UUID doctorUUID, UUID calendarUUID, UUID medicalUniteUUID) {
+		var doctor = doctorService.getDoctor(doctorUUID);
+		var optionalCalendar = doctor.getCalendars().stream().filter(c -> c.getCalendarUUID().equals(calendarUUID)).findFirst();
+		if (optionalCalendar.isEmpty()) {
+			throw new NoSuchElementException(String.format("Doctor doesn't have such calendar %s", calendarUUID ));
+		}
+		var calendar = optionalCalendar.get();
+		if (optionalCalendar.get().getMedicalUnitUUID() == null) {
+			throw new NoSuchElementException("Calendar isn't assigned to medicalUnite");
+		}
+		calendar.setMedicalUnitUUID(null);
+		calendarRepository.save(calendar);
 	}
 
 	private CalendarResponseDTO get(UUID calendarUUID) {

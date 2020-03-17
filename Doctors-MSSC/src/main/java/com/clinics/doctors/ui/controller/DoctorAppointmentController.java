@@ -35,7 +35,7 @@ public class DoctorAppointmentController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID){
-		return ResponseEntity.ok().body(appointmentService.getAllAppointment(doctorUUID, calendarUUID, appointmentUUID));
+		return ResponseEntity.ok().body(appointmentService.getAppointment(doctorUUID, calendarUUID, appointmentUUID));
 	}
 
 	@PostMapping
@@ -52,6 +52,15 @@ public class DoctorAppointmentController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
 		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.save(doctorUUID, calendarUUID, addEditAppointmentDTO));
+	}
+
+	@DeleteMapping(value = "{appointmentUUID}")
+	public ResponseEntity<Void> delete(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID,
+			@PathVariable UUID appointmentUUID){
+		appointmentService.delete(doctorUUID, calendarUUID, appointmentUUID);
+		return ResponseEntity.ok().build();
 	}
 
 }

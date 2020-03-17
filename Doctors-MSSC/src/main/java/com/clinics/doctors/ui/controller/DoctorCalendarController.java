@@ -67,4 +67,13 @@ public class DoctorCalendarController {
 		calendarService.delete(calendarUUID);
 		return ResponseEntity.ok().build();
 	}
+
+	@DeleteMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
+	public ResponseEntity<CalendarResponseDTO> deleteMedicalUniteFromCalendar(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID,
+			@PathVariable UUID medicalUniteUUID) {
+		calendarService.delete(doctorUUID, calendarUUID, medicalUniteUUID);
+		return ResponseEntity.ok().build();
+	}
 }

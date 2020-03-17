@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(toBuilder = true)
-@ToString
+@ToString(exclude = "calendar")
 @DynamicInsert
 @DynamicUpdate
 @Entity(name = "appointment")
@@ -45,8 +45,8 @@ public class Appointment {
 
 	@JsonIgnore
 	@ManyToOne(
-			targetEntity= Calendar.class,
-			fetch = FetchType.LAZY)
+			targetEntity = Calendar.class,
+			fetch= FetchType.LAZY)
 	@JoinColumn(name="calendar_id")
 	private Calendar calendar;
 }

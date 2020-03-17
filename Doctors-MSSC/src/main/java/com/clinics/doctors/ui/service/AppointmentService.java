@@ -8,12 +8,15 @@ import com.clinics.doctors.ui.repositorie.RepositoryAppointment;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Transactional
@@ -50,7 +53,7 @@ public class AppointmentService {
 
 	}
 
-	public AppointmentResponseDTO getAllAppointment(UUID doctorUUID, UUID calendarUUID, UUID appointmentUUID) {
+	public AppointmentResponseDTO getAppointment(UUID doctorUUID, UUID calendarUUID, UUID appointmentUUID) {
 		var optionalAppointmentResponseDTO = getAllAppointments(doctorUUID, calendarUUID)
 				.stream()
 				.filter(appointmentResponseDTO -> appointmentResponseDTO.getAppointmentUUID().equals(appointmentUUID))
@@ -63,7 +66,7 @@ public class AppointmentService {
 
 	public AppointmentResponseDTO save(UUID doctorUUID, UUID calendarUUID, AddEditAppointmentDTO addEditAppointmentDTO) {
 		var doctor = doctorService.getDoctor(doctorUUID);
-		if (doctor.getCalendars().stream().noneMatch(calendar -> calendar.getCalendarUUID().equals(calendarUUID))) {
+		if (doctor.getCalendars().stream().noneMatch(calendar -> calendar.getCalendarUUID().equals(calendarUUID))) {//todo bajzel !!! calendarService.GetCallendar !!!
 			throw new NoSuchElementException("Doctor doesn't have such calendar");
 		}
 		Calendar calendar = calendarService.getCalendar(calendarUUID);
@@ -87,5 +90,18 @@ public class AppointmentService {
 				.stream()
 				.map(addEditAppointmentDTO -> save(doctorUUID, calendarUUID, addEditAppointmentDTO))
 				.collect(Collectors.toList());
+	}
+
+	public void delete(UUID doctorUUID, UUID calendarUUID, UUID appointmentUUID) {
+		var doctor = doctorService.getDoctor(doctorUUID);
+		var calendar = doctor.getCalendars().stream().filter(c -> c.getCalendarUUID().equals(calendarUUID)).findFirst();
+		if (calendar.isEmpty()) {
+			throw new NoSuchElementException("Doctor doesn't have such calendar");
+		}
+		var appointment = calendar.get().getAppointments().stream().filter(a -> a.getAppointmentUUID().equals(appointmentUUID)).findFirst();
+		if (appointment.isEmpty()) {
+			throw new NoSuchElementException("Calendar doesn't have such appointment");
+		}
+		appointmentRepository.delete(appointment.get());
 	}
 }

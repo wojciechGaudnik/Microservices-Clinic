@@ -64,7 +64,8 @@ public class Doctor {
 	@OneToMany(
 			targetEntity= Calendar.class,
 			mappedBy="doctor",
-			cascade={CascadeType.ALL}, fetch = FetchType.LAZY,
+			cascade={CascadeType.REMOVE},
+			fetch = FetchType.LAZY,
 			orphanRemoval=true)
 	private Collection<Calendar> calendars;
 

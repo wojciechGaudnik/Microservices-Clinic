@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -50,7 +48,7 @@ public class Calendar {
 	@OneToMany(
 			targetEntity=Appointment.class,
 			mappedBy="calendar",
-			cascade={CascadeType.ALL},
+			cascade={CascadeType.REMOVE},
 			fetch = FetchType.LAZY,
 			orphanRemoval=true)
 	private Collection<Appointment> appointments;

@@ -64,10 +64,11 @@ public class DoctorSpecializationController {
 //		return ResponseEntity.ok().build();
 //	}
 //
-//	@DeleteMapping(value = "/{specializationUUID}")
-//	public ResponseEntity<Void> del(
-//			@PathVariable UUID specializationUUID) {
-//		specializationService.delete(specializationUUID);
-//		return ResponseEntity.ok().build();
-//	}
+	@DeleteMapping(value = "/{specializationUUID}")
+	public ResponseEntity<Void> del(
+			@PathVariable UUID specializationUUID,
+			@PathVariable UUID doctorUUID) {
+		specializationService.delete(specializationUUID, doctorUUID);
+		return ResponseEntity.ok().build();
+	}
 }

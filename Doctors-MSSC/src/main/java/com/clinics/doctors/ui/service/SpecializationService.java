@@ -106,8 +106,16 @@ public class SpecializationService {
 
 	}
 
-	public void delete(UUID specializationUUID) {
+	public void delete(UUID specializationUUID, UUID doctorUUID) {
+		var doctor = doctorService.getDoctor(doctorUUID);
+		var specialization = getSpecialization(specializationUUID);
+		doctor.getSpecializations().remove(specialization);
+	}
 
+	public void delete(UUID specializationUUID) {
+		var specialization = getSpecialization(specializationUUID);
+		log.error(String.valueOf(specialization));
+		specializationRepository.delete(specialization);
 	}
 
 	public List<SpecializationResponseDTO> getDoctorSpecializations(UUID doctorUUID) {
@@ -121,7 +129,7 @@ public class SpecializationService {
 	public SpecializationResponseDTO getDoctorSpecialization(UUID doctorUUID, UUID specializationUUID) {
 		var doctor = doctorService.getDoctor(doctorUUID);
 		if (doctor.getSpecializations().stream().noneMatch(specialization -> specialization.getSpecializationUUID().equals(specializationUUID))) {
-			throw new NoSuchElementException(String.format("No such specialization in system %s", specializationUUID ));
+			throw new NoSuchElementException(String.format("Doctor doesn't have such specialization %s", specializationUUID ));
 		}
 		var specialization = getSpecialization(specializationUUID);
 		return modelMapper.map(specialization, SpecializationResponseDTO.class);

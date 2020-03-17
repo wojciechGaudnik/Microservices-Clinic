@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/specialization")
+@RequestMapping(value = "/specializations")
 public class SpecializationController {
 
 	final private SpecializationService specializationService;
