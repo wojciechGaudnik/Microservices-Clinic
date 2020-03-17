@@ -48,13 +48,23 @@ public class DoctorAppointmentController {
 
 	@PostMapping(value = "/multiple")
 	public ResponseEntity<List<AppointmentResponseDTO>> addList(
-			@Valid @RequestBody List<AddEditAppointmentDTO> addEditAppointmentDTO,
+			@Valid @RequestBody List<AddEditAppointmentDTO> addEditAppointmentsDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.save(doctorUUID, calendarUUID, addEditAppointmentDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.save(doctorUUID, calendarUUID, addEditAppointmentsDTO));
 	}
 
-	@DeleteMapping(value = "{appointmentUUID}")
+	@PatchMapping(value = "/{appointmentUUID}")
+	public ResponseEntity<Void> edit(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID,
+			@PathVariable UUID appointmentUUID,
+			@Valid @RequestBody AddEditAppointmentDTO addEditAppointmentDTO){
+		appointmentService.edit(doctorUUID, calendarUUID, appointmentUUID, addEditAppointmentDTO);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(value = "/{appointmentUUID}")
 	public ResponseEntity<Void> delete(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,

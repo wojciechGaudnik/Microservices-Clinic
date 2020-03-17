@@ -104,4 +104,23 @@ public class AppointmentService {
 		}
 		appointmentRepository.delete(appointment.get());
 	}
+
+	public AppointmentResponseDTO edit(UUID doctorUUID, UUID calendarUUID, UUID appointmentUUID, AddEditAppointmentDTO addEditAppointmentDTO) {
+		var doctor = doctorService.getDoctor(doctorUUID);
+		Optional<Calendar> optionalCalendar = doctor.getCalendars().stream().filter(c -> c.getCalendarUUID().equals(calendarUUID)).findFirst();
+		if (optionalCalendar.isEmpty()) {
+			throw new NoSuchElementException("Doctor doesn't have such calendar");
+		}
+
+		Optional<Appointment> optionalAppointment = optionalCalendar.get().getAppointments().stream().filter(a -> a.getAppointmentUUID().equals(appointmentUUID)).findFirst();
+
+		if (optionalAppointment.isEmpty()) {
+			throw new NoSuchElementException("Calendar doesn't have such appointment");
+		}
+		var appointment = optionalAppointment.get();
+		modelMapper.map(addEditAppointmentDTO, appointment);
+		log.error(String.valueOf(appointment));
+		appointmentRepository.save(appointment);
+		return modelMapper.map(appointment, AppointmentResponseDTO.class);
+	}
 }
