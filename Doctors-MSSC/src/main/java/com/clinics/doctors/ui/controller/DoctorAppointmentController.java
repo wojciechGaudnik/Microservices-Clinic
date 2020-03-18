@@ -24,7 +24,7 @@ public class DoctorAppointmentController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<AppointmentResponseDTO>> getCalendarAppointments(
+	public ResponseEntity<List<AppointmentResponseDTO>> getAllCalendarAppointments(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
 		return ResponseEntity.ok().body(appointmentService.getAllAppointments(doctorUUID, calendarUUID));
@@ -39,7 +39,7 @@ public class DoctorAppointmentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<AppointmentResponseDTO> add(
+	public ResponseEntity<AppointmentResponseDTO> addAppointmentIntoCalendar(
 			@Valid @RequestBody AddEditAppointmentDTO addEditAppointmentDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
@@ -47,7 +47,7 @@ public class DoctorAppointmentController {
 	}
 
 	@PostMapping(value = "/multiple")
-	public ResponseEntity<List<AppointmentResponseDTO>> addList(
+	public ResponseEntity<List<AppointmentResponseDTO>> addListAppointmentsIntoCalendar(
 			@Valid @RequestBody List<AddEditAppointmentDTO> addEditAppointmentsDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
@@ -55,7 +55,7 @@ public class DoctorAppointmentController {
 	}
 
 	@PatchMapping(value = "/{appointmentUUID}")
-	public ResponseEntity<Void> edit(
+	public ResponseEntity<Void> editCalendarAppointment(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID,
@@ -65,7 +65,7 @@ public class DoctorAppointmentController {
 	}
 
 	@DeleteMapping(value = "/{appointmentUUID}")
-	public ResponseEntity<Void> delete(
+	public ResponseEntity<Void> deleteCalendarAppointment(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID){

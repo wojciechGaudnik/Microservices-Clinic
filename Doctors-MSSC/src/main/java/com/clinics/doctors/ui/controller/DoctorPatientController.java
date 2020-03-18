@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors/{doctorUUID}/patients")
 public class DoctorPatientController {
@@ -23,12 +21,12 @@ public class DoctorPatientController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PatientResponseDTO>> getDoctorsPatients(@PathVariable UUID doctorUUID){
+	public ResponseEntity<List<PatientResponseDTO>> getAllDoctorPatients(@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(doctorPatientService.getAll(doctorUUID));
 	}
 
 	@GetMapping(value = "/{patientUUID}")
-	public ResponseEntity<PatientResponseDTO> getDoctorsMedicalUnit(
+	public ResponseEntity<PatientResponseDTO> getDoctorPatient(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID patientUUID
 	){
@@ -36,14 +34,14 @@ public class DoctorPatientController {
 	}
 
 	@PostMapping(value = "/{patientUUID}")
-	public ResponseEntity<PatientResponseDTO> add(
+	public ResponseEntity<PatientResponseDTO> addPatientIntoDoctor(
 			@PathVariable UUID patientUUID,
 			@PathVariable UUID doctorUUID) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(doctorPatientService.save(patientUUID, doctorUUID));
 	}
 
 	@DeleteMapping(value = "/{patientUUID}")
-	public ResponseEntity<Void> del(
+	public ResponseEntity<Void> removePatientFromDoctor(
 			@PathVariable UUID patientUUID,
 			@PathVariable UUID doctorUUID) {
 		doctorPatientService.delete(doctorUUID, patientUUID);

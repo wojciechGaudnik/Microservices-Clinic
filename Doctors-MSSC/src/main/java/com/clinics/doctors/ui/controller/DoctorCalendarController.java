@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors/{doctorUUID}/calendars")
 public class DoctorCalendarController {
@@ -26,7 +24,7 @@ public class DoctorCalendarController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CalendarResponseDTO>> getDoctorCalendars(
+	public ResponseEntity<List<CalendarResponseDTO>> getALLDoctorCalendars(
 			@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(calendarService.getDoctorCalendars(doctorUUID));
 	}
@@ -39,10 +37,25 @@ public class DoctorCalendarController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CalendarResponseDTO> add(
+	public ResponseEntity<CalendarResponseDTO> addCalendarIntoDoctor(
 			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
 			@PathVariable UUID doctorUUID) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(addEditCalendarDTO, doctorUUID));
+	}
+
+	@PatchMapping(value = "/{calendarUUID}")
+	public ResponseEntity<Void> editDoctorCalendar(
+			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
+			@PathVariable UUID calendarUUID) {
+		calendarService.edit(addEditCalendarDTO, calendarUUID);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(value = "/{calendarUUID}")
+	public ResponseEntity<Void> deleteDoctorCalendar(
+			@PathVariable UUID calendarUUID) {
+		calendarService.delete(calendarUUID);
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
@@ -59,29 +72,6 @@ public class DoctorCalendarController {
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
 		calendarService.editCalendarMedicalUnite(doctorUUID, calendarUUID, medicalUniteUUID);
-		return ResponseEntity.ok().build();
-	}
-
-	@PatchMapping(value = "/{calendarUUID}")
-	public ResponseEntity<Void> edit(
-			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
-			@PathVariable UUID calendarUUID) {
-		calendarService.edit(addEditCalendarDTO, calendarUUID);
-		return ResponseEntity.ok().build();
-	}
-
-//	@PatchMapping(value = "/{calendarUUID}")
-//	public ResponseEntity<Void> edit(
-//			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
-//			@PathVariable UUID calendarUUID) {
-//		calendarService.edit(addEditCalendarDTO, calendarUUID);
-//		return ResponseEntity.ok().build();
-//	}
-
-	@DeleteMapping(value = "/{calendarUUID}")
-	public ResponseEntity<Void> del(
-			@PathVariable UUID calendarUUID) {
-		calendarService.delete(calendarUUID);
 		return ResponseEntity.ok().build();
 	}
 

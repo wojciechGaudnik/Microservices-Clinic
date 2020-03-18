@@ -2,7 +2,6 @@ package com.clinics.doctors.ui.controller;
 
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
 import com.clinics.doctors.ui.service.DoctorMedicalUnitService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/doctors/{doctorUUID}/medical-units")
 public class DoctorMedicalUnitController {
@@ -25,7 +23,7 @@ public class DoctorMedicalUnitController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<MedicalUnitResponseDTO>> getDoctorsMedicalUnits(@PathVariable UUID doctorUUID){
+	public ResponseEntity<List<MedicalUnitResponseDTO>> getAllDoctorMedicalUnites(@PathVariable UUID doctorUUID){
 		return ResponseEntity.ok().body(doctorMedicalUnitService.getAll(doctorUUID));
 	}
 
@@ -38,14 +36,14 @@ public class DoctorMedicalUnitController {
 	}
 
 	@PostMapping(value = "/{medicalUnitUUID}")
-	public ResponseEntity<MedicalUnitResponseDTO> add(
+	public ResponseEntity<MedicalUnitResponseDTO> addMedicalUniteIntoDoctor(
 			@PathVariable UUID medicalUnitUUID,
 			@PathVariable UUID doctorUUID) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(doctorMedicalUnitService.save(medicalUnitUUID, doctorUUID));
 	}
 
 	@DeleteMapping(value = "/{medicalUnitUUID}")
-	public ResponseEntity<Void> del(
+	public ResponseEntity<Void> removeMedicalUniteFromDoctor(
 			@PathVariable UUID medicalUnitUUID,
 			@PathVariable UUID doctorUUID) {
 		doctorMedicalUnitService.delete(doctorUUID, medicalUnitUUID);
