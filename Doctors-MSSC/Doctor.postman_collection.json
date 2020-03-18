@@ -315,6 +315,52 @@
 			"response": []
 		},
 		{
+			"name": "GetAllSpecializations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GetDefaultDoctorCalendars",
 			"event": [
 				{
@@ -564,7 +610,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllDoctorsMedicalUnite",
+			"name": "GetAllDoctorMedicalUnite",
 			"event": [
 				{
 					"listen": "test",
@@ -591,11 +637,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "{{tokenDefaultUser}}"
+						"value": "{{loginDoctorToken}}"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8762/doctor-mssc/doctors/{{uuidDefaultUser}}/medical-units/2d43f0c5-3338-46fc-8a44-9e50e20c256d",
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/medical-units/2d43f0c5-3338-46fc-8a44-9e50e20c256d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -604,7 +650,7 @@
 					"path": [
 						"doctor-mssc",
 						"doctors",
-						"{{uuidDefaultUser}}",
+						"{{loginDoctorUUID}}",
 						"medical-units",
 						"2d43f0c5-3338-46fc-8a44-9e50e20c256d"
 					]
@@ -724,7 +770,7 @@
 			"response": []
 		},
 		{
-			"name": "AddSpecialization",
+			"name": "AddSpecializationIntoDoctor",
 			"event": [
 				{
 					"listen": "test",
@@ -780,7 +826,7 @@
 			"response": []
 		},
 		{
-			"name": "AddSpecializationExisting",
+			"name": "AddSpecializationExistingDoctor",
 			"event": [
 				{
 					"listen": "test",
@@ -807,15 +853,6 @@
 						"value": "{{loginDoctorToken}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Znachor\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/specializations/{{specializationUUID}}",
 					"protocol": "http",
@@ -835,7 +872,61 @@
 			"response": []
 		},
 		{
-			"name": "AddCalendar",
+			"name": "AddSpecializationIntoSYSTEM",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"specializationSystemUUID\", jsonData.specializationUUID);",
+							"",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Znachor2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddCalendarIntoDoctor",
 			"event": [
 				{
 					"listen": "test",
@@ -896,7 +987,7 @@
 			"response": []
 		},
 		{
-			"name": "AddAppointment",
+			"name": "AddAppointmentIntoDoctorCalendar",
 			"event": [
 				{
 					"listen": "test",
@@ -958,7 +1049,7 @@
 			"response": []
 		},
 		{
-			"name": "AddAppointments",
+			"name": "AddAppointmentsIntoDoctorCalendar",
 			"event": [
 				{
 					"listen": "test",
@@ -1327,6 +1418,113 @@
 			"response": []
 		},
 		{
+			"name": "EditSpecialization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Znachor edited\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations/{{specializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations",
+						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditChangeCalendarMedicalUnite",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/medical-unites/17d25fda-fece-4294-9adb-34037445ca77",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"medical-unites",
+						"17d25fda-fece-4294-9adb-34037445ca77"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "RemoveMedicalUniteFromDoctor",
 			"event": [
 				{
@@ -1620,6 +1818,48 @@
 						"doctor-mssc",
 						"specializations",
 						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveSpecializationSecond",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b9481db-8ad2-4e5c-b8a6-b516381ea740",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations/{{specializationSystemUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations",
+						"{{specializationSystemUUID}}"
 					]
 				}
 			},

@@ -103,18 +103,20 @@ public class SpecializationService {
 
 
 	public void edit(AddEditSpecializationDTO addEditSpecializationDTO, UUID specializationUUID) {
-
+		var specialization = getSpecialization(specializationUUID);
+		modelMapper.map(addEditSpecializationDTO, specialization);
+		specializationRepository.save(specialization);
 	}
 
 	public void delete(UUID specializationUUID, UUID doctorUUID) {
 		var doctor = doctorService.getDoctor(doctorUUID);
 		var specialization = getSpecialization(specializationUUID);
 		doctor.getSpecializations().remove(specialization);
+		doctorRepository.save(doctor);
 	}
 
 	public void delete(UUID specializationUUID) {
 		var specialization = getSpecialization(specializationUUID);
-		log.error(String.valueOf(specialization));
 		specializationRepository.delete(specialization);
 	}
 

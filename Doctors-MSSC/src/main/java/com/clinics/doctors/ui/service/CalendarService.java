@@ -124,6 +124,21 @@ public class CalendarService {
 		return optionalCalendar.get();
 	}
 
+	public void editCalendarMedicalUnite(UUID doctorUUID, UUID calendarUUID, UUID medicalUniteUUID) {
+		var doctor = doctorService.getDoctor(doctorUUID);
+		var optionalCalendar = doctor.getCalendars().stream().filter(c -> c.getCalendarUUID().equals(calendarUUID)).findFirst();
+		if (optionalCalendar.isEmpty()) {
+			throw new NoSuchElementException(String.format("Doctor doesn't have such calendar %s", calendarUUID ));
+		}
+		if (optionalCalendar.get().getMedicalUnitUUID().equals(medicalUniteUUID)) {
+			throw new NoSuchElementException("Calendar is assigned to this medicalUnite");
+		}
+		var calendar = optionalCalendar.get();
+		calendar.setMedicalUnitUUID(medicalUniteUUID);
+		doctorMedicalUnitService.getMedicalUnitResponseDTO(medicalUniteUUID);
+		calendarRepository.save(calendar);
+	}
+
 	private Converter<Calendar, CalendarResponseDTO> getConverterCalendarIntoDTO() {
 		Converter<Calendar, CalendarResponseDTO> converter = new Converter<>() {
 			@Override

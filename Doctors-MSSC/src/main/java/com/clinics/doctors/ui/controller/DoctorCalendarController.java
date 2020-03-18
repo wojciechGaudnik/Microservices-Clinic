@@ -53,6 +53,15 @@ public class DoctorCalendarController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(doctorUUID, calendarUUID, medicalUniteUUID));
 	}
 
+	@PatchMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
+	public ResponseEntity<CalendarResponseDTO> editCalendarMedicalUnite(
+			@PathVariable UUID doctorUUID,
+			@PathVariable UUID calendarUUID,
+			@PathVariable UUID medicalUniteUUID) {
+		calendarService.editCalendarMedicalUnite(doctorUUID, calendarUUID, medicalUniteUUID);
+		return ResponseEntity.ok().build();
+	}
+
 	@PatchMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> edit(
 			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
@@ -60,6 +69,14 @@ public class DoctorCalendarController {
 		calendarService.edit(addEditCalendarDTO, calendarUUID);
 		return ResponseEntity.ok().build();
 	}
+
+//	@PatchMapping(value = "/{calendarUUID}")
+//	public ResponseEntity<Void> edit(
+//			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
+//			@PathVariable UUID calendarUUID) {
+//		calendarService.edit(addEditCalendarDTO, calendarUUID);
+//		return ResponseEntity.ok().build();
+//	}
 
 	@DeleteMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> del(

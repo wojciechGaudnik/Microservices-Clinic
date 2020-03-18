@@ -33,6 +33,7 @@ public class Specialization {
 			unique = true)
 	private UUID specializationUUID;
 
+	@Column(unique = true)
 	@NotBlank(message = "name is mandatory")
 	@Size(min = 2, max = 100, message = "name length out of range")
 	private String name;
