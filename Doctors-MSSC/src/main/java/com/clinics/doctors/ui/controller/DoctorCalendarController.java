@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.doctor.AddEditCalendarDTO;
+import com.clinics.common.DTO.request.outer.doctor.CalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
 import com.clinics.doctors.ui.service.CalendarService;
 import org.springframework.http.HttpStatus;
@@ -26,35 +26,37 @@ public class DoctorCalendarController {
 	@GetMapping
 	public ResponseEntity<List<CalendarResponseDTO>> getALLDoctorCalendars(
 			@PathVariable UUID doctorUUID){
-		return ResponseEntity.ok().body(calendarService.getDoctorCalendars(doctorUUID));
+		return ResponseEntity.ok().body(calendarService.getAllDoctorCalendarsDTO(doctorUUID));
 	}
 
 	@GetMapping(value = "/{calendarUUID}")
 	public ResponseEntity<CalendarResponseDTO> getDoctorCalendar(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.ok().body(calendarService.getDoctorCalendar(doctorUUID, calendarUUID));
+		return ResponseEntity.ok().body(calendarService.getDoctorCalendarDTO(doctorUUID, calendarUUID));
 	}
 
 	@PostMapping
 	public ResponseEntity<CalendarResponseDTO> addCalendarIntoDoctor(
-			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
+			@Valid @RequestBody CalendarDTO calendarDTO,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(addEditCalendarDTO, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarDTO));
 	}
 
 	@PatchMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> editDoctorCalendar(
-			@Valid @RequestBody AddEditCalendarDTO addEditCalendarDTO,
+			@Valid @RequestBody CalendarDTO calendarDTO,
+			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID) {
-		calendarService.edit(addEditCalendarDTO, calendarUUID);
+		calendarService.editCalendar(doctorUUID, calendarUUID, calendarDTO);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(value = "/{calendarUUID}")
 	public ResponseEntity<Void> deleteDoctorCalendar(
+			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID) {
-		calendarService.delete(calendarUUID);
+		calendarService.deleteDoctorCalendar(doctorUUID, calendarUUID);
 		return ResponseEntity.ok().build();
 	}
 
@@ -63,7 +65,7 @@ public class DoctorCalendarController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.save(doctorUUID, calendarUUID, medicalUniteUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarUUID, medicalUniteUUID));
 	}
 
 	@PatchMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
@@ -80,7 +82,7 @@ public class DoctorCalendarController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
-		calendarService.delete(doctorUUID, calendarUUID, medicalUniteUUID);
+		calendarService.removeMedicalUniteFromCalendar(doctorUUID, calendarUUID, medicalUniteUUID);
 		return ResponseEntity.ok().build();
 	}
 }

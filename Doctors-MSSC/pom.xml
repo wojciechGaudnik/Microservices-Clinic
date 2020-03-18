@@ -51,12 +51,6 @@
 			<optional>true</optional>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.codehaus.jackson</groupId>-->
-<!--			<artifactId>jackson-core-asl</artifactId>-->
-<!--			<version>1.9.13</version>-->
-<!--		</dependency>-->
-
 		<!--todo common-->
 		<dependency>
 			<groupId>com.clinics</groupId>
@@ -75,7 +69,7 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency><!---->
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

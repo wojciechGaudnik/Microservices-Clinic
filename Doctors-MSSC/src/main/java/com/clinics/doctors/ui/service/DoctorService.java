@@ -5,10 +5,9 @@ import com.clinics.common.DTO.request.inner.EditUserDTO;
 import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.security.JwtProperties;
-import com.clinics.doctors.ui.model.Calendar;
-import com.clinics.doctors.ui.model.Doctor;
-import com.clinics.doctors.ui.repositorie.DoctorRepository;
-import lombok.extern.slf4j.Slf4j;
+import com.clinics.doctors.data.model.Calendar;
+import com.clinics.doctors.data.model.Doctor;
+import com.clinics.doctors.data.repositorie.DoctorRepository;
 import org.modelmapper.*;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.core.env.Environment;
@@ -22,29 +21,27 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Transactional  //todo https://dzone.com/articles/how-does-spring-transactional
-@Slf4j
 @Service
 public class DoctorService {
 
 	final private DoctorRepository doctorRepository;
+	final private ModelMapper modelMapper;
 	final private RestTemplate restTemplate;
-	final private Environment environment;
-	private ModelMapper modelMapper;
+	final private Environment environment; //todo we will use this after set up config mssc
 
 	public DoctorService(
 			DoctorRepository doctorRepository,
+			ModelMapper modelMapper,
 			RestTemplate restTemplate,
-			Environment environment,
-			ModelMapper modelMapper) {
+			Environment environment) {
 		this.doctorRepository = doctorRepository;
+		this.modelMapper = modelMapper;
 		this.restTemplate = restTemplate;
 		this.environment = environment;
-		this.modelMapper = modelMapper;
 		this.modelMapper.createTypeMap(Doctor.class, DoctorResponseDTO.class).setPostConverter(getConverterDoctorIntoDTO());
 	}
 
-	public List<DoctorResponseDTO> getAll(){
-
+	public List<DoctorResponseDTO> getAllDTO(){
 		return doctorRepository
 				.findAll()
 				.stream()
@@ -52,14 +49,25 @@ public class DoctorService {
 				.collect(Collectors.toList());
 	}
 
-	public DoctorResponseDTO getByUUID(UUID doctorUUID) {
+	public DoctorResponseDTO getDTOByUUID(UUID doctorUUID) {
 		return modelMapper
 				.map(doctorRepository
 						.findByDoctorUUID(doctorUUID)
 						.orElseThrow(NoSuchElementException::new), DoctorResponseDTO.class);
 	}
 
+	public Doctor getByUUID(UUID doctorUUID) {
+		var optionalDoctor = doctorRepository.findByDoctorUUID(doctorUUID);
+		if (optionalDoctor.isEmpty()) {
+			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID));
+		}
+		return optionalDoctor.get();
+	}
+
 	public DoctorResponseDTO save(RegisterDoctorDTO registerDoctorDTO, HttpServletRequest request) {
+		//todo we have decide what way we go, here or set up rabbit or kafka
+		//todo https://dzone.com/articles/synchronous-kafka-using-spring-request-reply-1
+		//todo https://springbootdev.com/2017/11/12/spring-amqp-rabbitmq-topic-exchange-example-part-1-producer-application/
 //		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
 //		doctorRepository.save(doctor);
 
@@ -67,8 +75,6 @@ public class DoctorService {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
 		HttpEntity<String> requestFromDoctor = new HttpEntity<>("Empty Request", httpHeaders);  //todo make this better, Void ?
-
-		//todo make the same way as edit !!!
 		try {
 			ResponseEntity<Void> responseFromAuth = restTemplate.exchange(uri, HttpMethod.PUT, requestFromDoctor, Void.class);  //todo remove conmpletely response from Auth ?
 		} catch (Exception e) {
@@ -76,7 +82,6 @@ public class DoctorService {
 		}
 		var doctor = modelMapper.map(registerDoctorDTO, Doctor.class);
 		doctorRepository.save(doctor);
-		log.error(String.valueOf(doctor));
 		return modelMapper.map(doctor, DoctorResponseDTO.class);
 	}
 
@@ -119,18 +124,6 @@ public class DoctorService {
 		};
 		return converter;
 	}
-
-	public Doctor getDoctor(UUID doctorUUID) {
-		var optionalDoctor = doctorRepository.findByDoctorUUID(doctorUUID);
-		if (optionalDoctor.isEmpty()) {
-			throw new NoSuchElementException(String.format("No such doctor in system %s", doctorUUID));
-		}
-		return optionalDoctor.get();
-	}
-
-	//	public List<Calendar> getDoctorCalendars(UUID uuid) {
-//		return calendarRepository.getAllByDoctor_Doctoruuid(uuid);
-//	}
 }
 
 

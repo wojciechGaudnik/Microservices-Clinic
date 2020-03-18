@@ -4,7 +4,6 @@ import com.clinics.common.DTO.request.outer.doctor.EditDoctorDTO;
 import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.doctors.ui.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,6 @@ public class DoctorController {
 	final DoctorService doctorService;
 	final RestTemplate restTemplate;
 
-	@Autowired
 	public DoctorController(DoctorService doctorService, RestTemplate restTemplate) {
 		this.doctorService = doctorService;
 		this.restTemplate = restTemplate;
@@ -31,14 +29,14 @@ public class DoctorController {
 
 	@GetMapping
 	public ResponseEntity<List<DoctorResponseDTO>> get(){
-		return ResponseEntity.ok().body(doctorService.getAll());
+		return ResponseEntity.ok().body(doctorService.getAllDTO());
 	}
 
 
 	@GetMapping(path = "/{doctorUUID}")
 	public ResponseEntity<DoctorResponseDTO> getByUUID(
 			@PathVariable UUID doctorUUID){
-		return ResponseEntity.ok().body(doctorService.getByUUID(doctorUUID));
+		return ResponseEntity.ok().body(doctorService.getDTOByUUID(doctorUUID));
 	}
 
 	@PostMapping

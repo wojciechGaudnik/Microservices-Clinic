@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.doctor.AddEditSpecializationDTO;
+import com.clinics.common.DTO.request.outer.doctor.SpecializationDTO;
 import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
 import com.clinics.doctors.ui.service.SpecializationService;
 import org.springframework.http.HttpStatus;
@@ -38,9 +38,9 @@ public class DoctorSpecializationController {
 
 	@PostMapping
 	public ResponseEntity<SpecializationResponseDTO> addExistingSpecializationIntoDoctor(
-			@Valid @RequestBody AddEditSpecializationDTO addEditSpecializationDTO,
+			@Valid @RequestBody SpecializationDTO specializationDTO,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(addEditSpecializationDTO, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(specializationDTO, doctorUUID));
 	}
 
 	@PostMapping(value = "/{specializationUUID}")

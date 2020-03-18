@@ -1,6 +1,6 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.doctor.AddEditAppointmentDTO;
+import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.AppointmentResponseDTO;
 import com.clinics.doctors.ui.service.AppointmentService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class DoctorAppointmentController {
 	public ResponseEntity<List<AppointmentResponseDTO>> getAllCalendarAppointments(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.ok().body(appointmentService.getAllAppointments(doctorUUID, calendarUUID));
+		return ResponseEntity.ok().body(appointmentService.getAllDoctorAppointments(doctorUUID, calendarUUID));
 	}
 
 	@GetMapping(value = "/{appointmentUUID}")
@@ -35,23 +35,23 @@ public class DoctorAppointmentController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID){
-		return ResponseEntity.ok().body(appointmentService.getAppointment(doctorUUID, calendarUUID, appointmentUUID));
+		return ResponseEntity.ok().body(appointmentService.getDoctorAppointment(doctorUUID, calendarUUID, appointmentUUID));
 	}
 
 	@PostMapping
 	public ResponseEntity<AppointmentResponseDTO> addAppointmentIntoCalendar(
-			@Valid @RequestBody AddEditAppointmentDTO addEditAppointmentDTO,
+			@Valid @RequestBody AppointmentDTO appointmentDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.save(doctorUUID, calendarUUID, addEditAppointmentDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.saveAppointment(doctorUUID, calendarUUID, appointmentDTO));
 	}
 
 	@PostMapping(value = "/multiple")
 	public ResponseEntity<List<AppointmentResponseDTO>> addListAppointmentsIntoCalendar(
-			@Valid @RequestBody List<AddEditAppointmentDTO> addEditAppointmentsDTO,
+			@Valid @RequestBody List<AppointmentDTO> addEditAppointmentsDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.save(doctorUUID, calendarUUID, addEditAppointmentsDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.saveAppointments(doctorUUID, calendarUUID, addEditAppointmentsDTO));
 	}
 
 	@PatchMapping(value = "/{appointmentUUID}")
@@ -59,8 +59,8 @@ public class DoctorAppointmentController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID,
-			@Valid @RequestBody AddEditAppointmentDTO addEditAppointmentDTO){
-		appointmentService.edit(doctorUUID, calendarUUID, appointmentUUID, addEditAppointmentDTO);
+			@Valid @RequestBody AppointmentDTO appointmentDTO){
+		appointmentService.editAppointment(doctorUUID, calendarUUID, appointmentUUID, appointmentDTO);
 		return ResponseEntity.ok().build();
 	}
 
@@ -69,8 +69,7 @@ public class DoctorAppointmentController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID appointmentUUID){
-		appointmentService.delete(doctorUUID, calendarUUID, appointmentUUID);
+		appointmentService.deleteAppointment(doctorUUID, calendarUUID, appointmentUUID);
 		return ResponseEntity.ok().build();
 	}
-
 }

@@ -2,8 +2,8 @@ package com.clinics.medicalunits.ui.service;
 
 import com.clinics.common.DTO.request.outer.medicalUnit.RegisterMedicalUnitDTO;
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
-import com.clinics.medicalunits.ui.model.MedicalUnit;
-import com.clinics.medicalunits.ui.repositorie.MedicalUnitRepository;
+import com.clinics.medicalunits.data.model.MedicalUnit;
+import com.clinics.medicalunits.data.repositorie.MedicalUnitRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;

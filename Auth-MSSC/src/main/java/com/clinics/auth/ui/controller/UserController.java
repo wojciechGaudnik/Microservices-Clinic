@@ -51,7 +51,7 @@ public class UserController {
 
 	@PutMapping(path = "/users/{userUUID}")
 	public ResponseEntity<Void> setUserEnable(@PathVariable UUID userUUID) {
-		userService.setUserEnable(userUUID);
+		userService.setUserEnabled(userUUID);
 		return ResponseEntity.ok().build();
 	}
 

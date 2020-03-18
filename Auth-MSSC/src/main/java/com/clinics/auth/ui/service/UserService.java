@@ -1,8 +1,8 @@
 package com.clinics.auth.ui.service;
 
 import com.clinics.auth.configuration.AsyncUserRepositoryAccess;
-import com.clinics.auth.ui.model.User;
-import com.clinics.auth.ui.repositorie.UserRepository;
+import com.clinics.auth.data.model.User;
+import com.clinics.auth.data.repository.UserRepository;
 import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.inner.EditUserDTO;
 import com.clinics.common.DTO.request.outer.user.RegisterUserDTO;
@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
 		userAuth.setUserUUID(UUID.randomUUID());
 		userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
-		userAuth.setEnable(false);
+		userAuth.setEnabled(false);
 		userRepository.save(userAuth);
 		var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
 		String token = makeJwtToken(userAuth);
@@ -80,13 +80,13 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		userRepository.deleteByUserUUID(userUUID);
 	}
 
-	public void setUserEnable(UUID userUUID) {
+	public void setUserEnabled(UUID userUUID) {
 		Optional<User> user = userRepository.findByUserUUID(userUUID);
-		if (user.isEmpty() || user.get().isEnable()) {
+		if (user.isEmpty() || user.get().isEnabled()) {
 			throw new NoSuchElementException("User not found");
 		}
 		var updatedUser = user.get();
-		updatedUser.setEnable(true);
+		updatedUser.setEnabled(true);
         userRepository.save(updatedUser);
 		modelMapper.map(updatedUser, UserResponseDTO.class);
 	}

@@ -1,7 +1,7 @@
 package com.clinics.auth.configuration;
 
-import com.clinics.auth.ui.model.User;
-import com.clinics.auth.ui.repositorie.UserRepository;
+import com.clinics.auth.data.model.User;
+import com.clinics.auth.data.repository.UserRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -34,7 +34,7 @@ public class AsyncUserRepositoryAccess implements Runnable{
 	public void run() {
 		Thread.sleep(5000);  //todo move to environmental variable
 		Optional<User> user = userRepository.findById(userId);
-		if(user.isPresent() && !user.get().isEnable()) {
+		if(user.isPresent() && !user.get().isEnabled()) {
 			userRepository.deleteById(userId);
 		}
 	}

@@ -1,9 +1,8 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.doctor.AddEditSpecializationDTO;
+import com.clinics.common.DTO.request.outer.doctor.SpecializationDTO;
 import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
 import com.clinics.doctors.ui.service.SpecializationService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "/specializations")
 public class SpecializationController {
@@ -37,15 +35,15 @@ public class SpecializationController {
 
 	@PostMapping
 	public ResponseEntity<SpecializationResponseDTO> add (
-			@Valid @RequestBody AddEditSpecializationDTO addEditSpecializationDTO){
-		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(addEditSpecializationDTO));
+			@Valid @RequestBody SpecializationDTO specializationDTO){
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(specializationDTO));
 	}
 
 	@PatchMapping(value = "/{specializationUUID}")
 	public ResponseEntity<Void> edit(
-			@Valid @RequestBody AddEditSpecializationDTO addEditSpecializationDTO,
+			@Valid @RequestBody SpecializationDTO specializationDTO,
 			@PathVariable UUID specializationUUID) {
-		specializationService.edit(addEditSpecializationDTO, specializationUUID);
+		specializationService.edit(specializationDTO, specializationUUID);
 		return ResponseEntity.ok().build();
 	}
 
@@ -55,6 +53,4 @@ public class SpecializationController {
 		specializationService.delete(specializationUUID);
 		return ResponseEntity.ok().build();
 	}
-
-
 }
