@@ -2,7 +2,7 @@ package com.clinics.doctors.ui.controller;
 
 import com.clinics.common.DTO.request.outer.doctor.SpecializationDTO;
 import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
-import com.clinics.doctors.ui.service.SpecializationService;
+import com.clinics.doctors.ui.service.JPAimpl.SpecializationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,41 +16,41 @@ import java.util.UUID;
 @RequestMapping(value = "/specializations")
 public class SpecializationController {
 
-	final private SpecializationService specializationService;
+	final private SpecializationServiceImpl specializationServiceImpl;
 
-	public SpecializationController(SpecializationService specializationService) {
-		this.specializationService = specializationService;
+	public SpecializationController(SpecializationServiceImpl specializationServiceImpl) {
+		this.specializationServiceImpl = specializationServiceImpl;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<SpecializationResponseDTO>> getAll(){
-		return ResponseEntity.ok().body(specializationService.getAll());
+		return ResponseEntity.ok().body(specializationServiceImpl.getAllSpecializations());
 	}
 
 	@GetMapping(value = "/{specializationUUID}")
 	public ResponseEntity<SpecializationResponseDTO> getByUUID(
 			@PathVariable UUID specializationUUID){
-		return ResponseEntity.ok().body(specializationService.getByUUID(specializationUUID));
+		return ResponseEntity.ok().body(specializationServiceImpl.getSpecializationByUUID(specializationUUID));
 	}
 
 	@PostMapping
 	public ResponseEntity<SpecializationResponseDTO> add (
 			@Valid @RequestBody SpecializationDTO specializationDTO){
-		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(specializationDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationServiceImpl.saveSpecialization(specializationDTO));
 	}
 
 	@PatchMapping(value = "/{specializationUUID}")
 	public ResponseEntity<Void> edit(
 			@Valid @RequestBody SpecializationDTO specializationDTO,
 			@PathVariable UUID specializationUUID) {
-		specializationService.edit(specializationDTO, specializationUUID);
+		specializationServiceImpl.editSpecialization(specializationDTO, specializationUUID);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(value = "/{specializationUUID}")
 	public ResponseEntity<Void> del(
 			@PathVariable UUID specializationUUID) {
-		specializationService.delete(specializationUUID);
+		specializationServiceImpl.deleteSpecialization(specializationUUID);
 		return ResponseEntity.ok().build();
 	}
 }

@@ -1,7 +1,7 @@
 package com.clinics.doctors.ui.client;
 
 import com.clinics.common.DTO.response.outer.PatientResponseDTO;
-import com.clinics.doctors.ui.service.DoctorPatientClient;
+import com.clinics.doctors.ui.service.JPAimpl.DoctorPatientClientImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,15 +14,15 @@ import java.util.UUID;
 @RequestMapping(value = "/doctors/{doctorUUID}/patients")
 public class DoctorPatientController {
 
-	final private DoctorPatientClient doctorPatientClient;
+	final private DoctorPatientClientImpl doctorPatientClientImpl;
 
-	public DoctorPatientController(DoctorPatientClient doctorPatientClient) {
-		this.doctorPatientClient = doctorPatientClient;
+	public DoctorPatientController(DoctorPatientClientImpl doctorPatientClientImpl) {
+		this.doctorPatientClientImpl = doctorPatientClientImpl;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<PatientResponseDTO>> getAllDoctorPatients(@PathVariable UUID doctorUUID){
-		return ResponseEntity.ok().body(doctorPatientClient.getAll(doctorUUID));
+		return ResponseEntity.ok().body(doctorPatientClientImpl.getAll(doctorUUID));
 	}
 
 	@GetMapping(value = "/{patientUUID}")
@@ -30,21 +30,21 @@ public class DoctorPatientController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID patientUUID
 	){
-		return ResponseEntity.ok().body(doctorPatientClient.get(doctorUUID, patientUUID));
+		return ResponseEntity.ok().body(doctorPatientClientImpl.get(doctorUUID, patientUUID));
 	}
 
 	@PostMapping(value = "/{patientUUID}")
 	public ResponseEntity<PatientResponseDTO> addPatientIntoDoctor(
 			@PathVariable UUID patientUUID,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(doctorPatientClient.save(patientUUID, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(doctorPatientClientImpl.save(patientUUID, doctorUUID));
 	}
 
 	@DeleteMapping(value = "/{patientUUID}")
 	public ResponseEntity<Void> removePatientFromDoctor(
 			@PathVariable UUID patientUUID,
 			@PathVariable UUID doctorUUID) {
-		doctorPatientClient.delete(doctorUUID, patientUUID);
+		doctorPatientClientImpl.delete(doctorUUID, patientUUID);
 		return ResponseEntity.ok().build();
 	}
 }

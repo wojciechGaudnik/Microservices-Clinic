@@ -2,7 +2,7 @@ package com.clinics.doctors.ui.controller;
 
 import com.clinics.common.DTO.request.outer.doctor.CalendarDTO;
 import com.clinics.common.DTO.response.outer.CalendarResponseDTO;
-import com.clinics.doctors.ui.service.CalendarService;
+import com.clinics.doctors.ui.service.JPAimpl.CalendarServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,31 +16,31 @@ import java.util.UUID;
 @RequestMapping(value = "/doctors/{doctorUUID}/calendars")
 public class DoctorCalendarController {
 
-	final private CalendarService calendarService;
+	final private CalendarServiceImpl calendarServiceImpl;
 
 	public DoctorCalendarController(
-			CalendarService calendarService){
-		this.calendarService = calendarService;
+			CalendarServiceImpl calendarServiceImpl){
+		this.calendarServiceImpl = calendarServiceImpl;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<CalendarResponseDTO>> getALLDoctorCalendars(
 			@PathVariable UUID doctorUUID){
-		return ResponseEntity.ok().body(calendarService.getAllDoctorCalendarsDTO(doctorUUID));
+		return ResponseEntity.ok().body(calendarServiceImpl.getAllDoctorCalendarsDTO(doctorUUID));
 	}
 
 	@GetMapping(value = "/{calendarUUID}")
 	public ResponseEntity<CalendarResponseDTO> getDoctorCalendar(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID){
-		return ResponseEntity.ok().body(calendarService.getDoctorCalendarDTO(doctorUUID, calendarUUID));
+		return ResponseEntity.ok().body(calendarServiceImpl.getDoctorCalendarDTO(doctorUUID, calendarUUID));
 	}
 
 	@PostMapping
 	public ResponseEntity<CalendarResponseDTO> addCalendarIntoDoctor(
 			@Valid @RequestBody CalendarDTO calendarDTO,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarServiceImpl.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarDTO));
 	}
 
 	@PatchMapping(value = "/{calendarUUID}")
@@ -48,7 +48,7 @@ public class DoctorCalendarController {
 			@Valid @RequestBody CalendarDTO calendarDTO,
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID) {
-		calendarService.editCalendar(doctorUUID, calendarUUID, calendarDTO);
+		calendarServiceImpl.editCalendar(doctorUUID, calendarUUID, calendarDTO);
 		return ResponseEntity.ok().build();
 	}
 
@@ -56,7 +56,7 @@ public class DoctorCalendarController {
 	public ResponseEntity<Void> deleteDoctorCalendar(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID) {
-		calendarService.deleteDoctorCalendar(doctorUUID, calendarUUID);
+		calendarServiceImpl.deleteDoctorCalendar(doctorUUID, calendarUUID);
 		return ResponseEntity.ok().build();
 	}
 
@@ -65,7 +65,7 @@ public class DoctorCalendarController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(calendarService.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarUUID, medicalUniteUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(calendarServiceImpl.saveMedicalUniteIntoDoctorCalendar(doctorUUID, calendarUUID, medicalUniteUUID));
 	}
 
 	@PatchMapping(value = "/{calendarUUID}/medical-unites/{medicalUniteUUID}")
@@ -73,7 +73,7 @@ public class DoctorCalendarController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
-		calendarService.editCalendarMedicalUnite(doctorUUID, calendarUUID, medicalUniteUUID);
+		calendarServiceImpl.editCalendarMedicalUnite(doctorUUID, calendarUUID, medicalUniteUUID);
 		return ResponseEntity.ok().build();
 	}
 
@@ -82,7 +82,7 @@ public class DoctorCalendarController {
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID calendarUUID,
 			@PathVariable UUID medicalUniteUUID) {
-		calendarService.removeMedicalUniteFromCalendar(doctorUUID, calendarUUID, medicalUniteUUID);
+		calendarServiceImpl.removeMedicalUniteFromCalendar(doctorUUID, calendarUUID, medicalUniteUUID);
 		return ResponseEntity.ok().build();
 	}
 }

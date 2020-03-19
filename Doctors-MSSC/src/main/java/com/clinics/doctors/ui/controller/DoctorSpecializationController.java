@@ -2,7 +2,7 @@ package com.clinics.doctors.ui.controller;
 
 import com.clinics.common.DTO.request.outer.doctor.SpecializationDTO;
 import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
-import com.clinics.doctors.ui.service.SpecializationService;
+import com.clinics.doctors.ui.service.JPAimpl.SpecializationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,38 +16,38 @@ import java.util.UUID;
 @RequestMapping(value = "/doctors/{doctorUUID}/specializations")
 public class DoctorSpecializationController {
 
-	final private SpecializationService specializationService;
+	final private SpecializationServiceImpl specializationServiceImpl;
 
 	public DoctorSpecializationController(
-			SpecializationService specializationService) {
-		this.specializationService = specializationService;
+			SpecializationServiceImpl specializationServiceImpl) {
+		this.specializationServiceImpl = specializationServiceImpl;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<SpecializationResponseDTO>> getAllDoctorSpecializations(
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.ok().body(specializationService.getDoctorSpecializations(doctorUUID));
+		return ResponseEntity.ok().body(specializationServiceImpl.getDoctorSpecializations(doctorUUID));
 	}
 
 	@GetMapping(value = "/{specializationUUID}")
 	public ResponseEntity<SpecializationResponseDTO> getDoctorSpecialization(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID specializationUUID) {
-		return ResponseEntity.ok().body(specializationService.getDoctorSpecialization(doctorUUID, specializationUUID));
+		return ResponseEntity.ok().body(specializationServiceImpl.getDoctorSpecialization(doctorUUID, specializationUUID));
 	}
 
 	@PostMapping
 	public ResponseEntity<SpecializationResponseDTO> addExistingSpecializationIntoDoctor(
 			@Valid @RequestBody SpecializationDTO specializationDTO,
 			@PathVariable UUID doctorUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(specializationDTO, doctorUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationServiceImpl.saveSpecializationIntoDoctor(doctorUUID, specializationDTO));
 	}
 
 	@PostMapping(value = "/{specializationUUID}")
 	public ResponseEntity<SpecializationResponseDTO> addExistingSpecializationIntoDoctor(
 			@PathVariable UUID doctorUUID,
 			@PathVariable UUID specializationUUID) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(specializationService.save(doctorUUID, specializationUUID));
+		return ResponseEntity.status(HttpStatus.CREATED).body(specializationServiceImpl.saveExistingSpecializationIntoDoctor(doctorUUID, specializationUUID));
 	}
 
 //	@PatchMapping(value = "/{specializationUUID}")
@@ -63,7 +63,7 @@ public class DoctorSpecializationController {
 	public ResponseEntity<Void> removeSpecializationFromDoctor(
 			@PathVariable UUID specializationUUID,
 			@PathVariable UUID doctorUUID) {
-		specializationService.delete(specializationUUID, doctorUUID);
+		specializationServiceImpl.removeSpecializationFromDoctor(doctorUUID, specializationUUID);
 		return ResponseEntity.ok().build();
 	}
 }

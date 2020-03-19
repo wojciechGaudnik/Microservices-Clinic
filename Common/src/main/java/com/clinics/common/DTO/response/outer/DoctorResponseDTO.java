@@ -3,7 +3,6 @@ package com.clinics.common.DTO.response.outer;
 import lombok.*;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Data
