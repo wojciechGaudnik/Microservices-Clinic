@@ -16,7 +16,7 @@ import {
     styleForBackToLoginPageButton
 } from "./SetDoctorPage";
 
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import {ContainerForUserInformation} from "../../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
 import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccountBtn";

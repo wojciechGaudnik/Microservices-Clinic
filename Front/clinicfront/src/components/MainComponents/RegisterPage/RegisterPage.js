@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {sendFetchRequestRegisterNewUser} from "./SetRegisterPage";
 
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 
 import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
 

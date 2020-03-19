@@ -9,9 +9,9 @@ import {
     styleForSubContainer
 } from "./SetPatientPage";
 
-import {styleForContainer} from "../../AdditionalComponents/ContainerForUserInformation/Containers/SetContainerForUserInfo"
+import {styleForContainer} from "../../AdditionalComponents/ContainerForUserInformation/SetContainerForUserInfo"
 
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 
 export const PatientPage = (props) => {
     const [showFormForEdit, setShowFormForEdit] = useState(false);

@@ -24,6 +24,7 @@ export const sendRequestByGivenDetails = (
                     isError: false,
                     responseStatus: response.status
                 });
+                console.log(response);
                 return response.json()
             } else {
                 ifCatchSetErrorInStore({
@@ -42,5 +43,5 @@ export const sendRequestByGivenDetails = (
                 specialFunction(responseJSONData);
             }
         })
-        .catch(() => console.log("Something goes wrong"))
+        .catch((err) => console.log(err))
 };

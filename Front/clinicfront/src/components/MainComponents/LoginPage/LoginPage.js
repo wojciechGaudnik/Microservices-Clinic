@@ -4,7 +4,7 @@ import {sendFetchRequestIsThereLoginUser, sendFetchRequestLoginUser} from "./Set
 
 import {redirectByRole} from "../../../actions";
 
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUseInfo/FormForInputUserInformation";
+import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 import {Container} from "@material-ui/core";
 import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
 
@@ -20,11 +20,12 @@ export const LoginPage = (props) => {
     //Effects after each render
     useEffect(() => {
         setStoreUserDetails(userDetails);
+        console.log(userDetails);
         if (userDetails.role){redirectByRole(userDetails.role, props)}
     }, [userDetails.role, userDetails, props, setStoreUserDetails]);
 
     useEffect(() => {
-        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})};
+        if (localStorage.token && !userDetails.role){sendFetchRequestIsThereLoginUser({setUserDetails})}
     }, [userDetails.role]);
 
     useEffect(() => {

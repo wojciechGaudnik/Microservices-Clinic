@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {styleForContainer} from "./Containers/SetContainerForUserInfo";
+import {styleForContainer} from "./SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
 
