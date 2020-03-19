@@ -24,7 +24,6 @@ export const sendRequestByGivenDetails = (
                     isError: false,
                     responseStatus: response.status
                 });
-                console.log(response);
                 return response.json()
             } else {
                 ifCatchSetErrorInStore({
