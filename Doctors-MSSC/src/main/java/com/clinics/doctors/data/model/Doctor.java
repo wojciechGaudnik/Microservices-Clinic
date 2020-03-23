@@ -45,6 +45,8 @@ public class Doctor {
 	@Size(min = 3, max = 100, message = "lastName length out of range")
 	private String lastName;
 
+//	private int age;
+
 	@URL
 	@Column(unique = true)
 	@Size(min = 3, max = 500, message = "photoUrl length out of range ")

@@ -5,7 +5,6 @@ import com.clinics.common.DTO.response.outer.SpecializationResponseDTO;
 import com.clinics.doctors.data.model.Specialization;
 import com.clinics.doctors.data.repositorie.DoctorRepository;
 import com.clinics.doctors.data.repositorie.SpecializationRepository;
-import com.clinics.doctors.ui.service.JPAimpl.DoctorServiceImpl;
 import com.clinics.doctors.ui.service.SpecializationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
