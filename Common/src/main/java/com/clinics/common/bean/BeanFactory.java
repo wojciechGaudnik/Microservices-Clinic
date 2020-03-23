@@ -2,6 +2,9 @@ package com.clinics.common.bean;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.BeansException;
@@ -13,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 public class BeanFactory implements ApplicationContextAware {
@@ -30,17 +32,6 @@ public class BeanFactory implements ApplicationContextAware {
 //	}
 
 	@Bean
-	public ModelMapper getModelMapper(){
-		var modelMapper = new ModelMapper();
-		modelMapper
-				.getConfiguration()
-				.setMatchingStrategy(MatchingStrategies.STRICT)
-				.setFieldMatchingEnabled(true)
-				.setSkipNullEnabled(true);
-		return modelMapper;
-	}
-
-	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
@@ -50,8 +41,13 @@ public class BeanFactory implements ApplicationContextAware {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
-		objectMapper.setDateFormat(dateFormat);
+		objectMapper
+				.enable(JsonParser.Feature.ALLOW_COMMENTS)
+				.setDateFormat(dateFormat)
+				.registerModules(
+						new ParameterNamesModule(),
+						new Jdk8Module(),
+						new JavaTimeModule());
 		return objectMapper;
 	}
 
@@ -67,5 +63,20 @@ public class BeanFactory implements ApplicationContextAware {
 				objectMapper.setDateFormat(dateFormat);
 			}
 		};
+	}
+
+
+	@Bean
+	public ModelMapper getModelMapper(){
+		var modelMapper = new ModelMapper();
+		modelMapper
+				.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setFieldMatchingEnabled(true)
+				.setSkipNullEnabled(true);
+//				.setFieldMatchingEnabled(true)
+//				.setCollectionsMergeEnabled(true)
+//				.setDeepCopyEnabled(false);
+		return modelMapper;
 	}
 }

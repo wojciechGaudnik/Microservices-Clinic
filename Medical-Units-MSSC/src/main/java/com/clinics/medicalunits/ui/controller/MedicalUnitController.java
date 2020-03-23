@@ -1,6 +1,6 @@
 package com.clinics.medicalunits.ui.controller;
 
-import com.clinics.common.DTO.request.outer.RegisterMedicalUnitDTO;
+import com.clinics.common.DTO.request.outer.medicalUnit.RegisterMedicalUnitDTO;
 import com.clinics.common.DTO.response.outer.MedicalUnitResponseDTO;
 import com.clinics.medicalunits.ui.service.MedicalUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
-@RequestMapping(value = "/medical-unit")
+@RequestMapping(value = "/medical-units")
 public class MedicalUnitController {
 
 	final MedicalUnitService medicalUnitService;
@@ -27,18 +28,19 @@ public class MedicalUnitController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<MedicalUnitResponseDTO>> getMedicalUnitByUUID(){
+	public ResponseEntity<List<MedicalUnitResponseDTO>> getAllMedicalUnits(){
 		return ResponseEntity.ok().body(medicalUnitService.getAll());
 	}
 
-	@PostMapping
-	public ResponseEntity<Void> add(@Valid @RequestBody RegisterMedicalUnitDTO registerMedicalUnitDTO) {
-		medicalUnitService.save(registerMedicalUnitDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	@GetMapping(path = "/{medicalUnitUUID}")
+	public ResponseEntity<MedicalUnitResponseDTO> getMedicalUnitByUUID(@PathVariable UUID medicalUnitUUID){
+		return ResponseEntity.ok().body(medicalUnitService.getByUUID(medicalUnitUUID));
 	}
 
-
-
+	@PostMapping
+	public ResponseEntity<MedicalUnitResponseDTO> add(@Valid @RequestBody RegisterMedicalUnitDTO registerMedicalUnitDTO) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(medicalUnitService.save(registerMedicalUnitDTO));
+	}
 
 	@GetMapping(path = "/test")
 	public ResponseEntity<String> getDefault(){

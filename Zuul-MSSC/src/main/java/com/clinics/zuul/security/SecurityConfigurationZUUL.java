@@ -35,10 +35,16 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 
+				.antMatchers(HttpMethod.GET,"/doctor-mssc/specializations").hasAnyRole(Role.DOCTOR)
+				.antMatchers(HttpMethod.POST,"/doctor-mssc/specializations").hasAnyRole(Role.DOCTOR)
+				.antMatchers(HttpMethod.PATCH,"/doctor-mssc/specializations").hasAnyRole(Role.SYSTEM_ADMIN)
+				.antMatchers(HttpMethod.DELETE,"/doctor-mssc/specializations").hasAnyRole(Role.SYSTEM_ADMIN)
+				.antMatchers(HttpMethod.GET,"/doctor-mssc/specializations").hasAnyRole(Role.DOCTOR)
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/test/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
+				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/test/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.GET, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers("/doctor-mssc/doctors/{uuid}/**").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
-				.antMatchers(HttpMethod.POST, "/doctor-mssc/doctors/").hasAnyRole(Role.DOCTOR)
 				.antMatchers(HttpMethod.DELETE, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.PUT, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
 				.antMatchers(HttpMethod.PATCH, "/doctor-mssc/doctors/{uuid}").access("@userUUIDChecker.checkUserUUID(authentication, #uuid)")
@@ -57,6 +63,9 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET,"/auth/users/uuidAndRole/").authenticated()
 				.antMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
+
+				.antMatchers("/**").hasRole(Role.SYSTEM_ADMIN)
+
 				.anyRequest().denyAll();
 		http
 				.headers()
