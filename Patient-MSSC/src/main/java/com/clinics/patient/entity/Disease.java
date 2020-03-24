@@ -40,5 +40,5 @@ public class Disease {
             name = "disease_visit",
             joinColumns = {@JoinColumn(name = "disease_id")},
             inverseJoinColumns = {@JoinColumn(name = "visit_id")})
-    private Collection<Visit> visits = new ArrayList<>();;
+    private Collection<Visit> visits = new ArrayList<>();
 }

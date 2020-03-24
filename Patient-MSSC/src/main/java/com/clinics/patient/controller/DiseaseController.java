@@ -5,6 +5,7 @@ import com.clinics.patient.entity.Disease;
 import com.clinics.patient.service.DiseaseService;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,6 @@ public class DiseaseController {
 
     @PostMapping
     public ResponseEntity<Disease> addDisease(@PathVariable UUID visitUUID, HttpServletRequest request, @RequestBody DiseaseDTO diseaseDTO){
-        return ResponseEntity.status(201).body(diseaseService.addDisease(visitUUID, diseaseDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(diseaseService.addDisease(visitUUID, diseaseDTO));
     }
 }
