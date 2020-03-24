@@ -1,11 +1,7 @@
 package com.clinics.auth.configuration;
 
-import com.clinics.auth.ui.model.User;
-import com.clinics.auth.ui.repositorie.UserRepository;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import com.clinics.auth.data.model.User;
+import com.clinics.auth.data.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -21,7 +17,7 @@ public class InactiveUserRemover implements Runnable{
 
 	public void run() {
 		Optional<User> user = userRepository.findById(userId);
-		if(user.isPresent() && !user.get().isEnable()) {
+		if(user.isPresent() && !user.get().isEnabled()) {
 			System.out.println("Removing user of id " + userId);
 			userRepository.deleteById(userId);
 		}

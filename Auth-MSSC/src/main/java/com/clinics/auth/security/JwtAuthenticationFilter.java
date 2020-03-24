@@ -1,7 +1,7 @@
 package com.clinics.auth.security;
 
-import com.clinics.auth.ui.model.User;
-import com.clinics.common.DTO.request.outer.LoginUserDTO;
+import com.clinics.auth.data.model.User;
+import com.clinics.common.DTO.request.outer.user.LoginUserDTO;
 import com.clinics.common.DTO.response.outer.UserResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "auth.unfinished.registration.removal.timeout.millis",
+      "type": "java.lang.String",
+      "description": "Description for auth.unfinished.registration.removal.timeout.millis."
+    }
+  ]
+}

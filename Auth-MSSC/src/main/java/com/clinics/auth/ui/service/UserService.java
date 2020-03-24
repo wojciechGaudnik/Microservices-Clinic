@@ -1,11 +1,11 @@
 package com.clinics.auth.ui.service;
 
+import com.clinics.auth.data.model.User;
+import com.clinics.auth.data.repository.UserRepository;
 import com.clinics.auth.configuration.InactiveUserRemover;
-import com.clinics.auth.ui.model.User;
-import com.clinics.auth.ui.repositorie.UserRepository;
 import com.clinics.auth.security.JwtMaker;
 import com.clinics.common.DTO.request.inner.EditUserDTO;
-import com.clinics.common.DTO.request.outer.RegisterUserDTO;
+import com.clinics.common.DTO.request.outer.user.RegisterUserDTO;
 import com.clinics.common.DTO.response.outer.UserResponseDTO;
 import com.clinics.common.DTO.response.outer.UserUUIDAndROLE;
 import com.clinics.common.security.JwtProperties;
@@ -53,11 +53,11 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		return this.userRepository.findByEmail(email).orElseThrow();
 	}
 
-	public UserResponseDTO saveUser(RegisterUserDTO registerUserDTO) {
+	public UserResponseDTO save(RegisterUserDTO registerUserDTO) {
 		var userAuth = modelMapper.map(registerUserDTO, User.class);
-		userAuth.setUuid(UUID.randomUUID());
+		userAuth.setUserUUID(UUID.randomUUID());
 		userAuth.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
-		userAuth.setEnable(false);
+		userAuth.setEnabled(false);
 		userRepository.save(userAuth);
 		var userResponse = modelMapper.map(userAuth, UserResponseDTO.class);
 		String token = makeJwtToken(userAuth);
@@ -67,20 +67,19 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		return userResponse;
 	}
 
-	public UserResponseDTO setUserEnable(UUID userUUID) {
-		Optional<User> user = userRepository.findByUuid(userUUID);
-		if (user.isEmpty() || user.get().isEnable()) {
+	public void setUserEnabled(UUID userUUID) {
+		Optional<User> user = userRepository.findByUserUUID(userUUID);
+		if (user.isEmpty() || user.get().isEnabled()) {
 			throw new NoSuchElementException("User not found");
 		}
 		var updatedUser = user.get();
-		updatedUser.setEnable(true);
-        userRepository.save(updatedUser);
-        return modelMapper.map(updatedUser, UserResponseDTO.class);
+		updatedUser.setEnabled(true);
+		userRepository.save(updatedUser);
 	}
 
 
-	public UserResponseDTO editUser(EditUserDTO editUserDTO, UUID userUUID) {
-		var optionalUserToEdit = userRepository.findByUuid(userUUID);
+	public void edit(EditUserDTO editUserDTO, UUID userUUID) {
+		var optionalUserToEdit = userRepository.findByUserUUID(userUUID);
 		if (optionalUserToEdit.isEmpty()) {
 			throw new NoSuchElementException("No such user to edit ");
 		}
@@ -88,14 +87,14 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 		if(editUserDTO.getPassword() != null) userToEdit.setPassword(passwordEncoder.encode(editUserDTO.getPassword()));
 		if(editUserDTO.getEmail() != null) userToEdit.setEmail(editUserDTO.getEmail());
 		userRepository.save(userToEdit);
-		return modelMapper.map(userToEdit, UserResponseDTO.class);
+		modelMapper.map(userToEdit, UserResponseDTO.class);
 	}
 
-	public Long deleteUser(UUID uuid) {
-		return userRepository.deleteByUuid(uuid);
+	public void delete(UUID uuid) {
+		userRepository.deleteByUserUUID(uuid);
 	}
 
-	public UserUUIDAndROLE getUUIDAndRole(HttpServletRequest request) {
+	public UserUUIDAndROLE getUUIDAndROLE(HttpServletRequest request) {
 		String token = request.getHeader(JwtProperties.AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, "");
 		Claims claims = Jwts.parser()
 				.setSigningKey(TOKEN_SECRET)
@@ -103,7 +102,7 @@ public class UserService implements UserDetailsService, JwtMaker, JwtProperties 
 				.getBody();
 		return UserUUIDAndROLE
 				.builder()
-				.uuid(UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID))))
+				.userUUID(UUID.fromString(String.valueOf(claims.get(TOKEN_CLAIM_UUID))))
 				.role(claims.get(JwtProperties.TOKEN_CLAIM_AUTHORITIES)
 						.toString()
 						.replace("[", "")

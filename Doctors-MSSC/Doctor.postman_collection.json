@@ -1,0 +1,1924 @@
+{
+	"info": {
+		"_postman_id": "d002528a-de4a-4d24-9ac7-3110a5563c03",
+		"name": "Doctor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LoginDefaulDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa0ccba5-48f5-476c-8db6-effe98fdff76",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"loginDoctorToken\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"loginDoctorUUID\", jsonData.userUUID);",
+							"",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"ola@ola.pl\",\n\t\"password\" : \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginCreepy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c200b2c1-9e78-4b4f-8c84-ef3664f726a1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"creepyToken\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"creepyUUID\", jsonData.userUUID);",
+							"",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"creepy@creepy.pl\",\n\t\"password\" : \"666999\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDoctors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{creepyToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.firstName).to.be.equal(\"Ola\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorSpecializations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"defaultDoctorspecializationUUID\", jsonData[0].specializationUUID);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorSpecialization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(\"GP Specialization\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/specializations/{{defaultDoctorspecializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"specializations",
+						"{{defaultDoctorspecializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllSpecializations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorCalendars",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"calendarUUID\", jsonData[0].calendarUUID);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/calendars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"calendars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(\"GP Calendar\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/calendars/{{calendarUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorCalendarAppointments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"appointmentUUID\", jsonData[0].appointmentUUID);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/calendars/{{calendarUUID}}/appointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDefaultDoctorCalendarAppointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.duration).to.be.equal(3600);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/calendars/{{calendarUUID}}/appointments/{{appointmentUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments",
+						"{{appointmentUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDoctorsMedicalUnites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f24b1ec0-9e16-44fb-992b-4579b33cf956",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/medical-units/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"medical-units",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDoctorMedicalUnite",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e51fa48a-7b99-4ee9-803e-c9147f47f873",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(\"Medical Unit Pharmacy\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/medical-units/2d43f0c5-3338-46fc-8a44-9e50e20c256d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"medical-units",
+						"2d43f0c5-3338-46fc-8a44-9e50e20c256d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUserInAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b6aa738-2d47-45e5-9cc0-969be1b54583",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if(pm.response.code === 201){",
+							"    postman.setEnvironmentVariable(\"registeredDoctorEmail\", jsonData.email);",
+							"    postman.setEnvironmentVariable(\"registeredDoctorToken\", jsonData.token);",
+							"    postman.setEnvironmentVariable(\"registeredDoctorUUID\", jsonData.userUUID);    ",
+							"}",
+							"pm.test(\"Fail POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"zajac@zajeczyszczykiewicz.pl\",\n\t\"password\": \"hopshops\",\n\t\"role\": \"doctor\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"doctorUUID\": \"{{registeredDoctorUUID}}\",\n\t\"firstName\": \"Zajac\",\n\t\"lastName\": \"Zajeczy\",\n\t\"photoUrl\": \"http://www.hophop.com\",\n\t\"licence\": \"555-666-777-888\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddSpecializationIntoDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"specializationUUID\", jsonData.specializationUUID);",
+							"",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Znachor\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddExistingSpecializationIntoDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/specializations/{{specializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"specializations",
+						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddSpecializationIntoSYSTEM",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"specializationSystemUUID\", jsonData.specializationUUID);",
+							"",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Znachor2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddCalendarIntoDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2534edc-1d31-402f-b2a5-e60e260c1834",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"calendarUUID\", jsonData.calendarUUID);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Calendar from postman\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAppointmentIntoDoctorCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2534edc-1d31-402f-b2a5-e60e260c1834",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"appointmentUUID\", jsonData.appointmentUUID);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"localDateTime\": \"2020-03-14T02:59:01.00\",\n    \"duration\": 610,\n    \"patientUUID\": null,\n    \"patientFirstName\": null,\n    \"patientSecondName\": null\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/appointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAppointmentsIntoDoctorCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2534edc-1d31-402f-b2a5-e60e260c1834",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n    \"localDateTime\": \"2020-03-13T00:59:00.00\",\n    \"duration\": 610,\n    \"patientUUID\": null,\n    \"patientFirstName\": null,\n    \"patientSecondName\": null\n\t},\n\t{\n    \"localDateTime\": \"2020-03-13T01:59:00.00\",\n    \"duration\": 620,\n    \"patientUUID\": null,\n    \"patientFirstName\": null,\n    \"patientSecondName\": null\n\t}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/appointments/multiple",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments",
+						"multiple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddMedicalUniteIntoCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2534edc-1d31-402f-b2a5-e60e260c1834",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"uuidcalendar\", jsonData.calendarUUID);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							"",
+							"pm.test(\"Successful GET data\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(\"Calendar from postman\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/medical-unites/0b18f17d-098a-404d-a949-4b1ad394d43a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"medical-unites",
+						"0b18f17d-098a-404d-a949-4b1ad394d43a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddMedicalUniteIntoDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2534edc-1d31-402f-b2a5-e60e260c1834",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"medicalUnitUUID\", jsonData.medicalUnitUUID);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/medical-units/0b18f17d-098a-404d-a949-4b1ad394d43a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"medical-units",
+						"0b18f17d-098a-404d-a949-4b1ad394d43a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl72\",\n\t\"password\": \"kowal728\",\n\t\"firstName\": \"Janusz[[[\",\n\t\"lastName\": null,\n\t//\"photoUrl\": \"http://www.januszowo.com1\",\n\t\"licence\": \"111-222-333-444-555\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditCallendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Calendar from postman edited\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditAppointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"localDateTime\": null,\n    \"duration\": null,\n    \"patientUUID\": \"11f0f891-b243-4547-803b-605f72b11b11\",\n    \"patientFirstName\": \"Maciej\",\n    \"patientSecondName\": \"Maciejkowski\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/appointments/{{appointmentUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments",
+						"{{appointmentUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditSpecialization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Znachor edited\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations/{{specializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations",
+						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditChangeCalendarMedicalUnite",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7171f5-8062-4867-aa35-d0aeb30f94e7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/medical-unites/17d25fda-fece-4294-9adb-34037445ca77",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"medical-unites",
+						"17d25fda-fece-4294-9adb-34037445ca77"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveMedicalUniteFromDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88b918a9-4241-4d32-8930-1e8107404bc9",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/medical-units/0b18f17d-098a-404d-a949-4b1ad394d43a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"medical-units",
+						"0b18f17d-098a-404d-a949-4b1ad394d43a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveMedicalUniteFromCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88b918a9-4241-4d32-8930-1e8107404bc9",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/medical-unites/17d25fda-fece-4294-9adb-34037445ca77",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"medical-unites",
+						"17d25fda-fece-4294-9adb-34037445ca77"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveAppointmentfromDoctorCalendar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88b918a9-4241-4d32-8930-1e8107404bc9",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}/appointments/{{appointmentUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}",
+						"appointments",
+						"{{appointmentUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveCalendarFromDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88b918a9-4241-4d32-8930-1e8107404bc9",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}/calendars/{{calendarUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}",
+						"calendars",
+						"{{calendarUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveSpecializationFromDefaultDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b9481db-8ad2-4e5c-b8a6-b516381ea740",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{loginDoctorToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}/specializations/{{specializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}",
+						"specializations",
+						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRegisteredDoctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eed72fba-7469-4fe7-ae74-a908841eed3f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{registeredDoctorToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{registeredDoctorUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{registeredDoctorUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveSpecialization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b9481db-8ad2-4e5c-b8a6-b516381ea740",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations/{{specializationUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations",
+						"{{specializationUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveSpecializationSecond",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b9481db-8ad2-4e5c-b8a6-b516381ea740",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{creepyToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/specializations/{{specializationSystemUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"specializations",
+						"{{specializationSystemUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDoctorsBAD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "643995c0-87fa-4c73-96c6-1c557d5a6a4b",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([403]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

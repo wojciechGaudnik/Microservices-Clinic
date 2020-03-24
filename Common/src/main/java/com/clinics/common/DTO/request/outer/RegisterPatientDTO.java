@@ -24,8 +24,8 @@ public class RegisterPatientDTO {
     @Size(min = 3, max = 100, message = "lastName length out of range")
     private String lastName;
 
+    @PESEL
     @NotBlank(message = "pesel is mandatory")
-    @Size(min = 11, max = 11, message = "Pesel must be exactly 11 digits long")
     private String pesel;
 
     @Size(max = 500, message = "photoUrl length out of range ")

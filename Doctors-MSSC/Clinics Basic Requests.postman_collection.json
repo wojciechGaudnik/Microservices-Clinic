@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "76228bd7-90ba-47a2-9bb6-921108196592",
+		"name": "Clinics Basic Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Default User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c200b2c1-9e78-4b4f-8c84-ef3664f726a1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"tokenDefaultUser\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"uuidDefaultUser\", jsonData.userUUID);",
+							"",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"ola@ola.pl\",\n\t\"password\" : \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Default Doctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2fcf50f7-0a1f-480f-b7e9-fd4f8792e011",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET registered Doctor\", function () {",
+							"    pm.expect(jsonData.firstName).to.equal(\"Ola\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{tokenDefaultUser}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{uuidDefaultUser}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{uuidDefaultUser}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UUID from Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "377e061c-d4ca-4c8e-88d4-32ce0af1639f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful GET registered Doctor\", function () {",
+							"    pm.expect(jsonData.role).to.equal(\"doctor\");",
+							"});",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{tokenDefaultUser}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/auth/users/uuidAndRole/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"users",
+						"uuidAndRole",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUserInAuthGOOD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b6aa738-2d47-45e5-9cc0-969be1b54583",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if(pm.response.code === 201){",
+							"    postman.setEnvironmentVariable(\"registeredDoctorEmail\", jsonData.email);",
+							"    postman.setEnvironmentVariable(\"registeredDoctorToken\", jsonData.token);",
+							"    postman.setEnvironmentVariable(\"registeredDoctorUUID\", jsonData.userUUID);    ",
+							"}",
+							"pm.test(\"Fail POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl\",\n\t\"password\": \"kowal666\",\n\t\"role\": \"doctor\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterDoctorGOOD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "192a05a1-790c-4d1c-8171-42d49c6f5472",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredDoctorToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"doctorUUID\": \"{{registeredDoctorUUID}}\",\n\t\"firstName\": \"Janusz\",\n\t\"lastName\": \"Kowalski\",\n\t\"photoUrl\": \"http://www.januszex.com\",\n\t\"licence\": \"111-222-333-444-555\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginNewDoctorGOOD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c200b2c1-9e78-4b4f-8c84-ef3664f726a1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"loginNewDoctorToken\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"loginNewDoctorUUID\", jsonData.userUUID);",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl\",\n\t\"password\": \"kowal666\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditRegisteredDoctorGOOD",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginNewDoctorToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl72\",\n\t\"password\": \"kowal728\",\n\t\"firstName\": \"Janusz[[[\",\n\t\"lastName\": null,\n\t//\"photoUrl\": \"http://www.januszowo.com1\",\n\t\"licence\": \"111-222-333-444-555\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginNewDoctorUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginNewDoctorUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginNewDoctorGOODSecond",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c200b2c1-9e78-4b4f-8c84-ef3664f726a1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"loginDoctorToken\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"loginDoctorUUID\", jsonData.userUUID);",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl72\",\n\t\"password\": \"kowal728\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DelAddedDoctorGOOD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a86a532-8e6b-4f6a-8719-37f7a807b6a4",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{loginDoctorToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/doctor-mssc/doctors/{{loginDoctorUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"doctor-mssc",
+						"doctors",
+						"{{loginDoctorUUID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
