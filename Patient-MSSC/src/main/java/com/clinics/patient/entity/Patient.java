@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,8 +26,9 @@ public class Patient {
     private Long id;
 
     @Column(updatable = false, nullable = false)
-    private UUID uuid = UUID.randomUUID();
+    private UUID patientUUID = UUID.randomUUID();
 
+    @PESEL
     private String pesel;
 
     @NotBlank(message = "fistName is mandatory")

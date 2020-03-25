@@ -1,14 +1,15 @@
 package com.clinics.patient.service;
 
-import com.clinics.common.DTO.request.VisitDTO;
-import com.clinics.patient.entity.Patient;
+import com.clinics.common.DTO.request.outer.EditVisitDTO;
+import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.patient.entity.Visit;
 
 import java.util.UUID;
 
 
 public interface VisitService {
-    VisitDTO registerVisit(VisitDTO visitDTO);
-    Visit findAllDetails(UUID uuid);
-    Visit findByUuid(UUID uuid);
+    Visit registerVisit(UUID patientUUID, VisitDTO visitDTO);
+    Visit findByUuid(UUID visitUUID);
+    void deleteByUuid(UUID visitUUID);
+    void editVisit(UUID visitUUID, EditVisitDTO editVisitDTO);
 }

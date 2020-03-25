@@ -1,0 +1,20 @@
+package com.clinics.doctors.data.repositorie;
+
+import com.clinics.doctors.data.model.Doctor;
+import com.clinics.doctors.data.model.Specialization;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public interface SpecializationRepository extends JpaRepository<Specialization, Long> {
+
+	Optional<Specialization> findBySpecializationUUID(UUID specializationUUID);
+	List<Specialization> findAllByDoctors(Doctor doctor);
+	Boolean existsByName(String name);
+	Boolean existsBySpecializationUUID(UUID specializationUUID);
+	Specialization findByName(String name);
+}

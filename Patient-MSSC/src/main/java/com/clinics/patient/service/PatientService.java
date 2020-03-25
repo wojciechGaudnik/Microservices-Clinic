@@ -1,10 +1,10 @@
 package com.clinics.patient.service;
 
-import com.clinics.common.DTO.request.RegisterPatientDTO;
-import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.UUID;
 public interface PatientService {
     PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request);
     List<Patient> findAll();
-    Patient findByUuid(UUID UUID);
+    Patient findByUuid(UUID patientUUID);
     Optional<Patient> findById(Long ID);
-    void deleteById(Long ID);
-    Patient editPatient(Patient patient);
-    List<Visit> findAllVisits(UUID UUID);
+    void deleteByUuid(UUID patientUUID);
+    void editPatient(UUID patientUUID, EditPatientDTO patient);
+    List<Visit> findAllVisits(UUID patientUUID);
 }

@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
+//https://dzone.com/articles/quick-guide-to-microservices-with-spring-boot-20-e
+//@EnableSwagger2 //todo <--- show all endpoints
 @EnableZuulProxy
 @EnableEurekaClient
 @SpringBootApplication

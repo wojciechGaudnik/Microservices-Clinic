@@ -1,11 +1,13 @@
 package com.clinics.patient.service;
 
-import com.clinics.common.DTO.request.RegisterPatientDTO;
-import com.clinics.common.DTO.response.PatientRegisterResponseDTO;
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.PatientNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +39,14 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
-        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
-        System.out.println(url);
+        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getPatientUUID());
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
+        httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
         HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
-        System.out.println(requestEntity);
         try {
             ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
         } catch (Exception e) {
-            throw new NoSuchElementException("There is no such patient in AUTH");
+            throw new NoSuchElementException("There is no such user in AUTH or something else went wrong");
         }
         var patient = modelMapper.map(registerPatientDTO, Patient.class);
         patientRepository.save(patient);
@@ -59,8 +59,14 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient findByUuid(UUID UUID) {
-        return patientRepository.findByUuid(UUID);
+    public Patient findByUuid(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
+
+        if(patient.isPresent()){
+            return patient.get();
+        }else{
+            throw new PatientNotFoundException(patientUUID);
+        }
     }
 
     @Override
@@ -69,36 +75,34 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void deleteById(Long ID) {
-        patientRepository.deleteById(ID);
+    public void deleteByUuid(UUID patientUUID) {
+        patientRepository.deleteByPatientUUID(patientUUID);
     }
 
     @Override
-    public Patient editPatient(Patient patient) {
+    public void editPatient(UUID patientUUID, EditPatientDTO patient) {
+        Optional<Patient> existingPatient = patientRepository.findByPatientUUID(patientUUID);
 
-        patientValid(patient);
-        Optional<Patient> existingPatient = patientRepository.findById(patient.getId());
+        if(existingPatient.isEmpty()){
+            throw new PatientNotFoundException(patientUUID);
+        }
 
-        if(existingPatient.isPresent())
-        {
-            //TODO change patient data
-            existingPatient.get().setPesel(patient.getPesel());
-            return patientRepository.save(existingPatient.get());
+        existingPatient.ifPresent(thePatient-> {
+            thePatient.setPesel(patient.getPesel());
+            thePatient.setFirstName(patient.getFirstName());
+            thePatient.setLastName(patient.getLastName());
+            thePatient.setPhotoUrl(patient.getPhotoUrl());
+        });
+    }
+
+    @Override
+    public List<Visit> findAllVisits(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
+
+        if(patient.isPresent()) {
+            return patient.get().getVisits();
         }else{
-            return null;
+            throw new PatientNotFoundException(patientUUID);
         }
     }
-
-    @Override
-    public List<Visit> findAllVisits(UUID UUID) {
-        Patient patient = patientRepository.findByUuid(UUID);
-        return patient.getVisits();
-    }
-
-    private void patientValid(Patient patient){
-        // TODO patient data validation
-        // TODO Throw exception if f.ex pesel is wrong
-    }
-
-
 }
