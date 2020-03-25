@@ -79,7 +79,7 @@ public class VisitServiceImpl implements VisitService {
             patientRepository.save(thePatient);
 
             try{
-                patientClient.registerVisit(visitDTO);
+                patientClient.registerVisit(patientUUID, visitDTO);
             }catch (Exception e){
                 visitRepository.deleteByVisitUUID(visit.getVisitUUID());
                 throw e;

@@ -20,6 +20,7 @@ public class Swagger2Config implements SwaggerResourcesProvider {
 			add(swaggerResource("Auth", "/auth-swagger/v2/api-docs", "2.0"));
 			add(swaggerResource("Doctor", "/doctor-mssc/v2/api-docs", "2.0"));
 			add(swaggerResource("Medical Unites", "/medical-units-mssc/v2/api-docs", "2.0"));
+			add(swaggerResource("Patient", "/patient-mssc/v2/api-docs", "2.0"));
 		}};
 	}
 

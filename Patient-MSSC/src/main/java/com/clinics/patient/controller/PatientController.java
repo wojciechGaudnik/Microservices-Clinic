@@ -7,6 +7,7 @@ import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.PatientService;
 import com.clinics.patient.service.VisitService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<PatientRegisterResponseDTO> registerPatient(@RequestBody RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
-        return ResponseEntity.status(201).body(patientService.addPatient(registerPatientDTO, request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(patientService.addPatient(registerPatientDTO, request));
     }
 
     @PatchMapping(path = "/{patientUUID}")

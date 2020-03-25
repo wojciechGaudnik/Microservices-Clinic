@@ -47,6 +47,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers("/doctor-mssc/v2/api-docs/**").permitAll()
 				.antMatchers("/medical-units-mssc/v2/api-docs/**").permitAll()
 				.antMatchers("/auth-swagger/v2/api-docs/**").permitAll()
+				.antMatchers("/patient-mssc/v2/api-docs/**").permitAll()
 				.antMatchers(SWAGGER_WHITE_LIST).permitAll()
 
 
@@ -72,6 +73,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 
 				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{patientUUID}").access("@userUUIDChecker.checkUserUUID(authentication, #patientUUID)")
 				.antMatchers(HttpMethod.GET, "/patient-mssc/patients/{patientUUID}/visit/**").access("@userUUIDChecker.checkUserUUID(authentication, #patientUUID)")
+				.antMatchers(HttpMethod.POST, "/patient-mssc/patients/{patientUUID}/visits/{visitUUID}/disease/**").access("@userUUIDChecker.checkUserUUID(authentication, #patientUUID)")
 
 				.antMatchers("/medical-units-mssc/**").permitAll()
 
