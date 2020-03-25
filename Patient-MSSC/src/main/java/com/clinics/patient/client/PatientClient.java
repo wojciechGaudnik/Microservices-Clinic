@@ -4,6 +4,7 @@ import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
 import com.clinics.common.security.JwtProperties;
+import com.clinics.patient.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,25 +24,16 @@ public class PatientClient {
         this.restTemplate = restTemplate;
     }
 
-    public VisitRegisterResponseDTO registerVisit(UUID patientUUID, VisitDTO visitDTO){
+    public void registerVisit(Patient patient, VisitDTO visitDTO){
 
         AppointmentDTO appointmentDTO = new AppointmentDTO();
-        appointmentDTO.setPatientUUID(patientUUID);
-        appointmentDTO.setPatientFirstName("Piotr");
-        appointmentDTO.setPatientSecondName("Sobczynski");
+        appointmentDTO.setPatientUUID(patient.getPatientUUID());
+        appointmentDTO.setPatientFirstName(patient.getFirstName());
+        appointmentDTO.setPatientSecondName(patient.getLastName());
 
         String url = String.format("http://doctor-mssc/doctors/%s/calendars/%s/appointments/%s", visitDTO.getDoctorUUID(), visitDTO.getCalendarUUID(), visitDTO.getAppointmentUUID());
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO, httpHeaders);
-        try {
-            ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
-        }catch(Exception e){
-            System.out.println("ERROR");
-
-        }
-           /* patchForObject(String url, @Nullable Object request, Class<T> responseType,
-                    Map<String, ?> uriVariables))*/
-
-        return new VisitRegisterResponseDTO();
+        restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
     }
 }
