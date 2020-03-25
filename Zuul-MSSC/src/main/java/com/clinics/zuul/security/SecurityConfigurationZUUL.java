@@ -47,6 +47,7 @@ public class SecurityConfigurationZUUL extends WebSecurityConfigurerAdapter impl
 				.antMatchers("/doctor-mssc/v2/api-docs/**").permitAll()
 				.antMatchers("/medical-units-mssc/v2/api-docs/**").permitAll()
 				.antMatchers("/auth-swagger/v2/api-docs/**").permitAll()
+				.antMatchers("/patient-mssc/v2/api-docs/**").permitAll()
 				.antMatchers(SWAGGER_WHITE_LIST).permitAll()
 
 
