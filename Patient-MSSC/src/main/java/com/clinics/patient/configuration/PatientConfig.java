@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,8 +20,16 @@ import org.springframework.web.client.RestTemplate;
 public class PatientConfig extends BeanFactory implements ApplicationContextAware {
 	@Bean
 	@LoadBalanced
-	public RestTemplate restTemplate(){
-		return new RestTemplate();
+	public RestTemplate getRestTemplate(){
+		return new RestTemplate(getClientHttpRequestFactory());
+	}
+
+	private HttpComponentsClientHttpRequestFactory getClientHttpRequestFactory(){
+		HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory
+				= new HttpComponentsClientHttpRequestFactory();
+		httpComponentsClientHttpRequestFactory.setConnectTimeout(2000);
+		httpComponentsClientHttpRequestFactory.setReadTimeout(2000);
+		return httpComponentsClientHttpRequestFactory;
 	}
 
 	@Bean
