@@ -12,6 +12,8 @@ import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,7 @@ public class VisitServiceImpl implements VisitService {
     private VisitRepository visitRepository;
     private PatientRepository patientRepository;
     private ModelMapper modelMapper;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public VisitServiceImpl(PatientClient patientClient, VisitRepository visitRepository, PatientRepository patientRepository, ModelMapper modelMapper) {
         this.patientClient = patientClient;
@@ -79,8 +82,9 @@ public class VisitServiceImpl implements VisitService {
             patientRepository.save(thePatient);
 
             try{
-                patientClient.registerVisit(patientUUID, visitDTO);
+                patientClient.registerVisit(thePatient, visitDTO);
             }catch (Exception e){
+                logger.error(String.format("Error adding visit in doctor service, deleting visit for patient with uuid: '%s'", patientUUID), e);
                 visitRepository.deleteByVisitUUID(visit.getVisitUUID());
                 throw e;
             }
