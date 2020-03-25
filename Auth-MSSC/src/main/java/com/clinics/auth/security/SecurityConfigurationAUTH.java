@@ -27,6 +27,12 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
+	private static final String[] SWAGGER_WHITE_LIST = {
+			"/swagger-resources/**",
+			"/swagger-ui.html",
+			"/v2/api-docs",
+			"/webjars/**"
+	};
 
 	@Autowired
 	public SecurityConfigurationAUTH(UserService userService, PasswordEncoder passwordEncoder) {
@@ -36,6 +42,7 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
+//				http.authorizeRequests().antMatchers("/**").permitAll();
 		http
 				.cors().disable()
 				.csrf().disable()
@@ -45,6 +52,11 @@ public class SecurityConfigurationAUTH extends WebSecurityConfigurerAdapter impl
 				.and()
 				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.authorizeRequests()
+
+				.antMatchers(SWAGGER_WHITE_LIST).permitAll()
+				.antMatchers("/auth/v2/api-docs/**").permitAll()
+				.antMatchers("/v2/api-docs").permitAll()
+
 				.antMatchers(HttpMethod.POST, TOKEN_LOGIN_URI).permitAll()
 				.antMatchers(HttpMethod.GET, "/auth/users/uuidAndRole/").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/auth/users/**").permitAll()

@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.service.Contact;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -79,4 +81,27 @@ public class BeanFactory implements ApplicationContextAware {
 //				.setDeepCopyEnabled(false);
 		return modelMapper;
 	}
+
+	@Bean
+	public ApiInfoBuilder apiInfoBuilder(){
+		return new ApiInfoBuilder()
+				.title("E-Clinics REST API")
+				.contact(new Contact("Clinic team", "www.janusze.microserices", "janusz.januszewski@janusz.land.pl"))
+				.license("Free")
+				.licenseUrl("free.com");
+	}
+	//todo
+	// 	@Bean
+	//	@LoadBalanced
+	//	public RestTemplate getRestTemplate(){
+	//		return new RestTemplate(getClientHttpRequestFactory());
+	//	}
+	//
+	//	private HttpComponentsClientHttpRequestFactory getClientHttpRequestFactory(){
+	//		HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory
+	//				= new HttpComponentsClientHttpRequestFactory();
+	//		httpComponentsClientHttpRequestFactory.setConnectTimeout(2000);
+	//		httpComponentsClientHttpRequestFactory.setReadTimeout(2000);
+	//		return httpComponentsClientHttpRequestFactory;
+	//	}
 }
