@@ -1,6 +1,7 @@
 package com.clinics.doctors.exception;
 
 import com.clinics.common.exception.ErrorMessageCustom;
+import com.clinics.common.exception.validators.AppointmentAlreadyBookedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,5 +58,17 @@ public class ExceptionHandlerDoctor {
 				.webRequest(request)
 				.build();
 		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler({AppointmentAlreadyBookedException.class})
+	public ResponseEntity<Object> appointmentAlreadyBookedException(Exception exception, WebRequest request) {
+		ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+				.builder()
+				.status(HttpStatus.CONFLICT)
+				.error("Appointment already booked")
+				.errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+				.webRequest(request)
+				.build();
+		return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.CONFLICT);
 	}
 }

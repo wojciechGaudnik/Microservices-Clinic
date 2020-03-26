@@ -93,6 +93,7 @@ public class PatientServiceImpl implements PatientService{
             thePatient.setLastName(patient.getLastName());
             thePatient.setPhotoUrl(patient.getPhotoUrl());
         });
+        //TODO should it be save to repo here ?
     }
 
     @Override
