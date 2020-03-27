@@ -52,11 +52,11 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 const method = 'POST';
 
                 const body = {
-                    doctoruuid: responseJSONData.uuid,
+                    doctorUUID: responseJSONData.userUUID,
                     firstName: userRegisterInformation.firstName,
                     lastName: userRegisterInformation.lastName,
-                    photoUrl: userRegisterInformation.photoUrl,
-                    licence: userRegisterInformation.licence
+                    licence: userRegisterInformation.licence,
+                    photoUrl: userRegisterInformation.photoUrl
                 };
 
                 const headers = {
@@ -87,7 +87,7 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 const method = 'POST';
 
                 const body = {
-                    uuid: responseJSONData.uuid,
+                    patientUUID: responseJSONData.userUUID,
                     firstName: userRegisterInformation.firstName,
                     lastName: userRegisterInformation.lastName,
                     photoUrl: userRegisterInformation.photoUrl,
@@ -95,8 +95,7 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 };
 
                 const headers = {
-                    'Authorization': responseJSONData.token,
-                    'Content-Type': 'application/json;charset=UTF-8',
+                    'Authorization': responseJSONData.token
                 };
                 console.log("BODY KTÓRE WYSYŁAM PRZY REJESTROWANIU PACJENTA: ");
                 console.log(body);

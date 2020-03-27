@@ -33,6 +33,7 @@ export const sendRequestByGivenDetails = (
             }
         })
         .then((responseJSONData) => {
+            console.log(responseJSONData);
             if (setInStateFunction && specialFunction){
                 setInStateFunction(responseJSONData);
                 specialFunction(responseJSONData);

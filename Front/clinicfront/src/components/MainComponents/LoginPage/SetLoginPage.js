@@ -37,7 +37,7 @@ export const sendFetchRequestLoginUser = (loginDetails, {setUserDetails}, {ifCat
 
     const setInStateFunction = (responseData) => {
         setUserDetails({
-            uuid: responseData.uuid,
+            uuid: responseData.userUUID,
             role: responseData.role
         })
     };
@@ -68,7 +68,7 @@ export const sendFetchRequestIsThereLoginUser = ({setUserDetails}) => {
 
     const setInStateFunction = (responseData) => {
         setUserDetails({
-            uuid: responseData.uuid,
+            uuid: responseData.userUUID,
             role: responseData.role
         })
     };
