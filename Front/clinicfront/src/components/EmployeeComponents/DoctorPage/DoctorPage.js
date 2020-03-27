@@ -1,26 +1,21 @@
 import React, {useCallback, useEffect, useState} from "react";
 
-import {
-    Button,
-    Grid,
-    Typography
-} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
 
 import {
     sendFetchRequestChangeUserInformation,
     sendFetchRequestDeleteUser,
     sendFetchRequestSetUserInformation,
+    styleForBackToLoginPageButton,
     styleForMainDiv,
     styleForMainDivError,
-    styleForMainGrid,
-    styleForBackToLoginPageButton
+    styleForMainGrid
 } from "./SetDoctorPage";
-
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
-import {ContainerForUserInformation} from "../../AdditionalComponents/ContainerForUserInformation/ContainerForUserInformation";
-import {DelAccountBtn} from "../../AdditionalComponents/DelAccountBtn/DelAccountBtn";
 import {redirectByRole} from "../../../actions";
+import DoctorInfoComponent from "./DoctorPageComponents/DoctorInfoComponent";
+import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent";
+import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponent";
 
 
 export const DoctorPage = (props) => {
@@ -76,17 +71,9 @@ export const DoctorPage = (props) => {
             <div style={styleForMainDiv}>
                 <div>
                     <LogOutButton {...props}/>
-                    <ContainerForUserInformation
-                        {...props}
+                    <DoctorInfoComponent
                         fetchRequest={fetchRequestForContainerForUserInformation}
                         userInformationHasBeenEdit={userInformationHasBeenEdit}
-                        titleRole={"DOCTOR"}
-                        firstName={true}
-                        lastName={true}
-                        licence={true}
-                        calendars={true}
-                        specializations={true}
-                        medicalUnits={true}
                     />
                     <Grid
                         style={styleForMainGrid}
@@ -102,34 +89,16 @@ export const DoctorPage = (props) => {
                         </Button>
                     </Grid>
                     {showFormForEdit ? (
-                        <Grid item>
-                            <Typography
-                                color="primary"
-                                align="center"
-                                variant="subtitle2"
-                                gutterBottom={true}
-                            >
-                                Fill or change only variables which you want to change
-                            </Typography>
-                            <FormForInputUserInformation
-                                {...props}
-                                fetchRequest        ={fetchRequestForFormForInputUserInformation}
-                                submitButtonAdditionalActions = {() => setUserInformationHasBeenEdit(true)}
-                                submitButtonTitle   ="Edit"
-                                showEmailForm       ={true}
-                                showPasswordForm    ={true}
-                                showRoleForm        ={false}
-                                showFirstNameForm   ={true}
-                                showLastNameForm    ={true}
-                                showLicenceForm     ={true}
-                                showPhotoURLForm    ={true}
-                            />
-                        </Grid>) : null
+                        <EditDataFormComponent
+                            fetchRequest={fetchRequestForFormForInputUserInformation}
+                            submitButtonAdditionalActions={() => setUserInformationHasBeenEdit(true)}
+                            {...props}
+                        />) : null
                     }
                     <Grid item>
-                        <DelAccountBtn
-                        {...props}
-                        fetchRequest={fetchRequestForDelAccountBtn}
+                        <DeleteAccountComponent
+                            {...props}
+                            fetchRequest={fetchRequestForDelAccountBtn}
                         />
                     </Grid>
                     </Grid>
