@@ -54,6 +54,10 @@ export const styleForBackToLoginPageButton = {
     border: '2px solid black'
 };
 
+export const styleForMainContainer = {
+    marginTop: "50px"
+};
+
 //Content for fetch request
 export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction, setStoreUserInformation, {ifCatchSetErrorInStore}) => {
     const url = URLs.GET_USER_INFORMATION + alreadyLoginUserUuid;

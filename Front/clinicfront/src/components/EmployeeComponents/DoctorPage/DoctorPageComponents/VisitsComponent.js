@@ -1,6 +1,10 @@
-export const VisitsComponent = (props) => {
+import React from "react";
+
+export const VisitsComponent = () => {
       return(
-          <p>Visits</p>
+          <div>
+                <p>Visits</p>
+          </div>
       )
 };
 
