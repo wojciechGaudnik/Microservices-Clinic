@@ -9,9 +9,7 @@ export const DoctorInfoComponent = (props) => {
             firstName={true}
             lastName={true}
             licence={true}
-            calendars={true}
             specializations={true}
-            medicalUnits={true}
         />
     )
 };
