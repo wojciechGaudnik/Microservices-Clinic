@@ -2,6 +2,7 @@ package com.clinics.doctors.ui.service.JPAimpl;
 
 import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.AppointmentResponseDTO;
+import com.clinics.common.exception.validators.AppointmentAlreadyBookedException;
 import com.clinics.doctors.data.model.Appointment;
 import com.clinics.doctors.data.repositorie.RepositoryAppointment;
 import com.clinics.doctors.ui.service.AppointmentService;
@@ -83,6 +84,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throw new NoSuchElementException("Calendar doesn't have such appointment");
 		}
 		var appointment = optionalAppointment.get();
+		if(appointment.getPatientUUID()!=null){
+			throw new AppointmentAlreadyBookedException(appointmentUUID);
+		}
 		modelMapper.map(appointmentDTO, appointment);
 		appointmentRepository.save(appointment);
 	}

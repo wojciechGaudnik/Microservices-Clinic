@@ -1,0 +1,425 @@
+{
+	"info": {
+		"_postman_id": "955583fa-13d7-48fe-bf89-eb5974412571",
+		"name": "Patient",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RegisterUserInAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6acc262d-a35f-41e5-9f1a-ad9c8c6255c1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if(pm.response.code === 201){",
+							"    postman.setEnvironmentVariable(\"registeredPatientEmail\", jsonData.email);",
+							"    postman.setEnvironmentVariable(\"registeredPatientToken\", jsonData.token);",
+							"    postman.setEnvironmentVariable(\"registeredPatientUUID\", jsonData.userUUID);    ",
+							"}",
+							"pm.test(\"Fail POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 422]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"janusz@kowalski.pl\",\n\t\"password\": \"kowal666\",\n\t\"role\": \"patient\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterPatientAfterAuthRegister",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0c4dd24-8d6e-474a-a68d-54eb9c45267b",
+						"exec": [
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json\");",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,422, 404]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patientUUID\": \"{{registeredPatientUUID}}\",\n\t\"firstName\": \"Janusz\",\n\t\"lastName\": \"Kowalski\",\n\t\"photoUrl\": \"http://www.pacjentowooo.com\",\n\t\"pesel\": \"89103005666\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb1ad12c-3aeb-449d-915d-ce2eae873098",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"registeredPatientToken\", jsonData.token);",
+							"postman.setEnvironmentVariable(\"registeredPatientUUID\", jsonData.userUUID);",
+							"",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"pm.test(\"Successful POST request content-type\", function () {",
+							"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.equal(\"application/json;charset=ISO-8859-1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"janusz@kowalski.pl\",\n\t\"password\" : \"kowal666\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register visit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07c0c6a1-ae8f-4945-bb07-9519e72090f4",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if(pm.response.code === 201){",
+							"    postman.setEnvironmentVariable(\"registeredVisitUUID\", jsonData.visitUUID);",
+							"}",
+							"pm.test(\"Fail POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 422]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"doctorUUID\": \"03f0f891-b243-4547-803b-605f72b11be9\",\n\t\"appointmentUUID\": \"22b04bed-2b7a-4dd2-a207-c54cd047f36d\",\n\t\"calendarUUID\": \"2d22b701-56e4-4dca-8216-0cec4a06279d\",\n\t\"date\": \"2019-02-08T17:30\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients/{{registeredPatientUUID}}/visit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients",
+						"{{registeredPatientUUID}}",
+						"visit"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit visit",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"status\": \"FINISHED\",\n\t\"description\": \"Zmieniono\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients/{{registeredPatientUUID}}/visit/{{registeredVisitUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients",
+						"{{registeredPatientUUID}}",
+						"visit",
+						"{{registeredVisitUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete visit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b85d3fe-17ea-4075-8cec-c02c0db39287",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if(pm.response.code === 201){",
+							"    postman.setEnvironmentVariable(\"registeredVisitUUID\", jsonData.uuid);    ",
+							"}",
+							"pm.test(\"Fail POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 422]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients/{{registeredPatientUUID}}/visit/{{registeredVisitUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients",
+						"{{registeredPatientUUID}}",
+						"visit",
+						"{{registeredVisitUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get visit",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients/{{registeredPatientUUID}}/visit/{{registeredVisitUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients",
+						"{{registeredPatientUUID}}",
+						"visit",
+						"{{registeredVisitUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get patient",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{registeredPatientToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8762/patient-mssc/patients/{{registeredPatientUUID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"patient-mssc",
+						"patients",
+						"{{registeredPatientUUID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterVisitAppointmentInDoctor",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patientUUID\": \"\",\n\t\"patientFirstName\": \"\",\n\t\"patientSecondName\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/doctors/03f0f891-b243-4547-803b-605f72b11be9/calendars/2d22b701-56e4-4dca-8216-0cec4a06279d/appointments/215866fb-8b03-4650-90d8-d75ed79b5a46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"doctors",
+						"03f0f891-b243-4547-803b-605f72b11be9",
+						"calendars",
+						"2d22b701-56e4-4dca-8216-0cec4a06279d",
+						"appointments",
+						"215866fb-8b03-4650-90d8-d75ed79b5a46"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
