@@ -38,6 +38,9 @@ public class VisitServiceImpl implements VisitService {
         this.modelMapper = modelMapper;
     }
 
+    //TODO delete visit in doctor by edditing appointment
+    //TODO sprawdz tylko czy jest mozliwosc usuniecia pacjeta z appointmentu jak sie rozmysli bez usuwania calego appointment
+
     @Override
     @Transactional
     public void deleteByUuid(UUID visitUUID) {
@@ -79,12 +82,12 @@ public class VisitServiceImpl implements VisitService {
             throw new PatientNotFoundException(patientUUID);
         }
 
-        patient.ifPresent(thePatient-> {
+        patient.ifPresent(thePatient-> {                            //przemyslec czy potrzebne oba isEmpty() i isPresent()
             visit.setPatient(thePatient);
             thePatient.getVisits().add(visit);
             patientRepository.save(thePatient);
 
-            try{
+            try{                                                    //caly blok try catch do metody register visit in doctor
                 patientClient.registerVisit(thePatient, visitDTO);
             }catch (HttpClientErrorException e){
                 visitRepository.deleteByVisitUUID(visit.getVisitUUID());

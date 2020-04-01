@@ -1,9 +1,10 @@
 package com.clinics.patient.service;
 
 import com.clinics.common.DTO.request.outer.DiseaseDTO;
+import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.entity.Disease;
 import com.clinics.patient.entity.Visit;
-import com.clinics.patient.exception.PatientNotFoundException;
+import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.DiseaseRepository;
 import com.clinics.patient.repository.VisitRepository;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,9 +41,24 @@ public class DiseaseServiceImpl implements DiseaseService{
 
         visit.ifPresent(theVisit-> {
             disease.getVisits().add(theVisit);
-            theVisit.getDiseases().add(disease);
             diseaseRepository.save(disease);
         });
         return disease;
+    }
+
+    @Override
+    @Transactional
+    public void removeDisease(UUID visitUUID, UUID diseaseUUID) {
+        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
+        Optional<Disease> disease = diseaseRepository.findByDiseaseUUID(diseaseUUID);
+
+        if (visit.isEmpty()) {
+            throw new VisitNotFoundException(visitUUID);
+        }
+        if (visit.get().getStatus().equals(VisitStatus.FINISHED)) {
+            throw new RemovalOfFinishedVisitException(visitUUID);
+        } else {
+            diseaseRepository.deleteDiseaseByDiseaseUUID(diseaseUUID);
+        }
     }
 }
