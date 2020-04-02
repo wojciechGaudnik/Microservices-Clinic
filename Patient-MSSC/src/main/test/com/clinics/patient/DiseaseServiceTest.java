@@ -1,11 +1,9 @@
 package com.clinics.patient;
 
 import com.clinics.common.DTO.request.outer.DiseaseDTO;
-import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.entity.Disease;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.exception.DiseaseNotFoundException;
-import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.DiseaseRepository;
 import com.clinics.patient.repository.VisitRepository;
@@ -18,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 

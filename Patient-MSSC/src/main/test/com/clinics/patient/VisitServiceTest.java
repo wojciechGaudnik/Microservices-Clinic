@@ -1,15 +1,10 @@
 package com.clinics.patient;
 
-import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
-import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.client.PatientClient;
-import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
-import com.clinics.patient.exception.PatientNotFoundException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import com.clinics.patient.repository.VisitRepository;
-import com.clinics.patient.service.PatientServiceImpl;
 import com.clinics.patient.service.VisitServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,9 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 

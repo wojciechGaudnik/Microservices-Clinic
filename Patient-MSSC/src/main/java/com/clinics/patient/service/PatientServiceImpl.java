@@ -2,6 +2,7 @@ package com.clinics.patient.service;
 
 import com.clinics.common.DTO.request.outer.EditPatientDTO;
 import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
@@ -15,9 +16,11 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class PatientServiceImpl implements PatientService{
     final private PatientRepository patientRepository;
     final private ModelMapper modelMapper;
@@ -69,24 +72,26 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public void deleteByUuid(UUID patientUUID) {
+        //TODO catch exception
+        String uri = String.format("http://auth/auth/users/%s", patientUUID);
+        restTemplate.delete(uri);
+
         patientRepository.deleteByPatientUUID(patientUUID);
     }
 
     @Override
-    public void editPatient(UUID patientUUID, EditPatientDTO patient) {
+    public void editPatient(UUID patientUUID, EditPatientDTO editPatientDTO) {
         Optional<Patient> existingPatient = patientRepository.findByPatientUUID(patientUUID);
 
-        if(existingPatient.isEmpty()){
-            throw new PatientNotFoundException(patientUUID);
-        }
-
-        existingPatient.ifPresent(thePatient-> {
-            thePatient.setPesel(patient.getPesel());
-            thePatient.setFirstName(patient.getFirstName());
-            thePatient.setLastName(patient.getLastName());
-            thePatient.setPhotoUrl(patient.getPhotoUrl());
-            patientRepository.save(thePatient);
-        });
+        existingPatient.ifPresentOrElse(
+                patient -> {
+                    modelMapper.map(editPatientDTO, patient);
+                    patientRepository.save(patient);
+                },
+                () -> {
+                    throw new PatientNotFoundException(patientUUID);
+                }
+        );
     }
 
     @Override
