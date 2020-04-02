@@ -95,7 +95,8 @@ export const sendFetchRequestRegisterNewUser = (userRegisterInformation, {ifCatc
                 };
 
                 const headers = {
-                    'Authorization': responseJSONData.token
+                    'Authorization': responseJSONData.token,
+                    'Content-Type': 'application/json;charset=UTF-8',
                 };
                 console.log("BODY KTÓRE WYSYŁAM PRZY REJESTROWANIU PACJENTA: ");
                 console.log(body);
