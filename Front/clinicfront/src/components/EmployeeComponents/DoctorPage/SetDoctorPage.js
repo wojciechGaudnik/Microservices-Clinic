@@ -60,7 +60,7 @@ export const styleForMainContainer = {
 
 //Content for fetch request
 export const sendFetchRequestSetUserInformation = (alreadyLoginUserUuid, setUserInformationInStateFunction, setStoreUserInformation, {ifCatchSetErrorInStore}) => {
-    const url = URLs.GET_USER_INFORMATION + alreadyLoginUserUuid;
+    const url = URLs.GET_DOCTOR_INFORMATION + alreadyLoginUserUuid;
 
     const method = 'GET';
 

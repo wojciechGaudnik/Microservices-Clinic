@@ -22,7 +22,6 @@ import {styleForMainContainer} from "../../MainComponents/MainPage/SetMainPage";
 
 
 export const DoctorPage = (props) => {
-    const [showFormForEdit, setShowFormForEdit] = useState(false);
     const [userInformationHasBeenEdit, setUserInformationHasBeenEdit] = useState(false);
     const [value, setValue] = useState(0);
 
@@ -63,61 +62,62 @@ export const DoctorPage = (props) => {
     };
 
     //Main HTML return
-    return(<div>
-        {error.isError ? (
-            <div style={styleForMainDivError}>
-                <Button
-                    style={styleForBackToLoginPageButton}
-                    variant="outlined"
-                    size="large"
-                    onClick={() => onClickBackToLoginPageButton()}
-                >
-                    Back to login site
-                </Button>
-            </div>
-            ) : (
-            <div style={styleForMainDiv}>
-                <div>
-                    <LogOutButton {...props}/>
+    return(
+        <div>
+            {error.isError ? (
+                <div style={styleForMainDivError}>
+                    <Button
+                        style={styleForBackToLoginPageButton}
+                        variant="outlined"
+                        size="large"
+                        onClick={() => onClickBackToLoginPageButton()}
+                    >
+                        Back to login site
+                    </Button>
                 </div>
-                <div>
-                    <Container maxWidth="md" style={styleForMainContainer}>
-                        <AppBar position="static">
-                            <Tabs value={value} onChange={onClickChangeTabPanel} variant="fullWidth">
-                                <Tab label="Visits"/>
-                                <Tab label="User Information"/>
-                                <Tab label="Edit User Information"/>
-                                <Tab label="Delete Account"/>
-                            </Tabs>
-                        </AppBar>
-                        <TabPanel value={value} index={0}>
-                            <VisitsComponent
-                                doctorUUID={userDetails.uuid}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <DoctorInfoComponent
-                                fetchRequest={fetchRequestForContainerForUserInformation}
-                                userInformationHasBeenEdit={userInformationHasBeenEdit}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <EditDataFormComponent
-                                fetchRequest={fetchRequestForFormForInputUserInformation}
-                                submitButtonAdditionalActions={() => setUserInformationHasBeenEdit(true)}
-                                {...props}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
-                            <DeleteAccountComponent
-                                {...props}
-                                fetchRequest={fetchRequestForDelAccountBtn}
-                            />
-                        </TabPanel>
-                    </Container>
+                ) : (
+                <div style={styleForMainDiv}>
+                    <div>
+                        <LogOutButton {...props}/>
+                    </div>
+                    <div>
+                        <Container maxWidth="md" style={styleForMainContainer}>
+                            <AppBar position="static">
+                                <Tabs value={value} onChange={onClickChangeTabPanel} variant="fullWidth">
+                                    <Tab label="Visits"/>
+                                    <Tab label="User Information"/>
+                                    <Tab label="Edit User Information"/>
+                                    <Tab label="Delete Account"/>
+                                </Tabs>
+                            </AppBar>
+                            <TabPanel value={value} index={0}>
+                                <VisitsComponent
+                                    doctorUUID={userDetails.uuid}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                <DoctorInfoComponent
+                                    fetchRequest={fetchRequestForContainerForUserInformation}
+                                    userInformationHasBeenEdit={userInformationHasBeenEdit}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
+                                <EditDataFormComponent
+                                    fetchRequest={fetchRequestForFormForInputUserInformation}
+                                    submitButtonAdditionalActions={() => setUserInformationHasBeenEdit(true)}
+                                    {...props}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={3}>
+                                <DeleteAccountComponent
+                                    {...props}
+                                    fetchRequest={fetchRequestForDelAccountBtn}
+                                />
+                            </TabPanel>
+                        </Container>
+                    </div>
                 </div>
-            </div>
-        )}
+            )}
         </div>
     )
 };
