@@ -91,7 +91,9 @@ export const DoctorPage = (props) => {
                             </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                            <VisitsComponent/>
+                            <VisitsComponent
+                                doctorUUID={userDetails.uuid}
+                            />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <DoctorInfoComponent
