@@ -1,80 +1,50 @@
 package com.clinics.patient;
 
-import com.clinics.common.DTO.request.outer.DiseaseDTO;
-import com.clinics.common.patient.VisitStatus;
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
+import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Disease;
-import com.clinics.patient.entity.Visit;
+import com.clinics.patient.entity.Patient;
 import com.clinics.patient.exception.DiseaseNotFoundException;
-import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.exception.VisitNotFoundException;
-import com.clinics.patient.repository.DiseaseRepository;
-import com.clinics.patient.repository.VisitRepository;
-import com.clinics.patient.service.DiseaseServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DiseaseServiceTest {
+class PatientClientTest {
 
-    @Mock private ModelMapper modelMapper;
+    @Mock private RestTemplate restTemplate;
 
-    @Mock private Disease disease;
+    @InjectMocks PatientClient subject;
 
-    @Mock private DiseaseDTO diseaseDTO;
-
-    @Mock private Visit visit;
-
-    @Mock private VisitRepository visitRepository;
-
-    @Mock private DiseaseRepository diseaseRepository;
-
-    private UUID visitUUID = UUID.randomUUID();
-    private UUID diseaseUUID = UUID.randomUUID();
-
-    @InjectMocks DiseaseServiceImpl subject;
-
+//    public void registerVisit(Patient patient, VisitDTO visitDTO){
+//        AppointmentDTO appointmentDTO = new AppointmentDTO();
+//        appointmentDTO.setPatientUUID(patient.getPatientUUID());
+//        appointmentDTO.setPatientFirstName(patient.getFirstName());
+//        appointmentDTO.setPatientSecondName(patient.getLastName());
+//
+//        String url = String.format("http://doctor-mssc/doctors/%s/calendars/%s/appointments/%s", visitDTO.getDoctorUUID(), visitDTO.getCalendarUUID(), visitDTO.getAppointmentUUID());
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO, httpHeaders);
+//        restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
+//    }
 
     @Test
-    void shouldReturnVisit(){
-        when(visitRepository.findByVisitUUID(visitUUID)).thenReturn(Optional.of(visit));
-        when(modelMapper.map(diseaseDTO, Disease.class)).thenReturn(disease);
+    void shouldRegisterVisitHappyCase(){
+        AppointmentDTO appointmentDTO = new AppointmentDTO();
 
-        subject.addDisease(visitUUID, diseaseDTO);
-
-        verify(diseaseRepository, times(1)).save(disease);
-    }
-
-    @Test
-    void shouldThrowVisitNotFoundException(){
-        Assertions.assertThrows(VisitNotFoundException.class, () -> {
-            subject.addDisease(visitUUID, diseaseDTO);
-        });
-    }
-
-    @Test
-    void shouldRemoveDisease(){
-        when(diseaseRepository.findByDiseaseUUID(diseaseUUID)).thenReturn(Optional.of(disease));
-
-        subject.removeDisease(diseaseUUID);
-
-        verify(diseaseRepository, times(1)).deleteDiseaseByDiseaseUUID(diseaseUUID);
-    }
-
-    @Test
-    void shouldThrowDiseaseNotFoundExceptionRemoveDisease(){
-        Assertions.assertThrows(DiseaseNotFoundException.class, () -> {
-            subject.removeDisease(diseaseUUID);
-        });
     }
 }

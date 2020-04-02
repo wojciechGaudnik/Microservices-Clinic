@@ -40,6 +40,7 @@ public class VisitServiceImpl implements VisitService {
 
     //TODO delete visit in doctor by edditing appointment
     //TODO sprawdz tylko czy jest mozliwosc usuniecia pacjeta z appointmentu jak sie rozmysli bez usuwania calego appointment
+    //TODo use ifPresentOrElse
 
     @Override
     @Transactional
@@ -49,6 +50,7 @@ public class VisitServiceImpl implements VisitService {
         if(visit.isEmpty()){
             throw new VisitNotFoundException(visitUUID);
         }
+
         if(visit.get().getStatus().equals(VisitStatus.FINISHED)){
             throw new RemovalOfFinishedVisitException(visitUUID);
         }else {
@@ -60,16 +62,14 @@ public class VisitServiceImpl implements VisitService {
     public void editVisit(UUID visitUUID, EditVisitDTO editVisitDTO) {
         Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
 
-        if(visit.isEmpty()){
-            throw new VisitNotFoundException(visitUUID);
-        }
-
-        visit.ifPresent(theVisit -> {
-            theVisit.setStatus(editVisitDTO.getStatus());
-            theVisit.setDescription(editVisitDTO.getDescription());
-
-            visitRepository.save(theVisit);
-        });
+        visit.ifPresentOrElse(
+                theVisit -> {
+                    theVisit.setStatus(editVisitDTO.getStatus());
+                    theVisit.setDescription(editVisitDTO.getDescription());
+                    visitRepository.save(theVisit);
+                },
+                () -> {throw new VisitNotFoundException(visitUUID);}
+            );
     }
 
     @Override
@@ -78,31 +78,20 @@ public class VisitServiceImpl implements VisitService {
         Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
         Visit visit = modelMapper.map(visitDTO, Visit.class);
 
-        if(patient.isEmpty()){
-            throw new PatientNotFoundException(patientUUID);
-        }
-
-        patient.ifPresent(thePatient-> {                            //przemyslec czy potrzebne oba isEmpty() i isPresent()
-            visit.setPatient(thePatient);
-            thePatient.getVisits().add(visit);
-            patientRepository.save(thePatient);
-
-            try{                                                    //caly blok try catch do metody register visit in doctor
-                patientClient.registerVisit(thePatient, visitDTO);
-            }catch (HttpClientErrorException e){
-                visitRepository.deleteByVisitUUID(visit.getVisitUUID());
-
-                if(e.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
-                    logger.error(String.format("Appointment is already booked, appointment uuid: '%s'", visitDTO.getAppointmentUUID()), e);
-                    throw new AppointmentAlreadyBookedException(visitDTO.getAppointmentUUID());
-                }else{
-                    logger.error(String.format("Error adding visit in doctor service, deleting visit for patient with uuid: '%s'", patientUUID), e);
-                    throw e;
+        patient.ifPresentOrElse(
+                thePatient -> {
+                    visit.setPatient(thePatient);
+                    thePatient.getVisits().add(visit);
+                    patientRepository.save(thePatient);
+                    registerVisitInDoctorService(visitDTO, visit, thePatient);
+                },
+                () -> {
+                    throw new PatientNotFoundException(patientUUID);
                 }
-            }
-        });
+        );
         return visit;
     }
+
 
     @Override
     public Visit findByUuid(UUID visitUUID) {
@@ -112,6 +101,22 @@ public class VisitServiceImpl implements VisitService {
             return visit.get();
         }else{
             throw new VisitNotFoundException(visitUUID);
+        }
+    }
+
+    private void registerVisitInDoctorService(VisitDTO visitDTO, Visit visit, Patient thePatient) {
+        try{
+            patientClient.registerVisit(thePatient, visitDTO);
+        }catch (HttpClientErrorException e){
+            visitRepository.deleteByVisitUUID(visit.getVisitUUID());
+
+            if(e.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
+                logger.error(String.format("Appointment is already booked, appointment uuid: '%s'", visitDTO.getAppointmentUUID()), e);
+                throw new AppointmentAlreadyBookedException(visitDTO.getAppointmentUUID());
+            }else{
+                logger.error(String.format("Error adding visit in doctor service, deleting visit for patient with uuid: '%s'", thePatient.getPatientUUID()), e);
+                throw e;
+            }
         }
     }
 }

@@ -29,6 +29,6 @@ public class DiseaseController {
 
     @DeleteMapping(value = "/{diseaseUUID}")
     public void removeDisease(@PathVariable UUID visitUUID, @PathVariable UUID diseaseUUID, HttpServletRequest request){
-        diseaseService.removeDisease(visitUUID, diseaseUUID);
+        diseaseService.removeDisease(diseaseUUID);
     }
 }

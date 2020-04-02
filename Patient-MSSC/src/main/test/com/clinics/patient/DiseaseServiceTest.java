@@ -4,6 +4,7 @@ import com.clinics.common.DTO.request.outer.DiseaseDTO;
 import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.entity.Disease;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.DiseaseNotFoundException;
 import com.clinics.patient.exception.RemovalOfFinishedVisitException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.DiseaseRepository;
@@ -61,46 +62,19 @@ class DiseaseServiceTest {
         });
     }
 
-//    @Override
-//    @Transactional
-//    public void removeDisease(UUID visitUUID, UUID diseaseUUID) {
-//        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
-//        Optional<Disease> disease = diseaseRepository.findByDiseaseUUID(diseaseUUID);
-//
-//        if (visit.isEmpty()) {
-//            throw new VisitNotFoundException(visitUUID);
-//        }
-//        if (visit.get().getStatus().equals(VisitStatus.FINISHED)) {
-//            throw new RemovalOfFinishedVisitException(visitUUID);
-//        } else {
-//            diseaseRepository.deleteDiseaseByDiseaseUUID(diseaseUUID);
-//        }
-//    }
-
     @Test
     void shouldRemoveDisease(){
-        when(visitRepository.findByVisitUUID(visitUUID)).thenReturn(Optional.of(visit));
+        when(diseaseRepository.findByDiseaseUUID(diseaseUUID)).thenReturn(Optional.of(disease));
 
-        subject.removeDisease(visitUUID, diseaseUUID);
+        subject.removeDisease(diseaseUUID);
 
         verify(diseaseRepository, times(1)).deleteDiseaseByDiseaseUUID(diseaseUUID);
     }
 
     @Test
-    void RemovalOfFinishedVisitException(){
-        when(visitRepository.findByVisitUUID(visitUUID)).thenReturn(Optional.of(visit));
-        when(diseaseRepository.findByDiseaseUUID(diseaseUUID)).thenReturn(Optional.of(disease));
-        visit.setStatus(VisitStatus.FINISHED);
-
-        Assertions.assertThrows(RemovalOfFinishedVisitException.class, () -> {
-            subject.removeDisease(visitUUID, diseaseUUID);
-        });
-    }
-
-    @Test
-    void shouldThrowVisitNotFoundExceptionRemoveDisease(){
-        Assertions.assertThrows(VisitNotFoundException.class, () -> {
-            subject.removeDisease(visitUUID, diseaseUUID);
+    void shouldThrowDiseaseNotFoundExceptionRemoveDisease(){
+        Assertions.assertThrows(DiseaseNotFoundException.class, () -> {
+            subject.removeDisease(diseaseUUID);
         });
     }
 }

@@ -1,10 +1,9 @@
 package com.clinics.patient.service;
 
 import com.clinics.common.DTO.request.outer.DiseaseDTO;
-import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.entity.Disease;
 import com.clinics.patient.entity.Visit;
-import com.clinics.patient.exception.RemovalOfFinishedVisitException;
+import com.clinics.patient.exception.DiseaseNotFoundException;
 import com.clinics.patient.exception.VisitNotFoundException;
 import com.clinics.patient.repository.DiseaseRepository;
 import com.clinics.patient.repository.VisitRepository;
@@ -43,22 +42,19 @@ public class DiseaseServiceImpl implements DiseaseService{
             disease.getVisits().add(theVisit);
             diseaseRepository.save(disease);
         });
+
         return disease;
     }
 
     @Override
     @Transactional
-    public void removeDisease(UUID visitUUID, UUID diseaseUUID) {
-        Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
+    public void removeDisease(UUID diseaseUUID) {
         Optional<Disease> disease = diseaseRepository.findByDiseaseUUID(diseaseUUID);
 
-        if (visit.isEmpty()) {
-            throw new VisitNotFoundException(visitUUID);
+        if(disease.isEmpty()){
+            throw new DiseaseNotFoundException(diseaseUUID);
         }
-        if (visit.get().getStatus().equals(VisitStatus.FINISHED)) {
-            throw new RemovalOfFinishedVisitException(visitUUID);
-        } else {
-            diseaseRepository.deleteDiseaseByDiseaseUUID(diseaseUUID);
-        }
+
+        diseaseRepository.deleteDiseaseByDiseaseUUID(diseaseUUID);
     }
 }
