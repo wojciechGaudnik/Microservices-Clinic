@@ -23,13 +23,31 @@ public class BootStrapPatients implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 
 		Visit visit1 = Visit
 				.builder()
 				.date(LocalDateTime.now())
-				.description("Tralala")
+				.description("Visit1")
 				.doctorUUID(UUID.fromString("03f0f891-b243-4547-803b-605f72b11be9"))
+				.status(VisitStatus.NEW)
+				.visitUUID(UUID.randomUUID())
+				.build();
+
+		Visit visit2 = Visit
+				.builder()
+				.date(LocalDateTime.now())
+				.description("Visit2")
+				.doctorUUID(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
+				.status(VisitStatus.FINISHED)
+				.visitUUID(UUID.randomUUID())
+				.build();
+
+		Visit visit3 = Visit
+				.builder()
+				.date(LocalDateTime.now())
+				.description("Visit3")
+				.doctorUUID(UUID.fromString("fbb44683-a210-4a93-8a17-c84f16954d8d"))
 				.status(VisitStatus.NEW)
 				.visitUUID(UUID.randomUUID())
 				.build();
@@ -41,10 +59,12 @@ public class BootStrapPatients implements CommandLineRunner {
 				.lastName("Maciejkowski")
 				.photoUrl("http://maciej.pl")
 				.pesel("89103005444")
-				.visits(Collections.singletonList(visit1))
+				.visits(Arrays.asList(visit1, visit2, visit3))
 				.build();
 
 		visit1.setPatient(patient1);
+		visit2.setPatient(patient1);
+		visit3.setPatient(patient1);
 		patientRepository.save(patient1);
 	}
 }

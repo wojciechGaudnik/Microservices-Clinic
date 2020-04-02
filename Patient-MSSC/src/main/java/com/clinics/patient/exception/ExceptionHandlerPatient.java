@@ -38,7 +38,6 @@ public class ExceptionHandlerPatient {
         return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
-
     @ExceptionHandler({AppointmentAlreadyBookedException.class})
     public ResponseEntity<Object> appointmentAlreadyBookedException(Exception exception, WebRequest request) {
         ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
@@ -49,5 +48,17 @@ public class ExceptionHandlerPatient {
                 .webRequest(request)
                 .build();
         return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({DiseaseNotFoundException.class})
+    public ResponseEntity<Object> removalOfNotFoundDiseaseException(Exception exception, WebRequest request) {
+        ErrorMessageCustom errorMessageCustom = ErrorMessageCustom
+                .builder()
+                .status(HttpStatus.NOT_FOUND)
+                .error("Disease not found")
+                .errors(new HashMap<>(){{put("defaultMessage", exception.getMessage());}})
+                .webRequest(request)
+                .build();
+        return new ResponseEntity<>(errorMessageCustom, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 }

@@ -15,11 +15,9 @@ public class EditPatientDTO {
 	@Size(min = 11, max = 11, message = "pesel must have exactly 11 characters")
 	private String pesel;
 
-	@NotBlank(message = "fistName is mandatory")
 	@Size(min = 2, max = 100, message = "firstName length out of range")
 	private String firstName;
 
-	@NotBlank(message = "lastName is mandatory")
 	@Size(min = 3, max = 100, message = "lastName length out of range")
 	private String lastName;
 

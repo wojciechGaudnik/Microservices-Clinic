@@ -41,4 +41,6 @@ public class Disease {
             joinColumns = {@JoinColumn(name = "disease_id")},
             inverseJoinColumns = {@JoinColumn(name = "visit_id")})
     private Collection<Visit> visits = new ArrayList<>();
+
+    //TODO description so that this entity makes sense
 }

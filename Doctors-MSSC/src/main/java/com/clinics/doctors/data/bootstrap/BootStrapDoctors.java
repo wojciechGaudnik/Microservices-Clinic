@@ -114,10 +114,10 @@ public class BootStrapDoctors implements CommandLineRunner {
 				.photoUrl("http://ela.pl")
 				.licence("Licence example doctor 3")
 				.build();
-
+		//TODO maybe remove that hardcoded uuid
 		Appointment appointment1 = Appointment
 				.builder()
-				.appointmentUUID(UUID.randomUUID())
+				.appointmentUUID(UUID.fromString("91898129-bdb7-42f0-808c-e3c1a5ecaf06"))
 				.localDateTime(LocalDateTime.now())
 				.duration(Duration.ofMinutes(60))
 				.build();
