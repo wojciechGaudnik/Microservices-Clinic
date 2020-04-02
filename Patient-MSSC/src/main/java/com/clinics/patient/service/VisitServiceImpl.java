@@ -2,6 +2,7 @@ package com.clinics.patient.service;
 
 import com.clinics.common.DTO.request.outer.EditVisitDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.exception.validators.AppointmentAlreadyBookedException;
 import com.clinics.common.patient.VisitStatus;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
@@ -14,7 +15,9 @@ import com.clinics.patient.repository.VisitRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -35,6 +38,10 @@ public class VisitServiceImpl implements VisitService {
         this.modelMapper = modelMapper;
     }
 
+    //TODO delete visit in doctor by edditing appointment
+    //TODO sprawdz tylko czy jest mozliwosc usuniecia pacjeta z appointmentu jak sie rozmysli bez usuwania calego appointment
+    //TODo use ifPresentOrElse
+
     @Override
     @Transactional
     public void deleteByUuid(UUID visitUUID) {
@@ -43,6 +50,7 @@ public class VisitServiceImpl implements VisitService {
         if(visit.isEmpty()){
             throw new VisitNotFoundException(visitUUID);
         }
+
         if(visit.get().getStatus().equals(VisitStatus.FINISHED)){
             throw new RemovalOfFinishedVisitException(visitUUID);
         }else {
@@ -54,16 +62,14 @@ public class VisitServiceImpl implements VisitService {
     public void editVisit(UUID visitUUID, EditVisitDTO editVisitDTO) {
         Optional<Visit> visit = visitRepository.findByVisitUUID(visitUUID);
 
-        if(visit.isEmpty()){
-            throw new VisitNotFoundException(visitUUID);
-        }
-
-        visit.ifPresent(theVisit -> {
-            theVisit.setStatus(editVisitDTO.getStatus());
-            theVisit.setDescription(editVisitDTO.getDescription());
-
-            visitRepository.save(theVisit);
-        });
+        visit.ifPresentOrElse(
+                theVisit -> {
+                    theVisit.setStatus(editVisitDTO.getStatus());
+                    theVisit.setDescription(editVisitDTO.getDescription());
+                    visitRepository.save(theVisit);
+                },
+                () -> {throw new VisitNotFoundException(visitUUID);}
+            );
     }
 
     @Override
@@ -72,25 +78,20 @@ public class VisitServiceImpl implements VisitService {
         Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
         Visit visit = modelMapper.map(visitDTO, Visit.class);
 
-        if(patient.isEmpty()){
-            throw new PatientNotFoundException(patientUUID);
-        }
-
-        patient.ifPresent(thePatient-> {
-            visit.setPatient(thePatient);
-            thePatient.getVisits().add(visit);
-            patientRepository.save(thePatient);
-
-            try{
-                patientClient.registerVisit(thePatient, visitDTO);
-            }catch (Exception e){
-                logger.error(String.format("Error adding visit in doctor service, deleting visit for patient with uuid: '%s'", patientUUID), e);
-                visitRepository.deleteByVisitUUID(visit.getVisitUUID());
-                throw e;
-            }
-        });
+        patient.ifPresentOrElse(
+                thePatient -> {
+                    visit.setPatient(thePatient);
+                    thePatient.getVisits().add(visit);
+                    patientRepository.save(thePatient);
+                    registerVisitInDoctorService(visitDTO, visit, thePatient);
+                },
+                () -> {
+                    throw new PatientNotFoundException(patientUUID);
+                }
+        );
         return visit;
     }
+
 
     @Override
     public Visit findByUuid(UUID visitUUID) {
@@ -100,6 +101,22 @@ public class VisitServiceImpl implements VisitService {
             return visit.get();
         }else{
             throw new VisitNotFoundException(visitUUID);
+        }
+    }
+
+    private void registerVisitInDoctorService(VisitDTO visitDTO, Visit visit, Patient thePatient) {
+        try{
+            patientClient.registerVisit(thePatient, visitDTO);
+        }catch (HttpClientErrorException e){
+            visitRepository.deleteByVisitUUID(visit.getVisitUUID());
+
+            if(e.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
+                logger.error(String.format("Appointment is already booked, appointment uuid: '%s'", visitDTO.getAppointmentUUID()), e);
+                throw new AppointmentAlreadyBookedException(visitDTO.getAppointmentUUID());
+            }else{
+                logger.error(String.format("Error adding visit in doctor service, deleting visit for patient with uuid: '%s'", thePatient.getPatientUUID()), e);
+                throw e;
+            }
         }
     }
 }

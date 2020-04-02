@@ -26,4 +26,9 @@ public class DiseaseController {
     public ResponseEntity<Disease> addDisease(@PathVariable UUID visitUUID, HttpServletRequest request, @RequestBody DiseaseDTO diseaseDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(diseaseService.addDisease(visitUUID, diseaseDTO));
     }
+
+    @DeleteMapping(value = "/{diseaseUUID}")
+    public void removeDisease(@PathVariable UUID visitUUID, @PathVariable UUID diseaseUUID, HttpServletRequest request){
+        diseaseService.removeDisease(diseaseUUID);
+    }
 }

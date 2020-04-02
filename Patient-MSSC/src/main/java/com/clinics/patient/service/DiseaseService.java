@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface DiseaseService {
     Disease addDisease(UUID visitUUID, DiseaseDTO diseaseDTO);
+    void removeDisease(UUID diseaseUUID);
 }

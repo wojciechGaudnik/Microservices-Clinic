@@ -1,5 +1,6 @@
 package com.clinics.patient.client;
 
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
 import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
@@ -14,6 +15,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @Component
@@ -25,7 +27,6 @@ public class PatientClient {
     }
 
     public void registerVisit(Patient patient, VisitDTO visitDTO){
-
         AppointmentDTO appointmentDTO = new AppointmentDTO();
         appointmentDTO.setPatientUUID(patient.getPatientUUID());
         appointmentDTO.setPatientFirstName(patient.getFirstName());
@@ -35,5 +36,17 @@ public class PatientClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO, httpHeaders);
         restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
+    }
+
+    public void activatePatientInAuth(RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
+        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getPatientUUID());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
+        HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
+        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+    }
+
+    public void cancelVisit(Patient patient){
+
     }
 }
