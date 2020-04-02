@@ -32,13 +32,6 @@ public class PatientConfig extends BeanFactory implements ApplicationContextAwar
 		return httpComponentsClientHttpRequestFactory;
 	}
 
-	@Bean
-	public ModelMapper getModelMapper(){
-		var modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		return modelMapper;
-	}
-
 	//This to serialize LocalDateTime to format like 2019-02-08T13:30:00
 	@Bean
 	@Primary

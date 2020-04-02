@@ -6,6 +6,7 @@ import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
 import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.entity.Patient;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,8 +34,7 @@ public class PatientClient {
         appointmentDTO.setPatientSecondName(patient.getLastName());
 
         String url = String.format("http://doctor-mssc/doctors/%s/calendars/%s/appointments/%s", visitDTO.getDoctorUUID(), visitDTO.getCalendarUUID(), visitDTO.getAppointmentUUID());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO, httpHeaders);
+        HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO);
         restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
     }
 
@@ -46,6 +46,7 @@ public class PatientClient {
         restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
     }
 
+    //TODO
     public void cancelVisit(Patient patient){
 
     }
