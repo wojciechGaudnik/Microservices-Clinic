@@ -13,6 +13,7 @@ import java.util.UUID;
 public class AppointmentDTO {
 
 	private LocalDateTime localDateTime;
+
 	@DurationMax(minutes = 60)
 	@DurationMin(minutes = 10)
 	private Duration duration;

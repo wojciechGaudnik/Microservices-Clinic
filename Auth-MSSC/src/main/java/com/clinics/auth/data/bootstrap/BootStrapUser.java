@@ -48,6 +48,7 @@ public class BootStrapUser implements CommandLineRunner, Role {
 				.email("maciej@maciej.pl")
 				.password(passwordEncoder.encode("12345"))
 				.role(Role.PATIENT)
+				.isEnabled(true)
 				.build();
 		User userDoctor1 = User
 				.builder()

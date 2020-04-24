@@ -6,7 +6,6 @@ import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
 import com.clinics.patient.service.PatientService;
-import com.clinics.patient.service.VisitService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +46,10 @@ public class PatientController {
     @GetMapping(path = "/{patientUUID}/visits")
     public List<Visit> getAllVisits(@PathVariable UUID patientUUID) {
         return patientService.findAllVisits(patientUUID);
+    }
+
+    @DeleteMapping(path = "/{patientUUID}")
+    public void deletePatient(@PathVariable UUID patientUUID) {
+        patientService.deleteByUuid(patientUUID);
     }
 }
