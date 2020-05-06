@@ -7,6 +7,15 @@ import PatientPage from "./EmployeeComponents/PatientPage/SetPatientPage";
 import {AssistantPage} from "./EmployeeComponents/AssistantPage/AssistantPage";
 import {MainPage} from "./MainComponents/MainPage/MainPage";
 
+/*
+    TODO:
+        1. Zrefaktorować zapytania fetchowe użyć useReducers
+        2. Zrefaktorować useEffects
+        3. Zrefaktorować useState na obiekty a nie osobne stany
+        4. Sprawdzic jak wygląda operowanie na podkomponentach z perspektywy nadkomponentów
+        5. Gdy będzie wszystko gotowe usunąć Redux-a
+*/
+
 const App = () => (
     <BrowserRouter>
         <div className="App">

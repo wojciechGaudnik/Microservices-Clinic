@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Badge, Button, Container, Row} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 
 import {
     sendFetchRequestChangeUserInformation,
@@ -8,22 +8,18 @@ import {
     styleForBackToLoginPageButton,
     styleForMainContainer,
     styleForMainDiv,
-    styleForMainDivError,
-    styleForSubContainer
+    styleForMainDivError
 } from "./SetPatientPage";
-
-import {styleForContainer} from "../../AdditionalComponents/ContainerForUserInformation/SetContainerForUserInfo"
-
-import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import AppBar from "@material-ui/core/AppBar";
 import {Tab, Tabs} from "@material-ui/core";
 import TabPanel from "../../AdditionalComponents/TabPanel";
-import VisitsComponent from "../DoctorPage/DoctorPageComponents/VisitsComponent";
 import DeleteAccountComponent from "../DoctorPage/DoctorPageComponents/DeleteAccountComponent";
 import {redirectByRole} from "../../../actions";
 import PatientInfoComponent from "./PatientPageComponents/PatientInfoComponent";
 import EditDataFormComponent from "./PatientPageComponents/EditDataFormComponent";
+import VisitsComponent from "./PatientPageComponents/VisitsComponent";
+import VisitRegistration from "./PatientPageComponents/VisitRegistration";
 
 export const PatientPage = (props) => {
     const [userInformationHasBeenEdit, setUserInformationHasBeenEdit] = useState(false);
@@ -94,24 +90,25 @@ export const PatientPage = (props) => {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <VisitsComponent
-                                    doctorUUID={userDetails.uuid}
-                                />
+                                <VisitsComponent/>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
+                                <VisitRegistration/>
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
                                 <PatientInfoComponent
                                     fetchRequest={fetchRequestForContainerForUserInformation}
                                     userInformationHasBeenEdit={userInformationHasBeenEdit}
                                 />
                             </TabPanel>
-                            <TabPanel value={value} index={2}>
+                            <TabPanel value={value} index={3}>
                                 <EditDataFormComponent
                                     fetchRequest={fetchRequestForFormForInputUserInformation}
                                     submitButtonAdditionalActions={() => setUserInformationHasBeenEdit(true)}
                                     {...props}
                                 />
                             </TabPanel>
-                            <TabPanel value={value} index={3}>
+                            <TabPanel value={value} index={4}>
                                 <DeleteAccountComponent
                                     {...props}
                                     fetchRequest={fetchRequestForDelAccountBtn}
