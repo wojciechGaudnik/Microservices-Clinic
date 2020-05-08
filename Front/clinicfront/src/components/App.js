@@ -9,21 +9,35 @@ import {MainPage} from "./MainComponents/MainPage/MainPage";
 
 /*
     TODO:
-        1. Zrefaktorować zapytania fetchowe użyć useReducers
-        2. Zrefaktorować useEffects
-        3. Zrefaktorować useState na obiekty a nie osobne stany
-        4. Sprawdzic jak wygląda operowanie na podkomponentach z perspektywy nadkomponentów
-        5. Gdy będzie wszystko gotowe usunąć Redux-a
+        X 1. Zrefaktorować zapytania fetchowe użyć useReducers
+        X 2. Zrefaktorować useEffects
+        X 3. Zrefaktorować useState na obiekty a nie osobne stany
+        X 4. Zbudowanie prawidłowo wygladających kontenerów i komponentów:
+            X #1. Zbudowanie w prawidłowy sposób kontenerów
+            X #2. Zbudowanie w prawidłowy sposób komponentów
+        5. Sprawdzic jak wygląda operowanie na podkomponentach z perspektywy nadkomponentów
+        6. Gdy będzie wszystko gotowe usunąć Redux-a
+        7. Uporządkować pliki i foldery
+        8. Użyć sesji do logowania zalogowanego uzytkownika
+        9. Zmienić i zapoznać sie z funkcją render
 */
 
 const App = () => (
     <BrowserRouter>
         <div className="App">
             <Switch>
-                <Route exact path="/" render={props => <MainPage {...props}/>}/>
-                <Route path="/doctor" render={props => <DoctorPage {...props}/>}/>
-                <Route path="/patient" render={props => <PatientPage {...props}/>}/>
-                <Route path="/assistant" render={AssistantPage}/>
+                <Route exact path="/">
+                  <MainPage/>
+                </Route>
+                <Route path="/doctor">
+                  <DoctorPage/>
+                </Route>
+                <Route path="/patient">
+                  <PatientPage/>
+                </Route>
+                <Route path="/assistant">
+                  <AssistantPage/>
+                </Route>
             </Switch>
         </div>
     </BrowserRouter>

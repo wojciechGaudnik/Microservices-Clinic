@@ -41,6 +41,8 @@ export const sendRequestByGivenDetails = (
                 setInStateFunction(responseJSONData);
             }else if (specialFunction){
                 specialFunction(responseJSONData);
+            }else {
+                return responseJSONData;
             }
         })
         .catch((err) => console.log(err))
