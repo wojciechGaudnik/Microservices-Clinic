@@ -22,7 +22,7 @@ export const LoginPage = (props) => {
       />
       <FormForInputUserInformation
         {...props}
-        fetchRequest        ={(loginDetails) => {sendFetchForLoginUser(loginDetails); console.log("Fetch tutaj")}}
+        fetchRequest        ={(loginDetails) => {sendFetchForLoginUser(loginDetails)}}
         submitButtonTitle   ="Log In"
         showEmailForm       ={true}
         showPasswordForm    ={true}

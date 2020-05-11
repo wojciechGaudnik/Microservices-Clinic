@@ -44,11 +44,10 @@ const ContainerLoginPage = (props) => {
   let history = useHistory();
   useEffect(() => {
     setStoreUserDetails(userDetails);
-    console.log(userDetails);
     if (userDetails.role){
       history.push("/doctor");
     }
-  }, [userDetails.role, userDetails, props, setStoreUserDetails]);
+  }, [userDetails.role, userDetails, setStoreUserDetails]);
 
   useEffect(() => {
     const sendFetch = async () => {
@@ -115,7 +114,6 @@ const ContainerLoginPage = (props) => {
 
   return (
     children({
-      props,
       userDetails,
       dispatchUserState,
       sendFetchForLoginUser

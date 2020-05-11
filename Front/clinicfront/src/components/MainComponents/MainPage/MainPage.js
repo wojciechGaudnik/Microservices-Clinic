@@ -25,9 +25,7 @@ export const MainPage = (props) => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-              <ContainerLoginPage
-                {...props}
-              >
+              <ContainerLoginPage>
                 {({userDetails, dispatchUserState, sendFetchForLoginUser}) => (
                   <>
                     <LoginPage
