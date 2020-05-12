@@ -1,8 +1,8 @@
-#Clinic
+**Clinic**
 
 This is an online clinic where as a patient we can register visits to doctors, view what visits are available, register and log in as a doctor or patient. In this project I was responsible for the front-end. This project is created to be part of learning
 
-###Features: 
+**Features**: 
   * Login
   * Register
   * Change user details
