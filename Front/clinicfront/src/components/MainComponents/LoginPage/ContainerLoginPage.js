@@ -2,15 +2,10 @@ import React, {useEffect, useReducer} from "react";
 import {URLs} from "../../../URLs";
 import {useHistory} from "react-router";
 
-const ContainerLoginPage = (props) => {
-
-  const {
-    setStoreUserDetails,
-    children
-  } = props;
+const ContainerLoginPage = ({setStoreUserDetails, children}) => {
 
   //Here we create reducer
-  const checkLoginUser = (state, action) => {
+  const logInUser = (state, action) => {
     switch (action.type) {
       case "LOGIN_SUCCESS":
         return {
@@ -38,7 +33,7 @@ const ContainerLoginPage = (props) => {
     isError: false
   };
   const init = (initialState) => initialState;
-  const [userDetails, dispatchUserState] = useReducer(checkLoginUser, initialState, init);
+  const [userDetails, dispatchUserState] = useReducer(logInUser, initialState, init);
 
   //Here we have Effects
   let history = useHistory();
@@ -53,14 +48,17 @@ const ContainerLoginPage = (props) => {
     const sendFetch = async () => {
       if (localStorage.token && !userDetails.role){
         try {
+          const init = {
+            method: 'GET',
+            body: null,
+            headers: {'Authorization': localStorage.token}
+          };
+
           const response = await fetch(
             URLs.GET_DETAILS_BY_TOKEN,
-            {
-              method: 'GET',
-              body: null,
-              headers: {'Authorization': localStorage.token}
-            }
+            init
           );
+
           const result = await response.json();
 
           dispatchUserState({

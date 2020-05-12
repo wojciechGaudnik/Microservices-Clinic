@@ -18,7 +18,7 @@ import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponen
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
-import {styleForMainContainer} from "../../MainComponents/MainPage/SetMainPage";
+import {styleForMainContainer} from "../../MainComponents/MainPage/ContainerMainPage";
 
 
 export const DoctorPage = (props) => {

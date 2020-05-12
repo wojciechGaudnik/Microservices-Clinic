@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import {styleForTypography} from "../MainComponents/MainPage/SetMainPage";
+import {styleForTypography} from "../MainComponents/MainPage/ContainerMainPage";
 import Box from "@material-ui/core/Box";
 import React from "react";
 
