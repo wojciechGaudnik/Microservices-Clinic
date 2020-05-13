@@ -38,10 +38,12 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
   //Here we have Effects
   let history = useHistory();
   useEffect(() => {
-    setStoreUserDetails(userDetails);
-    if (userDetails.role){
-      history.push("/doctor");
-    }
+    const redirectAfterChangeRole = () => {
+      if (userDetails.role){
+        setStoreUserDetails(userDetails);
+        history.push(`/${userDetails.role}`);
+    }};
+    redirectAfterChangeRole();
   }, [userDetails.role, userDetails, setStoreUserDetails]);
 
   useEffect(() => {
