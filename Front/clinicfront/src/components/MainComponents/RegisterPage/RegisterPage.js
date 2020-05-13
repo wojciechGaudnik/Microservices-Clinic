@@ -14,40 +14,40 @@ export const RegisterPage = (props) => {
   } = props;
 
   const whichForm = () => {
-      switch (registerStatus.roleNewUser) {
-          case "doctor":
-              return(
-                  <FormForInputUserInformation
-                      {...props}
-                      fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-                      role                ={registerStatus.roleNewUser}
-                      submitButtonTitle   ="Register"
-                      showEmailForm       ={true}
-                      showPasswordForm    ={true}
-                      showFirstNameForm   ={true}
-                      showLastNameForm    ={true}
-                      showLicenceForm     ={true}
-                      showPhotoURLForm    ={true}
-                  />
-              );
-          case "patient":
-              return(
-                  <FormForInputUserInformation
-                      {...props}
-                      fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-                      role                ={registerStatus.roleNewUser}
-                      submitButtonTitle   ="Register"
-                      showEmailForm       ={true}
-                      showPasswordForm    ={true}
-                      showFirstNameForm   ={true}
-                      showLastNameForm    ={true}
-                      showPhotoURLForm    ={true}
-                      showPeselForm       ={true}
-                  />
-              );
-          default:
-              return null;
-      }
+    switch (registerStatus.roleNewUser) {
+      case "doctor":
+        return(
+          <FormForInputUserInformation
+            {...props}
+            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+            role                ={registerStatus.roleNewUser}
+            submitButtonTitle   ="Register"
+            showEmailForm       ={true}
+            showPasswordForm    ={true}
+            showFirstNameForm   ={true}
+            showLastNameForm    ={true}
+            showLicenceForm     ={true}
+            showPhotoURLForm    ={true}
+          />
+        );
+      case "patient":
+        return(
+          <FormForInputUserInformation
+            {...props}
+            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+            role                ={registerStatus.roleNewUser}
+            submitButtonTitle   ="Register"
+            showEmailForm       ={true}
+            showPasswordForm    ={true}
+            showFirstNameForm   ={true}
+            showLastNameForm    ={true}
+            showPhotoURLForm    ={true}
+            showPeselForm       ={true}
+          />
+        );
+      default:
+          return null;
+    }
   };
 
   //Main HTML return
