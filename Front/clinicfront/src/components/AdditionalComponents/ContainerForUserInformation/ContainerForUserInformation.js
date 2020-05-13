@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {styleForContainer} from "./SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
@@ -6,9 +6,7 @@ import {List, ListItemText, Typography,} from "@material-ui/core";
 export const ContainerForUserInformation = (props) => {
 
   const {
-    userInformationHasBeenEdit,
     doctorInformation,
-    fetchRequest,
     firstName,
     lastName,
     licence,
@@ -20,7 +18,7 @@ export const ContainerForUserInformation = (props) => {
   //Main HTML return
   const displaySpecializations = () => {
     let specializationsShow = '';
-    for (let item in doctorInformation.specializations){
+    for (let item in doctorInformation.specializations) {
       if (doctorInformation.specializations.hasOwnProperty(item)) {
         specializationsShow += doctorInformation.specializations[item].name + "  ";
       }
@@ -63,15 +61,15 @@ export const ContainerForUserInformation = (props) => {
     )
   };
 
-  return(
+  return (
     <Container style={styleForContainer}>
       <List>
         <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
-        {firstName        ? (displayEachInfo(doctorInformation.firstName, "First Name")) : null}
-        {lastName         ? (displayEachInfo(doctorInformation.lastName, "Last Name")) : null}
-        {licence          ? (displayEachInfo(doctorInformation.licence, "Licence")) : null}
-        {specializations  ? (displayEachInfo(doctorInformation.specializations, "Specializations")) : null}
-        {pesel            ? (displayEachInfo(doctorInformation.pesel, "PESEL")) : null}
+        {firstName ? (displayEachInfo(doctorInformation.firstName, "First Name")) : null}
+        {lastName ? (displayEachInfo(doctorInformation.lastName, "Last Name")) : null}
+        {licence ? (displayEachInfo(doctorInformation.licence, "Licence")) : null}
+        {specializations ? (displayEachInfo(doctorInformation.specializations, "Specializations")) : null}
+        {pesel ? (displayEachInfo(doctorInformation.pesel, "PESEL")) : null}
       </List>
     </Container>
 
