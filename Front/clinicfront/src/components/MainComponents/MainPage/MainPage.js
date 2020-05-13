@@ -11,21 +11,21 @@ import ContainerRegisterPage from "../RegisterPage/ContainerRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 
 export const MainPage = () => {
-    const [value, setValue] = useState(0);
+    const [whichPage, setPage] = useState(0);
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+      setPage(newValue);
     };
 
     return (
         <Container maxWidth="sm" style={styleForMainContainer}>
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} variant="fullWidth">
+                <Tabs value={whichPage} onChange={handleChange} variant="fullWidth">
                     <Tab label="Log In"/>
                     <Tab label="Register"/>
                 </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0}>
+            <TabPanel value={whichPage} index={0}>
               <ContainerLoginPage>
                 {({userDetails, dispatchUserState, sendFetchForLoginUser}) => (
                   <LoginPage
@@ -36,7 +36,7 @@ export const MainPage = () => {
                 )}
               </ContainerLoginPage>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={whichPage} index={1}>
               <ContainerRegisterPage>
                 {({fetchRegisterNewUser, registerStatus, dispatchRegisterStatus, handleChangeRole}) => (
                   <RegisterPage
