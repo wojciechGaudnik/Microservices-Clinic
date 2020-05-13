@@ -92,7 +92,7 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
   };
 
   useEffect(() => {
-    const fetchForUserInformation = async () => {
+    const fetchForDoctorInformation = async () => {
       try {
         const init = {
           method: 'GET',
@@ -107,7 +107,7 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
         dispatchDoctorPageState({type: "SETTING_INFORMATION_FAILED"})
       }
     };
-    fetchForUserInformation();
+    fetchForDoctorInformation();
   }, [doctorPageState.userInformationHasBeenEdit]);
 
   const onClickChangeTabPanel = (event, newValue) => {

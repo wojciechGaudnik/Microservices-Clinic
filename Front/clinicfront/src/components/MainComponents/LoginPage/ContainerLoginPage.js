@@ -97,7 +97,6 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
     } catch (e) {
       dispatchUserState({type: "LOGIN_FAILED"});
     }
-    console.log("hello")
   };
 
   return (

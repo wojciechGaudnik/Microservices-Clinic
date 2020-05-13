@@ -56,45 +56,55 @@ export const ContainerRegisterPage = ({children}) => {
       };
       const response = await fetch(URLs.REGISTER_USER, init);
       const result = await response.json();
-      switch(registerDetails.role) {
-        case "doctor":
-          const nextStepBodyDoctor = JSON.stringify({
-            "doctorUUID": result.userUUID,
-            "firstName": registerDetails.firstName,
-            "lastName": registerDetails.lastName,
-            "licence": registerDetails.licence,
-            "photoUrl": registerDetails.photoUrl
-          });
-          const nextStepInitDoctor = {
-            method: 'POST',
-            body: nextStepBodyDoctor,
-            headers: {
-              'Authorization': result.token,
-              'Content-Type': 'application/json;charset=UTF-8',
+
+        switch(registerDetails.role) {
+          case "doctor":
+            const nextStepBodyDoctor = JSON.stringify({
+              "doctorUUID": result.userUUID,
+              "firstName": registerDetails.firstName,
+              "lastName": registerDetails.lastName,
+              "licence": registerDetails.licence,
+              "photoUrl": registerDetails.photoUrl
+            });
+            const nextStepInitDoctor = {
+              method: 'POST',
+              body: nextStepBodyDoctor,
+              headers: {
+                'Authorization': result.token,
+                'Content-Type': 'application/json;charset=UTF-8',
+              }
+            };
+            const responseDoctor = await fetch(URLs.REGISTER_DOCTOR, nextStepInitDoctor);
+            if (responseDoctor){
+              dispatchRegisterStatus({type: "REGISTER_SUCCESSFUL"})
+            } else {
+              dispatchRegisterStatus({type: "REGISTER_FAILED"})
             }
-          };
-          await fetch(URLs.REGISTER_DOCTOR, nextStepInitDoctor);
-          break;
-        case "patient":
-          const nextStepBodyPatient = {
-            patientUUID: result.userUUID,
-            firstName: registerDetails.firstName,
-            lastName: registerDetails.lastName,
-            photoUrl: registerDetails.photoUrl,
-            pesel: registerDetails.pesel
-          };
-          const nextStepInitPatient = {
-            method: 'POST',
-            body: nextStepBodyPatient,
-            headers: {
-              'Authorization': result.token,
-              'Content-Type': 'application/json;charset=UTF-8',
+            break;
+          case "patient":
+            const nextStepBodyPatient = JSON.stringify({
+              patientUUID: result.userUUID,
+              firstName: registerDetails.firstName,
+              lastName: registerDetails.lastName,
+              photoUrl: registerDetails.photoUrl,
+              pesel: registerDetails.pesel
+            });
+            const nextStepInitPatient = {
+              method: 'POST',
+              body: nextStepBodyPatient,
+              headers: {
+                'Authorization': result.token,
+                'Content-Type': 'application/json;charset=UTF-8',
+              }
+            };
+            const responsePatient = await fetch(URLs.REGISTER_PATIENT, nextStepInitPatient);
+            if (responsePatient.ok) {
+              dispatchRegisterStatus({type: "REGISTER_SUCCESSFUL"})
+            } else {
+              dispatchRegisterStatus({type: "REGISTER_FAILED"})
             }
-          };
-          await fetch(URLs.REGISTER_PATIENT, nextStepInitPatient);
-          break;
-      }
-      dispatchRegisterStatus({type: "REGISTER_SUCCESSFUL"});
+            break;
+        }
     } catch (e) {
       dispatchRegisterStatus({type: "REGISTER_FAILED"});
     }

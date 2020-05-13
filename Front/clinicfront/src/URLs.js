@@ -4,11 +4,13 @@ export const URLs = {
   REGISTER_PATIENT:               "http://localhost:8762/patient-mssc/patients",
   REGISTER_DOCTOR:                "http://localhost:8762/doctor-mssc/doctors/",
   GET_ALL_DOCTORS:                "http://localhost:8762/doctor-mssc/doctors",
-  GET_PATIENT_INFORMATION:        "http://localhost:8762/patient-mssc/patients/",
   GET_DETAILS_BY_TOKEN:           "http://localhost:8762/auth/users/uuidAndRole/",
   LOGIN_USER:                     "http://localhost:8762/auth/login",
   CHANGE_PATIENT_INFORMATION:     "http://localhost:8762/patient-mssc/patients/",
   DELETE_PATIENT:                 "",
+  GET_PATIENT_INFORMATION:(
+    patientUUID
+  ) => (                      `http://localhost:8762/patient-mssc/patients/${patientUUID}`)        ,
   CHANGE_DOCTOR_INFORMATION:(
     doctorUUID
   ) => (                      `http://localhost:8762/doctor-mssc/doctors/${doctorUUID}`)      ,
