@@ -49,20 +49,13 @@ export const ContainerRegisterPage = ({children}) => {
         "password": registerDetails.password,
         "role": registerDetails.role
       });
-
       const init = {
         method: 'POST',
         body: body,
         headers: {'Content-Type': 'application/json'}
       };
-
-      const response = await fetch(
-        URLs.REGISTER_USER,
-        init
-      );
-
+      const response = await fetch(URLs.REGISTER_USER, init);
       const result = await response.json();
-
       switch(registerDetails.role) {
         case "doctor":
           const nextStepBodyDoctor = JSON.stringify({

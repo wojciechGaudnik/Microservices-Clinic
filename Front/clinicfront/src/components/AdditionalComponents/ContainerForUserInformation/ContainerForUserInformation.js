@@ -5,86 +5,75 @@ import {List, ListItemText, Typography,} from "@material-ui/core";
 
 export const ContainerForUserInformation = (props) => {
 
-    const {
-        userInformationHasBeenEdit,
-        fetchRequest,
-        firstName,
-        lastName,
-        licence,
-        specializations,
-        pesel,
-        titleRole
-    } = props;
+  const {
+    userInformationHasBeenEdit,
+    doctorInformation,
+    fetchRequest,
+    firstName,
+    lastName,
+    licence,
+    specializations,
+    pesel,
+    titleRole
+  } = props;
 
-    const [userInformation, setUserInformation] = useState({});
+  //Main HTML return
+  const displaySpecializations = () => {
+    let specializationsShow = '';
+    for (let item in doctorInformation.specializations){
+      if (doctorInformation.specializations.hasOwnProperty(item)) {
+        specializationsShow += doctorInformation.specializations[item].name + "  ";
+      }
+    }
+    return specializationsShow;
+  };
 
-    useEffect(() => {
-        fetchRequest(setUserInformation);
-    }, [fetchRequest]);
-
-    useEffect(() => {
-        console.log(userInformationHasBeenEdit);
-        if (userInformationHasBeenEdit){fetchRequest(setUserInformation);}
-    }, [userInformationHasBeenEdit, fetchRequest]);
-
-
-    //Main HTML return
-    const displaySpecializations = () => {
-        let specializationsShow = '';
-        for (let item in userInformation.specializations){
-            if (userInformation.specializations.hasOwnProperty(item)) {
-                specializationsShow += userInformation.specializations[item].name + "  ";
-            }
+  const displayEachInfo = (info, title) => {
+    let value;
+    if (title === "Specializations") {
+      value = displaySpecializations();
+    } else {
+      value = info;
+    }
+    return (
+      <ListItemText
+        primary={
+          <React.Fragment>
+            <Typography
+              component="span"
+              variant="overline"
+              color="textPrimary"
+            >
+              {title}
+            </Typography>
+          </React.Fragment>
         }
-        return specializationsShow;
-    };
-
-    const displayEachInfo = (info, title) => {
-        let value;
-        if (title === "Specializations") {
-            value = displaySpecializations();
-        } else {
-            value = info;
+        secondary={
+          <React.Fragment>
+            <Typography
+              component="span"
+              variant="h6"
+              color="primary"
+            >
+              {info ? (value) : null}
+            </Typography>
+          </React.Fragment>
         }
-        return (
-            <ListItemText
-                primary={
-                    <React.Fragment>
-                        <Typography
-                            component="span"
-                            variant="overline"
-                            color="textPrimary"
-                        >
-                            {title}
-                        </Typography>
-                    </React.Fragment>
-                }
-                secondary={
-                    <React.Fragment>
-                        <Typography
-                            component="span"
-                            variant="h6"
-                            color="primary"
-                        >
-                            {info ? (value) : null}
-                        </Typography>
-                    </React.Fragment>
-                }
-            />
-        )
-    };
-
-    return(
-        <Container style={styleForContainer}>
-            <List>
-                <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
-                {firstName        ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
-                {lastName         ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
-                {licence          ? (displayEachInfo(userInformation.licence, "Licence")) : null}
-                {specializations  ? (displayEachInfo(userInformation.specializations, "Specializations")) : null}
-                {pesel            ? (displayEachInfo(userInformation.pesel, "PESEL")) : null}
-            </List>
-        </Container>
-
+      />
     )
+  };
+
+  return(
+    <Container style={styleForContainer}>
+      <List>
+        <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
+        {firstName        ? (displayEachInfo(doctorInformation.firstName, "First Name")) : null}
+        {lastName         ? (displayEachInfo(doctorInformation.lastName, "Last Name")) : null}
+        {licence          ? (displayEachInfo(doctorInformation.licence, "Licence")) : null}
+        {specializations  ? (displayEachInfo(doctorInformation.specializations, "Specializations")) : null}
+        {pesel            ? (displayEachInfo(doctorInformation.pesel, "PESEL")) : null}
+      </List>
+    </Container>
+
+  )
 };

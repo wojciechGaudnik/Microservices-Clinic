@@ -55,14 +55,8 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
             body: null,
             headers: {'Authorization': localStorage.token}
           };
-
-          const response = await fetch(
-            URLs.GET_DETAILS_BY_TOKEN,
-            init
-          );
-
+          const response = await fetch(URLs.GET_DETAILS_BY_TOKEN, init);
           const result = await response.json();
-
           dispatchUserState({
             type: "LOGIN_SUCCESS",
             fetchResults: {
@@ -85,20 +79,13 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
         "email":loginDetails.email,
         "password":loginDetails.password
       });
-
       const init = {
         method: 'POST',
         body: body,
         headers: {},
       };
-
-      const response = await fetch(
-        URLs.LOGIN_USER,
-        init
-      );
-
+      const response = await fetch(URLs.LOGIN_USER, init);
       const result = await response.json();
-
       localStorage.setItem("token", result.token);
       dispatchUserState({
         type: "LOGIN_SUCCESS",
@@ -110,6 +97,7 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
     } catch (e) {
       dispatchUserState({type: "LOGIN_FAILED"});
     }
+    console.log("hello")
   };
 
   return (

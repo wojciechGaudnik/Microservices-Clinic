@@ -2,10 +2,11 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route, Switch} from "react-router";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DoctorPage from "./EmployeeComponents/DoctorPage/SetDoctorPage";
 import PatientPage from "./EmployeeComponents/PatientPage/SetPatientPage";
 import {AssistantPage} from "./EmployeeComponents/AssistantPage/AssistantPage";
-import {MainPage} from "./MainComponents/MainPage/MainPage";
+import MainPage from "./MainComponents/MainPage/MainPage";
+import ContainerDoctorPage from "./EmployeeComponents/DoctorPage/ReduxContainerDoctorPage";
+import DoctorPage from "./EmployeeComponents/DoctorPage/DoctorPage";
 
 /*
     TODO:
@@ -15,11 +16,11 @@ import {MainPage} from "./MainComponents/MainPage/MainPage";
         X 4. Zbudowanie prawidłowo wygladających kontenerów i komponentów:
             X #1. Zbudowanie w prawidłowy sposób kontenerów
             X #2. Zbudowanie w prawidłowy sposób komponentów
-        5. Sprawdzic jak wygląda operowanie na podkomponentach z perspektywy nadkomponentów
-        6. Gdy będzie wszystko gotowe usunąć Redux-a
+        X 5. Sprawdzic jak wygląda operowanie na podkomponentach z perspektywy nadkomponentów
+        X 6. Gdy będzie wszystko gotowe usunąć Redux-a
         7. Uporządkować pliki i foldery
         8. Użyć sesji do logowania zalogowanego uzytkownika
-        9. Zmienić i zapoznać sie z funkcją render
+        X 9. Zmienić i zapoznać sie z funkcją render
 */
 
 const App = () => (
@@ -30,7 +31,25 @@ const App = () => (
                   <MainPage/>
                 </Route>
                 <Route path="/doctor">
-                  <DoctorPage/>
+                  <ContainerDoctorPage>
+                    {({
+                        doctorPageState,
+                        fetchForDeleteAccount,
+                        fetchForChangeUserInformation,
+                        onClickChangeTabPanel,
+                        userDetails,
+                        userInformation
+                    }) => (
+                      <DoctorPage
+                        doctorPageState={doctorPageState}
+                        fetchForDeleteAccount={fetchForDeleteAccount}
+                        fetchForChangeUserInformation={fetchForChangeUserInformation}
+                        onClickChangeTabPanel={onClickChangeTabPanel}
+                        userDetails={userDetails}
+                        userInformation={userInformation}
+                      />
+                    )}
+                  </ContainerDoctorPage>
                 </Route>
                 <Route path="/patient">
                   <PatientPage/>

@@ -1,125 +1,106 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React from "react";
 
-import {Button, Container, Tab, Tabs} from "@material-ui/core";
-
-import {
-    sendFetchRequestChangeUserInformation,
-    sendFetchRequestDeleteUser,
-    sendFetchRequestSetUserInformation,
-    styleForBackToLoginPageButton,
-    styleForMainDiv,
-    styleForMainDivError
-} from "./SetDoctorPage";
+import {Container, Tab, Tabs} from "@material-ui/core";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
-import {redirectByRole} from "../../../actions";
 import DoctorInfoComponent from "./DoctorPageComponents/DoctorInfoComponent";
 import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent";
 import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponent";
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
-import {styleForMainContainer} from "../../MainComponents/MainPage/ContainerMainPage";
+import error_401 from "../../../images/error_401.jpg";
 
+//CSS Stylesheet
+export const styleForMainDiv = {
+  margin: '30px',
+  width: '100%'
+};
+
+export const styleForMainDivError = {
+  margin: '0px',
+  textAlign: 'center',
+  width: '100vw',
+  height: '100vh',
+  backgroundImage: `url(${error_401})`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+};
+
+export const styleForMainGrid = {
+  marginBottom: '15px',
+  marginRight: '25%',
+  marginLeft: '25%',
+  width: '50%'
+};
+
+export const styleForBackToLoginPageButton = {
+  marginTop: '10px',
+  border: '2px solid black'
+};
+
+export const styleForMainContainer = {
+  marginTop: "50px"
+};
 
 export const DoctorPage = (props) => {
-    const [userInformationHasBeenEdit, setUserInformationHasBeenEdit] = useState(false);
-    const [value, setValue] = useState(0);
+  const {
+    doctorPageState,
+    fetchForDeleteAccount,
+    fetchForChangeUserInformation,
+    onClickChangeTabPanel,
+    userDetails
+  } = props;
 
-    const {
-        userDetails,
-        userInformation,
-        setStoreUserInformation,
-        setStoreError,
-        error,
-    } = props;
-
-    useEffect(() => {setUserInformationHasBeenEdit(false)}, [userInformation]);
-
-    //Fetch requests
-    const fetchRequestForContainerForUserInformation = useCallback((setUserInformation)    => sendFetchRequestSetUserInformation(
-        userDetails.uuid,
-        setUserInformation,
-        setStoreUserInformation,
-        {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
-        ), [userDetails.uuid, setStoreUserInformation, setStoreError]);
-
-    const fetchRequestForDelAccountBtn               = ()                        => sendFetchRequestDeleteUser(
-        userDetails.uuid);
-
-    const fetchRequestForFormForInputUserInformation = (inputNewUserInformation) => sendFetchRequestChangeUserInformation(
-        inputNewUserInformation,
-        {ifCatchSetErrorInStore: (error) => {setStoreError(error)}},
-        userDetails.uuid);
-
-    //BackToLoginPageButton
-    const onClickBackToLoginPageButton = () => {
-        setStoreError({isError: false, response: null});
-        redirectByRole(null, props);
-    };
-
-    const onClickChangeTabPanel = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    //Main HTML return
-    return(
-        <div>
-            {error.isError ? (
-                <div style={styleForMainDivError}>
-                    <Button
-                        style={styleForBackToLoginPageButton}
-                        variant="outlined"
-                        size="large"
-                        onClick={() => onClickBackToLoginPageButton()}
-                    >
-                        Back to login site
-                    </Button>
-                </div>
-                ) : (
-                <div style={styleForMainDiv}>
-                    <div>
-                        <LogOutButton {...props}/>
-                    </div>
-                    <div>
-                        <Container maxWidth="md" style={styleForMainContainer}>
-                            <AppBar position="static">
-                                <Tabs value={value} onChange={onClickChangeTabPanel} variant="fullWidth">
-                                    <Tab label="Visits"/>
-                                    <Tab label="User Information"/>
-                                    <Tab label="Edit User Information"/>
-                                    <Tab label="Delete Account"/>
-                                </Tabs>
-                            </AppBar>
-                            <TabPanel value={value} index={0}>
-                                <VisitsComponent
-                                    doctorUUID={userDetails.uuid}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                <DoctorInfoComponent
-                                    fetchRequest={fetchRequestForContainerForUserInformation}
-                                    userInformationHasBeenEdit={userInformationHasBeenEdit}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                <EditDataFormComponent
-                                    fetchRequest={fetchRequestForFormForInputUserInformation}
-                                    submitButtonAdditionalActions={() => setUserInformationHasBeenEdit(true)}
-                                    {...props}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={3}>
-                                <DeleteAccountComponent
-                                    {...props}
-                                    fetchRequest={fetchRequestForDelAccountBtn}
-                                />
-                            </TabPanel>
-                        </Container>
-                    </div>
-                </div>
-            )}
-        </div>
-    )
+  //Main HTML return
+  return (
+    <div style={styleForMainDiv}>
+      <div>
+        <LogOutButton/>
+      </div>
+      <div>
+        <Container
+          maxWidth="md"
+          style={styleForMainContainer}
+        >
+          <AppBar position="static">
+            <Tabs
+              value={doctorPageState.componentToShow}
+              onChange={onClickChangeTabPanel} variant="fullWidth"
+            >
+              <Tab label="Visits"/>
+              <Tab label="User Information"/>
+              <Tab label="Edit User Information"/>
+              <Tab label="Delete Account"/>
+            </Tabs>
+          </AppBar>
+          <TabPanel value={doctorPageState.componentToShow} index={0}>
+            <VisitsComponent
+              doctorUUID={userDetails.uuid}
+            />
+          </TabPanel>
+          <TabPanel value={doctorPageState.componentToShow} index={1}>
+            <DoctorInfoComponent
+              doctorInformation={doctorPageState.doctorInformation}
+              userInformationHasBeenEdit={doctorPageState.userInformationHasBeenEdit}
+            />
+          </TabPanel>
+          <TabPanel value={doctorPageState.componentToShow} index={2}>
+            <EditDataFormComponent
+              fetchRequest={fetchForChangeUserInformation}
+              {...props}
+            />
+          </TabPanel>
+          <TabPanel value={doctorPageState.componentToShow} index={3}>
+            <DeleteAccountComponent
+              fetchRequest={fetchForDeleteAccount}
+              {...props}
+            />
+          </TabPanel>
+        </Container>
+      </div>
+    </div>
+  )
 };
 
 export default DoctorPage
