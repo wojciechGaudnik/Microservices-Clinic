@@ -2,15 +2,9 @@ import React from "react";
 
 import {Button} from "@material-ui/core";
 
-import {redirectByRole} from "../../../actions";
-
-export const DelAccountBtn = (props) => {
-    const { fetchRequest } = props;
-
+export const DelAccountBtn = ({fetchRequest}) => {
     const delUserBtnOnClick = () => {
         fetchRequest();
-        localStorage.removeItem("token");
-        redirectByRole(null, props);
     };
 
     return(

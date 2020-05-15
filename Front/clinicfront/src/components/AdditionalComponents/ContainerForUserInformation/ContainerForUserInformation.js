@@ -6,7 +6,7 @@ import {List, ListItemText, Typography,} from "@material-ui/core";
 export const ContainerForUserInformation = (props) => {
 
   const {
-    doctorInformation,
+    userInformation,
     firstName,
     lastName,
     licence,
@@ -18,9 +18,9 @@ export const ContainerForUserInformation = (props) => {
   //Main HTML return
   const displaySpecializations = () => {
     let specializationsShow = '';
-    for (let item in doctorInformation.specializations) {
-      if (doctorInformation.specializations.hasOwnProperty(item)) {
-        specializationsShow += doctorInformation.specializations[item].name + "  ";
+    for (let item in userInformation.specializations) {
+      if (userInformation.specializations.hasOwnProperty(item)) {
+        specializationsShow += userInformation.specializations[item].name + "  ";
       }
     }
     return specializationsShow;
@@ -65,11 +65,11 @@ export const ContainerForUserInformation = (props) => {
     <Container style={styleForContainer}>
       <List>
         <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
-        {firstName ? (displayEachInfo(doctorInformation.firstName, "First Name")) : null}
-        {lastName ? (displayEachInfo(doctorInformation.lastName, "Last Name")) : null}
-        {licence ? (displayEachInfo(doctorInformation.licence, "Licence")) : null}
-        {specializations ? (displayEachInfo(doctorInformation.specializations, "Specializations")) : null}
-        {pesel ? (displayEachInfo(doctorInformation.pesel, "PESEL")) : null}
+        {firstName ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
+        {lastName ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
+        {licence ? (displayEachInfo(userInformation.licence, "Licence")) : null}
+        {specializations ? (displayEachInfo(userInformation.specializations, "Specializations")) : null}
+        {pesel ? (displayEachInfo(userInformation.pesel, "PESEL")) : null}
       </List>
     </Container>
 

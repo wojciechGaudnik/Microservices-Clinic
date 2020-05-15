@@ -5,6 +5,7 @@ export const DoctorInfoComponent = (props) => {
     return(
         <ContainerForUserInformation
             {...props}
+            userInformation={props.doctorInformation}
             titleRole={"DOCTOR"}
             firstName={true}
             lastName={true}

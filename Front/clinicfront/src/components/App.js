@@ -2,11 +2,12 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route, Switch} from "react-router";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PatientPage from "./EmployeeComponents/PatientPage/SetPatientPage";
 import {AssistantPage} from "./EmployeeComponents/AssistantPage/AssistantPage";
 import MainPage from "./MainComponents/MainPage/MainPage";
 import ContainerDoctorPage from "./EmployeeComponents/DoctorPage/ReduxContainerDoctorPage";
 import DoctorPage from "./EmployeeComponents/DoctorPage/DoctorPage";
+import PatientPage from "./EmployeeComponents/PatientPage/PatientPage";
+import ContainerPatientPage from "./EmployeeComponents/PatientPage/ReduxContainerPatientPage";
 
 /*
     TODO:
@@ -37,7 +38,6 @@ const App = () => (
                         fetchForDeleteAccount,
                         fetchForChangeUserInformation,
                         onClickChangeTabPanel,
-                        userDetails,
                         userInformation
                     }) => (
                       <DoctorPage
@@ -45,14 +45,29 @@ const App = () => (
                         fetchForDeleteAccount={fetchForDeleteAccount}
                         fetchForChangeUserInformation={fetchForChangeUserInformation}
                         onClickChangeTabPanel={onClickChangeTabPanel}
-                        userDetails={userDetails}
                         userInformation={userInformation}
                       />
                     )}
                   </ContainerDoctorPage>
                 </Route>
                 <Route path="/patient">
-                  <PatientPage/>
+                  <ContainerPatientPage>
+                    {({
+                        patientPageState,
+                        userInformation,
+                        onClickChangeTabPanel,
+                        fetchForChangeUserInformation,
+                        fetchForDeleteAccount
+                      }) => (
+                      <PatientPage
+                        patientPageState={patientPageState}
+                        userInformation={userInformation}
+                        onClickChangeTabPanel={onClickChangeTabPanel}
+                        fetchForChangeUserInformation={fetchForChangeUserInformation}
+                        fetchForDeleteAccount={fetchForDeleteAccount}
+                      />
+                    )}
+                  </ContainerPatientPage>
                 </Route>
                 <Route path="/assistant">
                   <AssistantPage/>

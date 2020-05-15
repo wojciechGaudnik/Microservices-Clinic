@@ -16,7 +16,8 @@ export const EditDataFormComponent = (props) => {
             <FormForInputUserInformation
                 {...props}
                 submitButtonTitle   ="Edit"
-                showPeselForm    ={true}
+                showEmailForm       ={true}
+                showPasswordForm    ={true}
                 showFirstNameForm   ={true}
                 showLastNameForm    ={true}
                 showPhotoURLForm    ={true}

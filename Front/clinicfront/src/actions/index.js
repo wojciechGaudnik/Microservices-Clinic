@@ -40,6 +40,12 @@ export const useFormFields = (initialState) => {
     ];
 };
 
+export const logOut = (history) => {
+    localStorage.removeItem("token");
+    history.push("/");
+};
+
+
 export const redirectByRole = (role, props) => {
     switch (role) {
         case "doctor":

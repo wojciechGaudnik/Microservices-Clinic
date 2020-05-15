@@ -7,7 +7,6 @@ import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent"
 import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponent";
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
-import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
 import error_401 from "../../../images/error_401.jpg";
 
 //CSS Stylesheet
@@ -49,7 +48,7 @@ export const DoctorPage = (props) => {
     fetchForDeleteAccount,
     fetchForChangeUserInformation,
     onClickChangeTabPanel,
-    userDetails
+    userInformation
   } = props;
 
   //Main HTML return
@@ -60,7 +59,6 @@ export const DoctorPage = (props) => {
       </div>
       <div>
         <Container
-          maxWidth="md"
           style={styleForMainContainer}
         >
           <AppBar position="static">
@@ -75,9 +73,10 @@ export const DoctorPage = (props) => {
             </Tabs>
           </AppBar>
           <TabPanel value={doctorPageState.componentToShow} index={0}>
-            <VisitsComponent
-              doctorUUID={userDetails.uuid}
-            />
+            {/*<VisitsComponent*/}
+            {/*  doctorUUID={userDetails.uuid}*/}
+            {/*/>*/}
+            hello
           </TabPanel>
           <TabPanel value={doctorPageState.componentToShow} index={1}>
             <DoctorInfoComponent
@@ -88,13 +87,12 @@ export const DoctorPage = (props) => {
           <TabPanel value={doctorPageState.componentToShow} index={2}>
             <EditDataFormComponent
               fetchRequest={fetchForChangeUserInformation}
-              {...props}
+              userInformation={userInformation}
             />
           </TabPanel>
           <TabPanel value={doctorPageState.componentToShow} index={3}>
             <DeleteAccountComponent
               fetchRequest={fetchForDeleteAccount}
-              {...props}
             />
           </TabPanel>
         </Container>

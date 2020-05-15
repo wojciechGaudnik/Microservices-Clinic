@@ -2,15 +2,16 @@ import {ContainerForUserInformation} from "../../../AdditionalComponents/Contain
 import React from "react";
 
 export const PatientInfoComponent = (props) => {
-    return(
-        <ContainerForUserInformation
-            {...props}
-            titleRole={"PATIENT"}
-            firstName={true}
-            lastName={true}
-            pesel={true}
-        />
-    )
+  return(
+    <ContainerForUserInformation
+      {...props}
+      userInformation={props.patientInformation}
+      titleRole={"PATIENT"}
+      firstName={true}
+      lastName={true}
+      pesel={true}
+    />
+  )
 };
 
 export default PatientInfoComponent

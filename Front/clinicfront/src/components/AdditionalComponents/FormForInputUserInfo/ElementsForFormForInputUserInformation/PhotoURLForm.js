@@ -9,7 +9,6 @@ export const PhotoURLForm = (props) => {
     const [messageForIncorrectInput, setMessageForIncorrectInput] = useState(null);
 
     const setGoodInputInAllStates = () => {
-        console.log("photo true");
         setIsCorrectInput(true);
         setIsCorrectInputInForms({photoURLForm: true});
     };
