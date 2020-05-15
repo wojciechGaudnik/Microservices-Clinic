@@ -33,6 +33,8 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
         };
       case "USER_INFORMATION_HAS_BEEN_EDIT_FAILED":
         return state;
+      default:
+        return state;
     }
   };
   const init = (initialState) => initialState;
@@ -110,8 +112,9 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
         dispatchPatientPageState({type: "SETTING_INFORMATION_FAILED"})
       }
     };
-    fetchForPatientInformation()
-  }, [patientPageState.userInformationHasBeenEdit]);
+    fetchForPatientInformation();
+    console.log("Hello")
+  }, [patientPageState.userInformationHasBeenEdit, setStoreUserInformation, userDetails.uuid]);
 
   const onClickChangeTabPanel = (event, newValue) => {
     dispatchPatientPageState({type: "CHANGE_COMPONENT", componentToShow: newValue})

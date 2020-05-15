@@ -1,4 +1,4 @@
-import React, {useReducer} from "react";
+import {useReducer} from "react";
 import {URLs} from "../../../URLs";
 
 export const ContainerRegisterPage = ({children}) => {
@@ -30,7 +30,9 @@ export const ContainerRegisterPage = ({children}) => {
         return {
           ...state,
           showFailMessage: false
-        }
+        };
+      default:
+        return state;
     }
   };
   const initialState = {
@@ -103,6 +105,9 @@ export const ContainerRegisterPage = ({children}) => {
             } else {
               dispatchRegisterStatus({type: "REGISTER_FAILED"})
             }
+            break;
+          default:
+            dispatchRegisterStatus({type: "REGISTER_FAILED"});
             break;
         }
     } catch (e) {

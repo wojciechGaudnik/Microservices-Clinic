@@ -1,9 +1,10 @@
-import React, {useEffect, useReducer} from "react";
+import {useEffect, useReducer} from "react";
 import {URLs} from "../../../URLs";
 import {useHistory} from "react-router";
 
 const ContainerLoginPage = ({setStoreUserDetails, children}) => {
-
+  //History
+  let history = useHistory();
   //Here we create reducer
   const logInUser = (state, action) => {
     switch (action.type) {
@@ -24,7 +25,9 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
         return {
           ...state,
           isError: false
-        }
+        };
+      default:
+        return state;
     }
   };
   const initialState = {
@@ -36,7 +39,6 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
   const [userDetails, dispatchUserState] = useReducer(logInUser, initialState, init);
 
   //Here we have Effects
-  let history = useHistory();
   useEffect(() => {
     const redirectAfterChangeRole = () => {
       if (userDetails.role){
@@ -44,7 +46,7 @@ const ContainerLoginPage = ({setStoreUserDetails, children}) => {
         history.push(`/${userDetails.role}`);
     }};
     redirectAfterChangeRole();
-  }, [userDetails.role, userDetails, setStoreUserDetails]);
+  }, [userDetails.role, userDetails, setStoreUserDetails, history]);
 
   useEffect(() => {
     const sendFetch = async () => {

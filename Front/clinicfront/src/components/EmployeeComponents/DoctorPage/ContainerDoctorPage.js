@@ -32,6 +32,8 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
         };
       case "USER_INFORMATION_HAS_BEEN_EDIT_FAILED":
         return state;
+      default:
+        return state;
     }
   };
   const init = (initialState) => initialState;
@@ -114,7 +116,7 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       }
     };
     fetchForDoctorInformation();
-  }, [doctorPageState.userInformationHasBeenEdit]);
+  }, [doctorPageState.userInformationHasBeenEdit, setStoreUserInformation, userDetails.uuid]);
 
   const onClickChangeTabPanel = (event, newValue) => {
     dispatchDoctorPageState({type: "CHANGE_COMPONENT", componentToShow: newValue});
