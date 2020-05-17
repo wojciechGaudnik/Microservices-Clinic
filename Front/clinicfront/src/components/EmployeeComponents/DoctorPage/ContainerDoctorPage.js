@@ -16,15 +16,24 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
         };
       case "SETTING_INFORMATION_FAILED":
         return state;
+      case "SETTING_ALL_CALENDARS_INFORMATION_SUCCESS":
+        return {
+          ...state,
+          calendars: action.calendars
+        };
+      case "SETTING_ALL_CALENDARS_INFORMATION_FAILED":
+        return state;
+      case "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_SUCCESS":
+        return {
+          ...state,
+          appointments: [...state.appointments, action.appointments]
+        };
+      case "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_FAILED":
+        return state;
       case "DELETE_ACCOUNT_SUCCESS":
         return state;
       case "DELETE_ACCOUNT_FAILED":
         return state;
-      case "CHANGE_COMPONENT":
-        return {
-          ...state,
-          componentToShow: action.componentToShow
-        };
       case "USER_INFORMATION_HAS_BEEN_EDIT_SUCCESS":
         return {
           ...state,
@@ -32,6 +41,18 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
         };
       case "USER_INFORMATION_HAS_BEEN_EDIT_FAILED":
         return state;
+      case "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS":
+        state.calendars.map((calendar, index) =>
+          calendar.appointments = state.appointments[index]
+        );
+        return {...state};
+      case "SETTING_APPOINTMENT_TO_CALENDARS_FAILED":
+        return state;
+      case "CHANGE_COMPONENT":
+        return {
+          ...state,
+          componentToShow: action.componentToShow
+        };
       default:
         return state;
     }
@@ -49,11 +70,80 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       patientsUUIDs: null,
       medicalUnitsUUID: null
     },
+    calendars: null,
+    appointments: null,
     userInformationHasBeenEdit: false,
     componentToShow: 0
   };
   const [doctorPageState, dispatchDoctorPageState] = useReducer(setDoctorPageState, initialState, init);
 
+  useEffect(() => {
+    const fetchForDoctorInformation = async () => {
+      try {
+        const init = {
+          method: 'GET',
+          body: null,
+          headers: {'Authorization': localStorage.token}
+        };
+        const response = await fetch(URLs.GET_DOCTOR_INFORMATION(userDetails.uuid), init);
+        const result = await response.json();
+        setStoreUserInformation(result);
+        dispatchDoctorPageState({type: "SETTING_INFORMATION_SUCCESS", doctorInformation: result})
+      } catch (e) {
+        dispatchDoctorPageState({type: "SETTING_INFORMATION_FAILED"})
+      }
+    };
+    const fetchForSetAllCalendarsInformation = async () => {
+      try {
+        const initCalendars = {
+          method: 'GET',
+          body: null,
+          headers: {'Authorization': localStorage.token}
+        };
+        const responseCalendars = await fetch(URLs.GET_ALL_DOCTOR_CALENDARS(userDetails.uuid), initCalendars)
+          .catch(() => dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"}));
+        const resultCalendars = await responseCalendars.json();
+        dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_SUCCESS", calendars: resultCalendars})
+
+      } catch (e) {
+        dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"})
+      }
+    };
+    fetchForDoctorInformation();
+    fetchForSetAllCalendarsInformation();
+  }, [doctorPageState.userInformationHasBeenEdit, setStoreUserInformation, userDetails.uuid]);
+  useEffect(() => {
+    const fetchForSetAppointmentsInCalendar = async (calendar) => {
+      try {
+        const initAppointments = {
+          method: 'GET',
+          body: null,
+          headers: {'Authorization':localStorage.token}
+        };
+        const response = await fetch(URLs.GET_ALL_APPOINTMENTS_IN_GIVEN_CALENDAR(userDetails.uuid, calendar.calendarUUID), initAppointments);
+        const result = await response.json();
+        dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_SUCCESS", appointments: result})
+      } catch (e) {
+        dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_FAILED"})
+      }
+    };
+    try {
+      doctorPageState.calendars.map((calendar) =>
+        fetchForSetAppointmentsInCalendar(calendar)
+      );
+    } catch{
+      dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_FAILED"})
+    }
+  }, [doctorPageState.calendars]);
+  useEffect(() => {
+      if (!(doctorPageState.calendars == null || doctorPageState.appointments == null)){
+        try {
+          dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS"})
+        } catch {
+          dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_FAILED"})
+        }
+      }
+  }, [doctorPageState.calendars, doctorPageState.appointments]);
   //Fetch
   const fetchForDeleteAccount = async () => {
     try {
@@ -73,7 +163,6 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       dispatchDoctorPageState({type: "DELETE_ACCOUNT_FAILED"})
     }
   };
-
   const fetchForChangeUserInformation = async (newUserInformation) => {
     try {
       const body = JSON.stringify({
@@ -98,30 +187,9 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       dispatchDoctorPageState({type: "USER_INFORMATION_HAS_BEEN_EDIT_FAILED"})
     }
   };
-
-  useEffect(() => {
-    const fetchForDoctorInformation = async () => {
-      try {
-        const init = {
-          method: 'GET',
-          body: null,
-          headers: {'Authorization': localStorage.token}
-        };
-        const response = await fetch(URLs.GET_DOCTOR_INFORMATION(userDetails.uuid), init);
-        const result = await response.json();
-        setStoreUserInformation(result);
-        dispatchDoctorPageState({type: "SETTING_INFORMATION_SUCCESS", doctorInformation: result})
-      } catch (e) {
-        dispatchDoctorPageState({type: "SETTING_INFORMATION_FAILED"})
-      }
-    };
-    fetchForDoctorInformation();
-  }, [doctorPageState.userInformationHasBeenEdit, setStoreUserInformation, userDetails.uuid]);
-
   const onClickChangeTabPanel = (event, newValue) => {
     dispatchDoctorPageState({type: "CHANGE_COMPONENT", componentToShow: newValue});
   };
-
   return(children({
     doctorPageState,
     fetchForDeleteAccount,

@@ -8,6 +8,7 @@ import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponen
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import error_401 from "../../../images/error_401.jpg";
+import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
@@ -73,10 +74,9 @@ export const DoctorPage = (props) => {
             </Tabs>
           </AppBar>
           <TabPanel value={doctorPageState.componentToShow} index={0}>
-            {/*<VisitsComponent*/}
-            {/*  doctorUUID={userDetails.uuid}*/}
-            {/*/>*/}
-            hello
+            <VisitsComponent
+              calendars={doctorPageState.calendars}
+            />
           </TabPanel>
           <TabPanel value={doctorPageState.componentToShow} index={1}>
             <DoctorInfoComponent
