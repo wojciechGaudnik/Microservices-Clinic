@@ -1,8 +1,9 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import {TextField} from "@material-ui/core";
+import CustomTextField from "../../CustomTextField";
 
-export const EmailForm = (props) => {
+export const
+  EmailForm = (props) => {
     const { handleChange, validation, setIsCorrectInputInForms } = props;
 
     const [isCorrectInput, setIsCorrectInput] = useState(true);
@@ -36,7 +37,7 @@ export const EmailForm = (props) => {
 
     return (
         <Form.Group as={Col} controlId="formGridEmail">
-            <TextField
+            <CustomTextField
                 onChange={(e) => {
                     handleChange(e);
                     if (validation){checkInputCorrect(e)}

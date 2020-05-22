@@ -44,24 +44,3 @@ export const logOut = (history) => {
     localStorage.removeItem("token");
     history.push("/");
 };
-
-
-export const redirectByRole = (role, props) => {
-    switch (role) {
-        case "doctor":
-            props.history.push("/doctor");
-            return;
-        case "assistant":
-            props.history.push("/assistant");
-            return;
-        case "patient":
-            props.history.push("/patient");
-            return;
-        case "register":
-            props.history.push("/register");
-            return;
-        default:
-            props.history.push("/");
-            return;
-    }
-};

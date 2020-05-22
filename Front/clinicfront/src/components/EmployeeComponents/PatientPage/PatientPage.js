@@ -2,42 +2,18 @@ import React from "react";
 import {Container} from "react-bootstrap";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import AppBar from "@material-ui/core/AppBar";
-import {Tab, Tabs} from "@material-ui/core";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import DeleteAccountComponent from "../DoctorPage/DoctorPageComponents/DeleteAccountComponent";
 import EditDataFormComponent from "./PatientPageComponents/EditDataFormComponent";
 import PatientInfoComponent from "./PatientPageComponents/PatientInfoComponent";
-import error_401 from "../../../images/error_401.jpg";
+import VisitRegistration from "./PatientPageComponents/VisitRegistration";
+import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
 
 
 //CSS Stylesheet
 export const styleForMainDiv = {
   margin: '30px'
 };
-
-export const styleForSubContainer = {
-  color: 'black',
-  padding: '10px 30px 10px 30px',
-  marginBottom: '15px',
-  width: '50%',
-};
-
-export const styleForMainDivError = {
-  margin: '0px',
-  textAlign: 'center',
-  width: '100vw',
-  height: '100vh',
-  backgroundImage: `url(${error_401})`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-};
-
-export const styleForBackToLoginPageButton = {
-  marginTop: '10px',
-  border: '2px solid black'
-};
-
 export const styleForMainContainer = {
   marginTop: "50px"
 };
@@ -59,21 +35,20 @@ export const PatientPage = (props) => {
       <div>
         <Container style={styleForMainContainer}>
           <AppBar position="static">
-            <Tabs value={patientPageState.componentToShow} onChange={onClickChangeTabPanel} variant="fullWidth">
-              <Tab label="Visits"/>
-              <Tab label="Visit Registration"/>
-              <Tab label="User Information"/>
-              <Tab label="Edit User Information"/>
-              <Tab label="Delete Account"/>
-            </Tabs>
+            <CustomTabs value={patientPageState.componentToShow} onChange={onClickChangeTabPanel} variant="fullWidth">
+              <CustomTab label="Visits"/>
+              <CustomTab label="Visit Registration"/>
+              <CustomTab label="User Information"/>
+              <CustomTab label="Edit User Information"/>
+              <CustomTab label="Delete Account"/>
+            </CustomTabs>
           </AppBar>
           <TabPanel value={patientPageState.componentToShow} index={0}>
             {/*<VisitsComponent/>*/}
             hello
           </TabPanel>
           <TabPanel value={patientPageState.componentToShow} index={1}>
-            hello
-            {/*<VisitRegistration/>*/}
+            <VisitRegistration/>
           </TabPanel>
           <TabPanel value={patientPageState.componentToShow} index={2}>
             <PatientInfoComponent

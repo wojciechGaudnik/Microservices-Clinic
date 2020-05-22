@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Container, Tab, Tabs} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import DoctorInfoComponent from "./DoctorPageComponents/DoctorInfoComponent";
 import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent";
@@ -9,6 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import error_401 from "../../../images/error_401.jpg";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
+import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
@@ -63,15 +64,15 @@ export const DoctorPage = (props) => {
           style={styleForMainContainer}
         >
           <AppBar position="static">
-            <Tabs
+            <CustomTabs
               value={doctorPageState.componentToShow}
               onChange={onClickChangeTabPanel} variant="fullWidth"
             >
-              <Tab label="Visits"/>
-              <Tab label="User Information"/>
-              <Tab label="Edit User Information"/>
-              <Tab label="Delete Account"/>
-            </Tabs>
+              <CustomTab label="Visits"/>
+              <CustomTab label="User Information"/>
+              <CustomTab label="Edit User Information"/>
+              <CustomTab label="Delete Account"/>
+            </CustomTabs>
           </AppBar>
           <TabPanel value={doctorPageState.componentToShow} index={0}>
             <VisitsComponent

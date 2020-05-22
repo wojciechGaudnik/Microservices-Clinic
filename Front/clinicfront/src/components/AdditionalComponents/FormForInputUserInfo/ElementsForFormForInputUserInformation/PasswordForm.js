@@ -1,6 +1,6 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import {TextField} from "@material-ui/core";
+import CustomTextField from "../../CustomTextField";
 
 export const PasswordForm = (props) => {
     const { handleChange, validation, setIsCorrectInputInForms } = props;
@@ -31,7 +31,7 @@ export const PasswordForm = (props) => {
 
     return (
         <Form.Group as={Col} controlId="formGridPassword">
-            <TextField
+            <CustomTextField
                 onChange={(e) => {
                     handleChange(e);
                     if (validation){checkInputCorrect(e)}

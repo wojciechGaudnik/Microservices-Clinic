@@ -1,6 +1,6 @@
 import {Col, Form} from "react-bootstrap";
-import {TextField} from "@material-ui/core";
 import React, {useState} from "react";
+import CustomTextField from "../../CustomTextField";
 
 export const PeselForm = (props) => {
     const { handleChange, validation, userInformation, setIsCorrectInputInForms } = props;
@@ -34,7 +34,7 @@ export const PeselForm = (props) => {
 
     return (
         <Form.Group as={Col}>
-            <TextField
+            <CustomTextField
                 onChange={(e) => {
                     handleChange(e);
                     if (validation){checkInputCorrect(e)}

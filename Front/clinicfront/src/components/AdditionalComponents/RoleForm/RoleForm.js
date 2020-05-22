@@ -1,11 +1,12 @@
 import React from "react";
-import {MenuItem, TextField} from "@material-ui/core";
+import {MenuItem} from "@material-ui/core";
+import CustomTextField from "../CustomTextField";
 
 export const RoleForm = (props) => {
     const {handleChange, role} = props;
 
     return (
-        <TextField
+        <CustomTextField
             fullWidth
             variant="outlined"
             label="Register As"
@@ -18,6 +19,6 @@ export const RoleForm = (props) => {
             <MenuItem value="doctor">Doctor</MenuItem>
             <MenuItem value="patient">Patient</MenuItem>
             <MenuItem value="assistant">Assistant</MenuItem>
-        </TextField>
+        </CustomTextField>
     )
 };

@@ -13,5 +13,6 @@ export const URLs = {
   DELETE_DOCTOR: (doctorUUID) => (`http://localhost:8762/doctor-mssc/doctors/${doctorUUID}`),
   GET_DOCTOR_INFORMATION: (doctorUUID) => (`http://localhost:8762/doctor-mssc/doctors/${doctorUUID}`),
   GET_ALL_DOCTOR_CALENDARS: (doctorUUID) => (`http://localhost:8762/doctor-mssc/doctors/${doctorUUID}/calendars`),
-  GET_ALL_APPOINTMENTS_IN_GIVEN_CALENDAR : (doctorUUID, calendarUUID) => (`http://localhost:8762/doctor-mssc/doctors/${doctorUUID}/calendars/${calendarUUID}/appointments`)
+  GET_ALL_APPOINTMENTS_IN_GIVEN_CALENDAR : (doctorUUID, calendarUUID) => (`http://localhost:8762/doctor-mssc/doctors/${doctorUUID}/calendars/${calendarUUID}/appointments`),
+  GET_ALL_PATIENT_APPOINTMENTS: (patientUUID) => (`http://localhost:8762/patient-mssc/patients/${patientUUID}/visits`),
 };

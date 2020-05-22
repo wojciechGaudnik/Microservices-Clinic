@@ -11,7 +11,7 @@ export const LogOutButton = () => {
     };
 
     return (
-        <Button variant="contained" color="primary" disableElevation onClick={() => logOutButtonClick()}>
+        <Button variant="contained" style={{backgroundColor: "#4d1919", color: "white"}} disableElevation onClick={() => logOutButtonClick()}>
             Log Out
         </Button>
     )

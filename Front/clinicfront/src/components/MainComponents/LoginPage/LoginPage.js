@@ -11,9 +11,17 @@ export const LoginPage = (props) => {
     sendFetchForLoginUser
   } = props;
 
+  const styleForMainContainer = {
+    backgroundColor: "white",
+    margin: "0px",
+    padding: "0px"
+  };
+
   //Main HTML return
   return (
-    <Container>
+    <Container
+      style={styleForMainContainer}
+    >
       <AlertMessage
         show={userDetails.isError}
         onClose={() => {dispatchUserState({type: "CLOSE_ERROR_MASSAGE"})}}

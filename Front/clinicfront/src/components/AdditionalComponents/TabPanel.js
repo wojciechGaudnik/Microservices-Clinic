@@ -1,7 +1,14 @@
 import Typography from "@material-ui/core/Typography";
-import {styleForTypography} from "../MainComponents/MainPage/ContainerMainPage";
 import Box from "@material-ui/core/Box";
 import React from "react";
+
+const styleForTypography = {
+    border: "2.5px solid #4d1919",
+    borderBottomRightRadius: "10px",
+    borderBottomLeftRadius: "10px",
+    backgroundColor: "white",
+    opacity: "0.9",
+};
 
 export const TabPanel = (props) => {
     const { children, value, index} = props;

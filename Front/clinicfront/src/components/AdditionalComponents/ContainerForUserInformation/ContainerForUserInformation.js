@@ -51,7 +51,7 @@ export const ContainerForUserInformation = (props) => {
             <Typography
               component="span"
               variant="h6"
-              color="primary"
+              style={{color: "#4d1919"}}
             >
               {info ? (value) : null}
             </Typography>
@@ -64,7 +64,7 @@ export const ContainerForUserInformation = (props) => {
   return (
     <Container style={styleForContainer}>
       <List>
-        <Row><h5><Badge variant="primary">{titleRole}</Badge></h5></Row>
+        <Row><h5><Badge variant="primary" style={{backgroundColor: "#4d1919"}}>{titleRole}</Badge></h5></Row>
         {firstName ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
         {lastName ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
         {licence ? (displayEachInfo(userInformation.licence, "Licence")) : null}

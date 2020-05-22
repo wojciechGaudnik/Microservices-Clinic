@@ -6,7 +6,6 @@ export const EditDataFormComponent = (props) => {
     return(
         <Grid item>
             <Typography
-                color="primary"
                 align="center"
                 variant="subtitle2"
                 gutterBottom={true}

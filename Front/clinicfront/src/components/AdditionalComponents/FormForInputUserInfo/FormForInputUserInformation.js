@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {Button} from "@material-ui/core";
+import {Button, withStyles} from "@material-ui/core";
 
 import {useFormFields} from "../../../actions";
 
@@ -13,6 +13,14 @@ import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLFor
 import {Form} from "react-bootstrap";
 import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
 
+const LogInButton = withStyles({
+    root: {
+        backgroundColor: "#4d1919"
+    },
+    '&:focus': {
+        opacity: "0.9"
+    },
+})(Button);
 
 export const FormForInputUserInformation = (props) => {
     const {
@@ -133,14 +141,14 @@ export const FormForInputUserInformation = (props) => {
             <Form.Row>
                 {showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
             </Form.Row>
-            <Button variant="contained"
+            <LogInButton variant="contained"
                     color="primary"
                     type="submit"
                     disabled={!submitButtonAvailable && validation}
                     disableElevation
             >
                 {submitButtonTitle}
-            </Button>
+            </LogInButton>
         </Form>
     );
 };

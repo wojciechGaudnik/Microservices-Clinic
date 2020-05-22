@@ -47,6 +47,7 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
       photoUrl: null,
       visits: []
     },
+    appointments: [],
     userInformationHasBeenEdit: false,
     componentToShow: 0,
   };
@@ -71,7 +72,6 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
       dispatchPatientPageState({type: "DELETE_ACCOUNT_FAILED"})
     }
   };
-
   const fetchForChangeUserInformation = async (newUserInformation) => {
     try{
       const body = JSON.stringify({
@@ -95,7 +95,9 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
       dispatchPatientPageState({type: "USER_INFORMATION_HAS_BEEN_EDIT_FAILED"})
     }
   };
-
+  const onClickChangeTabPanel = (event, newValue) => {
+    dispatchPatientPageState({type: "CHANGE_COMPONENT", componentToShow: newValue})
+  };
   useEffect(() => {
     const fetchForPatientInformation = async () => {
       try {
@@ -106,6 +108,7 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
         };
         const response = await fetch(URLs.GET_PATIENT_INFORMATION(userDetails.uuid), init);
         const result = await response.json();
+        console.log(result);
         setStoreUserInformation(result);
         dispatchPatientPageState({type: "SETTING_INFORMATION_SUCCESS", patientInformation:result})
       }catch (e) {
@@ -113,12 +116,7 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
       }
     };
     fetchForPatientInformation();
-    console.log("Hello")
   }, [patientPageState.userInformationHasBeenEdit, setStoreUserInformation, userDetails.uuid]);
-
-  const onClickChangeTabPanel = (event, newValue) => {
-    dispatchPatientPageState({type: "CHANGE_COMPONENT", componentToShow: newValue})
-  };
 
   return(children({
     patientPageState,

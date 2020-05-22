@@ -70,8 +70,8 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       patientsUUIDs: null,
       medicalUnitsUUID: null
     },
-    calendars: null,
-    appointments: null,
+    calendars: [],
+    appointments: [],
     userInformationHasBeenEdit: false,
     componentToShow: 0
   };
@@ -136,7 +136,7 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
     }
   }, [doctorPageState.calendars]);
   useEffect(() => {
-      if (!(doctorPageState.calendars == null || doctorPageState.appointments == null)){
+      if (!(doctorPageState.calendars === [] || doctorPageState.appointments === [])){
         try {
           dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS"})
         } catch {

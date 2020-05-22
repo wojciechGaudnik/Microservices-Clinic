@@ -1,14 +1,21 @@
 import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
 import React, {useState} from "react";
-import Tab from "@material-ui/core/Tab";
 import {Container} from "@material-ui/core";
-import {styleForMainContainer} from "./ContainerMainPage";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import LoginPage from "../LoginPage/LoginPage";
 import ContainerLoginPage from "../LoginPage/ReduxContainerLoginPage";
 import ContainerRegisterPage from "../RegisterPage/ContainerRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
+import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
+
+//CSS Stylesheet
+const styleForMainContainer = {
+  marginTop: "50px"
+};
+
+const styleForTabPanel = {
+  backgroundColor: "white",
+};
 
 export const MainPage = () => {
     const [whichPage, setPage] = useState(0);
@@ -20,12 +27,20 @@ export const MainPage = () => {
     return (
         <Container maxWidth="sm" style={styleForMainContainer}>
             <AppBar position="static">
-                <Tabs value={whichPage} onChange={handleChange} variant="fullWidth">
-                    <Tab label="Log In"/>
-                    <Tab label="Register"/>
-                </Tabs>
+                <CustomTabs
+                  value={whichPage}
+                  onChange={handleChange}
+                  variant="fullWidth"
+                >
+                    <CustomTab label="Log In"/>
+                    <CustomTab label="Register"/>
+                </CustomTabs>
             </AppBar>
-            <TabPanel value={whichPage} index={0}>
+            <TabPanel
+              value={whichPage}
+              index={0}
+              classes={styleForTabPanel}
+            >
               <ContainerLoginPage>
                 {({userDetails, dispatchUserState, sendFetchForLoginUser}) => (
                   <LoginPage
@@ -36,7 +51,11 @@ export const MainPage = () => {
                 )}
               </ContainerLoginPage>
             </TabPanel>
-            <TabPanel value={whichPage} index={1}>
+            <TabPanel
+              value={whichPage}
+              index={1}
+              classes={styleForTabPanel}
+            >
               <ContainerRegisterPage>
                 {({fetchRegisterNewUser, registerStatus, dispatchRegisterStatus, handleChangeRole}) => (
                   <RegisterPage

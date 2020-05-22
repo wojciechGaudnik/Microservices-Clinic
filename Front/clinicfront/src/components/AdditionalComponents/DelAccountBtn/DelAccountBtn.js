@@ -8,7 +8,7 @@ export const DelAccountBtn = ({fetchRequest}) => {
     };
 
     return(
-        <Button variant="contained" color="primary" disableElevation fullWidth onClick={() => delUserBtnOnClick()}>
+        <Button variant="contained" style={{backgroundColor: "#4d1919", color: "white"}} disableElevation fullWidth onClick={() => delUserBtnOnClick()}>
             Delete Account
         </Button>
     )

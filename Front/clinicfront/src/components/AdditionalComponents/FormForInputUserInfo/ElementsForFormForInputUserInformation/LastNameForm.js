@@ -1,6 +1,6 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import {TextField} from "@material-ui/core";
+import CustomTextField from "../../CustomTextField";
 
 export const LastNameForm = (props) => {
     const { handleChange, validation, setIsCorrectInputInForms, userInformation } = props;
@@ -31,7 +31,7 @@ export const LastNameForm = (props) => {
 
     return (
         <Form.Group as={Col}>
-            <TextField
+            <CustomTextField
                 onChange={(e) => {
                     handleChange(e);
                     if (validation){checkInputCorrect(e)}

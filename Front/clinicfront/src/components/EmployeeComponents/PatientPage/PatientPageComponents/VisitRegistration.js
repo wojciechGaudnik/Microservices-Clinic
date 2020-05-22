@@ -1,9 +1,4 @@
-import {Container} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import {
-    sendFetchRequestSetAllDoctors,
-    WhichDoctorForm
-} from "./ContainersForDoctorPageComponents/ContainerForVisitRegistration";
+import React from "react";
 
 export const VisitRegistration = () => {
     /*TODO: Pobieranie wszystkich doktorów i wybranie jednego z nich:
@@ -13,23 +8,7 @@ export const VisitRegistration = () => {
         4. Stworzyć listę wszystkich doktorów do wyboru | (czyli select dla wielu) | {Imię + Nazwisko}
                                       !!!SPRAWDZAMY KAŻDY KROK!!!
     */
-    const [allDoctors, setAllDoctors] = useState(null);
-    const [selectedDoctor, setSelectedDoctor] = useState(null);
-
-    const handleChangeForSelectedDoctor = (event) => {
-        setSelectedDoctor(event.target.value)
-    };
-
-    useEffect(() => {
-        sendFetchRequestSetAllDoctors();
-    }, []);
-
-    return(
-        <Container maxWidth="lg">
-            <p>Wizyty</p>
-            <WhichDoctorForm handleChange={handleChangeForSelectedDoctor} whichDoctor={selectedDoctor} allDoctors={allDoctors}/>
-        </Container>
-    );
+    return (<p>hello</p>)
 };
 
 export default VisitRegistration
