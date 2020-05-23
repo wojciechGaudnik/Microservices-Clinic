@@ -10,56 +10,56 @@ import PatientPage from "./EmployeeComponents/PatientPage/PatientPage";
 import ContainerPatientPage from "./EmployeeComponents/PatientPage/ReduxContainerPatientPage";
 
 const App = () => (
-    <BrowserRouter>
-        <div className="App">
-            <Switch>
-                <Route exact path="/">
-                  <MainPage/>
-                </Route>
-                <Route path="/doctor">
-                  <ContainerDoctorPage>
-                    {({
-                        doctorPageState,
-                        fetchForDeleteAccount,
-                        fetchForChangeUserInformation,
-                        onClickChangeTabPanel,
-                        userInformation
-                    }) => (
-                      <DoctorPage
-                        doctorPageState={doctorPageState}
-                        fetchForDeleteAccount={fetchForDeleteAccount}
-                        fetchForChangeUserInformation={fetchForChangeUserInformation}
-                        onClickChangeTabPanel={onClickChangeTabPanel}
-                        userInformation={userInformation}
-                      />
-                    )}
-                  </ContainerDoctorPage>
-                </Route>
-                <Route path="/patient">
-                  <ContainerPatientPage>
-                    {({
-                        patientPageState,
-                        userInformation,
-                        onClickChangeTabPanel,
-                        fetchForChangeUserInformation,
-                        fetchForDeleteAccount
+      <BrowserRouter>
+          <div className="App">
+              <Switch>
+                  <Route exact path="/">
+                    <MainPage/>
+                  </Route>
+                  <Route path="/doctor">
+                    <ContainerDoctorPage>
+                      {({
+                          doctorPageState,
+                          fetchForDeleteAccount,
+                          fetchForChangeUserInformation,
+                          onClickChangeTabPanel,
+                          userInformation
                       }) => (
-                      <PatientPage
-                        patientPageState={patientPageState}
-                        userInformation={userInformation}
-                        onClickChangeTabPanel={onClickChangeTabPanel}
-                        fetchForChangeUserInformation={fetchForChangeUserInformation}
-                        fetchForDeleteAccount={fetchForDeleteAccount}
-                      />
-                    )}
-                  </ContainerPatientPage>
-                </Route>
-                <Route path="/assistant">
-                  <AssistantPage/>
-                </Route>
-            </Switch>
-        </div>
-    </BrowserRouter>
+                        <DoctorPage
+                          doctorPageState={doctorPageState}
+                          fetchForDeleteAccount={fetchForDeleteAccount}
+                          fetchForChangeUserInformation={fetchForChangeUserInformation}
+                          onClickChangeTabPanel={onClickChangeTabPanel}
+                          userInformation={userInformation}
+                        />
+                      )}
+                    </ContainerDoctorPage>
+                  </Route>
+                  <Route path="/patient">
+                    <ContainerPatientPage>
+                      {({
+                          patientPageState,
+                          userInformation,
+                          onClickChangeTabPanel,
+                          fetchForChangeUserInformation,
+                          fetchForDeleteAccount
+                        }) => (
+                        <PatientPage
+                          patientPageState={patientPageState}
+                          userInformation={userInformation}
+                          onClickChangeTabPanel={onClickChangeTabPanel}
+                          fetchForChangeUserInformation={fetchForChangeUserInformation}
+                          fetchForDeleteAccount={fetchForDeleteAccount}
+                        />
+                      )}
+                    </ContainerPatientPage>
+                  </Route>
+                  <Route path="/assistant">
+                    <AssistantPage/>
+                  </Route>
+              </Switch>
+          </div>
+      </BrowserRouter>
 );
 
 export default App;
