@@ -7,37 +7,13 @@ import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent"
 import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponent";
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
-import error_401 from "../../../images/error_401.jpg";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
-  margin: '30px',
+  marginTop: '30px',
   width: '100%'
-};
-
-export const styleForMainDivError = {
-  margin: '0px',
-  textAlign: 'center',
-  width: '100vw',
-  height: '100vh',
-  backgroundImage: `url(${error_401})`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-};
-
-export const styleForMainGrid = {
-  marginBottom: '15px',
-  marginRight: '25%',
-  marginLeft: '25%',
-  width: '50%'
-};
-
-export const styleForBackToLoginPageButton = {
-  marginTop: '10px',
-  border: '2px solid black'
 };
 
 export const styleForMainContainer = {
@@ -55,11 +31,11 @@ export const DoctorPage = (props) => {
 
   //Main HTML return
   return (
-    <div style={styleForMainDiv}>
-      <div>
+    <Container style={styleForMainDiv}>
+      <Container>
         <LogOutButton/>
-      </div>
-      <div>
+      </Container>
+      <Container>
         <Container
           style={styleForMainContainer}
         >
@@ -97,8 +73,8 @@ export const DoctorPage = (props) => {
             />
           </TabPanel>
         </Container>
-      </div>
-    </div>
+      </Container>
+    </Container>
   )
 };
 
