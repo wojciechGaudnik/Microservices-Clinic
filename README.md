@@ -2,29 +2,14 @@
 Implementation of medical unit administration system based on Spring Framework. The system is set up as distributed microservices architecture with use of Spring Boot tools. Main functionality of that system is registration of users(patients, doctors), managing doctors calendars and registering patients for visits.   
 
 ## Table of contents
-* [Structure](#structure)
-* [Technologies](#technologies)
-* [Setup](#setup)
+* [Architecture ](#architecture)
+* [Tech Stack](#tech stack)
 * [Screenshots](#screenshots)
-* [Status](#status)
+* [TODO](#TODO)
 * [Contact](#contact)
 
-## Architecture 
+# Architecture 
 ![Example screenshot](./Screenshots/Clinics%20Portal%20MSSC%20Architecture.png)
-## Security
-![Example screenshot](./Screenshots/Registration_Log%20in_Pull%20out_%20%20Data%20Flow.png)
-## Example communication between mssc 
-![Example screenshot](./Screenshots/Visit%20registration.png)
-
-## Tech Stack 
-* Java 13
-* Spring Boot 2 
-* Netflix Eureka
-* DB Postgres
-* JPA / Hibernate 
-* Swagger 2
-* React
-
 ### Eureka
 Service registry server.
 ### Zuul
@@ -37,8 +22,19 @@ Service implementing patient related logic.
 Service implementing doctor related logic.
 ### Clinic
 Service implementing clinic related logic.
-
-## Screenshots
+### Security
+![Example screenshot](./Screenshots/Registration_Log%20in_Pull%20out_%20%20Data%20Flow.png)
+### Example communication between mssc 
+![Example screenshot](./Screenshots/Visit%20registration.png)
+# Tech Stack 
+* Java 13
+* Spring Boot 2 
+* Netflix Eureka
+* DB Postgres
+* JPA / Hibernate 
+* Swagger 2
+* React
+# Screenshots
 ![Example screenshot](./Screenshots/Login.png)
 ![Example screenshot](./Screenshots/Edit.png)
 ![Example screenshot](./Screenshots/Information.png)
