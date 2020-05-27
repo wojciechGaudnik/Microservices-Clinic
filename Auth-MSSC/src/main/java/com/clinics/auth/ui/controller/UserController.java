@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequestMapping(value = "/auth")
 public class UserController {
 
-	final private  UserService userService;
+	private final UserService userService;
 
 	@Autowired
 	public UserController(UserService userService) {
