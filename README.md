@@ -11,6 +11,10 @@ Implementation of medical unit administration system based on Spring Framework. 
 
 ## Architecture 
 ![Example screenshot](./Screenshots/Clinics%20Portal%20MSSC%20Architecture.png)
+## Security
+![Example screenshot](./Screenshots/Registration_Log%20in_Pull%20out_%20%20Data%20Flow.png)
+## Example communication between mssc 
+![Example screenshot](./Screenshots/Visit%20registration.png)
 
 ## Tech Stack 
 * Java 13
