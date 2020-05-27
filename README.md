@@ -3,7 +3,7 @@ Implementation of medical unit administration system based on Spring Framework. 
 
 ## Table of contents
 * [Architecture ](#architecture)
-* [Tech Stack](#tech stack)
+* [Tech_Stack](#tech_stack)
 * [Screenshots](#screenshots)
 * [TODO](#TODO)
 * [Contact](#contact)
@@ -26,7 +26,7 @@ Service implementing clinic related logic.
 ![Example screenshot](./Screenshots/Registration_Log%20in_Pull%20out_%20%20Data%20Flow.png)
 ### Example communication between mssc 
 ![Example screenshot](./Screenshots/Visit%20registration.png)
-# Tech Stack 
+# Tech_Stack 
 * Java 13
 * Spring Boot 2 
 * Netflix Eureka
