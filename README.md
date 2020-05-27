@@ -9,13 +9,24 @@ Implementation of medical unit administration system based on Spring Framework. 
 * [Status](#status)
 * [Contact](#contact)
 
-## Structure
+## Architecture 
+![Example screenshot](./Screenshots/Clinics%20Portal%20MSSC%20Architecture.png)
+
+## Tech Stack 
+* Java 13
+* Spring Boot 2 
+* Netflix Eureka
+* DB Postgres
+* JPA / Hibernate 
+* Swagger 2
+* React
+
 ### Eureka
 Service registry server.
 ### Zuul
-API gateway.
+API gateway responsible for authorization.
 ### Authentication
-Service responsible for authentication and authorization of users.
+Service responsible for authentication.
 ### Patient
 Service implementing patient related logic.
 ### Doctor
@@ -23,25 +34,24 @@ Service implementing doctor related logic.
 ### Clinic
 Service implementing clinic related logic.
 
-## Technologies
-* Java
-* Spring
-* Netflix microservices libs
-* Hibernate
-* PostgreSQL
-* React
-
 ## Screenshots
-![Example screenshot](./screenshots/mainPage.png)
-![Example screenshot](./screenshots/filter.png)
-![Example screenshot](./screenshots/cart.png)
-![Example screenshot](./screenshots/checkout.png)
-![Example screenshot](./screenshots/payment.png)
-![Example screenshot](./screenshots/payPal.png)
-![Example screenshot](./screenshots/creditCard.png)
+![Example screenshot](./Screenshots/Login.png)
+![Example screenshot](./Screenshots/Edit.png)
+![Example screenshot](./Screenshots/Information.png)
+![Example screenshot](./Screenshots/Visits.png)
+![Example screenshot](./Screenshots/Delete.png)
 
-## Status
+## TODO in progress
+* doctor's unitests tests and integration tests <--- move here tests from postman 
+* search (kafka || rabit && elasticSearch)
+* statistic mssc in .NET MVC
+* config mssc 
+* rewrite to use faign, hateos  
+
 Project is in progress.
 
 ## Contact
-Created by [Weronika Walczak](mailto:weronikawalczak989@gmail.com) - feel free to contact me!
+Created by:
+* [Gaudnik Wojciech](mailto:gaudnik.wojciech@gmail.com) - feel free to contact me! 
+* Adamowski Wojciech
+* Walczak Weronika
