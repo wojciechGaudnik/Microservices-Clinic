@@ -42,8 +42,15 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       case "USER_INFORMATION_HAS_BEEN_EDIT_FAILED":
         return state;
       case "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS":
-        state.calendars.map((calendar, index) =>
-          calendar.appointments = state.appointments[index]
+        const setAppointments = (calendar) => {
+          for (let i = 0; i < state.appointments.length; i++){
+            if (calendar.calendarUUID === state.appointments[i].calendarUUID){
+              calendar.appointments = state.appointments[i].appointments;
+            }
+          }
+        };
+        state.calendars.map((calendar) =>
+          setAppointments(calendar)
         );
         return {...state};
       case "SETTING_APPOINTMENT_TO_CALENDARS_FAILED":
@@ -104,7 +111,6 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
           .catch(() => dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"}));
         const resultCalendars = await responseCalendars.json();
         dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_SUCCESS", calendars: resultCalendars})
-
       } catch (e) {
         dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"})
       }
@@ -122,7 +128,11 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
         };
         const response = await fetch(URLs.GET_ALL_APPOINTMENTS_IN_GIVEN_CALENDAR(userDetails.uuid, calendar.calendarUUID), initAppointments);
         const result = await response.json();
-        dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_SUCCESS", appointments: result})
+        const appointments = {
+          appointments: result,
+          calendarUUID: calendar.calendarUUID
+        };
+        dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_SUCCESS", appointments: appointments})
       } catch (e) {
         dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_FAILED"})
       }
@@ -134,15 +144,15 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
     } catch{
       dispatchDoctorPageState({type: "SETTING_ALL_CALENDAR_APPOINTMENTS_INFORMATION_FAILED"})
     }
-  }, [doctorPageState.calendars]);
+  }, [doctorPageState.calendars, userDetails.uuid]);
   useEffect(() => {
-      if (!(doctorPageState.calendars === [] || doctorPageState.appointments === [])){
-        try {
-          dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS"})
-        } catch {
-          dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_FAILED"})
-        }
+    if (!(doctorPageState.calendars === [] || doctorPageState.appointments === [])){
+      try {
+        dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_SUCCESS"})
+      } catch {
+        dispatchDoctorPageState({type: "SETTING_APPOINTMENTS_TO_CALENDARS_FAILED"})
       }
+    }
   }, [doctorPageState.calendars, doctorPageState.appointments]);
   //Fetch
   const fetchForDeleteAccount = async () => {

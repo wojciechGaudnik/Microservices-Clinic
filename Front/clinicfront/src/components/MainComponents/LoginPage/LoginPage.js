@@ -2,6 +2,8 @@ import React from "react";
 import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInputUserInfo/FormForInputUserInformation";
 import {Container} from "@material-ui/core";
 import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
+import ContainerForFormForInputUserInformation
+  from "../../AdditionalComponents/FormForInputUserInfo/ContainerForFormForInputUserInformation";
 
 export const LoginPage = (props) => {
 
@@ -28,18 +30,47 @@ export const LoginPage = (props) => {
         message="Wrong Login Details"
         type="error"
       />
-      <FormForInputUserInformation
+      <ContainerForFormForInputUserInformation
         {...props}
         fetchRequest        ={(loginDetails) => {sendFetchForLoginUser(loginDetails)}}
         submitButtonTitle   ="Log In"
         showEmailForm       ={true}
         showPasswordForm    ={true}
-        showRoleForm        ={false}
         showFirstNameForm   ={false}
         showLastNameForm    ={false}
         showLicenceForm     ={false}
         showPhotoURLForm    ={false}
-      />
+      >
+        {({
+            onSubmit,
+            showEmailForm,
+            showPasswordForm,
+            showFirstNameForm,
+            showLastNameForm,
+            showLicenceForm,
+            showPhotoURLForm,
+            submitButtonTitle,
+            submitButtonAvailable,
+            validation,
+            handleChange,
+            setIsCorrectInputInForms
+          }) => (
+            <FormForInputUserInformation
+            onSubmit={onSubmit}
+            submitButtonTitle={submitButtonTitle}
+            showEmailForm={showEmailForm}
+            showPasswordForm={showPasswordForm}
+            showFirstNameForm={showFirstNameForm}
+            showLastNameForm={showLastNameForm}
+            showLicenceForm={showLicenceForm}
+            showPhotoURLForm={showPhotoURLForm}
+            submitButtonAvailable={submitButtonAvailable}
+            validation={validation}
+            handleChange={handleChange}
+            setIsCorrectInputInForms={setIsCorrectInputInForms}
+            />
+          )}
+      </ContainerForFormForInputUserInformation>
     </Container>
   );
 };

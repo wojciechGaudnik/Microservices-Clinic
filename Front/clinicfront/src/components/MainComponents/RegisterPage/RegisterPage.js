@@ -3,6 +3,8 @@ import {FormForInputUserInformation} from "../../AdditionalComponents/FormForInp
 import AlertMessage from "../../AdditionalComponents/Alert/AlertMessage";
 import {Container, Grid} from "@material-ui/core";
 import {RoleForm} from "../../AdditionalComponents/RoleForm/RoleForm";
+import ContainerForFormForInputUserInformation
+  from "../../AdditionalComponents/FormForInputUserInfo/ContainerForFormForInputUserInformation";
 
 export const RegisterPage = (props) => {
 
@@ -17,33 +19,95 @@ export const RegisterPage = (props) => {
     switch (registerStatus.roleNewUser) {
       case "doctor":
         return(
-          <FormForInputUserInformation
-            {...props}
-            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-            role                ={registerStatus.roleNewUser}
-            submitButtonTitle   ="Register"
-            showEmailForm       ={true}
-            showPasswordForm    ={true}
-            showFirstNameForm   ={true}
-            showLastNameForm    ={true}
-            showLicenceForm     ={true}
-            showPhotoURLForm    ={true}
-          />
+        <ContainerForFormForInputUserInformation
+          {...props}
+          fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+          role                ={registerStatus.roleNewUser}
+          submitButtonTitle   ="Register"
+          showEmailForm       ={true}
+          showPasswordForm    ={true}
+          showFirstNameForm   ={true}
+          showLastNameForm    ={true}
+          showLicenceForm     ={true}
+          showPhotoURLForm    ={true}
+        >
+          {({
+              onSubmit,
+              showEmailForm,
+              showPasswordForm,
+              showFirstNameForm,
+              showLastNameForm,
+              showLicenceForm,
+              showPhotoURLForm,
+              submitButtonTitle,
+              submitButtonAvailable,
+              validation,
+              handleChange,
+              setIsCorrectInputInForms
+            }) => (
+            <FormForInputUserInformation
+              onSubmit={onSubmit}
+              submitButtonTitle={submitButtonTitle}
+              showEmailForm={showEmailForm}
+              showPasswordForm={showPasswordForm}
+              showFirstNameForm={showFirstNameForm}
+              showLastNameForm={showLastNameForm}
+              showLicenceForm={showLicenceForm}
+              showPhotoURLForm={showPhotoURLForm}
+              submitButtonAvailable={submitButtonAvailable}
+              validation={validation}
+              handleChange={handleChange}
+              setIsCorrectInputInForms={setIsCorrectInputInForms}
+            />
+          )}
+        </ContainerForFormForInputUserInformation>
         );
       case "patient":
         return(
-          <FormForInputUserInformation
-            {...props}
-            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-            role                ={registerStatus.roleNewUser}
-            submitButtonTitle   ="Register"
-            showEmailForm       ={true}
-            showPasswordForm    ={true}
-            showFirstNameForm   ={true}
-            showLastNameForm    ={true}
-            showPhotoURLForm    ={true}
-            showPeselForm       ={true}
-          />
+        <ContainerForFormForInputUserInformation
+          {...props}
+          fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+          role                ={registerStatus.roleNewUser}
+          submitButtonTitle   ="Register"
+          showEmailForm       ={true}
+          showPasswordForm    ={true}
+          showFirstNameForm   ={true}
+          showLastNameForm    ={true}
+          showPhotoURLForm    ={true}
+          showPeselForm       ={true}
+        >
+          {({
+              onSubmit,
+              showEmailForm,
+              showPasswordForm,
+              showFirstNameForm,
+              showLastNameForm,
+              showLicenceForm,
+              showPhotoURLForm,
+              showPeselForm,
+              submitButtonTitle,
+              submitButtonAvailable,
+              validation,
+              handleChange,
+              setIsCorrectInputInForms
+            }) => (
+            <FormForInputUserInformation
+              onSubmit={onSubmit}
+              submitButtonTitle={submitButtonTitle}
+              showEmailForm={showEmailForm}
+              showPasswordForm={showPasswordForm}
+              showFirstNameForm={showFirstNameForm}
+              showLastNameForm={showLastNameForm}
+              showLicenceForm={showLicenceForm}
+              showPhotoURLForm={showPhotoURLForm}
+              showPeselForm={showPeselForm}
+              submitButtonAvailable={submitButtonAvailable}
+              validation={validation}
+              handleChange={handleChange}
+              setIsCorrectInputInForms={setIsCorrectInputInForms}
+            />
+          )}
+        </ContainerForFormForInputUserInformation>
         );
       default:
           return null;

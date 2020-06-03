@@ -4,7 +4,6 @@ import {Card, CardContent} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 export const AppointmentCard = ({appointments}) => {
-  console.log(appointments);
   return (
     <>
     {appointments ? (appointments.map((appointment) =>
