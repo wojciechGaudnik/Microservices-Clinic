@@ -7,6 +7,7 @@ import ContainerLoginPage from "../LoginPage/ReduxContainerLoginPage";
 import ContainerRegisterPage from "../RegisterPage/ContainerRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
+import CustomTypography from "../../AdditionalComponents/CustomTypography/CustomTypography";
 
 //CSS Stylesheet
 const styleForMainContainer = {
@@ -32,8 +33,22 @@ export const MainPage = () => {
                   onChange={handleChange}
                   variant="fullWidth"
                 >
-                    <CustomTab label="Log In"/>
-                    <CustomTab label="Register"/>
+                    <CustomTab
+                      label={
+                        <CustomTypography
+                          primaryLabel={"Logowanie"}
+                          secondaryLabel={"Log In"}
+                        />
+                      }
+                    />
+                    <CustomTab
+                      label={
+                        <CustomTypography
+                          primaryLabel={"Rejestracja"}
+                          secondaryLabel={"Register"}
+                        />
+                      }
+                    />
                 </CustomTabs>
             </AppBar>
             <TabPanel

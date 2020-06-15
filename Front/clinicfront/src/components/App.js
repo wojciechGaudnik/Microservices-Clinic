@@ -11,13 +11,6 @@ import ContainerPatientPage from "./EmployeeComponents/PatientPage/ReduxContaine
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import AppTheme from "./AppTheme";
 
-/*
-TODO:
-  1. Naprawić wyświetlanie wizyt (nie wyświetlają się po kolei)
-  2. Zobaczyć jak stworzyć sesjęi z niej korzystać
-  3. Nauczyć się operować stylami w Material UI
-*/
-
 const App = () => (
     <ThemeProvider theme={AppTheme}>
         <BrowserRouter>

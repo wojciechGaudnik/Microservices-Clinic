@@ -9,6 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
+import CustomTypography from "../../AdditionalComponents/CustomTypography/CustomTypography";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
@@ -42,12 +43,43 @@ export const DoctorPage = (props) => {
           <AppBar position="static">
             <CustomTabs
               value={doctorPageState.componentToShow}
-              onChange={onClickChangeTabPanel} variant="fullWidth"
+              onChange={onClickChangeTabPanel}
+              variant="scrollable"
+              scrollButtons="auto"
+              centered
             >
-              <CustomTab label="Visits"/>
-              <CustomTab label="User Information"/>
-              <CustomTab label="Edit User Information"/>
-              <CustomTab label="Delete Account"/>
+              <CustomTab
+                label={
+                  <CustomTypography
+                    primaryLabel={"Wizyty"}
+                    secondaryLabel={"Visits"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <CustomTypography
+                    primaryLabel={"Informacje Użytkownika"}
+                    secondaryLabel={"User Information"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <CustomTypography
+                    primaryLabel={"Edytowanie danych użytkownika"}
+                    secondaryLabel={"Edit User Information"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <CustomTypography
+                    primaryLabel={"Usuwanie Konta"}
+                    secondaryLabel={"Delete Account"}
+                  />
+                }
+              />
             </CustomTabs>
           </AppBar>
           <TabPanel value={doctorPageState.componentToShow} index={0}>

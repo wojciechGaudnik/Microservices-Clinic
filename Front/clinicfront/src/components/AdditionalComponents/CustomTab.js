@@ -5,7 +5,7 @@ import React from "react";
 export const CustomTabs = withStyles({
   root: {
     borderBottom: '1px solid #e8e8e8',
-    backgroundColor: "#4d1919"
+    backgroundColor: "#4d1919",
   },
   indicator: {
     backgroundColor: 'white',
@@ -15,7 +15,10 @@ export const CustomTabs = withStyles({
 export const CustomTab = withStyles(() => ({
   root: {
     backgroundColor: "#4d1919",
-    color: "white"
+    color: "white",
+    width: "auto",
+    maxWidth: "none",
+    margin: "auto"
   },
   textColorInherit: {
     opacity: "0.7",
