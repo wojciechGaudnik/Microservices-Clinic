@@ -77,7 +77,7 @@ export const ContainerRegisterPage = ({children}) => {
               }
             };
             const responseDoctor = await fetch(URLs.REGISTER_DOCTOR, nextStepInitDoctor);
-            if (responseDoctor){
+            if (responseDoctor.ok){
               dispatchRegisterStatus({type: "REGISTER_SUCCESSFUL"})
             } else {
               dispatchRegisterStatus({type: "REGISTER_FAILED"})
@@ -114,7 +114,6 @@ export const ContainerRegisterPage = ({children}) => {
       dispatchRegisterStatus({type: "REGISTER_FAILED"});
     }
   };
-
   const handleChangeRole = (roleNewUser) => {
     dispatchRegisterStatus({
       type: "CHANGE_REGISTER_ROLE",
