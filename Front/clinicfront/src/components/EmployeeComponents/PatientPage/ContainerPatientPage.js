@@ -29,7 +29,7 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
       case "USER_INFORMATION_HAS_BEEN_EDIT_SUCCESS":
         return {
           ...state,
-          userInformationHasBeenEdit: true
+          userInformationHasBeenEdit: !state.userInformationHasBeenEdit
         };
       case "USER_INFORMATION_HAS_BEEN_EDIT_FAILED":
         return state;
