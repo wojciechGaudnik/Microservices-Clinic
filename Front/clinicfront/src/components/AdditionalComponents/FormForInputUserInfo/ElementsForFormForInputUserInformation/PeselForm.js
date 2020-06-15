@@ -36,7 +36,7 @@ export const PeselForm = (props) => {
         <Form.Group as={Col}>
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({pesel : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="pesel"

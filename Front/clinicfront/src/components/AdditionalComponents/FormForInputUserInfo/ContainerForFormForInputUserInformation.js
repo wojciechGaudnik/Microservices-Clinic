@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import {useFormFields} from "../../../actions";
 
 const ContainerForFormForInputUserInformation = (props) => {
+
   const {
     children,
     role,
@@ -14,86 +15,128 @@ const ContainerForFormForInputUserInformation = (props) => {
     showPhotoURLForm,
     showPeselForm,
     submitButtonTitle,
+    userInformation,
     submitButtonAdditionalActions = () => {}
   } = props;
 
-  const [submitButtonAvailable, setSubmitButtonAvailable] = useState(false);
-  const [validation, setValidation] = useState(true);
-  const [registerAs, setRegisterAs] = useState(role);
-  const [userInformation, setUserInformation] = useFormFields({
-    firstName:  null,
-    lastName:   null,
-    licence:    null,
-    photoUrl:   null,
-    email:      null,
-    password:   null,
-    pesel:      null,
-  });
-  const [isCorrectInputInEachForms, setIsCorrectInputFromEachForms] = useState({
-    emailForm:      !showEmailForm,
-    firstNameForm:  !showFirstNameForm,
-    lastNameForm:   !showLastNameForm,
-    licenceForm:    !showLicenceForm,
-    passwordForm:   !showPasswordForm,
-    peselForm:      !showPeselForm ,
-    photoURLForm:   !showPhotoURLForm,
-  });
-
-  useEffect(() => {
-    setRegisterAs(role);
-    setIsCorrectInputFromEachForms({
-      emailForm:      !showEmailForm,
+  const setFormState = (state, action) => {
+    switch (action.type) {
+      case "SET_USER_INFORMATION":
+        return {
+          ...state,
+          userInformation: {
+            ...state.userInformation,
+            ...action.userInformation
+          }
+        };
+      case "SET_CORRECT_INPUT":
+        return {
+          ...state,
+          correctInput: {
+            ...state.correctInput,
+            ...action.correctInput
+          }
+        };
+      case "SET_TRUE_CORRECT_INPUT":
+        return {
+          ...state,
+          correctInput: {
+            emailForm:      true,
+            firstNameForm:  true,
+            lastNameForm:   true,
+            licenceForm:    true,
+            passwordForm:   true,
+            peselForm:      true,
+            photoURLForm:   true
+          }
+        }
+      case "SET_ON_VALIDATION":
+        return {
+          ...state,
+          validation: true
+        }
+      case "SET_OFF_VALIDATION":
+        return {
+          ...state,
+          validation: false
+        }
+      case "SET_ON_BUTTON":
+        return {
+          ...state,
+          submitButtonAvailable: true
+        }
+      case "SET_OFF_BUTTON":
+        return {
+          ...state,
+          submitButtonAvailable: false
+        }
+      default:
+        return state;
+    }
+  };
+  const init = (initialState) => initialState;
+  const initialState = {
+    userInformation: {
+      firstName:  null,
+      lastName:   null,
+      licence:    null,
+      photoUrl:   null,
+      email:      null,
+      password:   null,
+      pesel:      null,
+    },
+    correctInput: {
       firstNameForm:  !showFirstNameForm,
       lastNameForm:   !showLastNameForm,
       licenceForm:    !showLicenceForm,
+      photoUrlForm:   !showPhotoURLForm,
+      emailForm:      !showEmailForm,
       passwordForm:   !showPasswordForm,
-      peselForm:      !showPeselForm ,
-      photoURLForm:   !showPhotoURLForm,
-    });
-  }, [role,
-    setRegisterAs,
-    showEmailForm,
-    showFirstNameForm,
-    showLastNameForm,
-    showLicenceForm,
-    showPasswordForm,
-    showPeselForm ,
-    showPhotoURLForm,]);
+      peselForm:      !showPeselForm,
+    },
+    validation: true,
+    submitButtonAvailable: false
+  };
+  const [formComponentState, dispatchFormComponentState] = useReducer(setFormState, initialState, init)
+
   useEffect(() => {
-    setValidation(submitButtonTitle !== "Log In");
-    if (submitButtonTitle === "Edit"){
-      setIsCorrectInputFromEachForms({
-        emailForm:      true,
-        firstNameForm:  true,
-        lastNameForm:   true,
-        licenceForm:    true,
-        passwordForm:   true,
-        peselForm:      true,
-        photoURLForm:   true,
-      })
+    if (submitButtonTitle === "Log In"){
+      dispatchFormComponentState({type: "SET_OFF_VALIDATION"})
+    } else if (submitButtonTitle === "Edit"){
+      dispatchFormComponentState({type: "SET_TRUE_CORRECT_INPUT"})
     }
   }, [submitButtonTitle]);
   useEffect(() => {
+    if (userInformation !== null){
+      dispatchFormComponentState({type: "SET_USER_INFORMATION", userInformation: userInformation})
+    }
+  }, [userInformation])
+  useEffect(() => {
     const checkCorrectInputInAllFormsForButtonAvailable = () => {
-      for (const isCorrectInput in isCorrectInputInEachForms){
-        if (isCorrectInputInEachForms[isCorrectInput] === false){
-          return false;
+      for (const inputCompatibility in formComponentState.correctInput){
+        if (formComponentState.correctInput.hasOwnProperty(inputCompatibility)){
+          if (formComponentState.correctInput[inputCompatibility] === false){
+            return false;
+          }
         }
       }
       return true;
     };
-
-    setSubmitButtonAvailable(() => checkCorrectInputInAllFormsForButtonAvailable())
-  }, [isCorrectInputInEachForms]);
-
+    if (checkCorrectInputInAllFormsForButtonAvailable()){
+      dispatchFormComponentState({type: "SET_ON_BUTTON"})
+    }else {
+      dispatchFormComponentState({type: "SET_OFF_BUTTON"})
+    }
+  }, [formComponentState.correctInput]);
   const setIsCorrectInputInForms = (isInputCorrectObject) => {
-    setIsCorrectInputFromEachForms({...isCorrectInputInEachForms, ...isInputCorrectObject})};
-  const handleChange = (event) => {
-    setUserInformation(event);
+    dispatchFormComponentState({type: "SET_CORRECT_INPUT", correctInput:isInputCorrectObject})
+  };
+  const handleChange = (userInformation) => {
+    dispatchFormComponentState({type: "SET_USER_INFORMATION", userInformation: userInformation});
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    fetchRequest({...userInformation, role: registerAs});
+    fetchRequest({...formComponentState.userInformation, role: role});
     submitButtonAdditionalActions();
   };
 
@@ -107,11 +150,11 @@ const ContainerForFormForInputUserInformation = (props) => {
     showPhotoURLForm,
     showPeselForm,
     submitButtonTitle,
-    submitButtonAvailable,
-    validation,
+    submitButtonAvailable: formComponentState.submitButtonAvailable,
+    validation: formComponentState.validation,
     handleChange,
     setIsCorrectInputInForms,
-    props
+    userInformation
   }))
 };
 

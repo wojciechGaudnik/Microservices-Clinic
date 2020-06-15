@@ -5,7 +5,10 @@ import ContainerForFormForInputUserInformation
   from "../../../AdditionalComponents/FormForInputUserInfo/ContainerForFormForInputUserInformation";
 
 export const EditDataFormComponent = (props) => {
-  //TODO: Trzeba koniecznie dopracować edytowanie w formie
+  const {
+    userInformation,
+    fetchRequest
+  } = props;
 
     return(
         <Grid item>
@@ -17,7 +20,8 @@ export const EditDataFormComponent = (props) => {
                 Fill or change only variables which you want to change
             </Typography>
           <ContainerForFormForInputUserInformation
-            {...props}
+            userInformation={userInformation}
+            fetchRequest={fetchRequest}
             submitButtonTitle   ="Edit"
             showEmailForm       ={true}
             showPasswordForm    ={true}
@@ -40,7 +44,7 @@ export const EditDataFormComponent = (props) => {
                 validation,
                 handleChange,
                 setIsCorrectInputInForms,
-                props
+                userInformation
               }) => (
               <FormForInputUserInformation
                 onSubmit={onSubmit}
@@ -55,7 +59,7 @@ export const EditDataFormComponent = (props) => {
                 validation={validation}
                 handleChange={handleChange}
                 setIsCorrectInputInForms={setIsCorrectInputInForms}
-                props={props}
+                userInformation={userInformation}
               />
             )}
           </ContainerForFormForInputUserInformation>

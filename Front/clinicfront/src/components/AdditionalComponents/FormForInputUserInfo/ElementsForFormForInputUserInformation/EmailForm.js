@@ -39,13 +39,14 @@ export const
         <Form.Group as={Col} controlId="formGridEmail">
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({email : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="email"
                 label="Email"
                 variant="outlined"
                 error={!isCorrectInput}
+                autoComplete={" "}
                 helperText={messageForIncorrectInput}
                 fullWidth
             />

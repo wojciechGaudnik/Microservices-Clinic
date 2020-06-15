@@ -25,7 +25,8 @@ export const FormForInputUserInformation = (props) => {
     submitButtonAvailable,
     validation,
     handleChange,
-    setIsCorrectInputInForms
+    setIsCorrectInputInForms,
+    userInformation
   } = props;
 
   return (
@@ -37,15 +38,15 @@ export const FormForInputUserInformation = (props) => {
         {showPasswordForm     ? ( <PasswordForm   handleChange={handleChange}             validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
       </Form.Row>
       <Form.Row>
-        {showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
-        {showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+        {showFirstNameForm    ? ( <FirstNameForm  handleChange={handleChange} userInformation={userInformation}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+        {showLastNameForm     ? ( <LastNameForm   handleChange={handleChange} userInformation={userInformation}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
       </Form.Row>
       <Form.Row>
-        {showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
-        {showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+        {showLicenceForm      ? ( <LicenceForm    handleChange={handleChange} userInformation={userInformation}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+        {showPhotoURLForm     ? ( <PhotoURLForm   handleChange={handleChange} userInformation={userInformation}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
       </Form.Row>
       <Form.Row>
-        {showPeselForm        ? ( <PeselForm      handleChange={handleChange} {...props}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
+        {showPeselForm        ? ( <PeselForm      handleChange={handleChange} userInformation={userInformation}  validation={validation} setIsCorrectInputInForms={setIsCorrectInputInForms}/> ) : null}
       </Form.Row>
       <Button
         variant="contained"

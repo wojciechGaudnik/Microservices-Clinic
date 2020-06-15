@@ -33,7 +33,7 @@ export const PasswordForm = (props) => {
         <Form.Group as={Col} controlId="formGridPassword">
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({password : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="password"

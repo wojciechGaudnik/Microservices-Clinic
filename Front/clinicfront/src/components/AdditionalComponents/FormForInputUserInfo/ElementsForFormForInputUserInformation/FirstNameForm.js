@@ -33,7 +33,7 @@ export const FirstNameForm = (props) => {
         <Form.Group as={Col}>
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({firstName : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="firstName"

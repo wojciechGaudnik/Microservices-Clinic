@@ -10,12 +10,12 @@ export const PhotoURLForm = (props) => {
 
     const setGoodInputInAllStates = () => {
         setIsCorrectInput(true);
-        setIsCorrectInputInForms({photoURLForm: true});
+        setIsCorrectInputInForms({photoUrlForm: true});
     };
 
     const setWrongInputInAllStates = () => {
         setIsCorrectInput(false);
-        setIsCorrectInputInForms({photoURLForm: false});
+        setIsCorrectInputInForms({photoUrlForm: false});
     };
 
     //Validation for input data
@@ -32,7 +32,7 @@ export const PhotoURLForm = (props) => {
         <Form.Group as={Col}>
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({photoUrl : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="photoUrl"

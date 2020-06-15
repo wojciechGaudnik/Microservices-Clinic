@@ -33,7 +33,7 @@ export const LicenceForm = (props) => {
         <Form.Group as={Col}>
             <CustomTextField
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange({licence : e.target.value});
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="licence"
