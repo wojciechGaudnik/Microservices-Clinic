@@ -108,9 +108,12 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
           headers: {'Authorization': localStorage.token}
         };
         const responseCalendars = await fetch(URLs.GET_ALL_DOCTOR_CALENDARS(userDetails.uuid), initCalendars)
-          .catch(() => dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"}));
         const resultCalendars = await responseCalendars.json();
-        dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_SUCCESS", calendars: resultCalendars})
+        if (responseCalendars.ok) {
+          dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_SUCCESS", calendars: resultCalendars})
+        } else {
+          dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"})
+        }
       } catch (e) {
         dispatchDoctorPageState({type: "SETTING_ALL_CALENDARS_INFORMATION_FAILED"})
       }
