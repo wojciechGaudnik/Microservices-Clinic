@@ -19,104 +19,102 @@ export const RegisterPage = (props) => {
     switch (registerStatus.roleNewUser) {
       case "doctor":
         return(
-        <ContainerForFormForInputUserInformation
-          {...props}
-          fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-          role                ={registerStatus.roleNewUser}
-          primaryLabel        ="Zarejestruj"
-          secondaryLabel      ="Register"
-          showEmailForm       ={true}
-          showPasswordForm    ={true}
-          showFirstNameForm   ={true}
-          showLastNameForm    ={true}
-          showLicenceForm     ={true}
-          showPhotoURLForm    ={true}
-        >
-          {({
-              onSubmit,
-              showEmailForm,
-              showPasswordForm,
-              showFirstNameForm,
-              showLastNameForm,
-              showLicenceForm,
-              showPhotoURLForm,
-              primaryLabel,
-              secondaryLabel,
-              submitButtonAvailable,
-              validation,
-              handleChange,
-              setIsCorrectInputInForms
-            }) => (
-            <FormForInputUserInformation
-              onSubmit={onSubmit}
-              primaryLabel={primaryLabel}
-              secondaryLabel={secondaryLabel}
-              showEmailForm={showEmailForm}
-              showPasswordForm={showPasswordForm}
-              showFirstNameForm={showFirstNameForm}
-              showLastNameForm={showLastNameForm}
-              showLicenceForm={showLicenceForm}
-              showPhotoURLForm={showPhotoURLForm}
-              submitButtonAvailable={submitButtonAvailable}
-              validation={validation}
-              handleChange={handleChange}
-              setIsCorrectInputInForms={setIsCorrectInputInForms}
-            />
-          )}
-        </ContainerForFormForInputUserInformation>
+          <ContainerForFormForInputUserInformation
+            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+            role                ={registerStatus.roleNewUser}
+            primaryLabel        ="Zarejestruj"
+            secondaryLabel      ="Register"
+            showEmailForm       ={true}
+            showPasswordForm    ={true}
+            showFirstNameForm   ={true}
+            showLastNameForm    ={true}
+            showLicenceForm     ={true}
+            showPhotoURLForm    ={true}
+            showPeselForm       ={false}
+          >
+            {({
+                onSubmit,
+                showEmailForm,
+                showPasswordForm,
+                showFirstNameForm,
+                showLastNameForm,
+                showLicenceForm,
+                showPhotoURLForm,
+                primaryLabel,
+                secondaryLabel,
+                submitButtonAvailable,
+                validation,
+                handleChange,
+                setIsCorrectInputInForms
+              }) => (
+              <FormForInputUserInformation
+                onSubmit={onSubmit}
+                primaryLabel={primaryLabel}
+                secondaryLabel={secondaryLabel}
+                showEmailForm={showEmailForm}
+                showPasswordForm={showPasswordForm}
+                showFirstNameForm={showFirstNameForm}
+                showLastNameForm={showLastNameForm}
+                showLicenceForm={showLicenceForm}
+                showPhotoURLForm={showPhotoURLForm}
+                submitButtonAvailable={submitButtonAvailable}
+                validation={validation}
+                handleChange={handleChange}
+                setIsCorrectInputInForms={setIsCorrectInputInForms}
+              />
+            )}
+          </ContainerForFormForInputUserInformation>
         );
       case "patient":
         return(
-        <ContainerForFormForInputUserInformation
-          {...props}
-          fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
-          role                ={registerStatus.roleNewUser}
-          primaryLabel        ="Zarejestruj"
-          secondaryLabel      ="Register"
-          showEmailForm       ={true}
-          showPasswordForm    ={true}
-          showFirstNameForm   ={true}
-          showLastNameForm    ={true}
-          showPhotoURLForm    ={true}
-          showPeselForm       ={true}
-        >
-          {({
-              onSubmit,
-              showEmailForm,
-              showPasswordForm,
-              showFirstNameForm,
-              showLastNameForm,
-              showLicenceForm,
-              showPhotoURLForm,
-              showPeselForm,
-              primaryLabel,
-              secondaryLabel,
-              submitButtonAvailable,
-              validation,
-              handleChange,
-              setIsCorrectInputInForms
-            }) => (
-            <FormForInputUserInformation
-              onSubmit={onSubmit}
-              primaryLabel={primaryLabel}
-              secondaryLabel={secondaryLabel}
-              showEmailForm={showEmailForm}
-              showPasswordForm={showPasswordForm}
-              showFirstNameForm={showFirstNameForm}
-              showLastNameForm={showLastNameForm}
-              showLicenceForm={showLicenceForm}
-              showPhotoURLForm={showPhotoURLForm}
-              showPeselForm={showPeselForm}
-              submitButtonAvailable={submitButtonAvailable}
-              validation={validation}
-              handleChange={handleChange}
-              setIsCorrectInputInForms={setIsCorrectInputInForms}
-            />
-          )}
-        </ContainerForFormForInputUserInformation>
+          <ContainerForFormForInputUserInformation
+            fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
+            role                ={registerStatus.roleNewUser}
+            primaryLabel        ="Zarejestruj"
+            secondaryLabel      ="Register"
+            showEmailForm       ={true}
+            showPasswordForm    ={true}
+            showFirstNameForm   ={true}
+            showLastNameForm    ={true}
+            showPhotoURLForm    ={true}
+            showPeselForm       ={true}
+            showLicenceForm     ={false}
+          >
+            {({
+                onSubmit,
+                showEmailForm,
+                showPasswordForm,
+                showFirstNameForm,
+                showLastNameForm,
+                showPhotoURLForm,
+                showPeselForm,
+                primaryLabel,
+                secondaryLabel,
+                submitButtonAvailable,
+                validation,
+                handleChange,
+                setIsCorrectInputInForms
+              }) => (
+              <FormForInputUserInformation
+                onSubmit={onSubmit}
+                primaryLabel={primaryLabel}
+                secondaryLabel={secondaryLabel}
+                showEmailForm={showEmailForm}
+                showPasswordForm={showPasswordForm}
+                showFirstNameForm={showFirstNameForm}
+                showLastNameForm={showLastNameForm}
+                showPhotoURLForm={showPhotoURLForm}
+                showPeselForm={showPeselForm}
+                submitButtonAvailable={submitButtonAvailable}
+                validation={validation}
+                handleChange={handleChange}
+                setIsCorrectInputInForms={setIsCorrectInputInForms}
+              />
+            )}
+          </ContainerForFormForInputUserInformation>
         );
       default:
-          return null;
+        return null;
     }
   };
 

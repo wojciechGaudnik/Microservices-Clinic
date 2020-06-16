@@ -26,7 +26,7 @@ export const PeselForm = (props) => {
             setMessageForIncorrectInput("The field cannot be empty")
         } else if (e.target.value.length !== 11){
             setWrongInputInAllStates();
-            setMessageForIncorrectInput("PESEL contain 11 numbers")
+            setMessageForIncorrectInput("Pesel contain 11 numbers")
         } else {
             setGoodInputInAllStates();
             setMessageForIncorrectInput(null);

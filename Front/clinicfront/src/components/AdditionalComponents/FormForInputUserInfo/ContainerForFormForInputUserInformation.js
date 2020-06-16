@@ -50,6 +50,11 @@ const ContainerForFormForInputUserInformation = (props) => {
             photoURLForm:   true
           }
         }
+      case "SET_INPUTS":
+        return {
+          ...state,
+          correctInput: action.inputCorrectness
+        }
       case "SET_ON_VALIDATION":
         return {
           ...state,
@@ -139,6 +144,20 @@ const ContainerForFormForInputUserInformation = (props) => {
     fetchRequest({...formComponentState.userInformation, role: role});
     submitButtonAdditionalActions();
   };
+  useEffect(() => {
+    dispatchFormComponentState({
+      type: "SET_INPUTS",
+      inputCorrectness: {
+        firstNameForm:  !showFirstNameForm,
+        lastNameForm:   !showLastNameForm,
+        licenceForm:    !showLicenceForm,
+        photoUrlForm:   !showPhotoURLForm,
+        emailForm:      !showEmailForm,
+        passwordForm:   !showPasswordForm,
+        peselForm:      !showPeselForm,
+      }
+    })
+  }, [role, showFirstNameForm,showLastNameForm, showLicenceForm, showPhotoURLForm, showEmailForm, showPasswordForm, showPeselForm,])
 
   return(children({
     onSubmit,

@@ -41,7 +41,7 @@ export const ContainerRegisterPage = ({children}) => {
     showSuccessMessage: false
   };
   const init = (initialState) => initialState;
-  const[registerStatus, dispatchRegisterStatus] = useReducer(registerNewUser, initialState, init);
+  const [registerStatus, dispatchRegisterStatus] = useReducer(registerNewUser, initialState, init);
 
 //Fetch
   const fetchRegisterNewUser = async (registerDetails) => {
