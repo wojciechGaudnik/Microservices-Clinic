@@ -7,7 +7,7 @@ import ContainerLoginPage from "../LoginPage/ReduxContainerLoginPage";
 import ContainerRegisterPage from "../RegisterPage/ContainerRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
-import CustomTypography from "../../AdditionalComponents/CustomTypography/CustomTypography";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
 
 //CSS Stylesheet
 const styleForMainContainer = {
@@ -35,7 +35,7 @@ export const MainPage = () => {
                 >
                     <CustomTab
                       label={
-                        <CustomTypography
+                        <TabCustomTypography
                           primaryLabel={"Logowanie"}
                           secondaryLabel={"Log In"}
                         />
@@ -43,7 +43,7 @@ export const MainPage = () => {
                     />
                     <CustomTab
                       label={
-                        <CustomTypography
+                        <TabCustomTypography
                           primaryLabel={"Rejestracja"}
                           secondaryLabel={"Register"}
                         />

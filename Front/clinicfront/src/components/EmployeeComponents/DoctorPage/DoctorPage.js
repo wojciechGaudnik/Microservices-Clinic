@@ -9,7 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../AdditionalComponents/TabPanel";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
-import CustomTypography from "../../AdditionalComponents/CustomTypography/CustomTypography";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
@@ -49,7 +49,7 @@ export const DoctorPage = (props) => {
             >
               <CustomTab
                 label={
-                  <CustomTypography
+                  <TabCustomTypography
                     primaryLabel={"Wizyty"}
                     secondaryLabel={"Visits"}
                   />
@@ -57,7 +57,7 @@ export const DoctorPage = (props) => {
               />
               <CustomTab
                 label={
-                  <CustomTypography
+                  <TabCustomTypography
                     primaryLabel={"Informacje Użytkownika"}
                     secondaryLabel={"User Information"}
                   />
@@ -65,7 +65,7 @@ export const DoctorPage = (props) => {
               />
               <CustomTab
                 label={
-                  <CustomTypography
+                  <TabCustomTypography
                     primaryLabel={"Edytowanie danych użytkownika"}
                     secondaryLabel={"Edit User Information"}
                   />
@@ -73,7 +73,7 @@ export const DoctorPage = (props) => {
               />
               <CustomTab
                 label={
-                  <CustomTypography
+                  <TabCustomTypography
                     primaryLabel={"Usuwanie Konta"}
                     secondaryLabel={"Delete Account"}
                   />

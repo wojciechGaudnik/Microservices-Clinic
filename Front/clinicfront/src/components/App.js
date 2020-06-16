@@ -11,6 +11,14 @@ import ContainerPatientPage from "./EmployeeComponents/PatientPage/ReduxContaine
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import AppTheme from "./AppTheme";
 
+/*
+  TODO:
+    1. Zmienić nazwę dla typography z custom na customTab
+    2. Zrobić nowe typography dla buttonów
+    3. Zamienić je z tymi Typography co są w przyciskach w formie
+    4. Zrobić nowe typography dla przypisów w miejscach do wypełnienia
+*/
+
 const App = () => (
     <ThemeProvider theme={AppTheme}>
         <BrowserRouter>
