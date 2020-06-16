@@ -33,7 +33,8 @@ export const LoginPage = (props) => {
       <ContainerForFormForInputUserInformation
         {...props}
         fetchRequest        ={(loginDetails) => {sendFetchForLoginUser(loginDetails)}}
-        submitButtonTitle   ="Log In"
+        primaryLabel        ="Zaloguj"
+        secondaryLabel      ="Log In"
         showEmailForm       ={true}
         showPasswordForm    ={true}
         showFirstNameForm   ={false}
@@ -49,7 +50,8 @@ export const LoginPage = (props) => {
             showLastNameForm,
             showLicenceForm,
             showPhotoURLForm,
-            submitButtonTitle,
+            primaryLabel,
+            secondaryLabel,
             submitButtonAvailable,
             validation,
             handleChange,
@@ -57,7 +59,8 @@ export const LoginPage = (props) => {
           }) => (
             <FormForInputUserInformation
             onSubmit={onSubmit}
-            submitButtonTitle={submitButtonTitle}
+            primaryLabel={primaryLabel}
+            secondaryLabel={secondaryLabel}
             showEmailForm={showEmailForm}
             showPasswordForm={showPasswordForm}
             showFirstNameForm={showFirstNameForm}

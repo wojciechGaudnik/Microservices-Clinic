@@ -10,6 +10,7 @@ import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm"
 import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 import {Form} from "react-bootstrap";
 import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
+import CustomTypography from "../CustomTypography/CustomTypography";
 
 export const FormForInputUserInformation = (props) => {
   const {
@@ -21,12 +22,13 @@ export const FormForInputUserInformation = (props) => {
     showLicenceForm,
     showPhotoURLForm,
     showPeselForm,
-    submitButtonTitle,
     submitButtonAvailable,
     validation,
     handleChange,
     setIsCorrectInputInForms,
-    userInformation
+    userInformation,
+    primaryLabel,
+    secondaryLabel
   } = props;
 
   return (
@@ -55,7 +57,10 @@ export const FormForInputUserInformation = (props) => {
         disabled={!submitButtonAvailable && validation}
         disableElevation
       >
-        {submitButtonTitle}
+        <CustomTypography
+          primaryLabel={primaryLabel}
+          secondaryLabel={secondaryLabel}
+        />
       </Button>
     </Form>
   );

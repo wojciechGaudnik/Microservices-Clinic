@@ -1,5 +1,4 @@
-import React, {useEffect, useReducer, useState} from "react";
-import {useFormFields} from "../../../actions";
+import {useEffect, useReducer} from "react";
 
 const ContainerForFormForInputUserInformation = (props) => {
 
@@ -14,7 +13,8 @@ const ContainerForFormForInputUserInformation = (props) => {
     showLicenceForm,
     showPhotoURLForm,
     showPeselForm,
-    submitButtonTitle,
+    primaryLabel,
+    secondaryLabel,
     userInformation,
     submitButtonAdditionalActions = () => {}
   } = props;
@@ -100,12 +100,12 @@ const ContainerForFormForInputUserInformation = (props) => {
   const [formComponentState, dispatchFormComponentState] = useReducer(setFormState, initialState, init)
 
   useEffect(() => {
-    if (submitButtonTitle === "Log In"){
+    if (secondaryLabel === "Log In"){
       dispatchFormComponentState({type: "SET_OFF_VALIDATION"})
-    } else if (submitButtonTitle === "Edit"){
+    } else if (secondaryLabel === "Edit"){
       dispatchFormComponentState({type: "SET_TRUE_CORRECT_INPUT"})
     }
-  }, [submitButtonTitle]);
+  }, [secondaryLabel]);
   useEffect(() => {
     if (userInformation !== null){
       dispatchFormComponentState({type: "SET_USER_INFORMATION", userInformation: userInformation})
@@ -149,7 +149,8 @@ const ContainerForFormForInputUserInformation = (props) => {
     showLicenceForm,
     showPhotoURLForm,
     showPeselForm,
-    submitButtonTitle,
+    primaryLabel,
+    secondaryLabel,
     submitButtonAvailable: formComponentState.submitButtonAvailable,
     validation: formComponentState.validation,
     handleChange,

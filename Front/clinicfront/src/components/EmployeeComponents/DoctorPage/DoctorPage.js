@@ -46,7 +46,6 @@ export const DoctorPage = (props) => {
               onChange={onClickChangeTabPanel}
               variant="scrollable"
               scrollButtons="auto"
-              centered
             >
               <CustomTab
                 label={

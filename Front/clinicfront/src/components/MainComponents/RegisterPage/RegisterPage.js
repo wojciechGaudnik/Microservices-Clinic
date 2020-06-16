@@ -23,7 +23,8 @@ export const RegisterPage = (props) => {
           {...props}
           fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
           role                ={registerStatus.roleNewUser}
-          submitButtonTitle   ="Register"
+          primaryLabel        ="Zarejestruj"
+          secondaryLabel      ="Register"
           showEmailForm       ={true}
           showPasswordForm    ={true}
           showFirstNameForm   ={true}
@@ -39,7 +40,8 @@ export const RegisterPage = (props) => {
               showLastNameForm,
               showLicenceForm,
               showPhotoURLForm,
-              submitButtonTitle,
+              primaryLabel,
+              secondaryLabel,
               submitButtonAvailable,
               validation,
               handleChange,
@@ -47,7 +49,8 @@ export const RegisterPage = (props) => {
             }) => (
             <FormForInputUserInformation
               onSubmit={onSubmit}
-              submitButtonTitle={submitButtonTitle}
+              primaryLabel={primaryLabel}
+              secondaryLabel={secondaryLabel}
               showEmailForm={showEmailForm}
               showPasswordForm={showPasswordForm}
               showFirstNameForm={showFirstNameForm}

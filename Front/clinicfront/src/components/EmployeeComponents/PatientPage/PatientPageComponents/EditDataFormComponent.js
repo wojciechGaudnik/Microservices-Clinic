@@ -20,9 +20,10 @@ export const EditDataFormComponent = (props) => {
                 Fill or change only variables which you want to change
             </Typography>
           <ContainerForFormForInputUserInformation
-            userInformation={userInformation}
-            fetchRequest={fetchRequest}
-            submitButtonTitle   ="Edit"
+            userInformation     ={userInformation}
+            fetchRequest        ={fetchRequest}
+            primaryLabel        ="Edytuj"
+            secondaryLabel      ="Edit"
             showEmailForm       ={true}
             showPasswordForm    ={true}
             showRoleForm        ={false}
@@ -39,7 +40,8 @@ export const EditDataFormComponent = (props) => {
                 showLastNameForm,
                 showLicenceForm,
                 showPhotoURLForm,
-                submitButtonTitle,
+                primaryLabel,
+                secondaryLabel,
                 submitButtonAvailable,
                 validation,
                 handleChange,
@@ -48,7 +50,8 @@ export const EditDataFormComponent = (props) => {
               }) => (
               <FormForInputUserInformation
                 onSubmit={onSubmit}
-                submitButtonTitle={submitButtonTitle}
+                primaryLabel={primaryLabel}
+                secondaryLabel={secondaryLabel}
                 showEmailForm={showEmailForm}
                 showPasswordForm={showPasswordForm}
                 showFirstNameForm={showFirstNameForm}
