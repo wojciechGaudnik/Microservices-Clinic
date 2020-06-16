@@ -2,6 +2,8 @@ import React from "react";
 import {styleForContainer} from "./SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
+import TextFieldCustomTypography from "../CustomTypography/TextFieldLabelCustomTypography";
+import ButtonCustomTypography from "../CustomTypography/ButtonCustomTypography";
 
 export const ContainerForUserInformation = (props) => {
 
@@ -12,7 +14,8 @@ export const ContainerForUserInformation = (props) => {
     licence,
     specializations,
     pesel,
-    titleRole
+    primaryTitleRole,
+    secondaryTitleRole
   } = props;
 
   //Main HTML return
@@ -26,9 +29,9 @@ export const ContainerForUserInformation = (props) => {
     return specializationsShow;
   };
 
-  const displayEachInfo = (info, title) => {
+  const displayEachInfo = (info, primaryTitle, secondaryTitle) => {
     let value;
-    if (title === "Specializations") {
+    if (secondaryTitle === "Specializations") {
       value = displaySpecializations();
     } else {
       value = info;
@@ -37,13 +40,10 @@ export const ContainerForUserInformation = (props) => {
       <ListItemText
         primary={
           <React.Fragment>
-            <Typography
-              component="span"
-              variant="overline"
-              color="textPrimary"
-            >
-              {title}
-            </Typography>
+            <TextFieldCustomTypography
+              primaryLabel={primaryTitle}
+              secondaryLabel={secondaryTitle}
+            />
           </React.Fragment>
         }
         secondary={
@@ -64,12 +64,21 @@ export const ContainerForUserInformation = (props) => {
   return (
     <Container style={styleForContainer}>
       <List>
-        <Row><h5><Badge variant="primary" style={{backgroundColor: "#4d1919"}}>{titleRole}</Badge></h5></Row>
-        {firstName ? (displayEachInfo(userInformation.firstName, "First Name")) : null}
-        {lastName ? (displayEachInfo(userInformation.lastName, "Last Name")) : null}
-        {licence ? (displayEachInfo(userInformation.licence, "Licence")) : null}
-        {specializations ? (displayEachInfo(userInformation.specializations, "Specializations")) : null}
-        {pesel ? (displayEachInfo(userInformation.pesel, "PESEL")) : null}
+        <Row>
+          <h5>
+            <Badge variant="primary" style={{backgroundColor: "#4d1919"}}>
+              <ButtonCustomTypography
+                primaryLabel={primaryTitleRole}
+                secondaryLabel={secondaryTitleRole}
+              />
+            </Badge>
+          </h5>
+        </Row>
+        {firstName ? (displayEachInfo(userInformation.firstName, "Imię" ,"First Name")) : null}
+        {lastName ? (displayEachInfo(userInformation.lastName, "Nazwisko","Last Name")) : null}
+        {licence ? (displayEachInfo(userInformation.licence, "Licencja","Licence")) : null}
+        {specializations ? (displayEachInfo(userInformation.specializations, "Specjalizacje","Specializations")) : null}
+        {pesel ? (displayEachInfo(userInformation.pesel, "Pesel","Pesel")) : null}
       </List>
     </Container>
 

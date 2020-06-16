@@ -12,13 +12,19 @@ export const EditDataFormComponent = (props) => {
 
     return(
         <Grid item>
-            <Typography
-                align="center"
-                variant="subtitle2"
-                gutterBottom={true}
-            >
-                Fill or change only variables which you want to change
-            </Typography>
+          <Typography
+              align="center"
+              variant="h6"
+          >
+            Proszę uzupełnić lub zmienić tylko te elementy które chcesz zmienić
+          </Typography>
+          <Typography
+            align="center"
+            variant="subtitle1"
+          >
+            Fill or change only variables which you want to change
+          </Typography>
+          <br/>
           <ContainerForFormForInputUserInformation
             userInformation     ={userInformation}
             fetchRequest        ={fetchRequest}

@@ -1,6 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import CustomTextField from "../../CustomTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
 
 export const PhotoURLForm = (props) => {
     const { handleChange, validation, userInformation, setIsCorrectInputInForms} = props;
@@ -36,7 +37,12 @@ export const PhotoURLForm = (props) => {
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="photoUrl"
-                label="Photo URL"
+                label={
+                    <TextFieldCustomTypography
+                      primaryLabel={"Link do zdjęcia"}
+                      secondaryLabel={"Photo URL"}
+                    />
+                }
                 variant="outlined"
                 error={!isCorrectInput}
                 helperText={messageForIncorrectInput}

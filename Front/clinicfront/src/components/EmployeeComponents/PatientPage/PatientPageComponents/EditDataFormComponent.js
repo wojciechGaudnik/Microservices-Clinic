@@ -12,13 +12,19 @@ export const EditDataFormComponent = (props) => {
 
     return(
         <Grid item>
-            <Typography
-                align="center"
-                variant="subtitle2"
-                gutterBottom={true}
-            >
-                Fill or change only variables which you want to change
-            </Typography>
+          <Typography
+            align="center"
+            variant="h6"
+          >
+            Proszę uzupełnić lub zmienić tylko te elementy które chcesz zmienić
+          </Typography>
+          <Typography
+            align="center"
+            variant="subtitle1"
+          >
+            Fill or change only variables which you want to change
+          </Typography>
+          <br/>
           <ContainerForFormForInputUserInformation
             userInformation     ={userInformation}
             fetchRequest        ={fetchRequest}
@@ -26,10 +32,9 @@ export const EditDataFormComponent = (props) => {
             secondaryLabel      ="Edit"
             showEmailForm       ={true}
             showPasswordForm    ={true}
-            showRoleForm        ={false}
             showFirstNameForm   ={true}
             showLastNameForm    ={true}
-            showLicenceForm     ={true}
+            showPeselForm       ={true}
             showPhotoURLForm    ={true}
           >
             {({
@@ -38,7 +43,7 @@ export const EditDataFormComponent = (props) => {
                 showPasswordForm,
                 showFirstNameForm,
                 showLastNameForm,
-                showLicenceForm,
+                showPeselForm,
                 showPhotoURLForm,
                 primaryLabel,
                 secondaryLabel,
@@ -56,7 +61,7 @@ export const EditDataFormComponent = (props) => {
                 showPasswordForm={showPasswordForm}
                 showFirstNameForm={showFirstNameForm}
                 showLastNameForm={showLastNameForm}
-                showLicenceForm={showLicenceForm}
+                showPeselForm={showPeselForm}
                 showPhotoURLForm={showPhotoURLForm}
                 submitButtonAvailable={submitButtonAvailable}
                 validation={validation}

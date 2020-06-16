@@ -2,6 +2,7 @@ import {TextField, withStyles} from "@material-ui/core";
 
 const CustomTextField = withStyles({
   root: {
+    minWidth: "211px",
     '& label.Mui-focused': {
       color: "#4d1919",
     },

@@ -8,6 +8,7 @@ import EditDataFormComponent from "./PatientPageComponents/EditDataFormComponent
 import PatientInfoComponent from "./PatientPageComponents/PatientInfoComponent";
 import VisitRegistration from "./PatientPageComponents/VisitRegistration";
 import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
 
 
 //CSS Stylesheet
@@ -35,12 +36,52 @@ export const PatientPage = (props) => {
       <div>
         <Container style={styleForMainContainer}>
           <AppBar position="static">
-            <CustomTabs value={patientPageState.componentToShow} onChange={onClickChangeTabPanel} variant="fullWidth">
-              <CustomTab label="Visits"/>
-              <CustomTab label="Visit Registration"/>
-              <CustomTab label="User Information"/>
-              <CustomTab label="Edit User Information"/>
-              <CustomTab label="Delete Account"/>
+            <CustomTabs
+              value={patientPageState.componentToShow}
+              onChange={onClickChangeTabPanel}
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              <CustomTab
+                label={
+                  <TabCustomTypography
+                    primaryLabel={"Wizyty"}
+                    secondaryLabel={"Visits"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <TabCustomTypography
+                    primaryLabel={"Rezerwowanie Wizyt"}
+                    secondaryLabel={"Visit Registration"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <TabCustomTypography
+                    primaryLabel={"Informacje Użytkownika"}
+                    secondaryLabel={"User Information"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <TabCustomTypography
+                    primaryLabel={"Edytowanie danych użytkownika"}
+                    secondaryLabel={"Edit User Information"}
+                  />
+                }
+              />
+              <CustomTab
+                label={
+                  <TabCustomTypography
+                    primaryLabel={"Usuwanie Konta"}
+                    secondaryLabel={"Delete Account"}
+                  />
+                }
+              />
             </CustomTabs>
           </AppBar>
           <TabPanel value={patientPageState.componentToShow} index={0}>

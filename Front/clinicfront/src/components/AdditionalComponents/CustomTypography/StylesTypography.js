@@ -24,3 +24,12 @@ export const StylesButtonTypography = withStyles({
     fontSize: "0.6rem"
   }
 })(Typography)
+
+export const StylesTextFieldLabelTypography = withStyles({
+  h4: {
+    fontSize: "1rem"
+  },
+  h2: {
+    fontSize: "0.8rem"
+  }
+})(Typography)

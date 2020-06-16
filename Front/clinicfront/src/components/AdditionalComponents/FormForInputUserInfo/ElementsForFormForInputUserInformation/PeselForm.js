@@ -1,6 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import CustomTextField from "../../CustomTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
 
 export const PeselForm = (props) => {
     const { handleChange, validation, userInformation, setIsCorrectInputInForms } = props;
@@ -40,7 +41,12 @@ export const PeselForm = (props) => {
                     if (validation){checkInputCorrect(e)}
                 }}
                 name="pesel"
-                label="Pesel"
+                label={
+                    <TextFieldCustomTypography
+                      primaryLabel={"Pesel"}
+                      secondaryLabel={"Pesel"}
+                    />
+                }
                 variant="outlined"
                 error={!isCorrectInput}
                 helperText={messageForIncorrectInput}

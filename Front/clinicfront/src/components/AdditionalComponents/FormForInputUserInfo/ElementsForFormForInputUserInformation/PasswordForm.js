@@ -1,6 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import CustomTextField from "../../CustomTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
 
 export const PasswordForm = (props) => {
     const { handleChange, validation, setIsCorrectInputInForms } = props;
@@ -38,7 +39,12 @@ export const PasswordForm = (props) => {
                 }}
                 name="password"
                 type="password"
-                label="Password"
+                label={
+                    <TextFieldCustomTypography
+                      primaryLabel={"Hasło"}
+                      secondaryLabel={"Password"}
+                    />
+                }
                 variant="outlined"
                 error={!isCorrectInput}
                 helperText={messageForIncorrectInput}
