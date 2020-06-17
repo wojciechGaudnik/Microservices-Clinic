@@ -1,4 +1,4 @@
-import {setStoreError, setStoreUserDetails} from "../../../actions";
+import {setStoreError, setStoreUserDetails} from "../../../redux/actions";
 import {connect} from "react-redux";
 import ContainerLoginPage from "./ContainerLoginPage";
 

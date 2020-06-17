@@ -1,13 +1,13 @@
 import React from "react";
 import {MenuItem} from "@material-ui/core";
-import CustomTextField from "../CustomTextField";
-import TextFieldCustomTypography from "../CustomTypography/TextFieldLabelCustomTypography";
+import StylesTextField from "../CustomTextField/StylesTextField";
+import TextFieldCustomTypography from "../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
 
 export const RoleForm = (props) => {
     const {handleChange, role} = props;
 
     return (
-        <CustomTextField
+        <StylesTextField
             fullWidth
             variant="outlined"
             label={
@@ -40,6 +40,6 @@ export const RoleForm = (props) => {
                 secondaryLabel={"Assistant"}
               />
             </MenuItem>
-        </CustomTextField>
+        </StylesTextField>
     )
 };

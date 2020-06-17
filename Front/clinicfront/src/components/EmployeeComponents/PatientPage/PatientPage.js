@@ -2,13 +2,13 @@ import React from "react";
 import {Container} from "react-bootstrap";
 import {LogOutButton} from "../../AdditionalComponents/LogOutBtn/LogOutButton";
 import AppBar from "@material-ui/core/AppBar";
-import TabPanel from "../../AdditionalComponents/TabPanel";
+import TabPanel from "../../AdditionalComponents/TabPanel/TabPanel";
 import DeleteAccountComponent from "../DoctorPage/DoctorPageComponents/DeleteAccountComponent";
 import EditDataFormComponent from "./PatientPageComponents/EditDataFormComponent";
 import PatientInfoComponent from "./PatientPageComponents/PatientInfoComponent";
 import VisitRegistration from "./PatientPageComponents/VisitRegistration";
-import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
-import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
+import {StylesTab, StylesTabs} from "../../AdditionalComponents/CustomTab/StylesTab";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TypesOfCustomTypography/TabCustomTypography";
 
 
 //CSS Stylesheet
@@ -36,13 +36,13 @@ export const PatientPage = (props) => {
       <div>
         <Container style={styleForMainContainer}>
           <AppBar position="static">
-            <CustomTabs
+            <StylesTabs
               value={patientPageState.componentToShow}
               onChange={onClickChangeTabPanel}
               variant="scrollable"
               scrollButtons="auto"
             >
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Wizyty"}
@@ -50,7 +50,7 @@ export const PatientPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Rezerwowanie Wizyt"}
@@ -58,7 +58,7 @@ export const PatientPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Informacje Użytkownika"}
@@ -66,7 +66,7 @@ export const PatientPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Edytowanie danych użytkownika"}
@@ -74,7 +74,7 @@ export const PatientPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Usuwanie Konta"}
@@ -82,7 +82,7 @@ export const PatientPage = (props) => {
                   />
                 }
               />
-            </CustomTabs>
+            </StylesTabs>
           </AppBar>
           <TabPanel value={patientPageState.componentToShow} index={0}>
             {/*<VisitsComponent/>*/}

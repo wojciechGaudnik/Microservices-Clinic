@@ -1,4 +1,4 @@
-import {StylesButtonTypography} from "./StylesTypography";
+import {StylesButtonTypography} from "../StylesTypography";
 import React from "react";
 import {Grid} from "@material-ui/core";
 

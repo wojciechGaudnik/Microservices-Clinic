@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Button} from "@material-ui/core";
-import ButtonCustomTypography from "../CustomTypography/ButtonCustomTypography";
+import ButtonCustomTypography from "../CustomTypography/TypesOfCustomTypography/ButtonCustomTypography";
 
 export const DelAccountBtn = ({fetchRequest}) => {
   const delUserBtnOnClick = () => {

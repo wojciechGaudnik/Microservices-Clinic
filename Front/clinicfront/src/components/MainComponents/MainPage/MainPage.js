@@ -1,13 +1,13 @@
 import AppBar from "@material-ui/core/AppBar";
 import React, {useState} from "react";
 import {Container} from "@material-ui/core";
-import TabPanel from "../../AdditionalComponents/TabPanel";
+import TabPanel from "../../AdditionalComponents/TabPanel/TabPanel";
 import LoginPage from "../LoginPage/LoginPage";
 import ContainerLoginPage from "../LoginPage/ReduxContainerLoginPage";
 import ContainerRegisterPage from "../RegisterPage/ContainerRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
-import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
-import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
+import {StylesTab, StylesTabs} from "../../AdditionalComponents/CustomTab/StylesTab";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TypesOfCustomTypography/TabCustomTypography";
 
 //CSS Stylesheet
 const styleForMainContainer = {
@@ -28,12 +28,12 @@ export const MainPage = () => {
     return (
         <Container maxWidth="sm" style={styleForMainContainer}>
             <AppBar position="static">
-                <CustomTabs
+                <StylesTabs
                   value={whichPage}
                   onChange={handleChange}
                   variant="fullWidth"
                 >
-                    <CustomTab
+                    <StylesTab
                       label={
                         <TabCustomTypography
                           primaryLabel={"Logowanie"}
@@ -41,7 +41,7 @@ export const MainPage = () => {
                         />
                       }
                     />
-                    <CustomTab
+                    <StylesTab
                       label={
                         <TabCustomTypography
                           primaryLabel={"Rejestracja"}
@@ -49,7 +49,7 @@ export const MainPage = () => {
                         />
                       }
                     />
-                </CustomTabs>
+                </StylesTabs>
             </AppBar>
             <TabPanel
               value={whichPage}

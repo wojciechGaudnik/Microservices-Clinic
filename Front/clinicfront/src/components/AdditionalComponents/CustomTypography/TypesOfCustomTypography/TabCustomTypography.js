@@ -1,5 +1,5 @@
 import React from "react";
-import {StylesTabTypography} from "./StylesTypography";
+import {StylesTabTypography} from "../StylesTypography";
 
 const TabCustomTypography = (props) => {
 

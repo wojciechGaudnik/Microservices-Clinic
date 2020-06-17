@@ -1,7 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import CustomTextField from "../../CustomTextField";
-import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
+import StylesTextField from "../../CustomTextField/StylesTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
 
 export const LastNameForm = (props) => {
     const { handleChange, validation, setIsCorrectInputInForms, userInformation } = props;
@@ -32,7 +32,7 @@ export const LastNameForm = (props) => {
 
     return (
         <Form.Group as={Col}>
-            <CustomTextField
+            <StylesTextField
                 onChange={(e) => {
                     handleChange({lastName : e.target.value});
                     if (validation){checkInputCorrect(e)}

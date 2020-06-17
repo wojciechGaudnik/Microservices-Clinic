@@ -1,7 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import CustomTextField from "../../CustomTextField";
-import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
+import StylesTextField from "../../CustomTextField/StylesTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
 
 export const PhotoURLForm = (props) => {
     const { handleChange, validation, userInformation, setIsCorrectInputInForms} = props;
@@ -31,7 +31,7 @@ export const PhotoURLForm = (props) => {
     };
     return (
         <Form.Group as={Col}>
-            <CustomTextField
+            <StylesTextField
                 onChange={(e) => {
                     handleChange({photoUrl : e.target.value});
                     if (validation){checkInputCorrect(e)}

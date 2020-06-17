@@ -1,7 +1,7 @@
 import {useHistory} from "react-router";
 import {useEffect, useReducer} from "react";
 import {URLs} from "../../../URLs";
-import {logOut} from "../../../actions";
+import {logOut} from "../../../redux/actions";
 
 export const ContainerPatientPage = ({userDetails, userInformation, setStoreUserInformation, children}) => {
 

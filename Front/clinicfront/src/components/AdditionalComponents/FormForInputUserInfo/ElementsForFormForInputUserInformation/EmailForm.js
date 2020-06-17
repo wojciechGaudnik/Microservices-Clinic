@@ -1,7 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import CustomTextField from "../../CustomTextField";
-import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
+import StylesTextField from "../../CustomTextField/StylesTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
 
 export const
   EmailForm = (props) => {
@@ -38,7 +38,7 @@ export const
 
     return (
       <Form.Group as={Col} controlId="formGridEmail">
-        <CustomTextField
+        <StylesTextField
           onChange={(e) => {
             handleChange({email : e.target.value});
             if (validation){checkInputCorrect(e)}

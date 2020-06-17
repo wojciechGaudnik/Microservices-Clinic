@@ -1,4 +1,4 @@
-import {StylesTextFieldLabelTypography} from "./StylesTypography";
+import {StylesTextFieldLabelTypography} from "../StylesTypography";
 import React from "react";
 import {Grid} from "@material-ui/core";
 

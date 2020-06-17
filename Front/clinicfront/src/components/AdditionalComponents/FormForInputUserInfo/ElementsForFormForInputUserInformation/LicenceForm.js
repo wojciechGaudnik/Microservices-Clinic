@@ -1,7 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import CustomTextField from "../../CustomTextField";
-import TextFieldCustomTypography from "../../CustomTypography/TextFieldLabelCustomTypography";
+import StylesTextField from "../../CustomTextField/StylesTextField";
+import TextFieldCustomTypography from "../../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
 
 export const LicenceForm = (props) => {
     const { handleChange, validation, userInformation, setIsCorrectInputInForms } = props;
@@ -32,7 +32,7 @@ export const LicenceForm = (props) => {
 
     return (
         <Form.Group as={Col}>
-            <CustomTextField
+            <StylesTextField
                 onChange={(e) => {
                     handleChange({licence : e.target.value});
                     if (validation){checkInputCorrect(e)}

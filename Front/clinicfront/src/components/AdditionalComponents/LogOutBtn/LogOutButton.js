@@ -2,7 +2,7 @@ import React from "react";
 
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router";
-import ButtonCustomTypography from "../CustomTypography/ButtonCustomTypography";
+import ButtonCustomTypography from "../CustomTypography/TypesOfCustomTypography/ButtonCustomTypography";
 
 export const LogOutButton = () => {
   const history = useHistory();

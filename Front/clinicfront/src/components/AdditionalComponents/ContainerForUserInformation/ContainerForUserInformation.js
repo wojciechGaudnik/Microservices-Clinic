@@ -1,9 +1,8 @@
 import React from "react";
-import {styleForContainer} from "./SetContainerForUserInfo";
 import {Badge, Container, Row} from "react-bootstrap";
 import {List, ListItemText, Typography,} from "@material-ui/core";
-import TextFieldCustomTypography from "../CustomTypography/TextFieldLabelCustomTypography";
-import ButtonCustomTypography from "../CustomTypography/ButtonCustomTypography";
+import TextFieldCustomTypography from "../CustomTypography/TypesOfCustomTypography/TextFieldLabelCustomTypography";
+import ButtonCustomTypography from "../CustomTypography/TypesOfCustomTypography/ButtonCustomTypography";
 
 export const ContainerForUserInformation = (props) => {
 
@@ -17,6 +16,16 @@ export const ContainerForUserInformation = (props) => {
     primaryTitleRole,
     secondaryTitleRole
   } = props;
+
+  //CSS stylesheet
+  const styleForContainer = {
+    color: 'black',
+    padding: '10px 30px 10px 30px',
+    marginBottom: '15px',
+    width: '50%',
+    border: '2px solid #4d1919',
+    borderRadius: '7px',
+  };
 
   //Main HTML return
   const displaySpecializations = () => {

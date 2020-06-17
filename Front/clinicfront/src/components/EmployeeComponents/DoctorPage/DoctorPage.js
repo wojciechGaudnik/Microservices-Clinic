@@ -6,10 +6,10 @@ import DoctorInfoComponent from "./DoctorPageComponents/DoctorInfoComponent";
 import EditDataFormComponent from "./DoctorPageComponents/EditDataFormComponent";
 import DeleteAccountComponent from "./DoctorPageComponents/DeleteAccountComponent";
 import AppBar from "@material-ui/core/AppBar";
-import TabPanel from "../../AdditionalComponents/TabPanel";
+import TabPanel from "../../AdditionalComponents/TabPanel/TabPanel";
 import VisitsComponent from "./DoctorPageComponents/VisitsComponent";
-import {CustomTab, CustomTabs} from "../../AdditionalComponents/CustomTab";
-import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TabCustomTypography";
+import {StylesTab, StylesTabs} from "../../AdditionalComponents/CustomTab/StylesTab";
+import TabCustomTypography from "../../AdditionalComponents/CustomTypography/TypesOfCustomTypography/TabCustomTypography";
 
 //CSS Stylesheet
 export const styleForMainDiv = {
@@ -41,13 +41,13 @@ export const DoctorPage = (props) => {
           style={styleForMainContainer}
         >
           <AppBar position="static">
-            <CustomTabs
+            <StylesTabs
               value={doctorPageState.componentToShow}
               onChange={onClickChangeTabPanel}
               variant="scrollable"
               scrollButtons="auto"
             >
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Wizyty"}
@@ -55,7 +55,7 @@ export const DoctorPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Informacje Użytkownika"}
@@ -63,7 +63,7 @@ export const DoctorPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Edytowanie danych użytkownika"}
@@ -71,7 +71,7 @@ export const DoctorPage = (props) => {
                   />
                 }
               />
-              <CustomTab
+              <StylesTab
                 label={
                   <TabCustomTypography
                     primaryLabel={"Usuwanie Konta"}
@@ -79,7 +79,7 @@ export const DoctorPage = (props) => {
                   />
                 }
               />
-            </CustomTabs>
+            </StylesTabs>
           </AppBar>
           <TabPanel value={doctorPageState.componentToShow} index={0}>
             <VisitsComponent

@@ -10,7 +10,7 @@ import {LicenceForm} from "./ElementsForFormForInputUserInformation/LicenceForm"
 import {PhotoURLForm} from "./ElementsForFormForInputUserInformation/PhotoURLForm";
 import {Form} from "react-bootstrap";
 import {PeselForm} from "./ElementsForFormForInputUserInformation/PeselForm";
-import ButtonCustomTypography from "../CustomTypography/ButtonCustomTypography";
+import ButtonCustomTypography from "../CustomTypography/TypesOfCustomTypography/ButtonCustomTypography";
 
 export const FormForInputUserInformation = (props) => {
   const {

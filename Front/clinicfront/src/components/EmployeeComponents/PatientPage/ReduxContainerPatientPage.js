@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {setStoreError, setStorePatientInformation} from "../../../actions";
+import {setStoreError, setStorePatientInformation} from "../../../redux/actions";
 import {ContainerPatientPage} from "./ContainerPatientPage";
 
 const getUserDetails = state => ( state.info.userDetails );
