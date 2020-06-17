@@ -1,10 +1,9 @@
 package com.clinics.doctors.ui.controller;
 
-import com.clinics.common.DTO.request.outer.EditDoctorDTO;
-import com.clinics.common.DTO.request.outer.RegisterDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.EditDoctorDTO;
+import com.clinics.common.DTO.request.outer.doctor.RegisterDoctorDTO;
 import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
-import com.clinics.doctors.ui.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.clinics.doctors.ui.service.JPAimpl.DoctorServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,49 +12,55 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/doctors")
 public class DoctorController {
 
-	final DoctorService doctorService;
+	final DoctorServiceImpl doctorServiceImpl;
 	final RestTemplate restTemplate;
 
-	@Autowired
-	public DoctorController(DoctorService doctorService, RestTemplate restTemplate) {
-		this.doctorService = doctorService;
+	public DoctorController(DoctorServiceImpl doctorServiceImpl, RestTemplate restTemplate) {
+		this.doctorServiceImpl = doctorServiceImpl;
 		this.restTemplate = restTemplate;
 	}
 
-	@GetMapping(path = "/{uuid}")
-	public ResponseEntity<DoctorResponseDTO> getDoctorByUUID(@PathVariable UUID uuid){
-		return ResponseEntity.ok().body(doctorService.getByUUID(uuid));
+	@GetMapping
+	public ResponseEntity<List<DoctorResponseDTO>> get(){
+		return ResponseEntity.ok().body(doctorServiceImpl.getAllDTO());
+	}
+
+
+	@GetMapping(path = "/{doctorUUID}")
+	public ResponseEntity<DoctorResponseDTO> getByUUID(
+			@PathVariable UUID doctorUUID){
+		return ResponseEntity.ok().body(doctorServiceImpl.getDTOByUUID(doctorUUID));
 	}
 
 	@PostMapping
-	public ResponseEntity<DoctorResponseDTO> registerDoctor(
+	public ResponseEntity<DoctorResponseDTO> add(
 			@Valid @RequestBody RegisterDoctorDTO registerDoctorDTO,
 			HttpServletRequest request) {
-		return ResponseEntity.status(201).body(doctorService.save(registerDoctorDTO, request));
+		return ResponseEntity.status(HttpStatus.CREATED).body(doctorServiceImpl.save(registerDoctorDTO, request));
 	}
 
-	@PatchMapping(path = "/{uuid}")
-	public ResponseEntity<Void> editDoctor(
+	@PatchMapping(path = "/{doctorUUID}")
+	public ResponseEntity<Void> edit(
 			@Valid @RequestBody EditDoctorDTO editDoctorDTO,
-			@PathVariable UUID uuid,
+			@PathVariable UUID doctorUUID,
 			HttpServletRequest request) {
-		doctorService.edit(editDoctorDTO, uuid, request);
+		doctorServiceImpl.edit(editDoctorDTO, doctorUUID, request);
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping(path = "/{uuid}")
-	public ResponseEntity<Void> deleteDoctor(
-			@PathVariable UUID uuid) {
-		doctorService.delete(uuid);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	@DeleteMapping(path = "/{doctorUUID}")
+	public ResponseEntity<Void> delete(
+			@PathVariable UUID doctorUUID) {
+		doctorServiceImpl.delete(doctorUUID);
+		return ResponseEntity.ok().build();
 	}
-
 
 
 
@@ -67,6 +72,6 @@ public class DoctorController {
 
 	@GetMapping(path = "/test/{text}")
 	public ResponseEntity<String> getTestFromAuth(@PathVariable String text){
-		return ResponseEntity.ok().body(restTemplate.getForObject("http://auth/users/" + text, String.class));
+		return ResponseEntity.ok().body(restTemplate.getForObject("http://auth/auth/test/" + text, String.class));
 	}
 }

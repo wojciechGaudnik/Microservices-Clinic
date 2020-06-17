@@ -48,7 +48,7 @@ public class DoctorUUIDChecker extends ZuulFilter implements JwtProperties {
 			}
 			String body = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
 			//todo throw excepiton if "uuid" not exist
-			body = body.replaceAll("(?<=uuid\"(\\s):(\\s?))(\"[^\"]*\")", "uuid\":\"" +
+			body = body.replaceAll("(?<=UUID\"(\\s):(\\s?))(\"[^\"]*\")", "UUID\":\"" +
 					uuidFromAuthentication);
 			context.set("requestEntity", new ByteArrayInputStream(body.getBytes("UTF-8")));
 		}

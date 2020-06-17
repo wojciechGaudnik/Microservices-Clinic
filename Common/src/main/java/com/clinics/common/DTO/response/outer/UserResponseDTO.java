@@ -10,7 +10,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class UserResponseDTO {
 	private String token; //todo token in body is less secure than in header ? maybe we should hide this field ?
-	private UUID uuid;
+	private UUID userUUID;
 	private String email;
 	private String role;
 }

@@ -1,24 +1,53 @@
 package com.clinics.patient.client;
 
+import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
 import com.clinics.common.DTO.request.outer.VisitDTO;
+import com.clinics.common.DTO.request.outer.doctor.AppointmentDTO;
 import com.clinics.common.DTO.response.outer.VisitRegisterResponseDTO;
+import com.clinics.common.security.JwtProperties;
+import com.clinics.patient.entity.Patient;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Component
 public class PatientClient {
     final private RestTemplate restTemplate;
 
-    @Autowired
     public PatientClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public VisitRegisterResponseDTO registerVisit(VisitDTO visitDTO){
-        //TODO uderzanie do doctora - zwrotka true or false
-        //TODO VisitRegisterResponseDTO
-        //TODO return restTemplate.postForObject("http://doctor/registerVisit/", registerVisitDTO, VisitRegisterResponseDTO.class);
-        return new VisitRegisterResponseDTO();
+    public void registerVisit(Patient patient, VisitDTO visitDTO){
+        AppointmentDTO appointmentDTO = new AppointmentDTO();
+        appointmentDTO.setPatientUUID(patient.getPatientUUID());
+        appointmentDTO.setPatientFirstName(patient.getFirstName());
+        appointmentDTO.setPatientSecondName(patient.getLastName());
+
+        String url = String.format("http://doctor-mssc/doctors/%s/calendars/%s/appointments/%s", visitDTO.getDoctorUUID(), visitDTO.getCalendarUUID(), visitDTO.getAppointmentUUID());
+        HttpEntity<AppointmentDTO> requestEntity = new HttpEntity<>(appointmentDTO);
+        restTemplate.exchange(url, HttpMethod.PATCH, requestEntity, Void.class);
+    }
+
+    public void activatePatientInAuth(RegisterPatientDTO registerPatientDTO, HttpServletRequest request){
+        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getPatientUUID());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtProperties.AUTHORIZATION_HEADER, request.getHeader(JwtProperties.AUTHORIZATION_HEADER));
+        HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
+        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+    }
+
+    //TODO
+    public void cancelVisit(Patient patient){
+
     }
 }

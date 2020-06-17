@@ -1,26 +1,26 @@
 package com.clinics.patient.service;
 
+import com.clinics.common.DTO.request.outer.EditPatientDTO;
 import com.clinics.common.DTO.request.outer.RegisterPatientDTO;
+import com.clinics.common.DTO.response.outer.DoctorResponseDTO;
 import com.clinics.common.DTO.response.outer.PatientRegisterResponseDTO;
-import com.clinics.common.security.JwtProperties;
 import com.clinics.patient.client.PatientClient;
 import com.clinics.patient.entity.Patient;
 import com.clinics.patient.entity.Visit;
+import com.clinics.patient.exception.PatientNotFoundException;
 import com.clinics.patient.repository.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class PatientServiceImpl implements PatientService{
     final private PatientRepository patientRepository;
     final private ModelMapper modelMapper;
@@ -37,19 +37,15 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public PatientRegisterResponseDTO addPatient(RegisterPatientDTO registerPatientDTO, HttpServletRequest request) {
-        String url = String.format("http://auth/auth/users/%s", registerPatientDTO.getUuid());
-        System.out.println(url);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtProperties.TOKEN_REQUEST_HEADER, request.getHeader(JwtProperties.TOKEN_REQUEST_HEADER));
-        HttpEntity<String> requestEntity = new HttpEntity<>("Empty Request", httpHeaders);
-        System.out.println(requestEntity);
-        try {
-            ResponseEntity<Void> responseFromAuth = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+        try{
+            patientClient.activatePatientInAuth(registerPatientDTO, request);
         } catch (Exception e) {
-            throw new NoSuchElementException("There is no such patient in AUTH");
+            throw new NoSuchElementException("There is no such user in AUTH or something else went wrong");
         }
+
         var patient = modelMapper.map(registerPatientDTO, Patient.class);
         patientRepository.save(patient);
+
         return modelMapper.map(patient, PatientRegisterResponseDTO.class);
     }
 
@@ -59,8 +55,14 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient findByUuid(UUID UUID) {
-        return patientRepository.findByUuid(UUID);
+    public Patient findByUuid(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
+
+        if(patient.isPresent()){
+            return patient.get();
+        }else{
+            throw new PatientNotFoundException(patientUUID);
+        }
     }
 
     @Override
@@ -69,36 +71,37 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void deleteById(Long ID) {
-        patientRepository.deleteById(ID);
+    public void deleteByUuid(UUID patientUUID) {
+        //TODO catch exception
+        String uri = String.format("http://auth/auth/users/%s", patientUUID);
+        restTemplate.delete(uri);
+
+        patientRepository.deleteByPatientUUID(patientUUID);
     }
 
     @Override
-    public Patient editPatient(Patient patient) {
+    public void editPatient(UUID patientUUID, EditPatientDTO editPatientDTO) {
+        Optional<Patient> existingPatient = patientRepository.findByPatientUUID(patientUUID);
 
-        patientValid(patient);
-        Optional<Patient> existingPatient = patientRepository.findById(patient.getId());
+        existingPatient.ifPresentOrElse(
+                patient -> {
+                    modelMapper.map(editPatientDTO, patient);
+                    patientRepository.save(patient);
+                },
+                () -> {
+                    throw new PatientNotFoundException(patientUUID);
+                }
+        );
+    }
 
-        if(existingPatient.isPresent())
-        {
-            //TODO change patient data
-            existingPatient.get().setPesel(patient.getPesel());
-            return patientRepository.save(existingPatient.get());
+    @Override
+    public List<Visit> findAllVisits(UUID patientUUID) {
+        Optional<Patient> patient = patientRepository.findByPatientUUID(patientUUID);
+
+        if(patient.isPresent()) {
+            return patient.get().getVisits();
         }else{
-            return null;
+            throw new PatientNotFoundException(patientUUID);
         }
     }
-
-    @Override
-    public List<Visit> findAllVisits(UUID UUID) {
-        Patient patient = patientRepository.findByUuid(UUID);
-        return patient.getVisits();
-    }
-
-    private void patientValid(Patient patient){
-        // TODO patient data validation
-        // TODO Throw exception if f.ex pesel is wrong
-    }
-
-
 }

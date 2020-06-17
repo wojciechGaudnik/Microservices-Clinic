@@ -2,7 +2,7 @@ package com.clinics.common.security;
 
 public interface JwtProperties {
 	String TOKEN_LOGIN_URI = "/auth/login";
-	String TOKEN_REQUEST_HEADER = "Authorization";
+	String AUTHORIZATION_HEADER = "Authorization";
 	String TOKEN_PREFIX = "Bearer ";
 	String TOKEN_PREFIX_ROLE = "ROLE_";
 	int TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;

@@ -1,15 +1,18 @@
 package com.clinics.patient.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.clinics.common.patient.VisitStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,21 +29,36 @@ public class Visit {
     private Long id;
 
     @Column(updatable = false, nullable = false)
-    private UUID uuid = UUID.randomUUID();
+    private UUID visitUUID = UUID.randomUUID();
 
-    //TODO na localDateTime
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime date;
 
+    @Column(updatable = false, nullable = false)
     private UUID doctorUUID;
 
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne(
             targetEntity=Patient.class,
+            cascade={CascadeType.ALL},
             fetch = FetchType.LAZY)
     @JoinColumn(name="patient_id")
     private Patient patient;
 
-    private String description;
+    @Size(max = 1000, message = "Description length out of range")
+    private String description = null;
+
+    @Enumerated(EnumType.STRING)
+    private VisitStatus status;
+
+    @JsonBackReference
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToMany(targetEntity = Disease.class)
+    @JoinTable(
+            name = "disease_visit",
+            joinColumns = {@JoinColumn(name = "visit_id")},
+            inverseJoinColumns = {@JoinColumn(name = "disease_id")})
+    private Collection<Disease> diseases = new ArrayList<>();;
 }
