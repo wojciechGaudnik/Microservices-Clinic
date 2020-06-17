@@ -108,7 +108,6 @@ export const ContainerPatientPage = ({userDetails, userInformation, setStoreUser
         };
         const response = await fetch(URLs.GET_PATIENT_INFORMATION(userDetails.uuid), init);
         const result = await response.json();
-        console.log(result);
         setStoreUserInformation(result);
         dispatchPatientPageState({type: "SETTING_INFORMATION_SUCCESS", patientInformation:result})
       }catch (e) {

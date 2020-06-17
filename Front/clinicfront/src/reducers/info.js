@@ -42,6 +42,9 @@ const info = (state = {
                     patientuuid: action.userInformation.patientuuid,
                     firstName: action.userInformation.firstName,
                     lastName: action.userInformation.lastName,
+                    pesel: action.userInformation.pesel,
+                    photoUrl: action.userInformation.photoUrl,
+                    visits: action.userInformation.visits
                 }
             };
         default:
