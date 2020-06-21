@@ -39,21 +39,31 @@ const ContainerForFormForInputUserInformation = (props) => {
         };
       case "SET_TRUE_CORRECT_INPUT":
         return {
+          edit: 1,
           ...state,
           correctInput: {
-            emailForm:      true,
             firstNameForm:  true,
             lastNameForm:   true,
             licenceForm:    true,
+            photoUrlForm:   true,
+            emailForm:      true,
             passwordForm:   true,
             peselForm:      true,
-            photoURLForm:   true
           }
         }
-      case "SET_INPUTS":
+      case "REFRESH_INPUTS":
         return {
+          refresh: 1,
           ...state,
-          correctInput: action.inputCorrectness
+          correctInput: {
+            firstNameForm:  !showFirstNameForm,
+            lastNameForm:   !showLastNameForm,
+            licenceForm:    !showLicenceForm,
+            photoUrlForm:   !showPhotoURLForm,
+            emailForm:      !showEmailForm,
+            passwordForm:   !showPasswordForm,
+            peselForm:      !showPeselForm,
+          }
         }
       case "SET_ON_VALIDATION":
         return {
@@ -108,9 +118,11 @@ const ContainerForFormForInputUserInformation = (props) => {
     if (secondaryLabel === "Log In"){
       dispatchFormComponentState({type: "SET_OFF_VALIDATION"})
     } else if (secondaryLabel === "Edit"){
-      dispatchFormComponentState({type: "SET_TRUE_CORRECT_INPUT"})
+      dispatchFormComponentState({type: "SET_TRUE_CORRECT_INPUT"});
+    } else {
+      dispatchFormComponentState({type: "REFRESH_INPUTS"})
     }
-  }, [secondaryLabel]);
+  }, [role, showFirstNameForm,showLastNameForm, showLicenceForm, showPhotoURLForm, showEmailForm, showPasswordForm, showPeselForm, secondaryLabel]);
   useEffect(() => {
     if (userInformation !== null){
       dispatchFormComponentState({type: "SET_USER_INFORMATION", userInformation: userInformation})
@@ -144,20 +156,6 @@ const ContainerForFormForInputUserInformation = (props) => {
     fetchRequest({...formComponentState.userInformation, role: role});
     submitButtonAdditionalActions();
   };
-  useEffect(() => {
-    dispatchFormComponentState({
-      type: "SET_INPUTS",
-      inputCorrectness: {
-        firstNameForm:  !showFirstNameForm,
-        lastNameForm:   !showLastNameForm,
-        licenceForm:    !showLicenceForm,
-        photoUrlForm:   !showPhotoURLForm,
-        emailForm:      !showEmailForm,
-        passwordForm:   !showPasswordForm,
-        peselForm:      !showPeselForm,
-      }
-    })
-  }, [role, showFirstNameForm,showLastNameForm, showLicenceForm, showPhotoURLForm, showEmailForm, showPasswordForm, showPeselForm,])
 
   return(children({
     onSubmit,

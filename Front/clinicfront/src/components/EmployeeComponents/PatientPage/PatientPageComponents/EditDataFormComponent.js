@@ -36,6 +36,7 @@ export const EditDataFormComponent = (props) => {
             showLastNameForm    ={true}
             showPeselForm       ={true}
             showPhotoURLForm    ={true}
+            showLicenceForm     ={false}
           >
             {({
                 onSubmit,
@@ -45,6 +46,7 @@ export const EditDataFormComponent = (props) => {
                 showLastNameForm,
                 showPeselForm,
                 showPhotoURLForm,
+                showLicenceForm,
                 primaryLabel,
                 secondaryLabel,
                 submitButtonAvailable,
@@ -63,6 +65,7 @@ export const EditDataFormComponent = (props) => {
                 showLastNameForm={showLastNameForm}
                 showPeselForm={showPeselForm}
                 showPhotoURLForm={showPhotoURLForm}
+                showLicenceForm={showLicenceForm}
                 submitButtonAvailable={submitButtonAvailable}
                 validation={validation}
                 handleChange={handleChange}

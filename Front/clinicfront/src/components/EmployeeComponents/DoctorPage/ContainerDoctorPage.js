@@ -177,8 +177,6 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
     }
   };
   const fetchForChangeUserInformation = async (newUserInformation) => {
-    console.log("CLICK!");
-    console.log(newUserInformation);
     try {
       const body = JSON.stringify({
         "email": newUserInformation.email,
@@ -198,10 +196,8 @@ export const ContainerDoctorPage = ({userInformation, children, userDetails, set
       };
       await fetch(URLs.CHANGE_DOCTOR_INFORMATION(userDetails.uuid), init);
       dispatchDoctorPageState({type: "USER_INFORMATION_HAS_BEEN_EDIT_SUCCESS"});
-      console.log("SUCCESS!");
     } catch (e) {
       dispatchDoctorPageState({type: "USER_INFORMATION_HAS_BEEN_EDIT_FAILED"})
-      console.log("FAILED!");
     }
   };
   const onClickChangeTabPanel = (event, newValue) => {

@@ -31,7 +31,6 @@ export const LoginPage = (props) => {
         type="error"
       />
       <ContainerForFormForInputUserInformation
-        {...props}
         fetchRequest        ={(loginDetails) => {sendFetchForLoginUser(loginDetails)}}
         primaryLabel        ="Zaloguj"
         secondaryLabel      ="Log In"
