@@ -11,8 +11,9 @@ export const RegisterPage = (props) => {
   const {
     fetchRegisterNewUser,
     registerStatus,
-    dispatchRegisterStatus,
-    handleChangeRole
+    closeAlertSuccessMessage,
+    closeAlertFailedMessage,
+    handleChangeRole,
   } = props;
 
   const whichForm = () => {
@@ -22,6 +23,7 @@ export const RegisterPage = (props) => {
           <ContainerForFormForInputUserInformation
             fetchRequest        ={(registerDetails) => fetchRegisterNewUser(registerDetails)}
             role                ={registerStatus.roleNewUser}
+            isLoading           ={registerStatus.isLoading}
             primaryLabel        ="Zarejestruj"
             secondaryLabel      ="Register"
             showEmailForm       ={true}
@@ -42,10 +44,10 @@ export const RegisterPage = (props) => {
                 showPhotoURLForm,
                 primaryLabel,
                 secondaryLabel,
-                submitButtonAvailable,
-                validation,
+                formComponentState,
                 handleChange,
-                setIsCorrectInputInForms
+                setIsCorrectInputInForms,
+                isLoading
               }) => (
               <FormForInputUserInformation
                 onSubmit={onSubmit}
@@ -57,10 +59,10 @@ export const RegisterPage = (props) => {
                 showLastNameForm={showLastNameForm}
                 showLicenceForm={showLicenceForm}
                 showPhotoURLForm={showPhotoURLForm}
-                submitButtonAvailable={submitButtonAvailable}
-                validation={validation}
+                formComponentState={formComponentState}
                 handleChange={handleChange}
                 setIsCorrectInputInForms={setIsCorrectInputInForms}
+                isLoading={isLoading}
               />
             )}
           </ContainerForFormForInputUserInformation>
@@ -90,8 +92,7 @@ export const RegisterPage = (props) => {
                 showPeselForm,
                 primaryLabel,
                 secondaryLabel,
-                submitButtonAvailable,
-                validation,
+                formComponentState,
                 handleChange,
                 setIsCorrectInputInForms
               }) => (
@@ -105,8 +106,7 @@ export const RegisterPage = (props) => {
                 showLastNameForm={showLastNameForm}
                 showPhotoURLForm={showPhotoURLForm}
                 showPeselForm={showPeselForm}
-                submitButtonAvailable={submitButtonAvailable}
-                validation={validation}
+                formComponentState={formComponentState}
                 handleChange={handleChange}
                 setIsCorrectInputInForms={setIsCorrectInputInForms}
               />
@@ -123,13 +123,13 @@ export const RegisterPage = (props) => {
       <Container>
           <AlertMessage
               show={registerStatus.showSuccessMessage}
-              onClose={() => dispatchRegisterStatus({type: "CLOSE_SUCCESS_MESSAGE"})}
+              onClose={() => closeAlertSuccessMessage()}
               message="Successful Register"
               type="success"
           />
           <AlertMessage
               show={registerStatus.showFailMessage}
-              onClose={() => dispatchRegisterStatus({type: "CLOSE_FAIL_MESSAGE"})}
+              onClose={() => closeAlertFailedMessage()}
               message="Wrong details please use another"
               type="error"
           />

@@ -16,6 +16,7 @@ const ContainerForFormForInputUserInformation = (props) => {
     primaryLabel,
     secondaryLabel,
     userInformation,
+    isLoading,
     submitButtonAdditionalActions = () => {}
   } = props;
 
@@ -110,7 +111,7 @@ const ContainerForFormForInputUserInformation = (props) => {
       peselForm:      !showPeselForm,
     },
     validation: true,
-    submitButtonAvailable: false
+    submitButtonAvailable: false,
   };
   const [formComponentState, dispatchFormComponentState] = useReducer(setFormState, initialState, init)
 
@@ -168,11 +169,11 @@ const ContainerForFormForInputUserInformation = (props) => {
     showPeselForm,
     primaryLabel,
     secondaryLabel,
-    submitButtonAvailable: formComponentState.submitButtonAvailable,
-    validation: formComponentState.validation,
+    formComponentState,
+    isLoading,
     handleChange,
     setIsCorrectInputInForms,
-    userInformation
+    userInformation,
   }))
 };
 

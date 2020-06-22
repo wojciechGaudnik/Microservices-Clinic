@@ -72,11 +72,12 @@ export const MainPage = () => {
               classes={styleForTabPanel}
             >
               <ContainerRegisterPage>
-                {({fetchRegisterNewUser, registerStatus, dispatchRegisterStatus, handleChangeRole}) => (
+                {({fetchRegisterNewUser, registerStatus, handleChangeRole, closeAlertSuccessMessage, closeAlertFailedMessage}) => (
                   <RegisterPage
                     fetchRegisterNewUser={fetchRegisterNewUser}
                     registerStatus={registerStatus}
-                    dispatchRegisterStatus={dispatchRegisterStatus}
+                    closeAlertSuccessMessage={closeAlertSuccessMessage}
+                    closeAlertFailedMessage={closeAlertFailedMessage}
                     handleChangeRole={handleChangeRole}
                   />
                 )}

@@ -31,6 +31,16 @@ export const ContainerRegisterPage = ({children}) => {
           ...state,
           showFailMessage: false
         };
+      case "LOADING_ON":
+        return {
+          ...state,
+          isLoading: true
+        }
+      case "LOADING_OFF":
+        return {
+          ...state,
+          isLoading: false
+        }
       default:
         return state;
     }
@@ -38,13 +48,15 @@ export const ContainerRegisterPage = ({children}) => {
   const initialState = {
     roleNewUser: "doctor",
     showFailMessage: false,
-    showSuccessMessage: false
+    showSuccessMessage: false,
+    isLoading: false
   };
   const init = (initialState) => initialState;
   const [registerStatus, dispatchRegisterStatus] = useReducer(registerNewUser, initialState, init);
 
 //Fetch
   const fetchRegisterNewUser = async (registerDetails) => {
+    dispatchRegisterStatus({type: "LOADING_ON"});
     try {
       const body = JSON.stringify({
         "email": registerDetails.email,
@@ -113,6 +125,7 @@ export const ContainerRegisterPage = ({children}) => {
     } catch (e) {
       dispatchRegisterStatus({type: "REGISTER_FAILED"});
     }
+    dispatchRegisterStatus({type: "LOADING_OFF"});
   };
   const handleChangeRole = (roleNewUser) => {
     dispatchRegisterStatus({
@@ -120,12 +133,19 @@ export const ContainerRegisterPage = ({children}) => {
       roleNewUser: roleNewUser
     })
   };
+  const closeAlertSuccessMessage = () => {
+    dispatchRegisterStatus({type: "CLOSE_SUCCESS_MESSAGE"})
+  }
+  const closeAlertFailedMessage = () => {
+    dispatchRegisterStatus({type: "CLOSE_FAIL_MESSAGE"})
+  }
 
   return(
     children({
       fetchRegisterNewUser,
       registerStatus,
-      dispatchRegisterStatus,
+      closeAlertSuccessMessage,
+      closeAlertFailedMessage,
       handleChangeRole
     })
   )

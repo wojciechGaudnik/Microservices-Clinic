@@ -51,8 +51,7 @@ export const LoginPage = (props) => {
             showPhotoURLForm,
             primaryLabel,
             secondaryLabel,
-            submitButtonAvailable,
-            validation,
+            formComponentState,
             handleChange,
             setIsCorrectInputInForms
           }) => (
@@ -66,8 +65,7 @@ export const LoginPage = (props) => {
             showLastNameForm={showLastNameForm}
             showLicenceForm={showLicenceForm}
             showPhotoURLForm={showPhotoURLForm}
-            submitButtonAvailable={submitButtonAvailable}
-            validation={validation}
+            formComponentState={formComponentState}
             handleChange={handleChange}
             setIsCorrectInputInForms={setIsCorrectInputInForms}
             />

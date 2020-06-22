@@ -49,8 +49,7 @@ export const EditDataFormComponent = (props) => {
                 showLicenceForm,
                 primaryLabel,
                 secondaryLabel,
-                submitButtonAvailable,
-                validation,
+                formComponentState,
                 handleChange,
                 setIsCorrectInputInForms,
                 userInformation
@@ -66,8 +65,7 @@ export const EditDataFormComponent = (props) => {
                 showPeselForm={showPeselForm}
                 showPhotoURLForm={showPhotoURLForm}
                 showLicenceForm={showLicenceForm}
-                submitButtonAvailable={submitButtonAvailable}
-                validation={validation}
+                formComponentState={formComponentState}
                 handleChange={handleChange}
                 setIsCorrectInputInForms={setIsCorrectInputInForms}
                 userInformation={userInformation}
